@@ -10,8 +10,8 @@ import java.util.ArrayList;
 public class Graph {
 
     private static Graph graph;
-    private ArrayList<Edge> edges = new ArrayList<Edge>();
-    private ArrayList<Vertex> vertices = new ArrayList<Vertex>();
+    private ArrayList<Edge> edges = new ArrayList<>();
+    private ArrayList<Vertex> vertices = new ArrayList<>();
 
     //singleton
     public static Graph getGraph(){
@@ -32,7 +32,7 @@ public class Graph {
      * because every new vertex needs a edge connection to a existing vertex (only one component!)
      *
      * */
-    public void registerVertice(Vertex baseVertex, Point2D newVertexCoord){
+    public void registerVertex(Vertex baseVertex, Point2D newVertexCoord){
 
         Vertex newVertex = new Vertex(newVertexCoord);
 

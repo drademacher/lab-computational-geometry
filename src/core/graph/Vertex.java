@@ -18,8 +18,12 @@ public class Vertex {
     }
 
 
-    public void registerEdge(Edge edge){
-        this.edges.add(edge);
+    public boolean registerEdge(Edge edge){
+        return this.edges.add(edge);
+    }
+
+    public boolean unregisterEdge(Edge edge){
+        return this.edges.remove(edge);
     }
 
     public ArrayList<Edge> getEdges(){

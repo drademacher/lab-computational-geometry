@@ -14,7 +14,7 @@ public class Edge {
     }
     public static Edge createNewEdge(Vertex vertexStart, Vertex vertexEnd, int vertexWeight){
         Edge edge = new Edge(vertexStart, vertexEnd, vertexWeight);
-        edge.registerEdges(edge);
+        edge.registerEdge();
         return edge;
     }
 
@@ -25,13 +25,12 @@ public class Edge {
 
     }
 
-    private void registerEdges(Edge edge){
+    private boolean registerEdge(){
+        return vertices[0].registerEdge(this) && vertices[1].registerEdge(this);
+    }
 
-        Vertex[] vertices = edge.getVertices();
-
-        //register the edge with the vertices
-        vertices[0].registerEdge(edge);
-        vertices[1].registerEdge(edge);
+    public boolean deleteEdge(){
+        return vertices[0].unregisterEdge(this) && vertices[1].unregisterEdge(this);
     }
 
 

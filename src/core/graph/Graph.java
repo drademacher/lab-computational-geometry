@@ -9,18 +9,11 @@ import java.util.ArrayList;
  */
 public class Graph {
 
-    private static Graph graph;
     private ArrayList<Edge> edges = new ArrayList<>();
     private ArrayList<Vertex> vertices = new ArrayList<>();
 
-    //singleton
-    public static Graph getGraph(){
-        if(Graph.graph == null){
-            Graph.graph = new Graph();
-        }
-        return Graph.graph;
-    }
-    private Graph(){
+
+    public Graph(){
         Vertex startVertex = new Vertex(new Point2D(2, 2));
         this.vertices.add(startVertex);
     }
@@ -42,6 +35,21 @@ public class Graph {
     }
 
     /**
+     * Delete Vertex
+     * delete a vertex and all incident edges
+     *
+     * */
+    public boolean deleteVertex(Vertex vertex){
+
+        for(int i = vertex.getEdges().size() - 1; i >= 0; i--){
+            Edge edge = vertex.getEdges().get(i);
+            deleteEdge(edge);
+        }
+        return vertices.remove(vertex);
+
+    }
+
+    /**
      * Create new Edge
      * specify two vertices between the new edge should be created
      *
@@ -52,6 +60,21 @@ public class Graph {
 
         this.edges.add(newEdge);
     }
+
+
+    /**
+     * Delete Edge
+     * unregister and delete edge
+     *
+     * */
+    public boolean deleteEdge(Edge edge){
+
+        if(edge.deleteEdge()){
+            return edges.remove(edge);
+        }
+        return false;
+    }
+
 
     public ArrayList<Edge> getEdges(){
         return edges;

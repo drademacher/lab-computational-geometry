@@ -16,7 +16,7 @@ public class GraphHolder {
     private Point cameraDim;
     private Point cameraPos = new Point(0, 0);
 
-    private Graph graph = Graph.getGraph();
+    private Graph graph = new Graph();
 
 
     private Canvas baseCanvas, edgeLengthCanvas, edgeStepsActiveCanvas, edgeStepsOtherCanvas, shortestDistanceCanvas, shortestPathCanvas;

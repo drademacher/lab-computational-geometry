@@ -63,10 +63,7 @@ public class GraphHolder {
 
     void setNode(Point coordinate) {
         // TODO: check if there is no node on this coordinate yet!
-        Vertex startVertex = graph.getVertices().get(0);
-        graph.registerVertex(startVertex, new Point(5, 5));
-        graph.registerVertex(startVertex, new Point(9, 9));
-        graph.registerEdge(graph.getVertices().get(1), graph.getVertices().get(2));
+
         this.renderNode(baseCanvas, coordinate);
     }
 

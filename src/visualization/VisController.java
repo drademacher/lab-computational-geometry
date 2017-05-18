@@ -2,6 +2,7 @@ package visualization;
 
 import core.CoreController;
 import core.graph.Graph;
+import core.graph.Vertex;
 import core.util.Point;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -70,7 +71,15 @@ public class VisController implements Initializable {
 
         //Init mapHolder
         this.graphHolder = new GraphHolder(baseCanvas, edgeLengthCanvas, edgeStepsActiveCanvas, edgeStepsAllCanvas, shortestDistanceCanvas, shortestPathCanvas);
-        this.graphHolder.setGraph(new Graph());
+
+        //
+        Graph graph = new Graph();
+        Vertex startVertex = graph.getVertices().get(0);
+        graph.registerVertex(startVertex, new Point(5, 5));
+        graph.registerVertex(startVertex, new Point(9, 9));
+        graph.registerEdge(graph.getVertices().get(1), graph.getVertices().get(2));
+        this.graphHolder.setGraph(graph);
+
 
         final EventHandler<KeyEvent> keyEventHandler = e -> {
             if (e.getCode() == KeyCode.RIGHT) {

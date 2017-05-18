@@ -24,13 +24,13 @@ public class Graph {
      * because every new vertex needs a edge connection to a existing vertex (only one component!)
      *
      * */
-    public void registerVertex(Vertex baseVertex, Point newVertexCoord){
+    public boolean registerVertex(Point newVertexCoord){
 
         Vertex newVertex = new Vertex(newVertexCoord);
 
         this.vertices.add(newVertex);
 
-        registerEdge(baseVertex, newVertex);
+        return true;
     }
 
     /**
@@ -53,11 +53,13 @@ public class Graph {
      * specify two vertices between the new edge should be created
      *
      * */
-    public void registerEdge(Vertex baseVertex, Vertex targetVertex){
+    public boolean registerEdge(Vertex baseVertex, Vertex targetVertex){
 
         Edge newEdge = Edge.createNewEdge(baseVertex, targetVertex);
 
         this.edges.add(newEdge);
+
+        return true;
     }
 
 

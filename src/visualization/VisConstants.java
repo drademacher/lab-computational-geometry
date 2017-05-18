@@ -3,7 +3,7 @@ package visualization;
 /**
  * Created by Danny on 13.05.2017.
  */
-public class Constants {
+public class VisConstants {
     //Zoom
     static final int ZOOM_FACTOR = 2;
     static final int ZOOM_MAX = 40;

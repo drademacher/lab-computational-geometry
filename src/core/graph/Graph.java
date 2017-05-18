@@ -1,6 +1,6 @@
 package core.graph;
 
-import javafx.geometry.Point2D;
+import core.util.Point;
 
 import java.util.ArrayList;
 
@@ -9,19 +9,11 @@ import java.util.ArrayList;
  */
 public class Graph {
 
-    private static Graph graph;
     private ArrayList<Edge> edges = new ArrayList<>();
     private ArrayList<Vertex> vertices = new ArrayList<>();
 
-    //singleton
-    public static Graph getGraph(){
-        if(Graph.graph == null){
-            Graph.graph = new Graph();
-        }
-        return Graph.graph;
-    }
-    private Graph(){
-        Vertex startVertex = new Vertex(new Point2D(2, 2));
+    public Graph(){
+        Vertex startVertex = new Vertex(new Point(1, 5));
         this.vertices.add(startVertex);
     }
 
@@ -32,13 +24,28 @@ public class Graph {
      * because every new vertex needs a edge connection to a existing vertex (only one component!)
      *
      * */
-    public void registerVertex(Vertex baseVertex, Point2D newVertexCoord){
+    public void registerVertex(Vertex baseVertex, Point newVertexCoord){
 
         Vertex newVertex = new Vertex(newVertexCoord);
 
         this.vertices.add(newVertex);
 
         registerEdge(baseVertex, newVertex);
+    }
+
+    /**
+     * Delete Vertex
+     * delete a vertex and all incident edges
+     *
+     * */
+    public boolean deleteVertex(Vertex vertex){
+
+        for(int i = vertex.getEdges().size() - 1; i >= 0; i--){
+            Edge edge = vertex.getEdges().get(i);
+            deleteEdge(edge);
+        }
+        return vertices.remove(vertex);
+
     }
 
     /**
@@ -53,6 +60,21 @@ public class Graph {
         this.edges.add(newEdge);
     }
 
+
+    /**
+     * Delete Edge
+     * unregister and delete edge
+     *
+     * */
+    public boolean deleteEdge(Edge edge){
+
+        if(edge.deleteEdge()){
+            return edges.remove(edge);
+        }
+        return false;
+    }
+
+
     public ArrayList<Edge> getEdges(){
         return edges;
     }
@@ -60,4 +82,16 @@ public class Graph {
     public ArrayList<Vertex> getVertices() {
         return vertices;
     }
+
+
+    public int getXRange() {
+        // TODO: fix this
+        return 10;
+    }
+
+    public int getYRange() {
+        // TODO: fix this
+        return 10;
+    }
+
 }

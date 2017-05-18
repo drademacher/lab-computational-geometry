@@ -2,7 +2,6 @@ package visualization;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -33,8 +32,8 @@ public class Main extends Application {
         Scene scene = new Scene(fxmlLoader.load(getClass().getResource("main.fxml").openStream()));
         primaryStage.setTitle("Lab Computational Geometry");
         primaryStage.setScene(scene);
-        primaryStage.setWidth(Constants.WINDOW_WIDTH);
-        primaryStage.setHeight(Constants.WINDOW_HEIGHT);
+        primaryStage.setWidth(VisConstants.WINDOW_WIDTH);
+        primaryStage.setHeight(VisConstants.WINDOW_HEIGHT);
         primaryStage.show();
     }
 }

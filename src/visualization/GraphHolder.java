@@ -121,13 +121,10 @@ public class GraphHolder {
         gc.fillRect(0, 0, this.baseCanvas.getWidth(), this.baseCanvas.getHeight());
 
 
-//        System.out.println("DRAW'##############################");
-//        System.out.println(graph.getVertices());
-        for (Vertex vertex : graph.getVertices()) {
+        for(Vertex vertex : graph.getVertices()){
             renderNode(baseCanvas, vertex.getCoord());
         }
-//        System.out.println(graph.getEdges());
-        for (Edge edge : graph.getEdges()) {
+        for(Edge edge : graph.getEdges()){
             renderEdge(baseCanvas, edge.getCoordStart(), edge.getCoordEnd());
         }
     }

@@ -62,26 +62,27 @@ public class GraphHolder {
     /* ------- Getter & Setter ------- */
 
     void setNode(Point coordinate) {
-        // TODO: check if there is no node on this coordinate yet!
-
-        this.renderNode(baseCanvas, coordinate);
+        if (graph.registerVertex(coordinate)) {
+            this.renderNode(baseCanvas, coordinate);
+        }
     }
 
     void removeNode(Point coordinate) {
-        // TODO: make this work
-        // graph.removeNode(from, to);
-        this.refreshMap();
+        if (graph.deleteVertex(coordinate)) {
+            this.renderNode(baseCanvas, coordinate);
+        }
     }
 
     void setEdge(Point from, Point to) {
-        // TODO: check if there is no node on this coordinate yet!
-        this.renderEdge(baseCanvas, from, to);
+        if (graph.registerEdge(from, to)) {
+            this.renderEdge(baseCanvas, from, to);
+        }
     }
 
     void removeEdge(Point from, Point to) {
-        // TODO: make this work
-        // graph.removeEdge(from, to);
-        this.refreshMap();
+        if (graph.deleteEdge(from, to)) {
+            this.renderEdge(baseCanvas, from, to);
+        }
     }
 
     void setGraph(Graph graph) {
@@ -119,32 +120,16 @@ public class GraphHolder {
         gc.setFill(Color.WHITE);
         gc.fillRect(0, 0, this.baseCanvas.getWidth(), this.baseCanvas.getHeight());
 
-        Point p1 = new Point(0, 0), p2 = new Point(2, 0);
 
-//        renderNode(baseCanvas, p1);
-//        renderNode(baseCanvas, p2);
-//        renderEdge(baseCanvas, p1, p2);
-//        renderEdge(baseCanvas, new Point(3, 3), new Point(6, 3));
-
-        System.out.println("DRAW'##############################");
-        System.out.println(graph.getVertices());
-        for(Vertex vertex : graph.getVertices()){
+//        System.out.println("DRAW'##############################");
+//        System.out.println(graph.getVertices());
+        for (Vertex vertex : graph.getVertices()) {
             renderNode(baseCanvas, vertex.getCoord());
         }
-        System.out.println(graph.getEdges());
-        for(Edge edge : graph.getEdges()){
+//        System.out.println(graph.getEdges());
+        for (Edge edge : graph.getEdges()) {
             renderEdge(baseCanvas, edge.getCoordStart(), edge.getCoordEnd());
         }
-
-        /*
-        for (int x = 0; x < cameraDim.getX(); x++) {
-            for (int y = 0; y < cameraDim.getY(); y++) {
-                renderField(gridCanvas, new Vector(x, y).add(cameraPos), isPassable(new Vector(x, y).add(cameraPos)) ? GRID_POINT : OBSTACLE_POINT);
-            }
-        }
-        */
-
-        // gc.fillRect(1, 1, 5, 5);
     }
 
     private void renderNode(Canvas canvas, Point coordinate) {
@@ -213,11 +198,14 @@ public class GraphHolder {
         int stepSize = fieldSize / 3;
 
         GraphicsContext gc = canvas.getGraphicsContext2D();
+
         gc.setFill(Color.DARKRED);
+        gc.setStroke(Color.DARKRED);
 
         for (int i = 1; i <= count; i++) {
             Point p = edgeAtOrigin.mul((i) / (1.0 + count));
-            gc.fillRect(from.getX() * this.fieldSize + p.getX() + (this.fieldSize - padding) / 2 - stepSize / 2,
+            // gc.strokeLine();
+            gc.fillOval(from.getX() * this.fieldSize + p.getX() + (this.fieldSize - padding) / 2 - stepSize / 2,
                     from.getY() * this.fieldSize + p.getY() + (this.fieldSize - padding) / 2 - stepSize / 2, stepSize, stepSize);
         }
     }

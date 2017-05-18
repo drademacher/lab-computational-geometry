@@ -126,12 +126,9 @@ public class GraphHolder {
 //        renderEdge(baseCanvas, p1, p2);
 //        renderEdge(baseCanvas, new Point(3, 3), new Point(6, 3));
 
-        System.out.println("DRAW'##############################");
-        System.out.println(graph.getVertices());
         for(Vertex vertex : graph.getVertices()){
             renderNode(baseCanvas, vertex.getCoord());
         }
-        System.out.println(graph.getEdges());
         for(Edge edge : graph.getEdges()){
             renderEdge(baseCanvas, edge.getCoordStart(), edge.getCoordEnd());
         }

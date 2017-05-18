@@ -76,6 +76,7 @@ public class VisController implements Initializable {
         Graph graph = new Graph();
         graph.registerVertex(new Point(5, 5));
         graph.registerVertex(new Point(9, 9));
+        graph.registerVertex(new Point(1, 4));
         graph.registerEdge(graph.getVertices().get(1), graph.getVertices().get(2));
         this.graphHolder.setGraph(graph);
 

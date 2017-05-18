@@ -13,8 +13,7 @@ public class Graph {
     private ArrayList<Vertex> vertices = new ArrayList<>();
 
     public Graph(){
-        Vertex startVertex = new Vertex(new Point(1, 5));
-        this.vertices.add(startVertex);
+
     }
 
 
@@ -28,10 +27,11 @@ public class Graph {
 
         Vertex newVertex = new Vertex(newVertexCoord);
 
-        this.vertices.add(newVertex);
+        if(getVertexByCoord(newVertexCoord) != null){
+            return false;
+        }
 
-        //TODO check if valid
-        return true;
+        return this.vertices.add(newVertex);
     }
 
     /**
@@ -68,13 +68,13 @@ public class Graph {
         if(baseVertex == null || targetVertex == null){
             return false;
         }
+        if(edgeExists(baseVertex, targetVertex)){
+            return false;
+        }
 
         Edge newEdge = Edge.createNewEdge(baseVertex, targetVertex);
 
-        this.edges.add(newEdge);
-
-        //TODO check if valid
-        return true;
+        return this.edges.add(newEdge);
     }
 
 
@@ -87,6 +87,10 @@ public class Graph {
         return deleteEdge(getEdgeByCoord(coordStart, coordEnd));
     }
     public boolean deleteEdge(Edge edge){
+
+        if(edge == null){
+            return false;
+        }
 
         if(edge.deleteEdge()){
             return edges.remove(edge);
@@ -122,6 +126,18 @@ public class Graph {
             }
         }
         return null;
+    }
+
+    /**
+     * Check if edge exists already
+     *
+     * */
+    private boolean edgeExists(Vertex baseVertex, Vertex targetVertex){
+        Edge edge = getEdgeByCoord(baseVertex.getCoord(), targetVertex.getCoord());
+        if(edge == null){
+            return false;
+        }
+        return true;
     }
 
 

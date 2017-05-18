@@ -22,7 +22,7 @@ public class GraphHolder {
     private Canvas baseCanvas, edgeLengthCanvas, edgeStepsActiveCanvas, edgeStepsOtherCanvas, shortestDistanceCanvas, shortestPathCanvas;
     private OnMouseClickedCallback onMouseClickedCallback;
     private int fieldSize = 10;
-    private int padding = (fieldSize > 5) ? 1 : 0;
+    private int padding = (fieldSize > 5) ? fieldSize / 10 : 0;
 
     GraphHolder(Canvas baseCanvas, Canvas edgeLengthCanvas, Canvas edgeStepsActiveCanvas, Canvas edgeStepsOtherCanvas, Canvas shortestDistanceCanvas, Canvas shortestPathCanvas) {
         this.baseCanvas = baseCanvas;
@@ -42,7 +42,7 @@ public class GraphHolder {
             if (event.getDeltaY() == 0) return;
             if (event.getDeltaY() > 0 && fieldSize + ZOOM_FACTOR <= ZOOM_MAX) this.fieldSize += ZOOM_FACTOR;
             if (event.getDeltaY() < 0 && fieldSize - ZOOM_FACTOR >= ZOOM_MIN) this.fieldSize -= ZOOM_FACTOR;
-            padding = (fieldSize > 5) ? 1 : 0;
+            padding = (fieldSize > 5) ? fieldSize / 10 : 0;
             updateCamera();
             renderMap();
         });
@@ -100,7 +100,11 @@ public class GraphHolder {
         gc.setFill(Color.WHITE);
         gc.fillRect(0, 0, this.baseCanvas.getWidth(), this.baseCanvas.getHeight());
 
-        renderNode(baseCanvas, new Point(0, 0));
+        Point p1 =  new Point(0, 0), p2 = new Point(2, 3);
+
+        renderNode(baseCanvas, p1);
+        renderNode(baseCanvas, p2);
+        renderEdge(baseCanvas, p1, p2);
 
         /*
         for (int x = 0; x < cameraDim.getX(); x++) {
@@ -119,13 +123,11 @@ public class GraphHolder {
             return;
 
         GraphicsContext gc = canvas.getGraphicsContext2D();
-        gc.setFill(Color.YELLOW);
-        gc.fillRect(coordinate.getX() * this.fieldSize + 1, coordinate.getY() * this.fieldSize + 1, this.fieldSize - padding, this.fieldSize - padding);
 
-        gc.setStroke(Color.BLACK);
+        gc.setFill(Color.BLACK);
         gc.setLineWidth(this.padding + 1);
         // gc.fillRect(coordinate.getX() * this.fieldSize + 1, coordinate.getY() * this.fieldSize + 1, this.fieldSize - padding, this.fieldSize - padding);
-        gc.strokeOval(coordinate.getX() * this.fieldSize + 1, coordinate.getY() * this.fieldSize + 1, this.fieldSize - padding, this.fieldSize - padding);
+        gc.fillOval(coordinate.getX() * this.fieldSize + 1, coordinate.getY() * this.fieldSize + 1, this.fieldSize - padding, this.fieldSize - padding);
 
         System.out.println("coord " + coordinate);
 
@@ -136,6 +138,37 @@ public class GraphHolder {
         System.out.println(cameraPos);
         adjustCamera();
         System.out.println(cameraPos);
+    }
+
+    private void renderEdge(Canvas canvas, Point from, Point to) {
+        from = from.sub(cameraPos);
+        to = to.sub(cameraPos);
+
+        Boolean oneVisibleNode = false;
+
+        if ( !(from.getX() < 0 || from.getY() < 0 || cameraDim.getX() < from.getX() || cameraDim.getY() < from.getY()) ) {
+            oneVisibleNode = true;
+        }
+
+        if ( !(to.getX() < 0 || to.getY() < 0 || cameraDim.getX() < to.getX() || cameraDim.getY() < to.getY()) ) {
+            oneVisibleNode = true;
+        }
+
+        if (!oneVisibleNode) {
+            return;
+        }
+
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+
+        gc.setStroke(Color.BLACK);
+        gc.setLineWidth(this.padding + 1);
+
+        // gc.fillOval(coordinate.getX() * this.fieldSize + 1, coordinate.getY() * this.fieldSize + 1, this.fieldSize - padding, this.fieldSize - padding);
+        gc.strokeLine(from.getX() * this.fieldSize + 1 + (this.fieldSize - padding) / 2,
+                from.getY() * this.fieldSize + 1 + (this.fieldSize - padding) / 2,
+                to.getX() * this.fieldSize + 1 + (this.fieldSize - padding) / 2,
+                to.getY() * this.fieldSize + 1 + (this.fieldSize - padding) / 2 );
+
     }
 
 

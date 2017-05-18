@@ -60,4 +60,16 @@ public class Graph {
     public ArrayList<Vertex> getVertices() {
         return vertices;
     }
+
+
+    public int getXRange() {
+        // TODO: fix this
+        return 10;
+    }
+
+    public int getYRange() {
+        // TODO: fix this
+        return 10;
+    }
+
 }

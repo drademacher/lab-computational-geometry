@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.StackPane?>
 
-<BorderPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visualization.Controller">
+<BorderPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visualization.VisController">
     <top>
         <MenuBar BorderPane.alignment="CENTER">
             <menus>
@@ -45,9 +45,9 @@
                         <RadioMenuItem fx:id="viewNoEdgeStepsMenuItem" mnemonicParsing="false" text="No Edge Steps" toggleGroup="$edgeStepsToggleGroup" />
                     </items>
                   </Menu>
-                        <CheckMenuItem fx:id="viewDistance" mnemonicParsing="false" selected="true" text="Closed Distance To Men" />
-                        <CheckMenuItem fx:id="viewPath" mnemonicParsing="false" selected="true" text="Shortest Path To Men" />
-                        <CheckMenuItem fx:id="viewEdgeLength" mnemonicParsing="false" selected="true" text="Edge Length" />
+                        <CheckMenuItem fx:id="shortestDistanceButton" mnemonicParsing="false" selected="true" text="Closed Distance To Men" />
+                        <CheckMenuItem fx:id="shortestPathButton" mnemonicParsing="false" selected="true" text="Shortest Path To Men" />
+                        <CheckMenuItem fx:id="edgeLengthButton" mnemonicParsing="false" selected="true" text="Edge Length" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Edit">
@@ -143,11 +143,12 @@
     <center>
         <StackPane style="-fx-background-color: #999999;">
             <children>
-                <Canvas fx:id="gridCanvas" />
-                <Canvas fx:id="closedListCanvas" />
-                <Canvas fx:id="openListCanvas" />
-                <Canvas fx:id="pathCanvas" />
-                <Canvas fx:id="detailsCanvas" />
+                <Canvas fx:id="baseCanvas" />
+                <Canvas fx:id="edgeLengthCanvas" />
+                <Canvas fx:id="edgeStepsActiveCanvas" />
+                <Canvas fx:id="edgeStepsOtherCanvas" />
+                <Canvas fx:id="shortestDistanceCanvas" />
+                <Canvas fx:id="shortestPathCanvas" />
             </children>
         </StackPane>
     </center>

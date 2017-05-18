@@ -34,6 +34,7 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.setWidth(VisConstants.WINDOW_WIDTH);
         primaryStage.setHeight(VisConstants.WINDOW_HEIGHT);
+        primaryStage.setResizable(true);
         primaryStage.show();
     }
 }

@@ -14,6 +14,7 @@ import javafx.scene.control.RadioMenuItem;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -72,13 +73,7 @@ public class VisController implements Initializable {
         //Init mapHolder
         this.graphHolder = new GraphHolder(baseCanvas, edgeLengthCanvas, edgeStepsActiveCanvas, edgeStepsAllCanvas, shortestDistanceCanvas, shortestPathCanvas);
 
-        //
-        Graph graph = new Graph();
-        graph.registerVertex(new Point(5, 5));
-        graph.registerVertex(new Point(9, 9));
-        graph.registerVertex(new Point(1, 4));
-        graph.registerEdge(graph.getVertices().get(1), graph.getVertices().get(2));
-        this.graphHolder.setGraph(graph);
+
 
 
         final EventHandler<KeyEvent> keyEventHandler = e -> {
@@ -102,6 +97,7 @@ public class VisController implements Initializable {
             if (newScene != null) newScene.addEventHandler(KeyEvent.KEY_PRESSED, keyEventHandler);
         });
 
+        initGraphButtons();
         initAddNodeButton();
         initRemoveNodeButton();
         initAddEdgeButton();
@@ -109,8 +105,42 @@ public class VisController implements Initializable {
         initViews();
 
 
+
+
+
         // TODO: remove this dirty hack
         edgeStepsAllCanvas.visibleProperty().bind(viewAllEdgeStepsMenuItem.selectedProperty());
+    }
+
+    private void initGraphButtons() {
+        emptyMapMenuItem.setOnAction(event -> {
+            this.graphHolder.setGraph(coreController.setEmptyGraph());
+        });
+
+        graph1MenuItem.setOnAction(event -> {
+            this.graphHolder.setGraph(coreController.setDefaultGraph1());
+        });
+
+        graph2MenuItem.setOnAction(event -> {
+            this.graphHolder.setGraph(coreController.setDefaultGraph2());
+        });
+
+        graph3MenuItem.setOnAction(event -> {
+            this.graphHolder.setGraph(coreController.setDefaultGraph3());
+        });
+
+        graph4MenuItem.setOnAction(event -> {
+            this.graphHolder.setGraph(coreController.setDefaultGraph4());
+        });
+
+        graph5MenuItem.setOnAction(event -> {
+            this.graphHolder.setGraph(coreController.setDefaultGraph5());
+        });
+
+        randomGraphMenuItem.setOnAction(event -> {
+            this.graphHolder.setGraph(coreController.setRandomGraph());
+        });
+
     }
 
     private void initAddNodeButton() {

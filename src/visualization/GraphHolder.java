@@ -212,18 +212,20 @@ public class GraphHolder {
     /* ------- Camera logic ------- */
 
     public void moveCamera(Point diff) {
-        int factor = 1; // TODO: implement logic for a nice multiplier
-        cameraPos = cameraPos.add(diff.mul(factor));
+        cameraPos = cameraPos.add(diff);
         adjustCamera();
         renderMap();
     }
 
     private void updateCamera() {
         StackPane pane = (StackPane) baseCanvas.getParent();
+        // System.out.println(pane.getWidth());
+
 
         cameraDim = new Point((int) Math.min(((pane.getWidth() - 1) / fieldSize), graph.getXRange()), (int) Math.min(((pane.getHeight() - 1) / fieldSize), graph.getYRange()));
+//        System.out.println(pane.getHeight());
         // System.out.println("pane: " + pane.getWidth());
-        cameraDim = new Point(10, 10);
+        // cameraDim = new Point(10, 10);
 
         this.baseCanvas.setWidth(this.fieldSize * cameraDim.getX() + 1);
         this.baseCanvas.setHeight(this.fieldSize * cameraDim.getY() + 1);
@@ -254,6 +256,7 @@ public class GraphHolder {
         cameraPos = new Point(
                 Math.min(Math.max(0, cameraPos.getX()), graph.getXRange() - cameraDim.getX()),
                 Math.min(Math.max(0, cameraPos.getY()), graph.getYRange() - cameraDim.getY()));
+        System.out.println(cameraDim);
     }
 
 

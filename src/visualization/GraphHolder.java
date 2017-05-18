@@ -142,7 +142,6 @@ public class GraphHolder {
 
         gc.setFill(Color.BLACK);
         gc.setLineWidth(this.padding + 1);
-        // gc.fillRect(coordinate.getX() * this.fieldSize + 1, coordinate.getY() * this.fieldSize + 1, this.fieldSize - padding, this.fieldSize - padding);
         gc.fillOval(coordinate.getX() * this.fieldSize, coordinate.getY() * this.fieldSize, this.fieldSize - padding, this.fieldSize - padding);
 
         // System.out.println("coord " + coordinate);
@@ -217,7 +216,7 @@ public class GraphHolder {
 
     public void moveCamera(Point diff) {
         int factor = 1; // TODO: implement logic for a nice multiplier
-        // cameraPos = cameraPos.add(diff.mult(factor));
+        cameraPos = cameraPos.add(diff.mul(factor));
         adjustCamera();
         renderMap();
     }

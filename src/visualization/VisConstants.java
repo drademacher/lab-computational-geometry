@@ -6,8 +6,8 @@ package visualization;
 public class VisConstants {
     //Zoom
     static final int ZOOM_FACTOR = 2;
-    static final int ZOOM_MAX = 40;
-    static final int ZOOM_MIN = 2;
+    static final int ZOOM_MAX = 60;
+    static final int ZOOM_MIN = 5;
 
     //Todo: Window dimension okay?
     static final int WINDOW_WIDTH = 1200;

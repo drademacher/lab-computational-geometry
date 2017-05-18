@@ -1,6 +1,7 @@
 package visualization;
 
 import core.CoreController;
+import core.graph.Graph;
 import core.util.Point;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -8,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.RadioMenuItem;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
@@ -25,13 +27,19 @@ public class VisController implements Initializable {
     private BorderPane mainPane;
 
     @FXML
-    private MenuItem emptyMapMenuItem,  graph1MenuItem,  graph2MenuItem,  graph3MenuItem,  graph4MenuItem,  graph5MenuItem,  randomGraphMenuItem,  openMapMenuItem,  saveMapMenuItem;
+    private MenuItem emptyMapMenuItem, graph1MenuItem, graph2MenuItem, graph3MenuItem, graph4MenuItem, graph5MenuItem, randomGraphMenuItem, openMapMenuItem, saveMapMenuItem;
 
     @FXML
-    private Canvas baseCanvas, edgeLengthCanvas, edgeStepsActiveCanvas, edgeStepsOtherCanvas, shortestDistanceCanvas, shortestPathCanvas;
+    private MenuItem addNodeButton, removeNodeButton, addEdgeButton, removeEdgeButton;
+
+    @FXML
+    private Canvas baseCanvas, edgeLengthCanvas, edgeStepsActiveCanvas, edgeStepsAllCanvas, shortestDistanceCanvas, shortestPathCanvas;
 
     @FXML
     private CheckMenuItem edgeLengthButton, shortestDistanceButton, shortestPathButton;
+
+    @FXML
+    private RadioMenuItem viewAllEdgeStepsMenuItem;
 
 
     // TODO: inject the coreController here
@@ -61,7 +69,8 @@ public class VisController implements Initializable {
         System.out.println(canvas.getHeight());*/
 
         //Init mapHolder
-        this.graphHolder = new GraphHolder(baseCanvas, edgeLengthCanvas, edgeStepsActiveCanvas, edgeStepsOtherCanvas, shortestDistanceCanvas, shortestPathCanvas);
+        this.graphHolder = new GraphHolder(baseCanvas, edgeLengthCanvas, edgeStepsActiveCanvas, edgeStepsAllCanvas, shortestDistanceCanvas, shortestPathCanvas);
+        this.graphHolder.setGraph(new Graph());
 
         final EventHandler<KeyEvent> keyEventHandler = e -> {
             if (e.getCode() == KeyCode.RIGHT) {
@@ -84,8 +93,32 @@ public class VisController implements Initializable {
             if (newScene != null) newScene.addEventHandler(KeyEvent.KEY_PRESSED, keyEventHandler);
         });
 
-
+        initAddNodeButton();
+        initAddEdgeButton();
         initViews();
+
+
+        // TODO: remove this dirty hack
+        edgeStepsAllCanvas.visibleProperty().bind(viewAllEdgeStepsMenuItem.selectedProperty());
+    }
+
+    private void initAddNodeButton() {
+
+        addNodeButton.setOnAction(event -> this.graphHolder.setOnMouseClickedCallback((coordinate -> {
+            this.graphHolder.setNode(coordinate);
+            this.graphHolder.setOnMouseClickedCallback(null);
+        })));
+    }
+
+    private void initAddEdgeButton() {
+        addEdgeButton.setOnAction(event -> {
+            this.graphHolder.setOnMouseClickedCallback((from -> {
+                this.graphHolder.setOnMouseClickedCallback(to -> {
+                    this.graphHolder.setEdge(from, to);
+                    this.graphHolder.setOnMouseClickedCallback(null);
+                });
+            }));
+        });
     }
 
     private void initViews() {
@@ -99,6 +132,6 @@ public class VisController implements Initializable {
         shortestPathCanvas.setMouseTransparent(true);
 
         edgeStepsActiveCanvas.setMouseTransparent(true);
-        edgeStepsOtherCanvas.setMouseTransparent(true);
+        edgeStepsAllCanvas.setMouseTransparent(true);
     }
 }

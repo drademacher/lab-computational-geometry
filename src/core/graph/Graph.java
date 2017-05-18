@@ -1,6 +1,6 @@
 package core.graph;
 
-import javafx.geometry.Point2D;
+import core.util.Point;
 
 import java.util.ArrayList;
 
@@ -12,9 +12,8 @@ public class Graph {
     private ArrayList<Edge> edges = new ArrayList<>();
     private ArrayList<Vertex> vertices = new ArrayList<>();
 
-
     public Graph(){
-        Vertex startVertex = new Vertex(new Point2D(2, 2));
+        Vertex startVertex = new Vertex(new Point(1, 5));
         this.vertices.add(startVertex);
     }
 
@@ -25,7 +24,7 @@ public class Graph {
      * because every new vertex needs a edge connection to a existing vertex (only one component!)
      *
      * */
-    public void registerVertex(Vertex baseVertex, Point2D newVertexCoord){
+    public void registerVertex(Vertex baseVertex, Point newVertexCoord){
 
         Vertex newVertex = new Vertex(newVertexCoord);
 

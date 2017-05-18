@@ -1,6 +1,7 @@
 package core.graph;
 
-import javafx.geometry.Point2D;
+
+import core.util.Point;
 
 import java.util.ArrayList;
 
@@ -10,9 +11,9 @@ import java.util.ArrayList;
 public class Vertex {
 
     private ArrayList<Edge> edges = new ArrayList<Edge>();
-    private Point2D coord;
+    private Point coord;
 
-    public Vertex(Point2D coord){
+    public Vertex(Point coord){
         this.coord = coord;
 
     }
@@ -30,7 +31,7 @@ public class Vertex {
         return edges;
     }
 
-    public Point2D getCoord() {
+    public Point getCoord() {
         return coord;
     }
 }

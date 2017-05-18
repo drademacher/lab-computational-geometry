@@ -1,5 +1,8 @@
 package core.graph;
 
+
+import core.util.Point;
+
 /**
  * Created by Danny on 13.05.2017.
  */
@@ -33,6 +36,13 @@ public class Edge {
         return vertices[0].unregisterEdge(this) && vertices[1].unregisterEdge(this);
     }
 
+    public Point getCoordStart(){
+        return vertices[0].getCoord();
+    }
+
+    public Point getCoordEnd(){
+        return vertices[1].getCoord();
+    }
 
     public Vertex[] getVertices(){
         return vertices;

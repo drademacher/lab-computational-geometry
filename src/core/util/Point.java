@@ -52,8 +52,13 @@ public class Point {
      * @param factor multiplication factor.
      * @return A new Vector instance representing the product of the input factor and this vector.
      */
-    public Point mul(int factor) {
-        return new Point(x * factor, y * factor);
+    public Point mul(double factor) {
+        return new Point( (int) (x * factor + 0.5), (int) (y * factor + 0.5) );
+    }
+
+
+    public double length() {
+        return Math.sqrt(x*x + y*y);
     }
 
 

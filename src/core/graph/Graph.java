@@ -30,6 +30,7 @@ public class Graph {
 
         this.vertices.add(newVertex);
 
+        //TODO check if valid
         return true;
     }
 
@@ -38,7 +39,13 @@ public class Graph {
      * delete a vertex and all incident edges
      *
      * */
+    public boolean deleteVertex(Point point){
+        return deleteVertex(getVertexByCoord(point));
+    }
     public boolean deleteVertex(Vertex vertex){
+        if(vertex == null){
+            return false;
+        }
 
         for(int i = vertex.getEdges().size() - 1; i >= 0; i--){
             Edge edge = vertex.getEdges().get(i);
@@ -53,12 +60,20 @@ public class Graph {
      * specify two vertices between the new edge should be created
      *
      * */
+    public boolean registerEdge(Point pointBaseVertex, Point pointTargetVertex){
+        return registerEdge(getVertexByCoord(pointBaseVertex), getVertexByCoord(pointTargetVertex));
+    }
     public boolean registerEdge(Vertex baseVertex, Vertex targetVertex){
+
+        if(baseVertex == null || targetVertex == null){
+            return false;
+        }
 
         Edge newEdge = Edge.createNewEdge(baseVertex, targetVertex);
 
         this.edges.add(newEdge);
 
+        //TODO check if valid
         return true;
     }
 
@@ -68,12 +83,45 @@ public class Graph {
      * unregister and delete edge
      *
      * */
+    public boolean deleteEdge(Point coordStart, Point coordEnd){
+        return deleteEdge(getEdgeByCoord(coordStart, coordEnd));
+    }
     public boolean deleteEdge(Edge edge){
 
         if(edge.deleteEdge()){
             return edges.remove(edge);
         }
         return false;
+    }
+
+    /**
+     * get Vertex by Coord
+     *
+     * */
+    public Vertex getVertexByCoord(Point coord){
+        for(Vertex vertex : vertices){
+            if (vertex.getCoord().equals(coord)) {
+                return vertex;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * get Edge by Coord
+     *
+     * */
+    public Edge getEdgeByCoord(Point coordStart, Point coordEnd){
+        for(Edge edge : edges){
+            //both possibilities
+            if(edge.getCoordStart().equals(coordStart) && edge.getCoordEnd().equals(coordEnd)){
+                return edge;
+            }
+            if(edge.getCoordStart().equals(coordEnd) && edge.getCoordEnd().equals(coordStart)){
+                return edge;
+            }
+        }
+        return null;
     }
 
 

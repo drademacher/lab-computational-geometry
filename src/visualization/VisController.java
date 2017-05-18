@@ -103,7 +103,9 @@ public class VisController implements Initializable {
         });
 
         initAddNodeButton();
+        initRemoveNodeButton();
         initAddEdgeButton();
+        initRemoveEdgeButton();
         initViews();
 
 
@@ -119,11 +121,29 @@ public class VisController implements Initializable {
         })));
     }
 
+    private void initRemoveNodeButton() {
+
+        removeNodeButton.setOnAction(event -> this.graphHolder.setOnMouseClickedCallback((coordinate -> {
+            this.graphHolder.removeNode(coordinate);
+            this.graphHolder.setOnMouseClickedCallback(null);
+        })));
+    }
+
     private void initAddEdgeButton() {
         addEdgeButton.setOnAction(event -> {
             this.graphHolder.setOnMouseClickedCallback((from -> {
                 this.graphHolder.setOnMouseClickedCallback(to -> {
                     this.graphHolder.setEdge(from, to);
+                    this.graphHolder.setOnMouseClickedCallback(null);
+                });
+            }));
+        });
+    }
+    private void initRemoveEdgeButton() {
+        removeEdgeButton.setOnAction(event -> {
+            this.graphHolder.setOnMouseClickedCallback((from -> {
+                this.graphHolder.setOnMouseClickedCallback(to -> {
+                    this.graphHolder.removeEdge(from, to);
                     this.graphHolder.setOnMouseClickedCallback(null);
                 });
             }));

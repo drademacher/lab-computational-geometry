@@ -69,7 +69,7 @@ public class GraphHolder {
 
     void removeNode(Point coordinate) {
         if (graph.deleteVertex(coordinate)) {
-            this.renderNode(baseCanvas, coordinate);
+            this.refreshMap();
         }
     }
 
@@ -81,7 +81,7 @@ public class GraphHolder {
 
     void removeEdge(Point from, Point to) {
         if (graph.deleteEdge(from, to)) {
-            this.renderEdge(baseCanvas, from, to);
+            this.refreshMap();
         }
     }
 

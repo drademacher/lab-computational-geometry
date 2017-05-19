@@ -4,6 +4,7 @@ import core.CoreController;
 import core.graph.Graph;
 import core.graph.Vertex;
 import core.util.Point;
+import javafx.beans.value.ChangeListener;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -15,7 +16,11 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -35,7 +40,8 @@ public class VisController implements Initializable {
     private MenuItem addNodeButton, removeNodeButton, addEdgeButton, removeEdgeButton;
 
     @FXML
-    private Canvas baseCanvas, edgeLengthCanvas, edgeStepsActiveCanvas, edgeStepsAllCanvas, shortestDistanceCanvas, shortestPathCanvas;
+    private StackPane canvasStacker;
+    // private Canvas baseCanvas, edgeLengthCanvas, edgeStepsActiveCanvas, edgeStepsAllCanvas, shortestDistanceCanvas, shortestPathCanvas;
 
     @FXML
     private CheckMenuItem edgeLengthButton, shortestDistanceButton, shortestPathButton;
@@ -49,9 +55,13 @@ public class VisController implements Initializable {
 
     private GraphHolder graphHolder;
 
+    private Stage stage;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        this.stage = (Stage) resources.getObject(null);
+
 /*        StackPane pane = (StackPane) baseCanvas.getParent();
 
         Point2D cameraDim = new Point2D.Double(pane.getWidth(), pane.getHeight());
@@ -71,7 +81,7 @@ public class VisController implements Initializable {
         System.out.println(canvas.getHeight());*/
 
         //Init mapHolder
-        this.graphHolder = new GraphHolder(baseCanvas, edgeLengthCanvas, edgeStepsActiveCanvas, edgeStepsAllCanvas, shortestDistanceCanvas, shortestPathCanvas);
+        this.graphHolder = new GraphHolder(canvasStacker); // baseCanvas, edgeLengthCanvas, edgeStepsActiveCanvas, edgeStepsAllCanvas, shortestDistanceCanvas, shortestPathCanvas
 
 
 
@@ -97,6 +107,15 @@ public class VisController implements Initializable {
             if (newScene != null) newScene.addEventHandler(KeyEvent.KEY_PRESSED, keyEventHandler);
         });
 
+        final ChangeListener listener = (observable, oldValue, newValue) -> {
+            if (graphHolder == null) return;
+            graphHolder.refreshMap();
+        };
+
+        mainPane.widthProperty().addListener(listener);
+        mainPane.heightProperty().addListener(listener);
+
+
         initGraphButtons();
         initAddNodeButton();
         initRemoveNodeButton();
@@ -109,7 +128,7 @@ public class VisController implements Initializable {
 
 
         // TODO: remove this dirty hack
-        edgeStepsAllCanvas.visibleProperty().bind(viewAllEdgeStepsMenuItem.selectedProperty());
+        // edgeStepsAllCanvas.visibleProperty().bind(viewAllEdgeStepsMenuItem.selectedProperty());
     }
 
     private void initGraphButtons() {
@@ -139,6 +158,37 @@ public class VisController implements Initializable {
 
         randomGraphMenuItem.setOnAction(event -> {
             this.graphHolder.setGraph(coreController.setRandomGraph());
+        });
+
+        openMapMenuItem.setOnAction(event -> {
+                FileChooser fileChooser = new FileChooser();
+                fileChooser.setTitle("Open Resource File");
+                fileChooser.getExtensionFilters().addAll(
+                        new FileChooser.ExtensionFilter("Map Files", "*.map"),
+                        new FileChooser.ExtensionFilter("All Files", "*.*"));
+                File selectedFile = fileChooser.showOpenDialog(this.stage);
+                if (selectedFile != null) {
+                    try {
+                        this.graphHolder.setGraph(coreController.setGraphFromFile(selectedFile));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        //Todo: openMapMenuItem.setOnAction - nice exception handling!!!
+                    }
+                }
+        });
+
+        saveMapMenuItem.setOnAction(event -> {
+
+                FileChooser fileChooser = new FileChooser();
+                fileChooser.setTitle("Save Current Map");
+                fileChooser.getExtensionFilters().addAll(
+                        new FileChooser.ExtensionFilter("Map Files", "*.map"),
+                        new FileChooser.ExtensionFilter("All Files", "*.*"));
+                File selectedFile = fileChooser.showSaveDialog(this.stage);
+                if (selectedFile != null) {
+                    this.coreController.saveGraphToFile(selectedFile);
+                }
+
         });
 
     }
@@ -181,16 +231,17 @@ public class VisController implements Initializable {
     }
 
     private void initViews() {
-        edgeLengthCanvas.visibleProperty().bind(edgeLengthButton.selectedProperty());
-        edgeLengthCanvas.setMouseTransparent(true);
-
-        shortestDistanceCanvas.visibleProperty().bind(shortestDistanceButton.selectedProperty());
-        shortestDistanceCanvas.setMouseTransparent(true);
-
-        shortestPathCanvas.visibleProperty().bind(shortestPathButton.selectedProperty());
-        shortestPathCanvas.setMouseTransparent(true);
-
-        edgeStepsActiveCanvas.setMouseTransparent(true);
-        edgeStepsAllCanvas.setMouseTransparent(true);
+        // TODO: visibiility properties set up is missing
+//        edgeLengthCanvas.visibleProperty().bind(edgeLengthButton.selectedProperty());
+//        edgeLengthCanvas.setMouseTransparent(true);
+//
+//        shortestDistanceCanvas.visibleProperty().bind(shortestDistanceButton.selectedProperty());
+//        shortestDistanceCanvas.setMouseTransparent(true);
+//
+//        shortestPathCanvas.visibleProperty().bind(shortestPathButton.selectedProperty());
+//        shortestPathCanvas.setMouseTransparent(true);
+//
+//        edgeStepsActiveCanvas.setMouseTransparent(true);
+//        edgeStepsAllCanvas.setMouseTransparent(true);
     }
 }

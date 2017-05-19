@@ -31,8 +31,8 @@ public class CoreController {
     public Graph setDefaultGraph1() {
         this.graph = new Graph();
         this.graph.registerVertex(new Point(5, 5));
-        this.graph.registerVertex(new Point(9, 9));
-        this.graph.registerVertex(new Point(1, 4));
+        this.graph.registerVertex(new Point(19, 9));
+        this.graph.registerVertex(new Point(9, 4));
         this.graph.registerEdge(this.graph.getVertices().get(1), this.graph.getVertices().get(2));
         return this.graph;
     }
@@ -41,8 +41,8 @@ public class CoreController {
     public Graph setDefaultGraph2() {
         this.graph = new Graph();
         this.graph.registerVertex(new Point(5, 5));
-        this.graph.registerVertex(new Point(9, 9));
-        this.graph.registerVertex(new Point(1, 4));
+        this.graph.registerVertex(new Point(19, 9));
+        this.graph.registerVertex(new Point(9, 4));
         this.graph.registerEdge(this.graph.getVertices().get(1), this.graph.getVertices().get(2));
         return this.graph;
     }
@@ -107,7 +107,7 @@ public class CoreController {
         }
     }
 
-    public void saveGraphFromFile(Graph graph) {
+    public void saveGraphToFile(File file) {
         this.graph = new Graph();
         // TODO: implement file saving
     }

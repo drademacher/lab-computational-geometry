@@ -152,12 +152,12 @@ public class Graph {
 
     public int getXRange() {
         // TODO: fix this
-        return 10;
+        return 20;
     }
 
     public int getYRange() {
         // TODO: fix this
-        return 10;
+        return 20;
     }
 
 }

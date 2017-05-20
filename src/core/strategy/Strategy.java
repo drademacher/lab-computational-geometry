@@ -1,6 +1,7 @@
 package core.strategy;
 
 import core.entities.Entity;
+import core.graph.Position;
 import core.graph.Vertex;
 
 /**
@@ -9,6 +10,6 @@ import core.graph.Vertex;
 public interface Strategy {
     // TODO: think about interface for strategy pattern
 
-    Vertex getSuccessor(Entity e);
+    public Position getNextPosition(Entity e);
 
 }

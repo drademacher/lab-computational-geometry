@@ -3,20 +3,24 @@ package core.graph;
 
 import core.util.Point;
 
+import java.util.ArrayList;
+
 /**
  * Created by Danny on 13.05.2017.
  */
-public class Edge {
+public class Edge implements GraphEntity{
 
     private Vertex[] vertices = new Vertex[2];
     private int vertexWeight;
+    private ArrayList<Position> edgePositions = new ArrayList<>();
 
-    public static Edge createNewEdge(Vertex vertexStart, Vertex vertexEnd){
+    public static Edge createNewEdge(Vertex vertex1, Vertex vertex2){
         //TODO specify default vertexWeight
-        return Edge.createNewEdge(vertexStart, vertexEnd, 4);
+        return Edge.createNewEdge(vertex1, vertex2, 4);
     }
-    public static Edge createNewEdge(Vertex vertexStart, Vertex vertexEnd, int vertexWeight){
-        Edge edge = new Edge(vertexStart, vertexEnd, vertexWeight);
+    public static Edge createNewEdge(Vertex vertex1, Vertex vertex2, int vertexWeight){
+        Edge edge = new Edge(vertex1, vertex2, vertexWeight);
+        edge.createPositions();
         edge.registerEdge();
         return edge;
     }
@@ -28,8 +32,28 @@ public class Edge {
 
     }
 
+    private void createPositions(){
+        //create Positions
+        for(int i = 0; i < vertexWeight - 1; i++){
+            edgePositions.add(new Position(this));
+        }
+        //link the inner positions
+        for(int i = 0; i < edgePositions.size(); i++){
+            if(i - 1 >= 0){
+                edgePositions.get(i).regiterNeighborPosition(edgePositions.get(i-1));
+            }
+            if(i + 1 < edgePositions.size()){
+                edgePositions.get(i).regiterNeighborPosition(edgePositions.get(i+1));
+            }
+        }
+
+        //link first and last position to the vertex
+        edgePositions.get(0).regiterNeighborPosition(vertices[0].getPosition());
+        edgePositions.get(edgePositions.size() - 1).regiterNeighborPosition(vertices[1].getPosition());
+    }
+
     private boolean registerEdge(){
-        return vertices[0].registerEdge(this) && vertices[1].registerEdge(this);
+        return vertices[0].registerEdge(this, edgePositions.get(0)) && vertices[1].registerEdge(this, edgePositions.get(edgePositions.size() - 1));
     }
 
     public boolean deleteEdge(){
@@ -50,5 +74,19 @@ public class Edge {
 
     public int getVertexWeight() {
         return vertexWeight;
+    }
+
+    public ArrayList<Position> getPositions() {
+        return edgePositions;
+    }
+
+    @Override
+    public String getEntityInfo() {
+        return "Edge_"+vertices[0].getId() + " - " + vertices[1].getId();
+    }
+
+    @Override
+    public String toString() {
+        return getEntityInfo();
     }
 }

@@ -8,18 +8,22 @@ import java.util.ArrayList;
 /**
  * Created by Danny on 13.05.2017.
  */
-public class Vertex {
+public class Vertex implements GraphEntity {
 
+    private int id;
     private ArrayList<Edge> edges = new ArrayList<Edge>();
     private Point coord;
+    private Position vertexPosition;
 
-    public Vertex(Point coord){
+    public Vertex(int id, Point coord){
         this.coord = coord;
-
+        this.vertexPosition = new Position(this);
+        this.id = id;
     }
 
 
-    public boolean registerEdge(Edge edge){
+    public boolean registerEdge(Edge edge, Position edgeFacingPosition){
+        vertexPosition.regiterNeighborPosition(edgeFacingPosition);
         return this.edges.add(edge);
     }
 
@@ -33,5 +37,27 @@ public class Vertex {
 
     public Point getCoord() {
         return coord;
+    }
+
+    public Position getPosition() {
+        return vertexPosition;
+    }
+
+    public int getId(){
+        return id;
+    }
+
+    @Override
+    public String getEntityInfo() {
+        return "Vertex_"+id;
+    }
+
+    @Override
+    public String toString() {
+        String edgeString = "";
+        for(Edge edge : edges){
+            edgeString += edge.getEntityInfo() + "  ";
+        }
+        return getEntityInfo() + ": " + edgeString;
     }
 }

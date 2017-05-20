@@ -40,16 +40,16 @@ public class Edge implements GraphEntity{
         //link the inner positions
         for(int i = 0; i < edgePositions.size(); i++){
             if(i - 1 >= 0){
-                edgePositions.get(i).regiterNeighborPosition(edgePositions.get(i-1));
+                edgePositions.get(i).registerNeighborPosition(edgePositions.get(i-1));
             }
             if(i + 1 < edgePositions.size()){
-                edgePositions.get(i).regiterNeighborPosition(edgePositions.get(i+1));
+                edgePositions.get(i).registerNeighborPosition(edgePositions.get(i+1));
             }
         }
 
         //link first and last position to the vertex
-        edgePositions.get(0).regiterNeighborPosition(vertices[0].getPosition());
-        edgePositions.get(edgePositions.size() - 1).regiterNeighborPosition(vertices[1].getPosition());
+        edgePositions.get(0).registerNeighborPosition(vertices[0].getPosition());
+        edgePositions.get(edgePositions.size() - 1).registerNeighborPosition(vertices[1].getPosition());
     }
 
     private boolean registerEdge(){
@@ -57,7 +57,7 @@ public class Edge implements GraphEntity{
     }
 
     public boolean deleteEdge(){
-        return vertices[0].unregisterEdge(this) && vertices[1].unregisterEdge(this);
+        return vertices[0].unregisterEdge(this, edgePositions.get(0)) && vertices[1].unregisterEdge(this, edgePositions.get(edgePositions.size() - 1));
     }
 
     public Point getCoordStart(){
@@ -81,12 +81,12 @@ public class Edge implements GraphEntity{
     }
 
     @Override
-    public String getEntityInfo() {
+    public String getGraphEntityInfo() {
         return "Edge_"+vertices[0].getId() + " - " + vertices[1].getId();
     }
 
     @Override
     public String toString() {
-        return getEntityInfo();
+        return getGraphEntityInfo();
     }
 }

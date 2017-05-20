@@ -23,12 +23,12 @@ public class Vertex implements GraphEntity {
 
 
     public boolean registerEdge(Edge edge, Position edgeFacingPosition){
-        vertexPosition.regiterNeighborPosition(edgeFacingPosition);
-        return this.edges.add(edge);
+
+        return vertexPosition.registerNeighborPosition(edgeFacingPosition) && edges.add(edge);
     }
 
-    public boolean unregisterEdge(Edge edge){
-        return this.edges.remove(edge);
+    public boolean unregisterEdge(Edge edge, Position edgeFacingPosition){
+        return vertexPosition.unregisterNeighborPosition(edgeFacingPosition) && edges.remove(edge);
     }
 
     public ArrayList<Edge> getEdges(){
@@ -48,7 +48,7 @@ public class Vertex implements GraphEntity {
     }
 
     @Override
-    public String getEntityInfo() {
+    public String getGraphEntityInfo() {
         return "Vertex_"+id;
     }
 
@@ -56,8 +56,8 @@ public class Vertex implements GraphEntity {
     public String toString() {
         String edgeString = "";
         for(Edge edge : edges){
-            edgeString += edge.getEntityInfo() + "  ";
+            edgeString += edge.getGraphEntityInfo() + "  ";
         }
-        return getEntityInfo() + ": " + edgeString;
+        return getGraphEntityInfo() + ": " + edgeString;
     }
 }

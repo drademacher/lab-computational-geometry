@@ -5,5 +5,5 @@ package core.graph;
  */
 public interface GraphEntity {
 
-    public String getEntityInfo();
+    public String getGraphEntityInfo();
 }

@@ -46,6 +46,14 @@ public class Point {
         return new Point(x - other.getX(), y - other.getY());
     }
 
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
     /**
      * Provides vector multiplication with a single integer value.
      *

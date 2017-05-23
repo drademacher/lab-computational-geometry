@@ -9,8 +9,10 @@ import java.util.ArrayList;
  */
 public class Graph {
 
+    private static int idCounter = 0;
     private ArrayList<Edge> edges = new ArrayList<>();
     private ArrayList<Vertex> vertices = new ArrayList<>();
+    private ArrayList<Position> positions = new ArrayList<>();
 
     public Graph(){
 
@@ -25,7 +27,7 @@ public class Graph {
      * */
     public boolean registerVertex(Point newVertexCoord){
 
-        Vertex newVertex = new Vertex(newVertexCoord);
+        Vertex newVertex = new Vertex(getIdCounter(), newVertexCoord);
 
         if(getVertexByCoord(newVertexCoord) != null){
             return false;
@@ -152,12 +154,37 @@ public class Graph {
 
     public int getXRange() {
         // TODO: fix this
-        return 10;
+        return 20;
     }
 
     public int getYRange() {
         // TODO: fix this
-        return 10;
+        return 20;
+    }
+
+    public void outputGraph(){
+        positions.clear();
+        System.out.println("##### all vertices");
+        for(Vertex vertex : vertices){
+            System.out.println(vertex);
+            positions.add(vertex.getPosition());
+        }
+        System.out.println("##### all edges");
+        for(Edge edge : edges){
+            System.out.println(edge);
+            for(Position position : edge.getPositions()){
+                positions.add(position);
+            }
+        }
+        System.out.println("##### all positions");
+        for(Position position : positions){
+            System.out.println(position);
+        }
+    }
+
+    private static int getIdCounter(){
+        idCounter++;
+        return  idCounter;
     }
 
 }

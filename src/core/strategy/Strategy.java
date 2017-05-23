@@ -1,7 +1,13 @@
 package core.strategy;
 
 import core.entities.Entity;
+import core.entities.Lion;
+import core.entities.Man;
+import core.graph.Position;
 import core.graph.Vertex;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 /**
  * Created by Danny on 13.05.2017.
@@ -9,6 +15,6 @@ import core.graph.Vertex;
 public interface Strategy {
     // TODO: think about interface for strategy pattern
 
-    Vertex getSuccessor(Entity e);
+    public Position getNextPosition(Entity e, ArrayList<Man> men, ArrayList<Lion> lions);
 
 }

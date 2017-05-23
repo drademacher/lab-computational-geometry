@@ -1,6 +1,8 @@
 package core.strategy;
 
 import core.entities.Entity;
+import core.entities.Lion;
+import core.entities.Man;
 import core.graph.Position;
 import core.util.Random;
 
@@ -11,7 +13,7 @@ import java.util.ArrayList;
  */
 public class StrategyRandom implements Strategy {
     @Override
-    public Position getNextPosition(Entity e) {
+    public Position getNextPosition(Entity e, ArrayList<Man> men, ArrayList<Lion> lions) {
         ArrayList<Position> neighborPositions = e.getCurrentPosition().getAllNeighborPositions();
         int rndInt = Random.getRandomInteger(neighborPositions.size());
         return neighborPositions.get(rndInt);

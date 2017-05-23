@@ -3,13 +3,20 @@ package core.entities;
 import core.graph.Position;
 import core.strategy.Strategy;
 
+import java.util.ArrayList;
+
 /**
  * Created by Danny on 13.05.2017.
  */
 public abstract class Entity {
 
     protected Position position;
+    protected Position newposition;
     protected Strategy strategy;
+
+    //TODO save men and lions in a better way / better place
+    protected static ArrayList<Man> men = new ArrayList<>();
+    protected static ArrayList<Lion> lions = new ArrayList<>();
 
     public Entity(Position startPosition, Strategy strategy){
         this.position = startPosition;
@@ -18,12 +25,13 @@ public abstract class Entity {
     }
 
     public Position getNextPosition() {
-        return strategy.getNextPosition(this);
+        return strategy.getNextPosition(this, men, lions);
     }
 
     public Position goToNextPosition(){
+        newposition = getNextPosition();
         position.unregisterEntity(this);
-        position = getNextPosition();
+        position = newposition;
         position.registerEntity(this);
         return position;
     }

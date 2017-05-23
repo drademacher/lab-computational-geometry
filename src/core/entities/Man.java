@@ -11,6 +11,7 @@ public class Man extends Entity {
 
     public Man(Position startPosition, Strategy strategy){
         super(startPosition,strategy);
+        men.add(this);
     }
 
     Lion getNearestLion() {

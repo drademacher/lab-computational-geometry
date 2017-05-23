@@ -12,6 +12,6 @@ public class Lion extends Entity {
 
     public Lion(Position startPosition, Strategy strategy){
         super(startPosition,strategy);
-
+        lions.add(this);
     }
 }

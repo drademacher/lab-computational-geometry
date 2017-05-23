@@ -14,6 +14,9 @@ public class Position {
     private ArrayList<Entity> entities = new ArrayList<>();
     private boolean visited = false;
 
+    //TODO BFS
+    public int counter = 0;
+
     public Position(GraphEntity graphEntity){
         this.graphEntity = graphEntity;
     }
@@ -34,10 +37,18 @@ public class Position {
         return entities.remove(entity);
     }
 
+    public ArrayList<Position> getAllNeighborPositions(){
+        return neighborPositions;
+    }
+
+    public ArrayList<Entity> getAllEntities(){
+        return entities;
+    }
+
 
     /*
      *
-     * DEBUG 
+     * DEBUG
      *
      *
      */
@@ -46,10 +57,6 @@ public class Position {
 
     public GraphEntity getGraphEntity() {
         return graphEntity;
-    }
-
-    public ArrayList<Position> getAllNeighborPositions(){
-        return neighborPositions;
     }
 
     public ArrayList<Position> startAllPositionsRecursiv(){

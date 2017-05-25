@@ -26,6 +26,9 @@ public class GraphHelper {
 
 
     public int BFS(Position startPosition){
+        return BFS(startPosition, false);
+    }
+    public int BFS(Position startPosition, boolean reversed){
         ArrayList<Integer> best = new ArrayList<>();
         for(Position position : startPosition.getAllNeighborPositions()){
             best.add(BFS(startPosition, position));
@@ -36,7 +39,11 @@ public class GraphHelper {
 //                return o1 - o2;
 //            }
 //        });
-        best.sort(Comparator.comparingInt(Integer::intValue));
+        if(reversed){
+            best.sort(Comparator.comparingInt(Integer::intValue).reversed());
+        }else {
+            best.sort(Comparator.comparingInt(Integer::intValue));
+        }
 
         for(int i = 0; i < best.size(); i++){
             if(best.get(i) > 0){
@@ -55,13 +62,13 @@ public class GraphHelper {
         Position current = null;
 
         //TODO goal
-//        boolean lookForMan = false;
-//        if(startPosition.getAllEntities().get(0) instanceof Man){
-//            lookForMan=false;
-//        }
-//        if(startPosition.getAllEntities().get(0) instanceof Lion){
-//            lookForMan=true;
-//        }
+        boolean lookForMan = false;
+        if(startPosition.getAllEntities().get(0) instanceof Man){
+            lookForMan=false;
+        }
+        if(startPosition.getAllEntities().get(0) instanceof Lion){
+            lookForMan=true;
+        }
 
         directionPosition.counter = 1;
 
@@ -72,20 +79,20 @@ public class GraphHelper {
         while (!queue.isEmpty()){
             current = queue.poll();
             //TODO goal
-//            for(Entity entity : current.getAllEntities()){
-////                if(lookForMan){
-////                    if(entity instanceof Man){
-////                        return current.counter;
-////                    }
-////                }else {
-////                    if(entity instanceof Lion){
-////                        return current.counter;
-////                    }
-////                }
-//            }
-            if(current.getAllEntities().size() > 0){
-                return current.counter;
+            for(Entity entity : current.getAllEntities()){
+                if(lookForMan){
+                    if(entity instanceof Man){
+                        return current.counter;
+                    }
+                }else {
+                    if(entity instanceof Lion){
+                        return current.counter;
+                    }
+                }
             }
+//            if(current.getAllEntities().size() > 0){
+//                return current.counter;
+//            }
 
             for(Position position : current.getAllNeighborPositions()){
                 if(!set.contains(position)){

@@ -74,24 +74,28 @@ public class GraphHolder {
 
     void setNode(Point coordinate) {
         if (graph.registerVertex(coordinate)) {
+            this.adjustCamera();
             this.renderNode(canvas, coordinate);
         }
     }
 
     void removeNode(Point coordinate) {
         if (graph.deleteVertex(coordinate)) {
+            this.adjustCamera();
             this.refreshMap();
         }
     }
 
     void setEdge(Point from, Point to) {
         if (graph.registerEdge(from, to)) {
+            this.adjustCamera();
             this.renderEdge(canvas, from, to);
         }
     }
 
     void removeEdge(Point from, Point to) {
         if (graph.deleteEdge(from, to)) {
+            this.adjustCamera();
             this.refreshMap();
         }
     }

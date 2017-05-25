@@ -49,7 +49,11 @@ public abstract class Entity {
         this.position = currentPosition;
     }
 
-    public GraphPosition getCurrentPosition(){
+    public Position getCurrentPosition(){
+        return position;
+    }
+
+    public GraphPosition getCurrentGraphPosition(){
         return position.getGraphPosition();
     }
 

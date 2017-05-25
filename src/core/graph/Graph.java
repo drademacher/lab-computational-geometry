@@ -16,6 +16,7 @@ public class Graph {
 
     private int xRange = 0;
     private int yRange = 0;
+    private int defaultEdgeWeight = 4;
 
     public Graph(){
 
@@ -70,6 +71,12 @@ public class Graph {
      * specify two vertices between the new edge should be created
      *
      * */
+    public boolean registerEdge(Point pointBaseVertex, Point pointTargetVertex){
+        return registerEdge(getVertexByCoord(pointBaseVertex), getVertexByCoord(pointTargetVertex));
+    }
+    public boolean registerEdge(Vertex baseVertex, Vertex targetVertex){
+        return registerEdge(baseVertex, targetVertex,defaultEdgeWeight);
+    }
     public boolean registerEdge(Point pointBaseVertex, Point pointTargetVertex, int edgeWeight){
         return registerEdge(getVertexByCoord(pointBaseVertex), getVertexByCoord(pointTargetVertex), edgeWeight);
     }

@@ -14,6 +14,9 @@ public class Graph {
     private ArrayList<Vertex> vertices = new ArrayList<>();
     private ArrayList<Position> positions = new ArrayList<>();
 
+    private int xRange = 0;
+    private int yRange = 0;
+
     public Graph(){
 
     }
@@ -33,6 +36,9 @@ public class Graph {
             return false;
         }
 
+        xRange = Math.max(xRange, newVertexCoord.getX());
+        yRange = Math.max(yRange, newVertexCoord.getY());
+
         return this.vertices.add(newVertex);
     }
 
@@ -49,6 +55,8 @@ public class Graph {
             return false;
         }
 
+        //TODO adjust xRange and yRange
+
         for(int i = vertex.getEdges().size() - 1; i >= 0; i--){
             Edge edge = vertex.getEdges().get(i);
             deleteEdge(edge);
@@ -62,10 +70,10 @@ public class Graph {
      * specify two vertices between the new edge should be created
      *
      * */
-    public boolean registerEdge(Point pointBaseVertex, Point pointTargetVertex){
-        return registerEdge(getVertexByCoord(pointBaseVertex), getVertexByCoord(pointTargetVertex));
+    public boolean registerEdge(Point pointBaseVertex, Point pointTargetVertex, int edgeWeight){
+        return registerEdge(getVertexByCoord(pointBaseVertex), getVertexByCoord(pointTargetVertex), edgeWeight);
     }
-    public boolean registerEdge(Vertex baseVertex, Vertex targetVertex){
+    public boolean registerEdge(Vertex baseVertex, Vertex targetVertex, int edgeWeight){
 
         if(baseVertex == null || targetVertex == null){
             return false;
@@ -74,7 +82,7 @@ public class Graph {
             return false;
         }
 
-        Edge newEdge = Edge.createNewEdge(baseVertex, targetVertex);
+        Edge newEdge = Edge.createNewEdge(baseVertex, targetVertex, edgeWeight);
 
         return this.edges.add(newEdge);
     }
@@ -153,13 +161,11 @@ public class Graph {
 
 
     public int getXRange() {
-        // TODO: fix this
-        return 20;
+        return xRange;
     }
 
     public int getYRange() {
-        // TODO: fix this
-        return 20;
+        return yRange;
     }
 
     public void outputGraph(){

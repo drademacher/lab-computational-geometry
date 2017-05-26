@@ -1,5 +1,6 @@
 package core.entities;
 
+import core.graph.GraphPosition;
 import core.graph.Position;
 import core.strategy.Strategy;
 
@@ -50,6 +51,10 @@ public abstract class Entity {
 
     public Position getCurrentPosition(){
         return position;
+    }
+
+    public GraphPosition getCurrentGraphPosition(){
+        return position.getGraphPosition();
     }
 
     @Override

@@ -11,14 +11,20 @@ public class Position {
 
     private ArrayList<Position> neighborPositions = new ArrayList<>();
     private GraphEntity graphEntity;
+    private GraphPosition graphPosition;
     private ArrayList<Entity> entities = new ArrayList<>();
     private boolean visited = false;
 
     //TODO BFS
     public int counter = 0;
 
-    public Position(GraphEntity graphEntity){
-        this.graphEntity = graphEntity;
+    public Position(Edge edge, int steps){
+        this.graphEntity = edge;
+        this.graphPosition = new GraphPosition(edge.getVertices()[0], edge.getVertices()[0], steps);
+    }
+    public Position(Vertex vertex){
+        this.graphEntity = vertex;
+        this.graphPosition = new GraphPosition(vertex, vertex, 0);
     }
 
     public boolean registerNeighborPosition(Position position){
@@ -43,6 +49,10 @@ public class Position {
 
     public ArrayList<Entity> getAllEntities(){
         return entities;
+    }
+
+    public GraphPosition getGraphPosition(){
+        return graphPosition;
     }
 
 

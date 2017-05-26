@@ -35,7 +35,7 @@ public class Edge implements GraphEntity{
     private void createPositions(){
         //create Positions
         for(int i = 0; i < vertexWeight - 1; i++){
-            edgePositions.add(new Position(this));
+            edgePositions.add(new Position(this, i+1));
         }
         //link the inner positions
         for(int i = 0; i < edgePositions.size(); i++){

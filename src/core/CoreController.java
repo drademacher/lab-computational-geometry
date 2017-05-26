@@ -18,8 +18,6 @@ public class CoreController {
     private Graph graph;
     private ArrayList<Man> men;
     private ArrayList<Lion> lions;
-    private Strategy manStrategy;
-    private Strategy lionStrategy;
 
     public Graph setEmptyGraph() {
         this.graph = new Graph();
@@ -40,10 +38,63 @@ public class CoreController {
 
     public Graph setDefaultGraph2() {
         this.graph = new Graph();
-        this.graph.registerVertex(new Point(5, 5));
-        this.graph.registerVertex(new Point(19, 9));
-        this.graph.registerVertex(new Point(9, 4));
+        this.graph.registerVertex(new Point(5, 2));
+        this.graph.registerVertex(new Point(19, 2));
+        this.graph.registerVertex(new Point(22, 15));
+        this.graph.registerVertex(new Point(12, 22));
+        this.graph.registerVertex(new Point(2, 15));
+
+        this.graph.registerVertex(new Point(12, 4));
+        this.graph.registerVertex(new Point(16, 6));
+        this.graph.registerVertex(new Point(19, 10));
+        this.graph.registerVertex(new Point(19, 14));
+        this.graph.registerVertex(new Point(16, 18));
+        this.graph.registerVertex(new Point(12, 19));
+        this.graph.registerVertex(new Point(8, 18));
+        this.graph.registerVertex(new Point(5, 14));
+        this.graph.registerVertex(new Point(5, 10));
+        this.graph.registerVertex(new Point(8, 6));
+
+        this.graph.registerVertex(new Point(12, 8));
+        this.graph.registerVertex(new Point(15, 11));
+        this.graph.registerVertex(new Point(14, 15));
+        this.graph.registerVertex(new Point(10, 15));
+        this.graph.registerVertex(new Point(9, 11));
+
+        this.graph.registerEdge(this.graph.getVertices().get(0), this.graph.getVertices().get(1));
         this.graph.registerEdge(this.graph.getVertices().get(1), this.graph.getVertices().get(2));
+        this.graph.registerEdge(this.graph.getVertices().get(2), this.graph.getVertices().get(3));
+        this.graph.registerEdge(this.graph.getVertices().get(3), this.graph.getVertices().get(4));
+        this.graph.registerEdge(this.graph.getVertices().get(4), this.graph.getVertices().get(0));
+
+        this.graph.registerEdge(this.graph.getVertices().get(0), this.graph.getVertices().get(14));
+        this.graph.registerEdge(this.graph.getVertices().get(1), this.graph.getVertices().get(6));
+        this.graph.registerEdge(this.graph.getVertices().get(2), this.graph.getVertices().get(8));
+        this.graph.registerEdge(this.graph.getVertices().get(3), this.graph.getVertices().get(10));
+        this.graph.registerEdge(this.graph.getVertices().get(4), this.graph.getVertices().get(12));
+
+        this.graph.registerEdge(this.graph.getVertices().get(5), this.graph.getVertices().get(6));
+        this.graph.registerEdge(this.graph.getVertices().get(6), this.graph.getVertices().get(7));
+        this.graph.registerEdge(this.graph.getVertices().get(7), this.graph.getVertices().get(8));
+        this.graph.registerEdge(this.graph.getVertices().get(8), this.graph.getVertices().get(9));
+        this.graph.registerEdge(this.graph.getVertices().get(9), this.graph.getVertices().get(10));
+        this.graph.registerEdge(this.graph.getVertices().get(10), this.graph.getVertices().get(11));
+        this.graph.registerEdge(this.graph.getVertices().get(11), this.graph.getVertices().get(12));
+        this.graph.registerEdge(this.graph.getVertices().get(12), this.graph.getVertices().get(13));
+        this.graph.registerEdge(this.graph.getVertices().get(13), this.graph.getVertices().get(14));
+        this.graph.registerEdge(this.graph.getVertices().get(14), this.graph.getVertices().get(5));
+
+        this.graph.registerEdge(this.graph.getVertices().get(5), this.graph.getVertices().get(15));
+        this.graph.registerEdge(this.graph.getVertices().get(7), this.graph.getVertices().get(16));
+        this.graph.registerEdge(this.graph.getVertices().get(9), this.graph.getVertices().get(17));
+        this.graph.registerEdge(this.graph.getVertices().get(11), this.graph.getVertices().get(18));
+        this.graph.registerEdge(this.graph.getVertices().get(13), this.graph.getVertices().get(19));
+
+        this.graph.registerEdge(this.graph.getVertices().get(15), this.graph.getVertices().get(16));
+        this.graph.registerEdge(this.graph.getVertices().get(16), this.graph.getVertices().get(17));
+        this.graph.registerEdge(this.graph.getVertices().get(17), this.graph.getVertices().get(18));
+        this.graph.registerEdge(this.graph.getVertices().get(18), this.graph.getVertices().get(19));
+        this.graph.registerEdge(this.graph.getVertices().get(19), this.graph.getVertices().get(15));
         return this.graph;
     }
 

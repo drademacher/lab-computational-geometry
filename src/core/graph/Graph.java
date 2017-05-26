@@ -9,7 +9,7 @@ import java.util.ArrayList;
  */
 public class Graph {
 
-    private static int idCounter = 0;
+    private static int idCounter = -1;
     private ArrayList<Edge> edges = new ArrayList<>();
     private ArrayList<Vertex> vertices = new ArrayList<>();
     private ArrayList<Position> positions = new ArrayList<>();

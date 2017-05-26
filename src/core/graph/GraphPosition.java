@@ -27,4 +27,8 @@ public class GraphPosition {
         return stepsOnEdge;
     }
 
+    @Override
+    public String toString() {
+        return vertexStart.getGraphEntityInfo() + " - " + vertexEnd.getGraphEntityInfo() + " | " +stepsOnEdge;
+    }
 }

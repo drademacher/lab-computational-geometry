@@ -3,7 +3,9 @@ package core;
 import core.entities.Lion;
 import core.entities.Man;
 import core.graph.Graph;
+import core.strategy.StrategyAggroGreedy;
 import core.strategy.StrategyRandom;
+import core.strategy.StrategyRunAwayGreedy;
 import core.util.Point;
 
 import java.io.BufferedReader;
@@ -17,6 +19,8 @@ import java.util.ArrayList;
 public class CoreController {
     private Graph graph;
     private State state;
+    ArrayList<Lion> lions = new ArrayList<>();
+    ArrayList<Man> men = new ArrayList<>();
 
     public Graph setEmptyGraph() {
         this.graph = new Graph();
@@ -32,10 +36,9 @@ public class CoreController {
         this.graph.registerVertex(new Point(9, 4));
         this.graph.registerEdge(this.graph.getVertices().get(0), this.graph.getVertices().get(1));
 
-
-        ArrayList<Man> men = new ArrayList<>();
+        men = new ArrayList<>();
+        lions = new ArrayList<>();
         men.add(new Man(this.graph.getVertices().get(0).getPosition(), new StrategyRandom()));
-        ArrayList<Lion> lions = new ArrayList<>();
         lions.add(new Lion(this.graph.getVertices().get(1).getPosition(), new StrategyRandom()));
 
         this.state = new State(men, lions);
@@ -46,7 +49,7 @@ public class CoreController {
 
     public Graph setDefaultGraph2() {
         this.graph = new Graph();
-        this.state = new State();
+
         this.graph.registerVertex(new Point(5, 2));
         this.graph.registerVertex(new Point(19, 2));
         this.graph.registerVertex(new Point(22, 15));
@@ -104,6 +107,16 @@ public class CoreController {
         this.graph.registerEdge(this.graph.getVertices().get(17), this.graph.getVertices().get(18));
         this.graph.registerEdge(this.graph.getVertices().get(18), this.graph.getVertices().get(19));
         this.graph.registerEdge(this.graph.getVertices().get(19), this.graph.getVertices().get(15));
+
+        men = new ArrayList<>();
+        lions = new ArrayList<>();
+        men.add(new Man(this.graph.getVertices().get(0).getPosition(), new StrategyRunAwayGreedy()));
+        lions.add(new Lion(this.graph.getVertices().get(1).getPosition(), new StrategyAggroGreedy()));
+        lions.add(new Lion(this.graph.getVertices().get(12).getPosition(), new StrategyAggroGreedy()));
+
+        this.state = new State(men, lions);
+
+
         return this.graph;
     }
 
@@ -156,6 +169,14 @@ public class CoreController {
     }
 
     public State simulateStep() {
+        System.out.println("simulate steps...");
+        for(Man man : men){
+            man.goToNextPosition();
+        }
+        for(Lion lion : lions){
+            lion.goToNextPosition();
+        }
+        this.state = new State(men, lions);
         return this.state;
     }
 

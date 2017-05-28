@@ -100,7 +100,7 @@ public class VisController implements Initializable {
                 this.graphHolder.moveCamera(new Point(0, 1));
             }
             if (e.getCode() == KeyCode.SPACE) {
-                this.coreController.simulateStep();
+                graphHolder.setState(this.coreController.simulateStep());
             }
             e.consume();
         };
@@ -146,22 +146,27 @@ public class VisController implements Initializable {
 
         graph2MenuItem.setOnAction(event -> {
             this.graphHolder.setGraph(coreController.setDefaultGraph2());
+            this.graphHolder.setState(coreController.getState());
         });
 
         graph3MenuItem.setOnAction(event -> {
             this.graphHolder.setGraph(coreController.setDefaultGraph3());
+            this.graphHolder.setState(coreController.getState());
         });
 
         graph4MenuItem.setOnAction(event -> {
             this.graphHolder.setGraph(coreController.setDefaultGraph4());
+            this.graphHolder.setState(coreController.getState());
         });
 
         graph5MenuItem.setOnAction(event -> {
             this.graphHolder.setGraph(coreController.setDefaultGraph5());
+            this.graphHolder.setState(coreController.getState());
         });
 
         randomGraphMenuItem.setOnAction(event -> {
             this.graphHolder.setGraph(coreController.setRandomGraph());
+            this.graphHolder.setState(coreController.getState());
         });
 
         openMapMenuItem.setOnAction(event -> {

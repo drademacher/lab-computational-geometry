@@ -173,7 +173,6 @@ public class CoreController {
     }
 
     public State simulateStep() {
-        System.out.println("simulate steps...");
         for(Man man : men){
             man.goToNextPosition();
         }

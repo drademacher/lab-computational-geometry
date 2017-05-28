@@ -91,6 +91,15 @@ public class GraphHolder {
         }
     }
 
+    void relocateNode(Point coordinateFrom, Point coordinateTo){
+        System.out.println("#1");
+        if (graph.relocateVertex(graph.getVertexByCoord(coordinateFrom), coordinateTo)) {
+            System.out.println("#2");
+            this.adjustCamera();
+            this.refreshMap();
+        }
+    }
+
     void setEdge(Point from, Point to) {
         if (graph.registerEdge(from, to)) {
             this.adjustCamera();

@@ -37,7 +37,7 @@ public class VisController implements Initializable {
     private MenuItem emptyMapMenuItem, graph1MenuItem, graph2MenuItem, graph3MenuItem, graph4MenuItem, graph5MenuItem, randomGraphMenuItem, openMapMenuItem, saveMapMenuItem;
 
     @FXML
-    private MenuItem addNodeButton, removeNodeButton, addEdgeButton, removeEdgeButton;
+    private MenuItem addNodeButton, removeNodeButton, relocateNodeButton, addEdgeButton, removeEdgeButton;
 
     @FXML
     private StackPane canvasStacker;
@@ -122,6 +122,7 @@ public class VisController implements Initializable {
         initGraphButtons();
         initAddNodeButton();
         initRemoveNodeButton();
+        initRelocateNodeButton();
         initAddEdgeButton();
         initRemoveEdgeButton();
         initViews();
@@ -217,6 +218,22 @@ public class VisController implements Initializable {
             this.graphHolder.removeNode(coordinate);
             this.graphHolder.setOnMouseClickedCallback(null);
         })));
+    }
+
+    private void initRelocateNodeButton() {
+
+        System.out.println("#a");
+        relocateNodeButton.setOnAction(event -> {
+            System.out.println("#b");
+            this.graphHolder.setOnMouseClickedCallback((from -> {
+                System.out.println("#c");
+                this.graphHolder.setOnMouseClickedCallback(to -> {
+                    System.out.println("#0");
+                    this.graphHolder.relocateNode(from, to);
+                    this.graphHolder.setOnMouseClickedCallback(null);
+                });
+            }));
+        });
     }
 
     private void initAddEdgeButton() {

@@ -31,6 +31,11 @@ public class Vertex implements GraphEntity {
         return vertexPosition.unregisterNeighborPosition(edgeFacingPosition) && edges.remove(edge);
     }
 
+    public void setCoord(Point point){
+        this.coord = point;
+        this.vertexPosition = new Position(this);
+    }
+
     public ArrayList<Edge> getEdges(){
         return edges;
     }

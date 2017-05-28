@@ -37,10 +37,19 @@ public class Graph {
             return false;
         }
 
-        xRange = Math.max(xRange, newVertexCoord.getX());
-        yRange = Math.max(yRange, newVertexCoord.getY());
+        xRange = Math.max(xRange, newVertexCoord.getX() +1);
+        yRange = Math.max(yRange, newVertexCoord.getY() +1);
 
         return this.vertices.add(newVertex);
+    }
+
+    public boolean relocateVertex(Vertex vertex, Point newVertexPoint){
+        if(vertex == null){
+            return false;
+        }
+
+        vertex.setCoord(newVertexPoint);
+        return true;
     }
 
     /**
@@ -156,6 +165,7 @@ public class Graph {
         }
         return true;
     }
+
 
 
     public ArrayList<Edge> getEdges(){

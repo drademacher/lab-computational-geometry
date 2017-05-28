@@ -21,4 +21,7 @@ public class VisConstants {
     static final Color COLOR_NODE = (Color) Paint.valueOf("#5b5b5b");
     static final Color COLOR_EDGE = (Color) Paint.valueOf("#A1A1A1");
     static final Color COLOR_EDGE_STEPS = (Color) Paint.valueOf("#5b5b5b");
+
+    static final Color COLOR_MAN = (Color) Paint.valueOf("#5ae863");
+    static final Color COLOR_LION = (Color) Paint.valueOf("#e8745a");
 }

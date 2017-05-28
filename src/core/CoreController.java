@@ -3,7 +3,7 @@ package core;
 import core.entities.Lion;
 import core.entities.Man;
 import core.graph.Graph;
-import core.strategy.Strategy;
+import core.strategy.StrategyRandom;
 import core.util.Point;
 
 import java.io.BufferedReader;
@@ -16,28 +16,37 @@ import java.util.ArrayList;
  */
 public class CoreController {
     private Graph graph;
-    private ArrayList<Man> men;
-    private ArrayList<Lion> lions;
+    private State state;
 
     public Graph setEmptyGraph() {
         this.graph = new Graph();
+        this.state = new State();
         return this.graph;
     }
 
 
-
     public Graph setDefaultGraph1() {
         this.graph = new Graph();
-        this.graph.registerVertex(new Point(5, 5));
+        // this.graph.registerVertex(new Point(5, 5));
         this.graph.registerVertex(new Point(19, 9));
         this.graph.registerVertex(new Point(9, 4));
-        this.graph.registerEdge(this.graph.getVertices().get(1), this.graph.getVertices().get(2));
+        this.graph.registerEdge(this.graph.getVertices().get(0), this.graph.getVertices().get(1));
+
+
+        ArrayList<Man> men = new ArrayList<>();
+        men.add(new Man(this.graph.getVertices().get(0).getPosition(), new StrategyRandom()));
+        ArrayList<Lion> lions = new ArrayList<>();
+        lions.add(new Lion(this.graph.getVertices().get(1).getPosition(), new StrategyRandom()));
+
+        this.state = new State(men, lions);
+
         return this.graph;
     }
 
 
     public Graph setDefaultGraph2() {
         this.graph = new Graph();
+        this.state = new State();
         this.graph.registerVertex(new Point(5, 2));
         this.graph.registerVertex(new Point(19, 2));
         this.graph.registerVertex(new Point(22, 15));
@@ -99,37 +108,21 @@ public class CoreController {
     }
 
     public Graph setDefaultGraph3() {
-        this.graph = new Graph();
-        this.graph.registerVertex(new Point(5, 5));
-        this.graph.registerVertex(new Point(9, 9));
-        this.graph.registerVertex(new Point(1, 4));
-        this.graph.registerEdge(this.graph.getVertices().get(1), this.graph.getVertices().get(2));
-        return this.graph;
+        return this.setDefaultGraph1();
     }
 
     public Graph setDefaultGraph4() {
-        this.graph = new Graph();
-        this.graph.registerVertex(new Point(5, 5));
-        this.graph.registerVertex(new Point(9, 9));
-        this.graph.registerVertex(new Point(1, 4));
-        this.graph.registerEdge(this.graph.getVertices().get(1), this.graph.getVertices().get(2));
-        return this.graph;
+        return this.setDefaultGraph1();
     }
 
     public Graph setDefaultGraph5() {
-        this.graph = new Graph();
-        this.graph.registerVertex(new Point(5, 5));
-        this.graph.registerVertex(new Point(9, 9));
-        this.graph.registerVertex(new Point(1, 4));
-        this.graph.registerEdge(this.graph.getVertices().get(1), this.graph.getVertices().get(2));
-        return this.graph;
+        return this.setDefaultGraph1();
     }
 
 
     public Graph setRandomGraph() {
-        this.graph = new Graph();
         // TODO: implement random graph algorithm
-        return this.graph;
+        return this.setDefaultGraph1();
     }
 
 
@@ -159,8 +152,16 @@ public class CoreController {
     }
 
     public void saveGraphToFile(File file) {
-        this.graph = new Graph();
         // TODO: implement file saving
+    }
+
+    public State simulateStep() {
+        return this.state;
+    }
+
+
+    public State getState() {
+        return state;
     }
 
 }

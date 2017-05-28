@@ -1,6 +1,10 @@
 package visualization;
 
 
+import core.State;
+import core.entities.Entity;
+import core.entities.Lion;
+import core.entities.Man;
 import core.exeception.InvalidCoordinateException;
 import core.graph.Edge;
 import core.graph.Graph;
@@ -20,6 +24,7 @@ public class GraphHolder {
     private Point cameraPos = new Point(0, 0);
 
     private Graph graph;
+    private State state;
 
     private StackPane pane;
 
@@ -108,6 +113,12 @@ public class GraphHolder {
     }
 
 
+    public void setState(State state) {
+        this.state = state;
+        refreshMap();
+    }
+
+
     void setOnMouseClickedCallback(OnMouseClickedCallback callback) {
         this.onMouseClickedCallback = callback;
     }
@@ -138,6 +149,24 @@ public class GraphHolder {
 
         for(Vertex vertex : graph.getVertices()){
             renderNode(canvas, vertex.getCoord());
+        }
+
+        gc.setFill(COLOR_MAN);
+
+        if (state == null) return;
+
+        gc.setFill(COLOR_MAN);
+        for (Entity man : state.getMen()) {
+            renderSingleEdgeSteps(man.getCurrentGraphPosition().getVertexStart().getCoord(),
+                                  man.getCurrentGraphPosition().getVertexEnd().getCoord(),
+                                  man.getCurrentGraphPosition().getStepsOnEdge());
+        }
+
+        gc.setFill(COLOR_LION);
+        for (Entity lion : state.getLions()) {
+            renderSingleEdgeSteps(lion.getCurrentGraphPosition().getVertexStart().getCoord(),
+                                lion.getCurrentGraphPosition().getVertexEnd().getCoord(),
+                                lion.getCurrentGraphPosition().getStepsOnEdge());
         }
 
     }
@@ -193,21 +222,25 @@ public class GraphHolder {
     void renderEdgeSteps(Canvas canvas, Point from, Point to) {
         // TODO: make this "4" a variable parameter
         int count = 4 - 1;
-        Point edgeAtOrigin = to.mul(this.fieldSize).sub(from.mul(this.fieldSize));
 
-        // double dist = 1 / count;
+        canvas.getGraphicsContext2D().setFill(COLOR_EDGE_STEPS);
+        for (int i = 1; i <= count; i++) {
+             renderSingleEdgeSteps(from, to, i);
+        }
+    }
+
+    private void renderSingleEdgeSteps(Point from, Point to,int i) {
         int stepSize = fieldSize / 3;
+        int count = 4 - 1;
+
+        Point edgeAtOrigin = to.mul(this.fieldSize).sub(from.mul(this.fieldSize));
 
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
-        gc.setFill(COLOR_EDGE_STEPS);
 
-        for (int i = 1; i <= count; i++) {
-            Point p = edgeAtOrigin.mul((i) / (1.0 + count));
-            // gc.strokeLine();
-            gc.fillOval(from.getX() * this.fieldSize + p.getX() + (this.fieldSize - padding) / 2 - stepSize / 2,
-                    from.getY() * this.fieldSize + p.getY() + (this.fieldSize - padding) / 2 - stepSize / 2, stepSize, stepSize);
-        }
+        Point p = edgeAtOrigin.mul((i) / (1.0 + count));
+        gc.fillOval(from.getX() * this.fieldSize + p.getX() + (this.fieldSize - padding) / 2 - stepSize / 2,
+                from.getY() * this.fieldSize + p.getY() + (this.fieldSize - padding) / 2 - stepSize / 2, stepSize, stepSize);
     }
 
 
@@ -238,6 +271,7 @@ public class GraphHolder {
                 Math.min(Math.max(0, cameraPos.getY()), graph.getYRange() - cameraDim.getY()));
 
     }
+
 
 
 

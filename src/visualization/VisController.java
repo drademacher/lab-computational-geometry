@@ -99,6 +99,9 @@ public class VisController implements Initializable {
             if (e.getCode() == KeyCode.DOWN) {
                 this.graphHolder.moveCamera(new Point(0, 1));
             }
+            if (e.getCode() == KeyCode.SPACE) {
+                this.coreController.simulateStep();
+            }
             e.consume();
         };
 
@@ -138,6 +141,7 @@ public class VisController implements Initializable {
 
         graph1MenuItem.setOnAction(event -> {
             this.graphHolder.setGraph(coreController.setDefaultGraph1());
+            this.graphHolder.setState(coreController.getState());
         });
 
         graph2MenuItem.setOnAction(event -> {

@@ -24,7 +24,10 @@ public class CoreController {
 
     public Graph setEmptyGraph() {
         this.graph = new Graph();
-        this.state = new State();
+
+        men = new ArrayList<>();
+        lions = new ArrayList<>();
+        this.state = new State(men, lions);
         return this.graph;
     }
 
@@ -112,7 +115,8 @@ public class CoreController {
         lions = new ArrayList<>();
         men.add(new Man(this.graph.getVertices().get(0).getPosition(), new StrategyRunAwayGreedy()));
         lions.add(new Lion(this.graph.getVertices().get(1).getPosition(), new StrategyAggroGreedy()));
-        lions.add(new Lion(this.graph.getVertices().get(12).getPosition(), new StrategyAggroGreedy()));
+        lions.add(new Lion(this.graph.getVertices().get(18).getPosition(), new StrategyAggroGreedy()));
+        lions.add(new Lion(this.graph.getVertices().get(13).getPosition(), new StrategyAggroGreedy()));
 
         this.state = new State(men, lions);
 

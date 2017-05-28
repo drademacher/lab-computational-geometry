@@ -137,6 +137,7 @@ public class VisController implements Initializable {
     private void initGraphButtons() {
         emptyMapMenuItem.setOnAction(event -> {
             this.graphHolder.setGraph(coreController.setEmptyGraph());
+            this.graphHolder.setState(coreController.getState());
         });
 
         graph1MenuItem.setOnAction(event -> {

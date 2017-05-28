@@ -52,26 +52,26 @@ public class CoreController {
 
         this.graph.registerVertex(new Point(5, 2));
         this.graph.registerVertex(new Point(19, 2));
-        this.graph.registerVertex(new Point(22, 15));
+        this.graph.registerVertex(new Point(22, 14));
         this.graph.registerVertex(new Point(12, 22));
-        this.graph.registerVertex(new Point(2, 15));
+        this.graph.registerVertex(new Point(2, 14));
 
         this.graph.registerVertex(new Point(12, 4));
-        this.graph.registerVertex(new Point(16, 6));
-        this.graph.registerVertex(new Point(19, 10));
-        this.graph.registerVertex(new Point(19, 14));
-        this.graph.registerVertex(new Point(16, 18));
-        this.graph.registerVertex(new Point(12, 19));
-        this.graph.registerVertex(new Point(8, 18));
-        this.graph.registerVertex(new Point(5, 14));
-        this.graph.registerVertex(new Point(5, 10));
-        this.graph.registerVertex(new Point(8, 6));
+        this.graph.registerVertex(new Point(16, 5));
+        this.graph.registerVertex(new Point(19, 9));
+        this.graph.registerVertex(new Point(19, 13));
+        this.graph.registerVertex(new Point(16, 17));
+        this.graph.registerVertex(new Point(12, 18));
+        this.graph.registerVertex(new Point(8, 17));
+        this.graph.registerVertex(new Point(5, 13));
+        this.graph.registerVertex(new Point(5, 9));
+        this.graph.registerVertex(new Point(8, 5));
 
-        this.graph.registerVertex(new Point(12, 8));
-        this.graph.registerVertex(new Point(15, 11));
-        this.graph.registerVertex(new Point(14, 15));
-        this.graph.registerVertex(new Point(10, 15));
-        this.graph.registerVertex(new Point(9, 11));
+        this.graph.registerVertex(new Point(12, 7));
+        this.graph.registerVertex(new Point(15, 10));
+        this.graph.registerVertex(new Point(14, 14));
+        this.graph.registerVertex(new Point(10, 14));
+        this.graph.registerVertex(new Point(9, 10));
 
         this.graph.registerEdge(this.graph.getVertices().get(0), this.graph.getVertices().get(1));
         this.graph.registerEdge(this.graph.getVertices().get(1), this.graph.getVertices().get(2));

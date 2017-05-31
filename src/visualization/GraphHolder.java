@@ -30,7 +30,7 @@ public class GraphHolder {
 
     private Canvas canvas;
     private OnMouseClickedCallback onMouseClickedCallback;
-    private int fieldSize = 10;
+    private int fieldSize = 30;
     private int padding = (fieldSize > 5) ? fieldSize / 10 : 0;
 
     GraphHolder(StackPane pane) { // Canvas canvas, Canvas edgeLengthCanvas, Canvas edgeStepsActiveCanvas, Canvas edgeStepsAllCanvas, Canvas shortestDistanceCanvas, Canvas shortestPathCanvas

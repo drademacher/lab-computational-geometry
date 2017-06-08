@@ -37,7 +37,7 @@ public class VisController implements Initializable {
     private MenuItem emptyMapMenuItem, graph1MenuItem, graph2MenuItem, graph3MenuItem, graph4MenuItem, graph5MenuItem, randomGraphMenuItem, openMapMenuItem, saveMapMenuItem;
 
     @FXML
-    private MenuItem addNodeButton, removeNodeButton, addEdgeButton, removeEdgeButton;
+    private MenuItem addNodeButton, removeNodeButton, relocateNodeButton, addEdgeButton, removeEdgeButton;
 
     @FXML
     private StackPane canvasStacker;
@@ -99,6 +99,9 @@ public class VisController implements Initializable {
             if (e.getCode() == KeyCode.DOWN) {
                 this.graphHolder.moveCamera(new Point(0, 1));
             }
+            if (e.getCode() == KeyCode.SPACE) {
+                graphHolder.setState(this.coreController.simulateStep());
+            }
             e.consume();
         };
 
@@ -119,6 +122,7 @@ public class VisController implements Initializable {
         initGraphButtons();
         initAddNodeButton();
         initRemoveNodeButton();
+        initRelocateNodeButton();
         initAddEdgeButton();
         initRemoveEdgeButton();
         initViews();
@@ -134,30 +138,37 @@ public class VisController implements Initializable {
     private void initGraphButtons() {
         emptyMapMenuItem.setOnAction(event -> {
             this.graphHolder.setGraph(coreController.setEmptyGraph());
+            this.graphHolder.setState(coreController.getState());
         });
 
         graph1MenuItem.setOnAction(event -> {
             this.graphHolder.setGraph(coreController.setDefaultGraph1());
+            this.graphHolder.setState(coreController.getState());
         });
 
         graph2MenuItem.setOnAction(event -> {
             this.graphHolder.setGraph(coreController.setDefaultGraph2());
+            this.graphHolder.setState(coreController.getState());
         });
 
         graph3MenuItem.setOnAction(event -> {
             this.graphHolder.setGraph(coreController.setDefaultGraph3());
+            this.graphHolder.setState(coreController.getState());
         });
 
         graph4MenuItem.setOnAction(event -> {
             this.graphHolder.setGraph(coreController.setDefaultGraph4());
+            this.graphHolder.setState(coreController.getState());
         });
 
         graph5MenuItem.setOnAction(event -> {
             this.graphHolder.setGraph(coreController.setDefaultGraph5());
+            this.graphHolder.setState(coreController.getState());
         });
 
         randomGraphMenuItem.setOnAction(event -> {
             this.graphHolder.setGraph(coreController.setRandomGraph());
+            this.graphHolder.setState(coreController.getState());
         });
 
         openMapMenuItem.setOnAction(event -> {
@@ -207,6 +218,22 @@ public class VisController implements Initializable {
             this.graphHolder.removeNode(coordinate);
             this.graphHolder.setOnMouseClickedCallback(null);
         })));
+    }
+
+    private void initRelocateNodeButton() {
+
+        System.out.println("#a");
+        relocateNodeButton.setOnAction(event -> {
+            System.out.println("#b");
+            this.graphHolder.setOnMouseClickedCallback((from -> {
+                System.out.println("#c");
+                this.graphHolder.setOnMouseClickedCallback(to -> {
+                    System.out.println("#0");
+                    this.graphHolder.relocateNode(from, to);
+                    this.graphHolder.setOnMouseClickedCallback(null);
+                });
+            }));
+        });
     }
 
     private void initAddEdgeButton() {

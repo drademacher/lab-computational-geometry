@@ -58,6 +58,8 @@
                             <items>
                                 <MenuItem fx:id="addNodeButton" mnemonicParsing="false" text="Add Node" />
                                 <MenuItem fx:id="removeNodeButton" mnemonicParsing="false" text="Remove Node" />
+                                <MenuItem fx:id="relocateNodeButton" mnemonicParsing="false" text="Relocate Node" />
+
                                 <MenuItem fx:id="addEdgeButton" mnemonicParsing="false" text="Add Edge" />
                                 <MenuItem fx:id="removeEdgeButton" mnemonicParsing="false" text="Remove Edge" />
                             </items>

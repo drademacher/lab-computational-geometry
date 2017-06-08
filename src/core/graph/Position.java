@@ -20,7 +20,7 @@ public class Position {
 
     public Position(Edge edge, int steps){
         this.graphEntity = edge;
-        this.graphPosition = new GraphPosition(edge.getVertices()[0], edge.getVertices()[0], steps);
+        this.graphPosition = new GraphPosition(edge.getVertices()[0], edge.getVertices()[1], steps);
     }
     public Position(Vertex vertex){
         this.graphEntity = vertex;
@@ -102,6 +102,6 @@ public class Position {
         for(Position position : neighborPositions){
             neighborString += "\n## "+position.getGraphEntity().getGraphEntityInfo();
         }
-        return "Position on "+graphEntity.getGraphEntityInfo()  + " Entities:" + entities + "" + neighborString ;
+        return "\n---------------\nPosition on "+graphEntity.getGraphEntityInfo()  + " Graphposition: " + graphPosition + "" + neighborString ;
     }
 }

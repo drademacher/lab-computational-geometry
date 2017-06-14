@@ -125,7 +125,6 @@ public class GraphVisPane extends Pane {
             GraphicsContext gc = this.baseCanvas.getGraphicsContext2D();
             gc.setFill(Color.RED);
             gc.fillOval(event.getX() - 5, event.getY() - 5, 10, 10);
-            event.consume();
         });
 
         this.baseCanvas.setOnMouseReleased(event -> {
@@ -162,7 +161,6 @@ public class GraphVisPane extends Pane {
                 GraphicsContext gc = this.baseCanvas.getGraphicsContext2D();
                 gc.setFill(Color.RED);
                 gc.fillOval(event.getX() - 5, event.getY() - 5, 10, 10);
-                event.consume();
             }
         });
 
@@ -206,11 +204,6 @@ public class GraphVisPane extends Pane {
 
 
 
-    void setOnMouseClickedCallback(OnMouseClickedCallback callback) {
-       //  this.onMouseClickedCallback = callback;
-        // TODO: remove this dummy method
-    }
-
 
 
     /* ------- Functions for rendering canvas ------- */
@@ -243,9 +236,12 @@ public class GraphVisPane extends Pane {
 
         if (state == null) return;
 
+        gc = this.entityCanvas.getGraphicsContext2D();
+        gc.clearRect(0, 0, this.entityCanvas.getWidth(), this.entityCanvas.getHeight());
+
         gc.setFill(COLOR_MAN);
         for (Entity man : state.getMen()) {
-            renderSingleEdgeSteps(baseCanvas,
+            renderSingleEdgeSteps(entityCanvas,
                                   man.getCurrentGraphPosition().getVertexStart().getCoord(),
                                   man.getCurrentGraphPosition().getVertexEnd().getCoord(),
                                   man.getCurrentGraphPosition().getStepsOnEdge());
@@ -253,7 +249,7 @@ public class GraphVisPane extends Pane {
 
         gc.setFill(COLOR_LION);
         for (Entity lion : state.getLions()) {
-            renderSingleEdgeSteps(baseCanvas,
+            renderSingleEdgeSteps(entityCanvas,
                                 lion.getCurrentGraphPosition().getVertexStart().getCoord(),
                                 lion.getCurrentGraphPosition().getVertexEnd().getCoord(),
                                 lion.getCurrentGraphPosition().getStepsOnEdge());
@@ -276,8 +272,8 @@ public class GraphVisPane extends Pane {
     }
 
     private void renderEdge(Canvas canvas, Point from, Point to) {
-        from = from.sub(cameraPos);
-        to = to.sub(cameraPos);
+        Point fromShifted = from.sub(cameraPos);
+        Point toShifted = to.sub(cameraPos);
 
 //        Boolean oneVisibleNode = false;
 //        if (!(from.getX() < 0 || from.getY() < 0 || cameraDim.getX() < from.getX() || cameraDim.getY() < from.getY())) {
@@ -298,10 +294,10 @@ public class GraphVisPane extends Pane {
         gc.setLineWidth(this.padding + 1);
 
         // gc.fillOval(coordinate.getX() * this.fieldSize + 1, coordinate.getY() * this.fieldSize + 1, this.fieldSize - padding, this.fieldSize - padding);
-        gc.strokeLine(from.getX() * this.fieldSize + (this.fieldSize - padding) / 2,
-                from.getY() * this.fieldSize + (this.fieldSize - padding) / 2,
-                to.getX() * this.fieldSize + (this.fieldSize - padding) / 2,
-                to.getY() * this.fieldSize + (this.fieldSize - padding) / 2);
+        gc.strokeLine(fromShifted.getX() * this.fieldSize + (this.fieldSize - padding) / 2,
+                fromShifted.getY() * this.fieldSize + (this.fieldSize - padding) / 2,
+                toShifted.getX() * this.fieldSize + (this.fieldSize - padding) / 2,
+                toShifted.getY() * this.fieldSize + (this.fieldSize - padding) / 2);
 
 
         // MINI POINTS!!!!
@@ -322,6 +318,9 @@ public class GraphVisPane extends Pane {
     private void renderSingleEdgeSteps(Canvas canvas, Point from, Point to,int i) {
         int stepSize = fieldSize / 3;
         int count = 4 - 1;
+
+        from = from.sub(cameraPos);
+        to = to.sub(cameraPos);
 
         Point edgeAtOrigin = to.mul(this.fieldSize).sub(from.mul(this.fieldSize));
 

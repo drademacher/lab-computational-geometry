@@ -1,21 +1,17 @@
 package visualization;
 
 import core.CoreController;
-import core.graph.Graph;
-import core.graph.Vertex;
 import core.util.Point;
 import javafx.beans.value.ChangeListener;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioMenuItem;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -41,7 +37,6 @@ public class VisController implements Initializable {
 
     @FXML
     private StackPane canvasStacker;
-    // private Canvas baseCanvas, edgeLengthCanvas, edgeStepsActiveCanvas, edgeStepsAllCanvas, shortestDistanceCanvas, shortestPathCanvas;
 
     @FXML
     private CheckMenuItem edgeLengthButton, shortestDistanceButton, shortestPathButton;
@@ -53,7 +48,7 @@ public class VisController implements Initializable {
     // TODO: inject the coreController here
     private CoreController coreController = new CoreController();
 
-    private GraphHolder graphHolder;
+    private GraphVisPane graphHolder;
 
     private Stage stage;
 
@@ -81,7 +76,7 @@ public class VisController implements Initializable {
         System.out.println(canvas.getHeight());*/
 
         //Init mapHolder
-        this.graphHolder = new GraphHolder(canvasStacker); // baseCanvas, edgeLengthCanvas, edgeStepsActiveCanvas, edgeStepsAllCanvas, shortestDistanceCanvas, shortestPathCanvas
+        this.graphHolder = new GraphVisPane(canvasStacker); // baseCanvas, edgeLengthCanvas, edgeStepsActiveCanvas, edgeStepsAllCanvas, shortestDistanceCanvas, shortestPathCanvas
 
 
 
@@ -120,19 +115,12 @@ public class VisController implements Initializable {
 
 
         initGraphButtons();
-        initAddNodeButton();
-        initRemoveNodeButton();
-        initRelocateNodeButton();
-        initAddEdgeButton();
-        initRemoveEdgeButton();
+//        initAddNodeButton();
+//        initRemoveNodeButton();
+//        initRelocateNodeButton();
+//        initAddEdgeButton();
+//        initRemoveEdgeButton();
         initViews();
-
-
-
-
-
-        // TODO: remove this dirty hack
-        // edgeStepsAllCanvas.visibleProperty().bind(viewAllEdgeStepsMenuItem.selectedProperty());
     }
 
     private void initGraphButtons() {
@@ -204,58 +192,7 @@ public class VisController implements Initializable {
 
     }
 
-    private void initAddNodeButton() {
 
-        addNodeButton.setOnAction(event -> this.graphHolder.setOnMouseClickedCallback((coordinate -> {
-            this.graphHolder.setNode(coordinate);
-            this.graphHolder.setOnMouseClickedCallback(null);
-        })));
-    }
-
-    private void initRemoveNodeButton() {
-
-        removeNodeButton.setOnAction(event -> this.graphHolder.setOnMouseClickedCallback((coordinate -> {
-            this.graphHolder.removeNode(coordinate);
-            this.graphHolder.setOnMouseClickedCallback(null);
-        })));
-    }
-
-    private void initRelocateNodeButton() {
-
-        System.out.println("#a");
-        relocateNodeButton.setOnAction(event -> {
-            System.out.println("#b");
-            this.graphHolder.setOnMouseClickedCallback((from -> {
-                System.out.println("#c");
-                this.graphHolder.setOnMouseClickedCallback(to -> {
-                    System.out.println("#0");
-                    this.graphHolder.relocateNode(from, to);
-                    this.graphHolder.setOnMouseClickedCallback(null);
-                });
-            }));
-        });
-    }
-
-    private void initAddEdgeButton() {
-        addEdgeButton.setOnAction(event -> {
-            this.graphHolder.setOnMouseClickedCallback((from -> {
-                this.graphHolder.setOnMouseClickedCallback(to -> {
-                    this.graphHolder.setEdge(from, to);
-                    this.graphHolder.setOnMouseClickedCallback(null);
-                });
-            }));
-        });
-    }
-    private void initRemoveEdgeButton() {
-        removeEdgeButton.setOnAction(event -> {
-            this.graphHolder.setOnMouseClickedCallback((from -> {
-                this.graphHolder.setOnMouseClickedCallback(to -> {
-                    this.graphHolder.removeEdge(from, to);
-                    this.graphHolder.setOnMouseClickedCallback(null);
-                });
-            }));
-        });
-    }
 
     private void initViews() {
         // TODO: visibiility properties set up is missing

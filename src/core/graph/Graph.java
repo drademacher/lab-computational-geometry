@@ -48,7 +48,12 @@ public class Graph {
             return false;
         }
 
+
         vertex.setCoord(newVertexPoint);
+        // TODO: jens, hier muss die xRange gemacht werden (aber vermutlich besser als mein fix)
+        xRange = Math.max(xRange, newVertexPoint.getX() +1);
+        yRange = Math.max(yRange, newVertexPoint.getY() +1);
+
         return true;
     }
 
@@ -135,6 +140,11 @@ public class Graph {
             }
         }
         return null;
+    }
+
+    public Boolean isVertex(Point coord) {
+        // TODO: Jens, mach das mal ordentlich :D
+        return getVertexByCoord(coord) != null;
     }
 
     /**

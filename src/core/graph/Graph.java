@@ -37,8 +37,8 @@ public class Graph {
             return false;
         }
 
-        xRange = Math.max(xRange, newVertexCoord.getX() +1);
-        yRange = Math.max(yRange, newVertexCoord.getY() +1);
+        calculateXRange(newVertexCoord);
+        calculateYRange(newVertexCoord);
 
         return this.vertices.add(newVertex);
     }
@@ -48,11 +48,29 @@ public class Graph {
             return false;
         }
 
+        if(getVertexByCoord(newVertexPoint) != null){
+            return false;
+        }
 
-        vertex.setCoord(newVertexPoint);
-        // TODO: jens, hier muss die xRange gemacht werden (aber vermutlich besser als mein fix)
-        xRange = Math.max(xRange, newVertexPoint.getX() +1);
-        yRange = Math.max(yRange, newVertexPoint.getY() +1);
+        ArrayList<Vertex> neighborVertices = new ArrayList<>();
+        for(Edge edge : vertex.getEdges()){
+            if(!edge.getVertices()[0].getCoord().equals(vertex.getCoord())){
+                neighborVertices.add(edge.getVertices()[0]);
+            }
+            if(!edge.getVertices()[1].getCoord().equals(vertex.getCoord())){
+                neighborVertices.add(edge.getVertices()[1]);
+            }
+        }
+
+//        vertex.setCoord(newVertexPoint);
+        deleteVertex(vertex);
+        registerVertex(newVertexPoint);
+        for(Vertex neighborVertex : neighborVertices){
+            registerEdge(newVertexPoint, neighborVertex.getCoord());
+        }
+
+        calculateXRange(newVertexPoint);
+        calculateYRange(newVertexPoint);
 
         return true;
     }
@@ -70,14 +88,19 @@ public class Graph {
             return false;
         }
 
-        //TODO adjust xRange and yRange
-
         for(int i = vertex.getEdges().size() - 1; i >= 0; i--){
             Edge edge = vertex.getEdges().get(i);
             deleteEdge(edge);
         }
-        return vertices.remove(vertex);
 
+        boolean resultDelete = vertices.remove(vertex);
+
+        if(resultDelete){
+            calculateXRange(null);
+            calculateYRange(null);
+        }
+
+        return resultDelete;
     }
 
     /**
@@ -174,6 +197,37 @@ public class Graph {
             return false;
         }
         return true;
+    }
+
+    /**
+     *  calculate xRand and yRange
+     *
+     */
+    private void calculateXRange(Point changedValue){
+        if(changedValue == null){
+            changedValue = new Point(0, 0);
+        }
+        if(changedValue.getX() > xRange){
+            xRange = changedValue.getX() + 1;
+        } else {
+            xRange = 0;
+            for (Vertex vertex : vertices) {
+                xRange = Math.max(xRange, vertex.getCoord().getX() + 1);
+            }
+        }
+    }
+    private void calculateYRange(Point changedValue){
+        if(changedValue == null){
+            changedValue = new Point(0, 0);
+        }
+        if(changedValue.getY() > yRange){
+            yRange = changedValue.getY() + 1;
+        } else {
+            yRange = 0;
+            for (Vertex vertex : vertices) {
+                yRange = Math.max(yRange, vertex.getCoord().getY() + 1);
+            }
+        }
     }
 
 

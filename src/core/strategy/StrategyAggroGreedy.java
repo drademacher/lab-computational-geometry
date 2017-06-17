@@ -19,7 +19,7 @@ public class StrategyAggroGreedy implements Strategy{
 
         Position currentPosition = e.getCurrentPosition();
 
-        int bestSteps = helper.BFS(currentPosition);
+        int bestSteps = helper.bestBFS(currentPosition);
 
         for(Position neighborPosition : currentPosition.getAllNeighborPositions()){
             int steps = helper.BFS(currentPosition, neighborPosition);

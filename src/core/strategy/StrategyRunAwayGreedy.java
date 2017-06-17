@@ -18,7 +18,7 @@ public class StrategyRunAwayGreedy implements Strategy{
 
         Position currentPosition = e.getCurrentPosition();
 
-        int bestSteps = helper.BFS(currentPosition, true);
+        int bestSteps = helper.bestBFS(currentPosition, true);
 
         for(Position neighborPosition : currentPosition.getAllNeighborPositions()){
             int steps = helper.BFS(currentPosition, neighborPosition);

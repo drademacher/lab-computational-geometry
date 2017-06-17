@@ -166,7 +166,12 @@ public class GraphVisPane extends Pane {
 
     }
 
-    void setLionEditMode() {
+    void setEntityEditMode() {
+        this.baseCanvas.setOnDragDetected(event -> {});
+        this.baseCanvas.setOnMouseReleased(event -> {});
+    }
+
+    void setPlayMode() {
         this.baseCanvas.setOnDragDetected(event -> {});
         this.baseCanvas.setOnMouseReleased(event -> {});
     }

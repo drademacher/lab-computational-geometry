@@ -133,9 +133,9 @@ public class VisController implements Initializable {
             if (newValue == this.editGraphModeButton) {
                 graphHolder.setGraphEditMode();
             } else if (newValue == this.editEntityModeButton) {
-                graphHolder.setLionEditMode();
+                graphHolder.setEntityEditMode();
             } else if (newValue == this.playModeButton) {
-                // TODO: implement play mode
+                graphHolder.setPlayMode();
             }
         });
 

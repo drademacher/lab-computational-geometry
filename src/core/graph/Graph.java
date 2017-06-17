@@ -37,8 +37,8 @@ public class Graph {
             return false;
         }
 
-        xRange = Math.max(xRange, newVertexCoord.getX() +1);
-        yRange = Math.max(yRange, newVertexCoord.getY() +1);
+        calculateXRange(newVertexCoord);
+        calculateYRange(newVertexCoord);
 
         return this.vertices.add(newVertex);
     }
@@ -54,9 +54,9 @@ public class Graph {
 
 
         vertex.setCoord(newVertexPoint);
-        // TODO: jens, hier muss die xRange gemacht werden (aber vermutlich besser als mein fix)
-        xRange = Math.max(xRange, newVertexPoint.getX() +1);
-        yRange = Math.max(yRange, newVertexPoint.getY() +1);
+
+        calculateXRange(newVertexPoint);
+        calculateYRange(newVertexPoint);
 
         return true;
     }
@@ -74,7 +74,8 @@ public class Graph {
             return false;
         }
 
-        //TODO adjust xRange and yRange
+        calculateXRange(null);
+        calculateYRange(null);
 
         for(int i = vertex.getEdges().size() - 1; i >= 0; i--){
             Edge edge = vertex.getEdges().get(i);
@@ -178,6 +179,37 @@ public class Graph {
             return false;
         }
         return true;
+    }
+
+    /**
+     *  calculate xRand and yRange
+     *
+     */
+    private void calculateXRange(Point changedValue){
+        if(changedValue == null){
+            changedValue = new Point(0, 0);
+        }
+        if(changedValue.getX() > xRange){
+            xRange = changedValue.getX() + 1;
+        } else {
+            xRange = 0;
+            for (Vertex vertex : vertices) {
+                xRange = Math.max(xRange, vertex.getCoord().getX() + 1);
+            }
+        }
+    }
+    private void calculateYRange(Point changedValue){
+        if(changedValue == null){
+            changedValue = new Point(0, 0);
+        }
+        if(changedValue.getY() > yRange){
+            yRange = changedValue.getY() + 1;
+        } else {
+            yRange = 0;
+            for (Vertex vertex : vertices) {
+                yRange = Math.max(yRange, vertex.getCoord().getY() + 1);
+            }
+        }
     }
 
 

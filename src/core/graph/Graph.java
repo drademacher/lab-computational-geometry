@@ -48,6 +48,10 @@ public class Graph {
             return false;
         }
 
+        if(getVertexByCoord(newVertexPoint) != null){
+            return false;
+        }
+
 
         vertex.setCoord(newVertexPoint);
         // TODO: jens, hier muss die xRange gemacht werden (aber vermutlich besser als mein fix)

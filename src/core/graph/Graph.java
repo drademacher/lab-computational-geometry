@@ -52,8 +52,22 @@ public class Graph {
             return false;
         }
 
+        ArrayList<Vertex> neighborVertices = new ArrayList<>();
+        for(Edge edge : vertex.getEdges()){
+            if(!edge.getVertices()[0].getCoord().equals(vertex.getCoord())){
+                neighborVertices.add(edge.getVertices()[0]);
+            }
+            if(!edge.getVertices()[1].getCoord().equals(vertex.getCoord())){
+                neighborVertices.add(edge.getVertices()[1]);
+            }
+        }
 
-        vertex.setCoord(newVertexPoint);
+//        vertex.setCoord(newVertexPoint);
+        deleteVertex(vertex);
+        registerVertex(newVertexPoint);
+        for(Vertex neighborVertex : neighborVertices){
+            registerEdge(newVertexPoint, neighborVertex.getCoord());
+        }
 
         calculateXRange(newVertexPoint);
         calculateYRange(newVertexPoint);
@@ -74,13 +88,27 @@ public class Graph {
             return false;
         }
 
+        System.out.println("deleting..... vertexID: "+vertex.getId());
+
+        System.out.println("xRange: "+xRange);
+        System.out.println("yRange: "+yRange);
+
         calculateXRange(null);
         calculateYRange(null);
 
+        System.out.println("xRange: "+xRange);
+        System.out.println("yRange: "+yRange);
+
+        System.out.println("edge number: "+vertex.getEdges().size());
+
         for(int i = vertex.getEdges().size() - 1; i >= 0; i--){
+            System.out.println("edge "+i);
             Edge edge = vertex.getEdges().get(i);
             deleteEdge(edge);
         }
+
+        System.out.println("edge number: "+vertex.getEdges().size());
+
         return vertices.remove(vertex);
 
     }
@@ -124,13 +152,19 @@ public class Graph {
     }
     public boolean deleteEdge(Edge edge){
 
+        System.out.println("deleting edge #1");
+
         if(edge == null){
             return false;
         }
 
+        System.out.println("deleting edge #2");
+
         if(edge.deleteEdge()){
+            System.out.println("deleting edge #3");
             return edges.remove(edge);
         }
+        System.out.println("deleting edge #FALSE");
         return false;
     }
 

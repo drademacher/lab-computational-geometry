@@ -88,15 +88,19 @@ public class Graph {
             return false;
         }
 
-        calculateXRange(null);
-        calculateYRange(null);
-
         for(int i = vertex.getEdges().size() - 1; i >= 0; i--){
             Edge edge = vertex.getEdges().get(i);
             deleteEdge(edge);
         }
 
-        return vertices.remove(vertex);
+        boolean resultDelete = vertices.remove(vertex);
+
+        if(resultDelete){
+            calculateXRange(null);
+            calculateYRange(null);
+        }
+
+        return resultDelete;
     }
 
     /**

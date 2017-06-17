@@ -167,7 +167,8 @@ public class GraphVisPane extends Pane {
     }
 
     void setLionEditMode() {
-
+        this.baseCanvas.setOnDragDetected(event -> {});
+        this.baseCanvas.setOnMouseReleased(event -> {});
     }
 
     private void addNode(Point coordinate) {

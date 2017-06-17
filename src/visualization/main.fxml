@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.CheckMenuItem?>
+<?import javafx.scene.control.ContextMenu?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
@@ -52,28 +53,14 @@
                 </Menu>
                 <Menu mnemonicParsing="false" text="Edit">
                     <items>
-                        <MenuItem fx:id="editMapMenuItem" mnemonicParsing="false" text="Edit Graph Layout" />
+                  <RadioMenuItem fx:id="editGraphModeButton" mnemonicParsing="false" selected="true" text="Edit Graph Mode">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="useModeToggle" />
+                     </toggleGroup>
+                  </RadioMenuItem>
+                  <RadioMenuItem fx:id="editEntityModeButton" mnemonicParsing="false" text="Edit Entity Mode" toggleGroup="$useModeToggle" />
+                  <RadioMenuItem fx:id="playModeButton" mnemonicParsing="false" text="Play Mode" toggleGroup="$useModeToggle" />
                         <SeparatorMenuItem />
-                        <Menu mnemonicParsing="false" text="Change Graph">
-                            <items>
-                                <MenuItem fx:id="addNodeButton" mnemonicParsing="false" text="Add Node" />
-                                <MenuItem fx:id="removeNodeButton" mnemonicParsing="false" text="Remove Node" />
-                                <MenuItem fx:id="relocateNodeButton" mnemonicParsing="false" text="Relocate Node" />
-
-                                <MenuItem fx:id="addEdgeButton" mnemonicParsing="false" text="Add Edge" />
-                                <MenuItem fx:id="removeEdgeButton" mnemonicParsing="false" text="Remove Edge" />
-                            </items>
-                        </Menu>
-                        <Menu mnemonicParsing="false" text="Change Entities">
-                            <items>
-                                <MenuItem mnemonicParsing="false" text="Add new man" />
-                                <MenuItem mnemonicParsing="false" text="Remove man" />
-                                <MenuItem mnemonicParsing="false" text="Move man" />
-                                <MenuItem mnemonicParsing="false" text="Add new lion" />
-                                <MenuItem mnemonicParsing="false" text="Remove lion" />
-                                <MenuItem mnemonicParsing="false" text="Move Lion" />
-                            </items>
-                        </Menu>
                         <Menu mnemonicParsing="false" text="Change Edge Length">
                             <items>
                                 <MenuItem mnemonicParsing="false" text="Set All Edges" />
@@ -110,6 +97,13 @@
                     </items>
                 </Menu>
             </menus>
+         <contextMenu>
+            <ContextMenu>
+              <items>
+                <MenuItem mnemonicParsing="false" text="Unspecified Action" />
+              </items>
+            </ContextMenu>
+         </contextMenu>
         </MenuBar>
     </top>
     <bottom>

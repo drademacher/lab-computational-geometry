@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioMenuItem;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
@@ -43,6 +44,14 @@ public class VisController implements Initializable {
 
     @FXML
     private RadioMenuItem viewAllEdgeStepsMenuItem;
+
+
+    @FXML
+    private ToggleGroup useModeToggle;
+
+    @FXML
+    private RadioMenuItem editGraphModeButton, editEntityModeButton, playModeButton;
+
 
 
     // TODO: inject the coreController here
@@ -120,6 +129,16 @@ public class VisController implements Initializable {
 //        initRelocateNodeButton();
 //        initAddEdgeButton();
 //        initRemoveEdgeButton();
+        useModeToggle.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue == this.editGraphModeButton) {
+                graphHolder.setGraphEditMode();
+            } else if (newValue == this.editEntityModeButton) {
+                graphHolder.setLionEditMode();
+            } else if (newValue == this.playModeButton) {
+                // TODO: implement play mode
+            }
+        });
+
         initViews();
     }
 

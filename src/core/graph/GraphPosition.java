@@ -9,7 +9,7 @@ public class GraphPosition {
     private Vertex vertexEnd;
     private int stepsOnEdge;
 
-    public GraphPosition(Vertex vertexStart, Vertex vertexEnd, int stepsOnEdge){
+    public GraphPosition(Vertex vertexStart, Vertex vertexEnd, int stepsOnEdge) {
         this.vertexStart = vertexStart;
         this.vertexEnd = vertexEnd;
         this.stepsOnEdge = stepsOnEdge;
@@ -29,6 +29,6 @@ public class GraphPosition {
 
     @Override
     public String toString() {
-        return vertexStart.getGraphEntityInfo() + " - " + vertexEnd.getGraphEntityInfo() + " | " +stepsOnEdge;
+        return vertexStart.getGraphEntityInfo() + " - " + vertexEnd.getGraphEntityInfo() + " | " + stepsOnEdge;
     }
 }

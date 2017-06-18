@@ -9,8 +9,8 @@ import core.strategy.Strategy;
 public class Man extends Entity {
     // TODO: implement Man class
 
-    public Man(Position startPosition, Strategy strategy){
-        super(startPosition,strategy);
+    public Man(Position startPosition, Strategy strategy) {
+        super(startPosition, strategy);
         men.add(this);
     }
 

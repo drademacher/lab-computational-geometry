@@ -10,8 +10,8 @@ import core.strategy.Strategy;
 public class Lion extends Entity {
     // TODO: implement Lion class
 
-    public Lion(Position startPosition, Strategy strategy){
-        super(startPosition,strategy);
+    public Lion(Position startPosition, Strategy strategy) {
+        super(startPosition, strategy);
         lions.add(this);
     }
 }

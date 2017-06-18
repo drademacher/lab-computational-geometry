@@ -9,49 +9,49 @@ import java.util.ArrayList;
  */
 public class Position {
 
+    //TODO BFS
+    public int counter = 0;
     private ArrayList<Position> neighborPositions = new ArrayList<>();
     private GraphEntity graphEntity;
     private GraphPosition graphPosition;
     private ArrayList<Entity> entities = new ArrayList<>();
     private boolean visited = false;
 
-    //TODO BFS
-    public int counter = 0;
-
-    public Position(Edge edge, int steps){
+    public Position(Edge edge, int steps) {
         this.graphEntity = edge;
         this.graphPosition = new GraphPosition(edge.getVertices()[0], edge.getVertices()[1], steps);
     }
-    public Position(Vertex vertex){
+
+    public Position(Vertex vertex) {
         this.graphEntity = vertex;
         this.graphPosition = new GraphPosition(vertex, vertex, 0);
     }
 
-    public boolean registerNeighborPosition(Position position){
+    public boolean registerNeighborPosition(Position position) {
         return neighborPositions.add(position);
     }
 
-    public boolean unregisterNeighborPosition(Position position){
+    public boolean unregisterNeighborPosition(Position position) {
         return neighborPositions.remove(position);
     }
 
-    public boolean registerEntity(Entity entity){
+    public boolean registerEntity(Entity entity) {
         return entities.add(entity);
     }
 
-    public boolean unregisterEntity(Entity entity){
+    public boolean unregisterEntity(Entity entity) {
         return entities.remove(entity);
     }
 
-    public ArrayList<Position> getAllNeighborPositions(){
+    public ArrayList<Position> getAllNeighborPositions() {
         return neighborPositions;
     }
 
-    public ArrayList<Entity> getAllEntities(){
+    public ArrayList<Entity> getAllEntities() {
         return entities;
     }
 
-    public GraphPosition getGraphPosition(){
+    public GraphPosition getGraphPosition() {
         return graphPosition;
     }
 
@@ -64,32 +64,33 @@ public class Position {
      */
 
 
-
     public GraphEntity getGraphEntity() {
         return graphEntity;
     }
 
-    public ArrayList<Position> startAllPositionsRecursiv(){
+    public ArrayList<Position> startAllPositionsRecursiv() {
         setAllVisitedFalse();
         return getAllPositionsRecursive();
     }
-    public void setAllVisitedFalse(){
-        if(!visited){
+
+    public void setAllVisitedFalse() {
+        if (!visited) {
             return;
         }
         visited = false;
-        for(Position pos : neighborPositions){
+        for (Position pos : neighborPositions) {
             pos.setAllVisitedFalse();
         }
     }
-    public ArrayList<Position> getAllPositionsRecursive(){
+
+    public ArrayList<Position> getAllPositionsRecursive() {
         ArrayList<Position> recursiveList = new ArrayList<>();
-        if(visited){
+        if (visited) {
             return recursiveList;
         }
         visited = true;
         recursiveList.add(this);
-        for(Position pos : neighborPositions){
+        for (Position pos : neighborPositions) {
             recursiveList.addAll(pos.getAllPositionsRecursive());
         }
 
@@ -99,9 +100,9 @@ public class Position {
     @Override
     public String toString() {
         String neighborString = "";
-        for(Position position : neighborPositions){
-            neighborString += "\n## "+position.getGraphEntity().getGraphEntityInfo();
+        for (Position position : neighborPositions) {
+            neighborString += "\n## " + position.getGraphEntity().getGraphEntityInfo();
         }
-        return "\n---------------\nPosition on "+graphEntity.getGraphEntityInfo()  + " Graphposition: " + graphPosition + "" + neighborString ;
+        return "\n---------------\nPosition on " + graphEntity.getGraphEntityInfo() + " Graphposition: " + graphPosition + "" + neighborString;
     }
 }

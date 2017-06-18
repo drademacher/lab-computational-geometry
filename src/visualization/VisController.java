@@ -47,7 +47,6 @@ public class VisController implements Initializable {
     private RadioMenuItem editGraphModeButton, editEntityModeButton, playModeButton;
 
 
-
     // TODO: inject the coreController here
     private CoreController coreController = new CoreController();
 
@@ -82,14 +81,11 @@ public class VisController implements Initializable {
         this.graphHolder = new GraphHolder(canvasStacker); // baseCanvas, edgeLengthCanvas, edgeStepsActiveCanvas, edgeStepsAllCanvas, shortestDistanceCanvas, shortestPathCanvas
 
 
-
-
         // TODO: global key commands here!
 //        mainPane.sceneProperty().addListener((observableScene, oldScene, newScene) -> {
 //            if (oldScene != null) oldScene.removeEventHandler(KeyEvent.KEY_PRESSED, keyEventHandler);
 //            if (newScene != null) newScene.addEventHandler(KeyEvent.KEY_PRESSED, keyEventHandler);
 //        });
-
 
 
         initGraphButtons();
@@ -155,38 +151,37 @@ public class VisController implements Initializable {
         });
 
         openMapMenuItem.setOnAction(event -> {
-                FileChooser fileChooser = new FileChooser();
-                fileChooser.setTitle("Open Resource File");
-                fileChooser.getExtensionFilters().addAll(
-                        new FileChooser.ExtensionFilter("Map Files", "*.map"),
-                        new FileChooser.ExtensionFilter("All Files", "*.*"));
-                File selectedFile = fileChooser.showOpenDialog(this.stage);
-                if (selectedFile != null) {
-                    try {
-                        this.graphHolder.setGraph(coreController.setGraphFromFile(selectedFile));
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        //Todo: openMapMenuItem.setOnAction - nice exception handling!!!
-                    }
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Open Resource File");
+            fileChooser.getExtensionFilters().addAll(
+                    new FileChooser.ExtensionFilter("Map Files", "*.map"),
+                    new FileChooser.ExtensionFilter("All Files", "*.*"));
+            File selectedFile = fileChooser.showOpenDialog(this.stage);
+            if (selectedFile != null) {
+                try {
+                    this.graphHolder.setGraph(coreController.setGraphFromFile(selectedFile));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    //Todo: openMapMenuItem.setOnAction - nice exception handling!!!
                 }
+            }
         });
 
         saveMapMenuItem.setOnAction(event -> {
 
-                FileChooser fileChooser = new FileChooser();
-                fileChooser.setTitle("Save Current Map");
-                fileChooser.getExtensionFilters().addAll(
-                        new FileChooser.ExtensionFilter("Map Files", "*.map"),
-                        new FileChooser.ExtensionFilter("All Files", "*.*"));
-                File selectedFile = fileChooser.showSaveDialog(this.stage);
-                if (selectedFile != null) {
-                    this.coreController.saveGraphToFile(selectedFile);
-                }
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Save Current Map");
+            fileChooser.getExtensionFilters().addAll(
+                    new FileChooser.ExtensionFilter("Map Files", "*.map"),
+                    new FileChooser.ExtensionFilter("All Files", "*.*"));
+            File selectedFile = fileChooser.showSaveDialog(this.stage);
+            if (selectedFile != null) {
+                this.coreController.saveGraphToFile(selectedFile);
+            }
 
         });
 
     }
-
 
 
     private void initViews() {

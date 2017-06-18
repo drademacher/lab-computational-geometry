@@ -11,7 +11,7 @@ import java.util.ArrayList;
 /**
  * Created by Jens on 20.05.2017.
  */
-public class StrategyAggroGreedy implements Strategy{
+public class StrategyAggroGreedy implements Strategy {
     @Override
     public Position getNextPosition(Entity e, ArrayList<Man> men, ArrayList<Lion> lions) {
 
@@ -21,9 +21,9 @@ public class StrategyAggroGreedy implements Strategy{
 
         int bestSteps = helper.bestBFS(currentPosition);
 
-        for(Position neighborPosition : currentPosition.getAllNeighborPositions()){
+        for (Position neighborPosition : currentPosition.getAllNeighborPositions()) {
             int steps = helper.BFS(currentPosition, neighborPosition);
-            if(bestSteps == steps){
+            if (bestSteps == steps) {
                 return neighborPosition;
             }
         }

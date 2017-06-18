@@ -1,18 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.CheckMenuItem?>
-<?import javafx.scene.control.ContextMenu?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.RadioMenuItem?>
-<?import javafx.scene.control.SeparatorMenuItem?>
-<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.BorderPane?>
-
 <?import visualization.ZoomScrollPane?>
-<BorderPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visualization.VisController">
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity"
+            xmlns="http://javafx.com/javafx/8.0.102" fx:controller="visualization.VisController">
     <top>
         <MenuBar BorderPane.alignment="CENTER">
             <menus>
@@ -20,52 +13,62 @@
                     <items>
                         <Menu mnemonicParsing="false" text="New">
                             <items>
-                                <MenuItem fx:id="emptyMapMenuItem" mnemonicParsing="false" text="Empty Graph" />
-                                <MenuItem fx:id="graph1MenuItem" mnemonicParsing="false" text="Graph 1" />
-                                <MenuItem fx:id="graph2MenuItem" mnemonicParsing="false" text="Graph 2" />
-                                <MenuItem fx:id="graph3MenuItem" mnemonicParsing="false" text="Graph 3" />
-                                <MenuItem fx:id="graph4MenuItem" mnemonicParsing="false" text="Graph 4" />
-                                <MenuItem fx:id="graph5MenuItem" mnemonicParsing="false" text="Graph 5" />
-                                <MenuItem fx:id="randomGraphMenuItem" mnemonicParsing="false" text="Random Map" />
+                                <MenuItem fx:id="emptyMapMenuItem" mnemonicParsing="false" text="Empty Graph"/>
+                                <MenuItem fx:id="graph1MenuItem" mnemonicParsing="false" text="Graph 1"/>
+                                <MenuItem fx:id="graph2MenuItem" mnemonicParsing="false" text="Graph 2"/>
+                                <MenuItem fx:id="graph3MenuItem" mnemonicParsing="false" text="Graph 3"/>
+                                <MenuItem fx:id="graph4MenuItem" mnemonicParsing="false" text="Graph 4"/>
+                                <MenuItem fx:id="graph5MenuItem" mnemonicParsing="false" text="Graph 5"/>
+                                <MenuItem fx:id="randomGraphMenuItem" mnemonicParsing="false" text="Random Map"/>
                             </items>
                         </Menu>
-                        <MenuItem fx:id="openMapMenuItem" mnemonicParsing="false" text="Open" />
-                        <MenuItem fx:id="saveMapMenuItem" mnemonicParsing="false" text="Save" />
+                        <MenuItem fx:id="openMapMenuItem" mnemonicParsing="false" text="Open"/>
+                        <MenuItem fx:id="saveMapMenuItem" mnemonicParsing="false" text="Save"/>
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="View">
                     <items>
                         <Menu mnemonicParsing="false" text="Edge Steps">
                             <items>
-                                <RadioMenuItem fx:id="viewAllEdgeStepsMenuItem" mnemonicParsing="false" text="All Edge Steps">
+                                <RadioMenuItem fx:id="viewAllEdgeStepsMenuItem" mnemonicParsing="false"
+                                               text="All Edge Steps">
                                     <toggleGroup>
-                                        <ToggleGroup fx:id="edgeStepsToggleGroup" />
+                                        <ToggleGroup fx:id="edgeStepsToggleGroup"/>
                                     </toggleGroup>
                                 </RadioMenuItem>
-                                <RadioMenuItem fx:id="viewActiveEdgeStepsMenuItem" mnemonicParsing="false" selected="true" text="Active Edge Steps" toggleGroup="$edgeStepsToggleGroup" />
-                                <RadioMenuItem fx:id="viewNoEdgeStepsMenuItem" mnemonicParsing="false" text="No Edge Steps" toggleGroup="$edgeStepsToggleGroup" />
+                                <RadioMenuItem fx:id="viewActiveEdgeStepsMenuItem" mnemonicParsing="false"
+                                               selected="true" text="Active Edge Steps"
+                                               toggleGroup="$edgeStepsToggleGroup"/>
+                                <RadioMenuItem fx:id="viewNoEdgeStepsMenuItem" mnemonicParsing="false"
+                                               text="No Edge Steps" toggleGroup="$edgeStepsToggleGroup"/>
                             </items>
                         </Menu>
-                        <CheckMenuItem fx:id="shortestDistanceButton" mnemonicParsing="false" selected="true" text="Closed Distance To Men" />
-                        <CheckMenuItem fx:id="shortestPathButton" mnemonicParsing="false" selected="true" text="Shortest Path To Men" />
-                        <CheckMenuItem fx:id="edgeLengthButton" mnemonicParsing="false" selected="true" text="Edge Length" />
+                        <CheckMenuItem fx:id="shortestDistanceButton" mnemonicParsing="false" selected="true"
+                                       text="Closed Distance To Men"/>
+                        <CheckMenuItem fx:id="shortestPathButton" mnemonicParsing="false" selected="true"
+                                       text="Shortest Path To Men"/>
+                        <CheckMenuItem fx:id="edgeLengthButton" mnemonicParsing="false" selected="true"
+                                       text="Edge Length"/>
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Edit">
                     <items>
-                  <RadioMenuItem fx:id="editGraphModeButton" mnemonicParsing="false" selected="true" text="Edit Graph Mode">
-                     <toggleGroup>
-                        <ToggleGroup fx:id="useModeToggle" />
-                     </toggleGroup>
-                  </RadioMenuItem>
-                  <RadioMenuItem fx:id="editEntityModeButton" mnemonicParsing="false" text="Edit Entity Mode" toggleGroup="$useModeToggle" />
-                  <RadioMenuItem fx:id="playModeButton" mnemonicParsing="false" text="Play Mode" toggleGroup="$useModeToggle" />
-                        <SeparatorMenuItem />
+                        <RadioMenuItem fx:id="editGraphModeButton" mnemonicParsing="false" selected="true"
+                                       text="Edit Graph Mode">
+                            <toggleGroup>
+                                <ToggleGroup fx:id="useModeToggle"/>
+                            </toggleGroup>
+                        </RadioMenuItem>
+                        <RadioMenuItem fx:id="editEntityModeButton" mnemonicParsing="false" text="Edit Entity Mode"
+                                       toggleGroup="$useModeToggle"/>
+                        <RadioMenuItem fx:id="playModeButton" mnemonicParsing="false" text="Play Mode"
+                                       toggleGroup="$useModeToggle"/>
+                        <SeparatorMenuItem/>
                         <Menu mnemonicParsing="false" text="Change Edge Length">
                             <items>
-                                <MenuItem mnemonicParsing="false" text="Set All Edges" />
-                                <MenuItem mnemonicParsing="false" text="Increment All Edges" />
-                                <MenuItem mnemonicParsing="false" text="Decrement All Edges" />
+                                <MenuItem mnemonicParsing="false" text="Set All Edges"/>
+                                <MenuItem mnemonicParsing="false" text="Increment All Edges"/>
+                                <MenuItem mnemonicParsing="false" text="Decrement All Edges"/>
                             </items>
                         </Menu>
                     </items>
@@ -76,34 +79,38 @@
                             <items>
                                 <RadioMenuItem mnemonicParsing="false" selected="true" text="Wait">
                                     <toggleGroup>
-                                        <ToggleGroup fx:id="lionStrategyToggleGroup" />
+                                        <ToggleGroup fx:id="lionStrategyToggleGroup"/>
                                     </toggleGroup>
                                 </RadioMenuItem>
-                                <RadioMenuItem mnemonicParsing="false" text="Random Walk" toggleGroup="$lionStrategyToggleGroup" />
-                                <RadioMenuItem mnemonicParsing="false" text="Greedy" toggleGroup="$lionStrategyToggleGroup" />
+                                <RadioMenuItem mnemonicParsing="false" text="Random Walk"
+                                               toggleGroup="$lionStrategyToggleGroup"/>
+                                <RadioMenuItem mnemonicParsing="false" text="Greedy"
+                                               toggleGroup="$lionStrategyToggleGroup"/>
                             </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="Choose Men Strategy">
                             <items>
                                 <RadioMenuItem mnemonicParsing="false" selected="true" text="Wait">
                                     <toggleGroup>
-                                        <ToggleGroup fx:id="menStrategyToggleGroup" />
+                                        <ToggleGroup fx:id="menStrategyToggleGroup"/>
                                     </toggleGroup>
                                 </RadioMenuItem>
-                                <RadioMenuItem mnemonicParsing="false" text="Random Walk" toggleGroup="$menStrategyToggleGroup" />
-                                <RadioMenuItem mnemonicParsing="false" text="Paper Strategy" toggleGroup="$menStrategyToggleGroup" />
+                                <RadioMenuItem mnemonicParsing="false" text="Random Walk"
+                                               toggleGroup="$menStrategyToggleGroup"/>
+                                <RadioMenuItem mnemonicParsing="false" text="Paper Strategy"
+                                               toggleGroup="$menStrategyToggleGroup"/>
                             </items>
                         </Menu>
                     </items>
                 </Menu>
             </menus>
-         <contextMenu>
-            <ContextMenu>
-              <items>
-                <MenuItem mnemonicParsing="false" text="Unspecified Action" />
-              </items>
-            </ContextMenu>
-         </contextMenu>
+            <contextMenu>
+                <ContextMenu>
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Unspecified Action"/>
+                    </items>
+                </ContextMenu>
+            </contextMenu>
         </MenuBar>
     </top>
     <bottom>
@@ -111,11 +118,12 @@
     </bottom>
     <center>
         <ZoomScrollPane fx:id="canvasStacker" style="-fx-background-color: #999999;">
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-         <BorderPane.margin>
-            <Insets />
-         </BorderPane.margin></ZoomScrollPane>
+            <opaqueInsets>
+                <Insets/>
+            </opaqueInsets>
+            <BorderPane.margin>
+                <Insets/>
+            </BorderPane.margin>
+        </ZoomScrollPane>
     </center>
 </BorderPane>

@@ -4,9 +4,7 @@ import core.entities.Entity;
 import core.entities.Lion;
 import core.entities.Man;
 import core.graph.Position;
-import core.graph.Vertex;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 /**
  * Created by Jens on 25.05.2017.
  */
-public class StrategyRunAwayGreedy implements Strategy{
+public class StrategyRunAwayGreedy implements Strategy {
     @Override
     public Position getNextPosition(Entity e, ArrayList<Man> men, ArrayList<Lion> lions) {
         GraphHelper helper = GraphHelper.createGraphHelper();
@@ -20,9 +20,9 @@ public class StrategyRunAwayGreedy implements Strategy{
 
         int bestSteps = helper.bestBFS(currentPosition, true);
 
-        for(Position neighborPosition : currentPosition.getAllNeighborPositions()){
+        for (Position neighborPosition : currentPosition.getAllNeighborPositions()) {
             int steps = helper.BFS(currentPosition, neighborPosition);
-            if(bestSteps == steps){
+            if (bestSteps == steps) {
                 return neighborPosition;
             }
         }

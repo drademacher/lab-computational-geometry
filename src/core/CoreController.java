@@ -18,10 +18,10 @@ import java.util.ArrayList;
  * Created by Danny on 17.05.2017.
  */
 public class CoreController {
-    private Graph graph;
-    private State state;
     ArrayList<Lion> lions = new ArrayList<>();
     ArrayList<Man> men = new ArrayList<>();
+    private Graph graph;
+    private State state;
 
     public Graph setEmptyGraph() {
         this.graph = new Graph();
@@ -244,10 +244,10 @@ public class CoreController {
     }
 
     public State simulateStep() {
-        for(Man man : men){
+        for (Man man : men) {
             man.goToNextPosition();
         }
-        for(Lion lion : lions){
+        for (Lion lion : lions) {
             lion.goToNextPosition();
         }
         this.state = new State(men, lions);

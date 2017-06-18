@@ -1,14 +1,5 @@
 package visualization;
 
-import javafx.geometry.Pos;
-import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
-import javafx.util.Callback;
-
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 // TODO: use this dialog executer to make dialog or improve upon
 
 public class DialogExecuter {

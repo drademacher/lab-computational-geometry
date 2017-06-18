@@ -11,15 +11,14 @@ import java.util.ArrayList;
  */
 public abstract class Entity {
 
+    //TODO save men and lions in a better way / better place
+    protected static ArrayList<Man> men = new ArrayList<>();
+    protected static ArrayList<Lion> lions = new ArrayList<>();
     protected Position position;
     protected Position newposition;
     protected Strategy strategy;
 
-    //TODO save men and lions in a better way / better place
-    protected static ArrayList<Man> men = new ArrayList<>();
-    protected static ArrayList<Lion> lions = new ArrayList<>();
-
-    public Entity(Position startPosition, Strategy strategy){
+    public Entity(Position startPosition, Strategy strategy) {
         this.position = startPosition;
         this.strategy = strategy;
         this.position.registerEntity(this);
@@ -29,7 +28,7 @@ public abstract class Entity {
         return strategy.getNextPosition(this, men, lions);
     }
 
-    public Position goToNextPosition(){
+    public Position goToNextPosition() {
         newposition = getNextPosition();
         position.unregisterEntity(this);
         position = newposition;
@@ -37,23 +36,23 @@ public abstract class Entity {
         return position;
     }
 
-    public void setStrategy(Strategy strategy){
-        this.strategy = strategy;
-    }
-
     public Strategy getStrategy() {
         return strategy;
     }
 
-    public void setCurentPosition(Position currentPosition){
+    public void setStrategy(Strategy strategy) {
+        this.strategy = strategy;
+    }
+
+    public void setCurentPosition(Position currentPosition) {
         this.position = currentPosition;
     }
 
-    public Position getCurrentPosition(){
+    public Position getCurrentPosition() {
         return position;
     }
 
-    public GraphPosition getCurrentGraphPosition(){
+    public GraphPosition getCurrentGraphPosition() {
         return position.getGraphPosition();
     }
 

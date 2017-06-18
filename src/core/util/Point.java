@@ -26,6 +26,10 @@ public class Point {
         return x;
     }
 
+    public void setX(int x) {
+        this.x = x;
+    }
+
     /**
      * Provides current y value of the vector.
      *
@@ -36,22 +40,16 @@ public class Point {
         return y;
     }
 
+    public void setY(int y) {
+        this.y = y;
+    }
 
     public Point add(Point other) {
         return new Point(x + other.getX(), y + other.getY());
     }
 
-
     public Point sub(Point other) {
         return new Point(x - other.getX(), y - other.getY());
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public void setY(int y) {
-        this.y = y;
     }
 
     /**
@@ -61,12 +59,12 @@ public class Point {
      * @return A new Vector instance representing the product of the input factor and this vector.
      */
     public Point mul(double factor) {
-        return new Point( (int) (x * factor + 0.5), (int) (y * factor + 0.5) );
+        return new Point((int) (x * factor + 0.5), (int) (y * factor + 0.5));
     }
 
 
     public double length() {
-        return Math.sqrt(x*x + y*y);
+        return Math.sqrt(x * x + y * y);
     }
 
 

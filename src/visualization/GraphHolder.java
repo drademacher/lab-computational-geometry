@@ -7,12 +7,10 @@ import core.graph.Graph;
 import core.graph.Vertex;
 import core.util.Point;
 import javafx.scene.Group;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 
-import static visualization.VisConstants.*;
+import static visualization.VisConstants.COLOR_NODE;
 
 
 public class GraphHolder {
@@ -23,9 +21,7 @@ public class GraphHolder {
     private Group vertexShapes, edgeShapes, entityShapes;
 
 
-
     private boolean editMode = true; // TODO: important variable!!!
-
 
 
     GraphHolder(ZoomScrollPane superPane) { // Canvas canvas, Canvas edgeLengthCanvas, Canvas edgeStepsActiveCanvas, Canvas edgeStepsAllCanvas, Canvas shortestDistanceCanvas, Canvas shortestPathCanvas
@@ -128,7 +124,7 @@ public class GraphHolder {
         }
     }
 
-    private void relocateNode(Point start, Point end){
+    private void relocateNode(Point start, Point end) {
         if (graph.relocateVertex(graph.getVertexByCoord(start), end)) {
 //            this.refreshMap();
         }
@@ -163,7 +159,7 @@ public class GraphHolder {
         edgeShapes.getChildren().clear();
         entityShapes.getChildren().clear();
 
-        for(Vertex vertex : graph.getVertices()){
+        for (Vertex vertex : graph.getVertices()) {
             Circle elem = new Circle(vertex.getCoord().getX(), vertex.getCoord().getY(), 5, COLOR_NODE);
             elem.setOnMouseClicked(event -> {
                 System.out.println(vertex.getCoord());
@@ -171,7 +167,7 @@ public class GraphHolder {
             vertexShapes.getChildren().add(elem);
         }
 
-        for(Edge edge : graph.getEdges()){
+        for (Edge edge : graph.getEdges()) {
             Line elem = new Line(edge.getCoordStart().getX(), edge.getCoordStart().getY(), edge.getCoordEnd().getX(), edge.getCoordEnd().getY());
             edgeShapes.getChildren().add(elem);
         }

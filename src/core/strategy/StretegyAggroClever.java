@@ -23,14 +23,14 @@ public class StretegyAggroClever implements Strategy {
 
         int bestSteps = helper.bestBFS(currentPosition, false, Man.class, Lion.class);
 
-        for(Position neighborPosition : currentPosition.getAllNeighborPositions()){
+        for (Position neighborPosition : currentPosition.getAllNeighborPositions()) {
             int steps = helper.BFS(currentPosition, neighborPosition, Man.class, Lion.class);
-            if(bestSteps == steps){
-                if(neighborPosition.getAllEntities().size() > 0){
-                    if(!(neighborPosition.getAllEntities().get(0) instanceof Lion)){
+            if (bestSteps == steps) {
+                if (neighborPosition.getAllEntities().size() > 0) {
+                    if (!(neighborPosition.getAllEntities().get(0) instanceof Lion)) {
                         return neighborPosition;
                     }
-                }else{
+                } else {
                     return neighborPosition;
                 }
             }

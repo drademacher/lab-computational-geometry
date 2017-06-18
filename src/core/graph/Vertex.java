@@ -15,28 +15,23 @@ public class Vertex implements GraphEntity {
     private Point coord;
     private Position vertexPosition;
 
-    public Vertex(int id, Point coord){
+    public Vertex(int id, Point coord) {
         this.coord = coord;
         this.vertexPosition = new Position(this);
         this.id = id;
     }
 
 
-    public boolean registerEdge(Edge edge, Position edgeFacingPosition){
+    public boolean registerEdge(Edge edge, Position edgeFacingPosition) {
 
         return vertexPosition.registerNeighborPosition(edgeFacingPosition) && edges.add(edge);
     }
 
-    public boolean unregisterEdge(Edge edge, Position edgeFacingPosition){
+    public boolean unregisterEdge(Edge edge, Position edgeFacingPosition) {
         return vertexPosition.unregisterNeighborPosition(edgeFacingPosition) && edges.remove(edge);
     }
 
-    public void setCoord(Point point){
-        this.coord = point;
-        this.vertexPosition = new Position(this);
-    }
-
-    public ArrayList<Edge> getEdges(){
+    public ArrayList<Edge> getEdges() {
         return edges;
     }
 
@@ -44,23 +39,28 @@ public class Vertex implements GraphEntity {
         return coord;
     }
 
+    public void setCoord(Point point) {
+        this.coord = point;
+        this.vertexPosition = new Position(this);
+    }
+
     public Position getPosition() {
         return vertexPosition;
     }
 
-    public int getId(){
+    public int getId() {
         return id;
     }
 
     @Override
     public String getGraphEntityInfo() {
-        return "Vertex_"+id;
+        return "Vertex_" + id;
     }
 
     @Override
     public String toString() {
         String edgeString = "";
-        for(Edge edge : edges){
+        for (Edge edge : edges) {
             edgeString += edge.getGraphEntityInfo() + "  ";
         }
         return getGraphEntityInfo() + ": " + edgeString;

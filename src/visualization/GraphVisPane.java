@@ -246,7 +246,7 @@ public class GraphVisPane extends Pane {
         }
 
         for(Vertex vertex : graph.getVertices()){
-            Circle elem = new Circle(this.fieldSize * vertex.getCoord().getX(), this.fieldSize * vertex.getCoord().getY(), this.fieldSize - this.padding, COLOR_NODE);
+            Circle elem = new Circle(this.fieldSize * vertex.getCoord().getX(), this.fieldSize * vertex.getCoord().getY(), (this.fieldSize - this.padding)/2, COLOR_NODE);
             elem.setOnMouseClicked(event -> {
                 System.out.println(vertex.getCoord());
             });

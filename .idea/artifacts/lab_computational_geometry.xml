@@ -6,10 +6,8 @@
         <option name="appClass" value="visualization.Main" />
         <option name="description" value="" />
         <option name="height" value="800" />
-        <option name="htmlPlaceholderId" value="" />
         <option name="title" value="Lab Computational Geometry" />
         <option name="vendor" value="" />
-        <option name="version" value="" />
         <option name="width" value="1200" />
       </options>
     </properties>

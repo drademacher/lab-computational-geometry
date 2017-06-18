@@ -9,7 +9,9 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.StackPane;
 
 public class ZoomScrollPane extends ScrollPane {
-    public ZoomScrollPane(Group group) {
+    private Group group = new Group();
+
+    public ZoomScrollPane() {
         final double SCALE_DELTA = 1.1;
         final StackPane zoomPane = new StackPane();
 
@@ -101,5 +103,9 @@ public class ZoomScrollPane extends ScrollPane {
         } else {
             scroller.setHvalue(scroller.getHmin());
         }
+    }
+
+    public Group getGroup() {
+        return group;
     }
 }

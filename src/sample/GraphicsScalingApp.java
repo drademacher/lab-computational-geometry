@@ -2,7 +2,6 @@ package sample;
 
 import javafx.application.Application;
 import javafx.scene.Group;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -26,12 +25,13 @@ public class GraphicsScalingApp extends Application {
 
     @Override
     public void start(final Stage stage) {
-        final Group group = new Group(createStar(), createCurve());
 
-        Parent zoomPane = createZoomPane(group);
+        ZoomScrollPane zoomPane = new ZoomScrollPane();
 
         VBox layout = new VBox();
-        layout.getChildren().setAll(createMenuBar(stage, group), zoomPane);
+        layout.getChildren().setAll(createMenuBar(stage, zoomPane.getGroup()), zoomPane);
+
+        zoomPane.getGroup().getChildren().addAll(createStar(), createCurve());
 
         VBox.setVgrow(zoomPane, Priority.ALWAYS);
 
@@ -41,10 +41,6 @@ public class GraphicsScalingApp extends Application {
         stage.getIcons().setAll(new Image(APP_ICON));
         stage.setScene(scene);
         stage.show();
-    }
-
-    private Parent createZoomPane(final Group group) {
-        return new ZoomScrollPane(group);
     }
 
 

@@ -1,0 +1,20 @@
+<component name="ArtifactManager">
+  <artifact type="javafx" name="lab-computational-geometry">
+    <output-path>$PROJECT_DIR$/out/artifacts/lab_computational_geometry</output-path>
+    <properties id="javafx-properties">
+      <options>
+        <option name="appClass" value="visualization.Main" />
+        <option name="description" value="" />
+        <option name="height" value="800" />
+        <option name="title" value="Lab Computational Geometry" />
+        <option name="vendor" value="" />
+        <option name="width" value="1200" />
+      </options>
+    </properties>
+    <root id="root">
+      <element id="archive" name="lab_computational_geometry.jar">
+        <element id="module-output" name="lab-computational-geometry" />
+      </element>
+    </root>
+  </artifact>
+</component>

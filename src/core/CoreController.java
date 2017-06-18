@@ -36,28 +36,28 @@ public class CoreController {
     public Graph setDefaultGraph1() {
         this.graph = new Graph();
 
-        this.graph.registerVertex(new Point(5, 2));
-        this.graph.registerVertex(new Point(19, 2));
-        this.graph.registerVertex(new Point(22, 14));
-        this.graph.registerVertex(new Point(12, 22));
-        this.graph.registerVertex(new Point(2, 14));
+        this.graph.registerVertex(new Point(50, 20));
+        this.graph.registerVertex(new Point(190, 20));
+        this.graph.registerVertex(new Point(220, 140));
+        this.graph.registerVertex(new Point(120, 220));
+        this.graph.registerVertex(new Point(20, 140));
 
-        this.graph.registerVertex(new Point(12, 4));
-        this.graph.registerVertex(new Point(16, 5));
-        this.graph.registerVertex(new Point(19, 9));
-        this.graph.registerVertex(new Point(19, 13));
-        this.graph.registerVertex(new Point(16, 17));
-        this.graph.registerVertex(new Point(12, 18));
-        this.graph.registerVertex(new Point(8, 17));
-        this.graph.registerVertex(new Point(5, 13));
-        this.graph.registerVertex(new Point(5, 9));
-        this.graph.registerVertex(new Point(8, 5));
+        this.graph.registerVertex(new Point(120, 40));
+        this.graph.registerVertex(new Point(160, 50));
+        this.graph.registerVertex(new Point(190, 90));
+        this.graph.registerVertex(new Point(190, 130));
+        this.graph.registerVertex(new Point(160, 170));
+        this.graph.registerVertex(new Point(120, 180));
+        this.graph.registerVertex(new Point(80, 170));
+        this.graph.registerVertex(new Point(50, 130));
+        this.graph.registerVertex(new Point(50, 90));
+        this.graph.registerVertex(new Point(80, 50));
 
-        this.graph.registerVertex(new Point(12, 7));
-        this.graph.registerVertex(new Point(15, 10));
-        this.graph.registerVertex(new Point(14, 14));
-        this.graph.registerVertex(new Point(10, 14));
-        this.graph.registerVertex(new Point(9, 10));
+        this.graph.registerVertex(new Point(120, 70));
+        this.graph.registerVertex(new Point(150, 100));
+        this.graph.registerVertex(new Point(140, 140));
+        this.graph.registerVertex(new Point(100, 140));
+        this.graph.registerVertex(new Point(90, 100));
 
         this.graph.registerEdge(this.graph.getVertices().get(0), this.graph.getVertices().get(1));
         this.graph.registerEdge(this.graph.getVertices().get(1), this.graph.getVertices().get(2));
@@ -111,28 +111,28 @@ public class CoreController {
     public Graph setDefaultGraph2() {
         this.graph = new Graph();
 
-        this.graph.registerVertex(new Point(5, 2));
-        this.graph.registerVertex(new Point(19, 2));
-        this.graph.registerVertex(new Point(22, 14));
-        this.graph.registerVertex(new Point(12, 22));
-        this.graph.registerVertex(new Point(2, 14));
+        this.graph.registerVertex(new Point(50, 20));
+        this.graph.registerVertex(new Point(190, 20));
+        this.graph.registerVertex(new Point(220, 140));
+        this.graph.registerVertex(new Point(120, 220));
+        this.graph.registerVertex(new Point(20, 140));
 
-        this.graph.registerVertex(new Point(12, 4));
-        this.graph.registerVertex(new Point(16, 5));
-        this.graph.registerVertex(new Point(19, 9));
-        this.graph.registerVertex(new Point(19, 13));
-        this.graph.registerVertex(new Point(16, 17));
-        this.graph.registerVertex(new Point(12, 18));
-        this.graph.registerVertex(new Point(8, 17));
-        this.graph.registerVertex(new Point(5, 13));
-        this.graph.registerVertex(new Point(5, 9));
-        this.graph.registerVertex(new Point(8, 5));
+        this.graph.registerVertex(new Point(120, 40));
+        this.graph.registerVertex(new Point(160, 50));
+        this.graph.registerVertex(new Point(190, 90));
+        this.graph.registerVertex(new Point(190, 130));
+        this.graph.registerVertex(new Point(160, 170));
+        this.graph.registerVertex(new Point(120, 180));
+        this.graph.registerVertex(new Point(80, 170));
+        this.graph.registerVertex(new Point(50, 130));
+        this.graph.registerVertex(new Point(50, 90));
+        this.graph.registerVertex(new Point(80, 50));
 
-        this.graph.registerVertex(new Point(12, 7));
-        this.graph.registerVertex(new Point(15, 10));
-        this.graph.registerVertex(new Point(14, 14));
-        this.graph.registerVertex(new Point(10, 14));
-        this.graph.registerVertex(new Point(9, 10));
+        this.graph.registerVertex(new Point(120, 70));
+        this.graph.registerVertex(new Point(150, 100));
+        this.graph.registerVertex(new Point(140, 140));
+        this.graph.registerVertex(new Point(100, 140));
+        this.graph.registerVertex(new Point(90, 100));
 
         this.graph.registerEdge(this.graph.getVertices().get(0), this.graph.getVertices().get(1));
         this.graph.registerEdge(this.graph.getVertices().get(1), this.graph.getVertices().get(2));

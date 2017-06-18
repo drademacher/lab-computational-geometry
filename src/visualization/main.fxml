@@ -10,8 +10,8 @@
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.StackPane?>
 
+<?import visualization.ZoomScrollPane?>
 <BorderPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visualization.VisController">
     <top>
         <MenuBar BorderPane.alignment="CENTER">
@@ -110,12 +110,12 @@
 
     </bottom>
     <center>
-        <StackPane fx:id="canvasStacker" style="-fx-background-color: #999999;">
+        <ZoomScrollPane fx:id="canvasStacker" style="-fx-background-color: #999999;">
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
          <BorderPane.margin>
             <Insets />
-         </BorderPane.margin></StackPane>
+         </BorderPane.margin></ZoomScrollPane>
     </center>
 </BorderPane>

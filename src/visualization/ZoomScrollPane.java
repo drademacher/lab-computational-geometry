@@ -1,4 +1,4 @@
-package sample;
+package visualization;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -13,13 +13,15 @@ import javafx.scene.layout.StackPane;
  * https://stackoverflow.com/questions/16680295/javafx-correct-scaling
  */
 public class ZoomScrollPane extends ScrollPane {
-    private Group group = new Group();
+    private Group vertexShapes = new Group();
+    private Group edgeShapes = new Group();
+    private Group entityShapes = new Group();
 
     public ZoomScrollPane() {
         final double SCALE_DELTA = 1.1;
         final StackPane zoomPane = new StackPane();
 
-        zoomPane.getChildren().add(group);
+        zoomPane.getChildren().addAll(edgeShapes, vertexShapes, entityShapes);
 
         final Group scrollContent = new Group(zoomPane);
         this.setContent(scrollContent);
@@ -47,8 +49,12 @@ public class ZoomScrollPane extends ScrollPane {
             // units
             Point2D scrollOffset = figureScrollOffset(scrollContent, scroller);
 
-            group.setScaleX(group.getScaleX() * scaleFactor);
-            group.setScaleY(group.getScaleY() * scaleFactor);
+            vertexShapes.setScaleX(vertexShapes.getScaleX() * scaleFactor);
+            vertexShapes.setScaleY(vertexShapes.getScaleY() * scaleFactor);
+            edgeShapes.setScaleX(vertexShapes.getScaleX() * scaleFactor);
+            edgeShapes.setScaleY(vertexShapes.getScaleY() * scaleFactor);
+            entityShapes.setScaleX(vertexShapes.getScaleX() * scaleFactor);
+            entityShapes.setScaleY(vertexShapes.getScaleY() * scaleFactor);
 
             // move viewport so that old center remains in the center after the
             // scaling
@@ -109,7 +115,15 @@ public class ZoomScrollPane extends ScrollPane {
         }
     }
 
-    public Group getGroup() {
-        return group;
+    public Group getVertexShapes() {
+        return vertexShapes;
+    }
+
+    public Group getEdgeShapes() {
+        return edgeShapes;
+    }
+
+    public Group getEntityShapes() {
+        return entityShapes;
     }
 }

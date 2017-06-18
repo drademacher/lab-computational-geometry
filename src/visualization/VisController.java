@@ -1,19 +1,13 @@
 package visualization;
 
 import core.CoreController;
-import core.util.Point;
-import javafx.beans.value.ChangeListener;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioMenuItem;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -37,7 +31,7 @@ public class VisController implements Initializable {
     private MenuItem addNodeButton, removeNodeButton, relocateNodeButton, addEdgeButton, removeEdgeButton;
 
     @FXML
-    private StackPane canvasStacker;
+    private ZoomScrollPane canvasStacker;
 
     @FXML
     private CheckMenuItem edgeLengthButton, shortestDistanceButton, shortestPathButton;
@@ -57,7 +51,7 @@ public class VisController implements Initializable {
     // TODO: inject the coreController here
     private CoreController coreController = new CoreController();
 
-    private GraphVisPane graphHolder;
+    private GraphHolder graphHolder;
 
     private Stage stage;
 
@@ -85,42 +79,17 @@ public class VisController implements Initializable {
         System.out.println(canvas.getHeight());*/
 
         //Init mapHolder
-        this.graphHolder = new GraphVisPane(canvasStacker); // baseCanvas, edgeLengthCanvas, edgeStepsActiveCanvas, edgeStepsAllCanvas, shortestDistanceCanvas, shortestPathCanvas
+        this.graphHolder = new GraphHolder(canvasStacker); // baseCanvas, edgeLengthCanvas, edgeStepsActiveCanvas, edgeStepsAllCanvas, shortestDistanceCanvas, shortestPathCanvas
 
 
 
 
-        final EventHandler<KeyEvent> keyEventHandler = e -> {
-            if (e.getCode() == KeyCode.RIGHT) {
-                this.graphHolder.moveCamera(new Point(1, 0));
-            }
-            if (e.getCode() == KeyCode.LEFT) {
-                this.graphHolder.moveCamera(new Point(-1, 0));
-            }
-            if (e.getCode() == KeyCode.UP) {
-                this.graphHolder.moveCamera(new Point(0, -1));
-            }
-            if (e.getCode() == KeyCode.DOWN) {
-                this.graphHolder.moveCamera(new Point(0, 1));
-            }
-            if (e.getCode() == KeyCode.SPACE) {
-                graphHolder.setState(this.coreController.simulateStep());
-            }
-            e.consume();
-        };
+        // TODO: global key commands here!
+//        mainPane.sceneProperty().addListener((observableScene, oldScene, newScene) -> {
+//            if (oldScene != null) oldScene.removeEventHandler(KeyEvent.KEY_PRESSED, keyEventHandler);
+//            if (newScene != null) newScene.addEventHandler(KeyEvent.KEY_PRESSED, keyEventHandler);
+//        });
 
-        mainPane.sceneProperty().addListener((observableScene, oldScene, newScene) -> {
-            if (oldScene != null) oldScene.removeEventHandler(KeyEvent.KEY_PRESSED, keyEventHandler);
-            if (newScene != null) newScene.addEventHandler(KeyEvent.KEY_PRESSED, keyEventHandler);
-        });
-
-        final ChangeListener listener = (observable, oldValue, newValue) -> {
-            if (graphHolder == null) return;
-            graphHolder.refreshMap();
-        };
-
-        mainPane.widthProperty().addListener(listener);
-        mainPane.heightProperty().addListener(listener);
 
 
         initGraphButtons();

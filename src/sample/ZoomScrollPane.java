@@ -8,6 +8,10 @@ import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.StackPane;
 
+/***
+ * Based on Source Code:
+ * https://stackoverflow.com/questions/16680295/javafx-correct-scaling
+ */
 public class ZoomScrollPane extends ScrollPane {
     private Group group = new Group();
 

@@ -24,7 +24,7 @@ public class GraphHolder {
     private boolean editMode = true; // TODO: important variable!!!
 
 
-    GraphHolder(ZoomScrollPane superPane) { // Canvas canvas, Canvas edgeLengthCanvas, Canvas edgeStepsActiveCanvas, Canvas edgeStepsAllCanvas, Canvas shortestDistanceCanvas, Canvas shortestPathCanvas
+    GraphHolder(ZoomScrollPane superPane) {
         super();
 
         vertexShapes = superPane.getVertexShapes();
@@ -160,7 +160,7 @@ public class GraphHolder {
         entityShapes.getChildren().clear();
 
         for (Vertex vertex : graph.getVertices()) {
-            Circle elem = new Circle(vertex.getCoord().getX(), vertex.getCoord().getY(), 5, COLOR_NODE);
+            Circle elem = new Circle(vertex.getCoord().getX(), vertex.getCoord().getY(), 3, COLOR_NODE);
             elem.setOnMouseClicked(event -> {
                 System.out.println(vertex.getCoord());
             });
@@ -169,6 +169,7 @@ public class GraphHolder {
 
         for (Edge edge : graph.getEdges()) {
             Line elem = new Line(edge.getCoordStart().getX(), edge.getCoordStart().getY(), edge.getCoordEnd().getX(), edge.getCoordEnd().getY());
+            elem.setOnMouseClicked(event -> System.out.println("wow"));
             edgeShapes.getChildren().add(elem);
         }
 

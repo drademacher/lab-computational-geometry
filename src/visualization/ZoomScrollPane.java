@@ -51,10 +51,10 @@ public class ZoomScrollPane extends ScrollPane {
 
             vertexShapes.setScaleX(vertexShapes.getScaleX() * scaleFactor);
             vertexShapes.setScaleY(vertexShapes.getScaleY() * scaleFactor);
-            edgeShapes.setScaleX(vertexShapes.getScaleX() * scaleFactor);
-            edgeShapes.setScaleY(vertexShapes.getScaleY() * scaleFactor);
-            entityShapes.setScaleX(vertexShapes.getScaleX() * scaleFactor);
-            entityShapes.setScaleY(vertexShapes.getScaleY() * scaleFactor);
+            edgeShapes.setScaleX(edgeShapes.getScaleX() * scaleFactor);
+            edgeShapes.setScaleY(edgeShapes.getScaleY() * scaleFactor);
+            entityShapes.setScaleX(entityShapes.getScaleX() * scaleFactor);
+            entityShapes.setScaleY(entityShapes.getScaleY() * scaleFactor);
 
             // move viewport so that old center remains in the center after the
             // scaling

@@ -183,7 +183,20 @@ public class CoreController {
     }
 
     public Graph setDefaultGraph3() {
-        return this.setDefaultGraph1();
+        this.graph = new Graph();
+        // this.graph.registerVertex(new Point(5, 5));
+        this.graph.registerVertex(new Point(19, 9));
+        this.graph.registerVertex(new Point(9, 4));
+        this.graph.registerEdge(this.graph.getVertices().get(0), this.graph.getVertices().get(1));
+
+        men = new ArrayList<>();
+        lions = new ArrayList<>();
+        men.add(new Man(this.graph.getVertices().get(0).getPosition(), new StrategyRandom()));
+        lions.add(new Lion(this.graph.getVertices().get(1).getPosition(), new StrategyRandom()));
+
+        this.state = new State(men, lions);
+
+        return this.graph;
     }
 
     public Graph setDefaultGraph4() {

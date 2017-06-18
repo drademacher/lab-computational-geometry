@@ -8,12 +8,15 @@ import core.graph.Edge;
 import core.graph.Graph;
 import core.graph.Vertex;
 import core.util.Point;
+import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 
 import static visualization.VisConstants.*;
 
@@ -28,6 +31,7 @@ public class GraphVisPane extends Pane {
     private Graph graph;
     private State state;
 
+    private Group allNodes;
     // private StackPane pane;
 
     // private OnMouseClickedCallback onMouseClickedCallback;
@@ -45,9 +49,10 @@ public class GraphVisPane extends Pane {
     GraphVisPane(StackPane superPane) { // Canvas canvas, Canvas edgeLengthCanvas, Canvas edgeStepsActiveCanvas, Canvas edgeStepsAllCanvas, Canvas shortestDistanceCanvas, Canvas shortestPathCanvas
         super();
 
-
+        allNodes = new Group();
 
         superPane.getChildren().add(this);
+        superPane.getChildren().add(allNodes);
 
 
         this.baseCanvas = new Canvas(10, 10);
@@ -89,6 +94,10 @@ public class GraphVisPane extends Pane {
         entityCanvas.setLayoutY(y);
         entityCanvas.setWidth(w);
         entityCanvas.setHeight(h);
+        allNodes.setLayoutX(x);
+        allNodes.setLayoutY(y);
+//        allNodes.setWidth(w);
+//        allNodes.setHeight(h);
     }
 
 
@@ -224,6 +233,8 @@ public class GraphVisPane extends Pane {
         if (graph == null) {
             return;
         }
+        allNodes.getChildren().clear();
+
 
         GraphicsContext gc = this.baseCanvas.getGraphicsContext2D();
         gc.setFill(COLOR_BACKGROUND);
@@ -235,8 +246,13 @@ public class GraphVisPane extends Pane {
         }
 
         for(Vertex vertex : graph.getVertices()){
-            renderNode(baseCanvas, vertex.getCoord());
+            Circle elem = new Circle(this.fieldSize * vertex.getCoord().getX(), this.fieldSize * vertex.getCoord().getY(), this.fieldSize - this.padding, COLOR_NODE);
+            elem.setOnMouseClicked(event -> {
+                System.out.println(vertex.getCoord());
+            });
+            allNodes.getChildren().add(elem);
         }
+
 
         gc.setFill(COLOR_MAN);
 

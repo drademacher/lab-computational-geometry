@@ -4,6 +4,8 @@ import core.util.Point;
 
 import java.util.ArrayList;
 
+import static core.graph.NEWGraphConstants.BIG_VERTEX_RADIUS;
+
 /**
  * Created by Jens on 20.06.2017.
  */
@@ -18,7 +20,12 @@ public class NEWGraph {
     }
 
     public NEWBigVertex createVertex(Point coordinate){
-        //TODO check duplicate / margin to other vertices
+
+        //check duplicate and margin to other vertices
+        if(!validVertexPosition(coordinate)){
+            return null;
+        }
+
         NEWBigVertex vertex =  new NEWBigVertex(getIdCounter(), coordinate);
         vertices.add(vertex);
         return vertex;
@@ -27,8 +34,13 @@ public class NEWGraph {
     public boolean relocateVertex(NEWBigVertex vertex, Point newCoordinate){
 
         //TODO implement
-        //TODO check duplicate / margin to other vertices
         //TODO update position of SmallVertices
+
+        //check duplicate
+        if(!validVertexPosition(newCoordinate)){
+            return false;
+        }
+
         return false;
     }
 
@@ -39,7 +51,12 @@ public class NEWGraph {
 
     public boolean createEdge(NEWBigVertex vertex1, NEWBigVertex vertex2, int weight){
 
-        //TODO check duplicate
+        //check duplicate
+        for(NEWBigVertex.EdgeVerticesObject edgeVerticesObject : vertex1.getEdgeVerticesObjects()){
+            if(edgeVerticesObject.getNeighbor().equals(vertex2)){
+                return false; //dublicate
+            }
+        }
 
         ArrayList<NEWSmallVertex> edgeVertices = new ArrayList<>();
         for(int i = 0; i < weight-1; i++){
@@ -73,21 +90,26 @@ public class NEWGraph {
             vertex1.registerAdjacentVertex(vertex2);
             vertex2.registerAdjacentVertex(vertex1);
         }
-        return false;
+        return true;
     }
 
     public boolean removeEdge(NEWBigVertex vertex1, NEWBigVertex vertex2){
         return vertex1.unregisterEdgeVerticeObject(vertex2) && vertex2.unregisterEdgeVerticeObject(vertex1);
     }
 
-    public NEWVertex getVertexByCoord(Point coordinate) {
+    public NEWVertex getVertexByCoordinate(Point coordinate) {
+        return getVertexByCoordinate(coordinate, BIG_VERTEX_RADIUS);
+    }
+    private NEWVertex getVertexByCoordinate(Point coordinate, int radius) {
 
-        //TODO implement
-//        for (NEWVertex vertex : vertices) {
-//            if (vertex.getCoord().equals(coord)) {
-//                return vertex;
-//            }
-//        }
+        for(NEWBigVertex vertex : vertices){
+            Point vector = new Point(vertex.getCoordinates().getX() - coordinate.getX(), vertex.getCoordinates().getY() - coordinate.getY());
+            double vectorLength = vector.length();
+            if(vectorLength <= radius){
+                return vertex;
+            }
+        }
+
         return null;
     }
 
@@ -95,6 +117,13 @@ public class NEWGraph {
     /* ***********************************
      *  PRIVATE HELPER FUNCTIONS
      *********************************** */
+
+    private boolean validVertexPosition(Point coordinates){
+        if(getVertexByCoordinate(coordinates, 2*BIG_VERTEX_RADIUS) != null){
+            return false;
+        }
+        return true;
+    }
 
     private static int getIdCounter() {
         idCounter++;

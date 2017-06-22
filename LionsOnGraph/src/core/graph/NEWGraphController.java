@@ -41,7 +41,7 @@ public class NEWGraphController {
     }
 
     public NEWVertex getVertexByCoord(Point coordinate) {
-        return this.graph.getVertexByCoord(coordinate);
+        return this.graph.getVertexByCoordinate(coordinate);
     }
 
 

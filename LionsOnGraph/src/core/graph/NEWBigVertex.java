@@ -23,8 +23,8 @@ public class NEWBigVertex extends NEWVertex {
     }
 
 
-    public boolean registerEdgeVerticeObject(NEWBigVertex neighbor, ArrayList<NEWSmallVertex> edgeVertices){
-        return this.edgeVerticesObjects.add(new EdgeVerticesObject(neighbor, edgeVertices));
+    public boolean registerEdgeVerticeObject(NEWBigVertex neighbor, ArrayList<NEWSmallVertex> edgeVertices, int weight){
+        return this.edgeVerticesObjects.add(new EdgeVerticesObject(neighbor, edgeVertices,weight));
     }
 
     public boolean unregisterEdgeVerticeObject(NEWBigVertex neighbor){
@@ -50,10 +50,12 @@ public class NEWBigVertex extends NEWVertex {
     public class EdgeVerticesObject {
         private NEWBigVertex neighbor;
         private ArrayList<NEWSmallVertex> edgeVertices = new ArrayList<>();
+        private int weight;
 
-        public EdgeVerticesObject(NEWBigVertex neighbor, ArrayList<NEWSmallVertex> edgeVertices){
+        public EdgeVerticesObject(NEWBigVertex neighbor, ArrayList<NEWSmallVertex> edgeVertices, int weight){
             this.neighbor = neighbor;
             this.edgeVertices = edgeVertices;
+            this.weight = weight;
         }
 
         public NEWBigVertex getNeighbor() {
@@ -62,6 +64,10 @@ public class NEWBigVertex extends NEWVertex {
 
         public ArrayList<NEWSmallVertex> getEdgeVertices() {
             return edgeVertices;
+        }
+
+        public int getEdgeWeight(){
+            return weight;
         }
 
         public boolean unregisterAll(NEWBigVertex vertex){

@@ -33,12 +33,33 @@ public class NEWGraph {
 
     public boolean relocateVertex(NEWBigVertex vertex, Point newCoordinate){
 
-        //TODO implement
-        //TODO update position of SmallVertices
-
         //check duplicate
         if(!validVertexPosition(newCoordinate)){
             return false;
+        }
+
+        vertex.setCoordinates(newCoordinate);
+
+        //update position of SmallVertices
+        for(NEWBigVertex.EdgeVerticesObject edgeVerticesObject : vertex.getEdgeVerticesObjects()){
+            NEWBigVertex neighbor = edgeVerticesObject.getNeighbor();
+            int edgeWeight = edgeVerticesObject.getEdgeWeight();
+            int i = 0;
+
+            //check edge orientation, if there are (enough) edge vertices
+            boolean reversedEdge = false;
+            if(edgeWeight>2){
+                reversedEdge = !verticesAreAdjacent(edgeVerticesObject.getEdgeVertices().get(0), vertex);
+            }
+
+            for(NEWSmallVertex smallVertex : edgeVerticesObject.getEdgeVertices()){
+                if(reversedEdge){
+                    smallVertex.setCoordinates(calcSmallVertexCoordinates(neighbor, vertex, edgeWeight, i));
+                }else{
+                    smallVertex.setCoordinates(calcSmallVertexCoordinates(vertex, neighbor, edgeWeight, i));
+                }
+                i++;
+            }
         }
 
         return false;
@@ -82,8 +103,8 @@ public class NEWGraph {
             }
         }
 
-        vertex1.registerEdgeVerticeObject(vertex2, edgeVertices);
-        vertex2.registerEdgeVerticeObject(vertex1, edgeVertices);
+        vertex1.registerEdgeVerticeObject(vertex2, edgeVertices, weight);
+        vertex2.registerEdgeVerticeObject(vertex1, edgeVertices, weight);
 
 
         if(weight <= 1){
@@ -117,6 +138,15 @@ public class NEWGraph {
     /* ***********************************
      *  PRIVATE HELPER FUNCTIONS
      *********************************** */
+
+    private boolean verticesAreAdjacent(NEWVertex vertex1, NEWVertex vertex2){
+        for(NEWVertex vertex : vertex1.getAdjacentVertices()){
+            if(vertex.equals(vertex2)){
+                return true;
+            }
+        }
+        return false;
+    }
 
     private boolean validVertexPosition(Point coordinates){
         if(getVertexByCoordinate(coordinates, 2*BIG_VERTEX_RADIUS) != null){

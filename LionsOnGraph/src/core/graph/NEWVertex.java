@@ -28,6 +28,10 @@ public abstract class NEWVertex {
         return this.adjacentVertices.remove(vertex);
     }
 
+    public void setCoordinates(Point coordinates){
+        this.coordinates = coordinates;
+    }
+
     public Point getCoordinates() {
         return coordinates;
     }
@@ -38,5 +42,21 @@ public abstract class NEWVertex {
 
     public ArrayList<NEWVertex> getAdjacentVertices() {
         return adjacentVertices;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        // self check
+        if (this == o)
+            return true;
+        // null check
+        if (o == null)
+            return false;
+        // type check and cast
+        if (getClass() != o.getClass())
+            return false;
+        NEWVertex vertex = (NEWVertex) o;
+        // field comparison
+        return vertex.getId() == getId() && vertex.getCoordinates().equals(getCoordinates());
     }
 }

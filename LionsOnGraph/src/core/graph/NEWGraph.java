@@ -28,6 +28,7 @@ public class NEWGraph {
 
         //TODO implement
         //TODO check duplicate / margin to other vertices
+        //TODO update position of SmallVertices
         return false;
     }
 
@@ -101,9 +102,12 @@ public class NEWGraph {
     }
 
     private Point calcSmallVertexCoordinates(NEWBigVertex vertex1, NEWBigVertex vertex2, int weight, int index){
-        Point vector = new Point(vertex1.getCoordinates().getX() - vertex2.getCoordinates().getX(), vertex1.getCoordinates().getY() - vertex2.getCoordinates().getY());
+        Point vector = new Point(vertex2.getCoordinates().getX() - vertex1.getCoordinates().getX(), vertex2.getCoordinates().getY() - vertex1.getCoordinates().getY());
         double vectorLength = vector.length();
-        return vertex1.getCoordinates().add(vector.mul((vectorLength / weight) * index + 1));
+        double factor = (index + 1) * (vectorLength/weight) /vectorLength;
+        Point addingVector = vector.mul(factor);
+        Point result = vertex1.getCoordinates().add(addingVector);
+        return result;
     }
 
     public String debugGraph(){
@@ -111,7 +115,7 @@ public class NEWGraph {
         String str = "";
 
         for(NEWBigVertex vertex : vertices){
-            str += "\n"+vertex.getId() + " (";
+            str += "\n"+vertex.getId() + " Coord: "+vertex.getCoordinates()+ " (";
             for(NEWVertex ver : vertex.getAdjacentVertices()){
                 str += ver.getId() + " ' ";
             }
@@ -119,10 +123,10 @@ public class NEWGraph {
             for(NEWBigVertex.EdgeVerticesObject evObject : vertex.getEdgeVerticesObjects()){
                 str += "\n - to: " + evObject.getNeighbor().getId();
                 for(NEWSmallVertex smallVertex : evObject.getEdgeVertices()){
-                    str += "        \n --->   "+smallVertex.getId()+" (";
-                        for(NEWVertex ver : smallVertex.getAdjacentVertices()){
-                            str += ver.getId() + " ' ";
-                        }
+                    str += "        \n --->   "+smallVertex.getId() + " Coord: "+smallVertex.getCoordinates() +" (";
+                    for(NEWVertex ver : smallVertex.getAdjacentVertices()){
+                        str += ver.getId() + " ' ";
+                    }
                     str += "), ";
                 }
             }

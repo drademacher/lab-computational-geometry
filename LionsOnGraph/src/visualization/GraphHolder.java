@@ -6,6 +6,7 @@ import core.graph.*;
 import core.util.Point;
 import javafx.scene.Group;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
 
 import static visualization.VisConstants.COLOR_NODE;
 
@@ -161,16 +162,34 @@ public class GraphHolder {
             elem.setOnMouseClicked(event -> {
                 System.out.println(vertex.getCoordinates());
             });
+
+            for (Vertex edge : vertex.getAdjacentVertices()) {
+                Line line = new Line(vertex.getCoordinates().getX(), vertex.getCoordinates().getY(), edge.getCoordinates().getX(), edge.getCoordinates().getY());
+
+                edgeShapes.getChildren().add(line);
+            }
+
             vertexShapes.getChildren().add(elem);
         }
+
+        // System.out.println(graphController.getSmallVertices());
 
         for (SmallVertex vertex : graphController.getSmallVertices()) {
             Circle elem = new Circle(vertex.getCoordinates().getX(), vertex.getCoordinates().getY(), 2, COLOR_NODE);
             elem.setOnMouseClicked(event -> {
                 System.out.println(vertex.getCoordinates());
             });
+
+            for (Vertex edge : vertex.getAdjacentVertices()) {
+                Line line = new Line(vertex.getCoordinates().getX(), vertex.getCoordinates().getY(), edge.getCoordinates().getX(), edge.getCoordinates().getY());
+
+                edgeShapes.getChildren().add(line);
+            }
+
             vertexShapes.getChildren().add(elem);
         }
+
+
 
 //        for (Edge edge : graphController.getEdges()) {
 //            Line elem = new Line(edge.getCoordStart().getX(), edge.getCoordStart().getY(), edge.getCoordEnd().getX(), edge.getCoordEnd().getY());

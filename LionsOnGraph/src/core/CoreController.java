@@ -2,7 +2,9 @@ package core;
 
 import core.entities.Lion;
 import core.entities.Man;
-import core.graph.Graph;
+import core.graph.NEWBigVertex;
+import core.graph.NEWGraph;
+import core.graph.NEWGraphController;
 import core.strategy.StrategyAggroGreedy;
 import core.strategy.StrategyRandom;
 import core.strategy.StrategyRunAwayGreedy;
@@ -18,209 +20,224 @@ import java.util.ArrayList;
  * Created by Danny on 17.05.2017.
  */
 public class CoreController {
-    ArrayList<Lion> lions = new ArrayList<>();
-    ArrayList<Man> men = new ArrayList<>();
-    private Graph graph;
+    private NEWGraphController graphController;
     private State state;
 
-    public Graph setEmptyGraph() {
-        this.graph = new Graph();
+    public NEWGraphController setEmptyGraph() {
+        this.graphController = new NEWGraphController();
 
-        men = new ArrayList<>();
-        lions = new ArrayList<>();
-        this.state = new State(men, lions);
-        return this.graph;
+        this.state = new State(this.graphController.getMen(), this.graphController.getLions());
+        return this.graphController;
     }
 
 
-    public Graph setDefaultGraph1() {
-        this.graph = new Graph();
+    public NEWGraphController setDefaultGraph1() {
+        this.graphController = new NEWGraphController();
 
-        this.graph.registerVertex(new Point(50, 20));
-        this.graph.registerVertex(new Point(190, 20));
-        this.graph.registerVertex(new Point(220, 140));
-        this.graph.registerVertex(new Point(120, 220));
-        this.graph.registerVertex(new Point(20, 140));
+        this.graphController.createVertex(new Point(50, 20));
+        this.graphController.createVertex(new Point(190, 20));
+        this.graphController.createVertex(new Point(220, 140));
+        this.graphController.createVertex(new Point(120, 220));
+        this.graphController.createVertex(new Point(20, 140));
 
-        this.graph.registerVertex(new Point(120, 40));
-        this.graph.registerVertex(new Point(160, 50));
-        this.graph.registerVertex(new Point(190, 90));
-        this.graph.registerVertex(new Point(190, 130));
-        this.graph.registerVertex(new Point(160, 170));
-        this.graph.registerVertex(new Point(120, 180));
-        this.graph.registerVertex(new Point(80, 170));
-        this.graph.registerVertex(new Point(50, 130));
-        this.graph.registerVertex(new Point(50, 90));
-        this.graph.registerVertex(new Point(80, 50));
+        this.graphController.createVertex(new Point(120, 40));
+        this.graphController.createVertex(new Point(160, 50));
+        this.graphController.createVertex(new Point(190, 90));
+        this.graphController.createVertex(new Point(190, 130));
+        this.graphController.createVertex(new Point(160, 170));
+        this.graphController.createVertex(new Point(120, 180));
+        this.graphController.createVertex(new Point(80, 170));
+        this.graphController.createVertex(new Point(50, 130));
+        this.graphController.createVertex(new Point(50, 90));
+        this.graphController.createVertex(new Point(80, 50));
 
-        this.graph.registerVertex(new Point(120, 70));
-        this.graph.registerVertex(new Point(150, 100));
-        this.graph.registerVertex(new Point(140, 140));
-        this.graph.registerVertex(new Point(100, 140));
-        this.graph.registerVertex(new Point(90, 100));
+        this.graphController.createVertex(new Point(120, 70));
+        this.graphController.createVertex(new Point(150, 100));
+        this.graphController.createVertex(new Point(140, 140));
+        this.graphController.createVertex(new Point(100, 140));
+        this.graphController.createVertex(new Point(90, 100));
 
-        this.graph.registerEdge(this.graph.getVertices().get(0), this.graph.getVertices().get(1));
-        this.graph.registerEdge(this.graph.getVertices().get(1), this.graph.getVertices().get(2));
-        this.graph.registerEdge(this.graph.getVertices().get(2), this.graph.getVertices().get(3));
-        this.graph.registerEdge(this.graph.getVertices().get(3), this.graph.getVertices().get(4));
-        this.graph.registerEdge(this.graph.getVertices().get(4), this.graph.getVertices().get(0));
+        this.graphController.createEdge(this.graphController.getBigVertexById(0), this.graphController.getBigVertexById(1));
+        this.graphController.createEdge(this.graphController.getBigVertexById(1), this.graphController.getBigVertexById(2));
+        this.graphController.createEdge(this.graphController.getBigVertexById(2), this.graphController.getBigVertexById(3));
+        this.graphController.createEdge(this.graphController.getBigVertexById(3), this.graphController.getBigVertexById(4));
+        this.graphController.createEdge(this.graphController.getBigVertexById(4), this.graphController.getBigVertexById(0));
 
-        this.graph.registerEdge(this.graph.getVertices().get(0), this.graph.getVertices().get(14));
-        this.graph.registerEdge(this.graph.getVertices().get(1), this.graph.getVertices().get(6));
-        this.graph.registerEdge(this.graph.getVertices().get(2), this.graph.getVertices().get(8));
-        this.graph.registerEdge(this.graph.getVertices().get(3), this.graph.getVertices().get(10));
-        this.graph.registerEdge(this.graph.getVertices().get(4), this.graph.getVertices().get(12));
+        this.graphController.createEdge(this.graphController.getBigVertexById(0), this.graphController.getBigVertexById(14));
+        this.graphController.createEdge(this.graphController.getBigVertexById(1), this.graphController.getBigVertexById(6));
+        this.graphController.createEdge(this.graphController.getBigVertexById(2), this.graphController.getBigVertexById(8));
+        this.graphController.createEdge(this.graphController.getBigVertexById(3), this.graphController.getBigVertexById(10));
+        this.graphController.createEdge(this.graphController.getBigVertexById(4), this.graphController.getBigVertexById(12));
 
-        this.graph.registerEdge(this.graph.getVertices().get(5), this.graph.getVertices().get(6));
-        this.graph.registerEdge(this.graph.getVertices().get(6), this.graph.getVertices().get(7));
-        this.graph.registerEdge(this.graph.getVertices().get(7), this.graph.getVertices().get(8));
-        this.graph.registerEdge(this.graph.getVertices().get(8), this.graph.getVertices().get(9));
-        this.graph.registerEdge(this.graph.getVertices().get(9), this.graph.getVertices().get(10));
-        this.graph.registerEdge(this.graph.getVertices().get(10), this.graph.getVertices().get(11));
-        this.graph.registerEdge(this.graph.getVertices().get(11), this.graph.getVertices().get(12));
-        this.graph.registerEdge(this.graph.getVertices().get(12), this.graph.getVertices().get(13));
-        this.graph.registerEdge(this.graph.getVertices().get(13), this.graph.getVertices().get(14));
-        this.graph.registerEdge(this.graph.getVertices().get(14), this.graph.getVertices().get(5));
+        this.graphController.createEdge(this.graphController.getBigVertexById(5), this.graphController.getBigVertexById(6));
+        this.graphController.createEdge(this.graphController.getBigVertexById(6), this.graphController.getBigVertexById(7));
+        this.graphController.createEdge(this.graphController.getBigVertexById(7), this.graphController.getBigVertexById(8));
+        this.graphController.createEdge(this.graphController.getBigVertexById(8), this.graphController.getBigVertexById(9));
+        this.graphController.createEdge(this.graphController.getBigVertexById(9), this.graphController.getBigVertexById(10));
+        this.graphController.createEdge(this.graphController.getBigVertexById(10), this.graphController.getBigVertexById(11));
+        this.graphController.createEdge(this.graphController.getBigVertexById(11), this.graphController.getBigVertexById(12));
+        this.graphController.createEdge(this.graphController.getBigVertexById(12), this.graphController.getBigVertexById(13));
+        this.graphController.createEdge(this.graphController.getBigVertexById(13), this.graphController.getBigVertexById(14));
+        this.graphController.createEdge(this.graphController.getBigVertexById(14), this.graphController.getBigVertexById(15));
 
-        this.graph.registerEdge(this.graph.getVertices().get(5), this.graph.getVertices().get(15));
-        this.graph.registerEdge(this.graph.getVertices().get(7), this.graph.getVertices().get(16));
-        this.graph.registerEdge(this.graph.getVertices().get(9), this.graph.getVertices().get(17));
-        this.graph.registerEdge(this.graph.getVertices().get(11), this.graph.getVertices().get(18));
-        this.graph.registerEdge(this.graph.getVertices().get(13), this.graph.getVertices().get(19));
+        this.graphController.createEdge(this.graphController.getBigVertexById(5), this.graphController.getBigVertexById(15));
+        this.graphController.createEdge(this.graphController.getBigVertexById(7), this.graphController.getBigVertexById(16));
+        this.graphController.createEdge(this.graphController.getBigVertexById(9), this.graphController.getBigVertexById(17));
+        this.graphController.createEdge(this.graphController.getBigVertexById(11), this.graphController.getBigVertexById(18));
+        this.graphController.createEdge(this.graphController.getBigVertexById(13), this.graphController.getBigVertexById(19));
 
-        this.graph.registerEdge(this.graph.getVertices().get(15), this.graph.getVertices().get(16));
-        this.graph.registerEdge(this.graph.getVertices().get(16), this.graph.getVertices().get(17));
-        this.graph.registerEdge(this.graph.getVertices().get(17), this.graph.getVertices().get(18));
-        this.graph.registerEdge(this.graph.getVertices().get(18), this.graph.getVertices().get(19));
-        this.graph.registerEdge(this.graph.getVertices().get(19), this.graph.getVertices().get(15));
+        this.graphController.createEdge(this.graphController.getBigVertexById(15), this.graphController.getBigVertexById(16));
+        this.graphController.createEdge(this.graphController.getBigVertexById(16), this.graphController.getBigVertexById(17));
+        this.graphController.createEdge(this.graphController.getBigVertexById(17), this.graphController.getBigVertexById(18));
+        this.graphController.createEdge(this.graphController.getBigVertexById(18), this.graphController.getBigVertexById(19));
+        this.graphController.createEdge(this.graphController.getBigVertexById(19), this.graphController.getBigVertexById(15));
 
-        men = new ArrayList<>();
-        lions = new ArrayList<>();
-        men.add(new Man(this.graph.getVertices().get(0).getPosition(), new StrategyRunAwayGreedy()));
-        lions.add(new Lion(this.graph.getVertices().get(1).getPosition(), new StrategyAggroGreedy()));
-        lions.add(new Lion(this.graph.getVertices().get(18).getPosition(), new StrategyAggroGreedy()));
-        lions.add(new Lion(this.graph.getVertices().get(13).getPosition(), new StrategyAggroGreedy()));
+        this.graphController.setMan(new Man(this.graphController.getBigVertexById(0), new StrategyRunAwayGreedy()));
+        this.graphController.setLion(new Lion(this.graphController.getBigVertexById(1), new StrategyAggroGreedy()));
+        this.graphController.setLion(new Lion(this.graphController.getBigVertexById(18), new StrategyAggroGreedy()));
+        this.graphController.setLion(new Lion(this.graphController.getBigVertexById(13), new StrategyAggroGreedy()));
 
-        this.state = new State(men, lions);
+        this.state = new State(this.graphController.getMen(), this.graphController.getLions());
 
 
-        return this.graph;
+        return this.graphController;
     }
 
 
-    public Graph setDefaultGraph2() {
-        this.graph = new Graph();
+    public NEWGraphController setDefaultGraph2() {
+        this.graphController = new NEWGraphController();
 
-        this.graph.registerVertex(new Point(50, 20));
-        this.graph.registerVertex(new Point(190, 20));
-        this.graph.registerVertex(new Point(220, 140));
-        this.graph.registerVertex(new Point(120, 220));
-        this.graph.registerVertex(new Point(20, 140));
+        this.graphController.createVertex(new Point(50, 20));
+        this.graphController.createVertex(new Point(190, 20));
+        this.graphController.createVertex(new Point(220, 140));
+        this.graphController.createVertex(new Point(120, 220));
+        this.graphController.createVertex(new Point(20, 140));
 
-        this.graph.registerVertex(new Point(120, 40));
-        this.graph.registerVertex(new Point(160, 50));
-        this.graph.registerVertex(new Point(190, 90));
-        this.graph.registerVertex(new Point(190, 130));
-        this.graph.registerVertex(new Point(160, 170));
-        this.graph.registerVertex(new Point(120, 180));
-        this.graph.registerVertex(new Point(80, 170));
-        this.graph.registerVertex(new Point(50, 130));
-        this.graph.registerVertex(new Point(50, 90));
-        this.graph.registerVertex(new Point(80, 50));
+        this.graphController.createVertex(new Point(120, 40));
+        this.graphController.createVertex(new Point(160, 50));
+        this.graphController.createVertex(new Point(190, 90));
+        this.graphController.createVertex(new Point(190, 130));
+        this.graphController.createVertex(new Point(160, 170));
+        this.graphController.createVertex(new Point(120, 180));
+        this.graphController.createVertex(new Point(80, 170));
+        this.graphController.createVertex(new Point(50, 130));
+        this.graphController.createVertex(new Point(50, 90));
+        this.graphController.createVertex(new Point(80, 50));
 
-        this.graph.registerVertex(new Point(120, 70));
-        this.graph.registerVertex(new Point(150, 100));
-        this.graph.registerVertex(new Point(140, 140));
-        this.graph.registerVertex(new Point(100, 140));
-        this.graph.registerVertex(new Point(90, 100));
+        this.graphController.createVertex(new Point(120, 70));
+        this.graphController.createVertex(new Point(150, 100));
+        this.graphController.createVertex(new Point(140, 140));
+        this.graphController.createVertex(new Point(100, 140));
+        this.graphController.createVertex(new Point(90, 100));
 
-        this.graph.registerEdge(this.graph.getVertices().get(0), this.graph.getVertices().get(1));
-        this.graph.registerEdge(this.graph.getVertices().get(1), this.graph.getVertices().get(2));
-        this.graph.registerEdge(this.graph.getVertices().get(2), this.graph.getVertices().get(3));
-        this.graph.registerEdge(this.graph.getVertices().get(3), this.graph.getVertices().get(4));
-        this.graph.registerEdge(this.graph.getVertices().get(4), this.graph.getVertices().get(0));
+        this.graphController.createEdge(this.graphController.getBigVertexById(0), this.graphController.getBigVertexById(1));
+        this.graphController.createEdge(this.graphController.getBigVertexById(1), this.graphController.getBigVertexById(2));
+        this.graphController.createEdge(this.graphController.getBigVertexById(2), this.graphController.getBigVertexById(3));
+        this.graphController.createEdge(this.graphController.getBigVertexById(3), this.graphController.getBigVertexById(4));
+        this.graphController.createEdge(this.graphController.getBigVertexById(4), this.graphController.getBigVertexById(0));
 
-        this.graph.registerEdge(this.graph.getVertices().get(0), this.graph.getVertices().get(14));
-        this.graph.registerEdge(this.graph.getVertices().get(1), this.graph.getVertices().get(6));
-        this.graph.registerEdge(this.graph.getVertices().get(2), this.graph.getVertices().get(8));
-        this.graph.registerEdge(this.graph.getVertices().get(3), this.graph.getVertices().get(10));
-        this.graph.registerEdge(this.graph.getVertices().get(4), this.graph.getVertices().get(12));
+        this.graphController.createEdge(this.graphController.getBigVertexById(0), this.graphController.getBigVertexById(14));
+        this.graphController.createEdge(this.graphController.getBigVertexById(1), this.graphController.getBigVertexById(6));
+        this.graphController.createEdge(this.graphController.getBigVertexById(2), this.graphController.getBigVertexById(8));
+        this.graphController.createEdge(this.graphController.getBigVertexById(3), this.graphController.getBigVertexById(10));
+        this.graphController.createEdge(this.graphController.getBigVertexById(4), this.graphController.getBigVertexById(12));
 
-        this.graph.registerEdge(this.graph.getVertices().get(5), this.graph.getVertices().get(6));
-        this.graph.registerEdge(this.graph.getVertices().get(6), this.graph.getVertices().get(7));
-        this.graph.registerEdge(this.graph.getVertices().get(7), this.graph.getVertices().get(8));
-        this.graph.registerEdge(this.graph.getVertices().get(8), this.graph.getVertices().get(9));
-        this.graph.registerEdge(this.graph.getVertices().get(9), this.graph.getVertices().get(10));
-        this.graph.registerEdge(this.graph.getVertices().get(10), this.graph.getVertices().get(11));
-        this.graph.registerEdge(this.graph.getVertices().get(11), this.graph.getVertices().get(12));
-        this.graph.registerEdge(this.graph.getVertices().get(12), this.graph.getVertices().get(13));
-        this.graph.registerEdge(this.graph.getVertices().get(13), this.graph.getVertices().get(14));
-        this.graph.registerEdge(this.graph.getVertices().get(14), this.graph.getVertices().get(5));
+        this.graphController.createEdge(this.graphController.getBigVertexById(5), this.graphController.getBigVertexById(6));
+        this.graphController.createEdge(this.graphController.getBigVertexById(6), this.graphController.getBigVertexById(7));
+        this.graphController.createEdge(this.graphController.getBigVertexById(7), this.graphController.getBigVertexById(8));
+        this.graphController.createEdge(this.graphController.getBigVertexById(8), this.graphController.getBigVertexById(9));
+        this.graphController.createEdge(this.graphController.getBigVertexById(9), this.graphController.getBigVertexById(10));
+        this.graphController.createEdge(this.graphController.getBigVertexById(10), this.graphController.getBigVertexById(11));
+        this.graphController.createEdge(this.graphController.getBigVertexById(11), this.graphController.getBigVertexById(12));
+        this.graphController.createEdge(this.graphController.getBigVertexById(12), this.graphController.getBigVertexById(13));
+        this.graphController.createEdge(this.graphController.getBigVertexById(13), this.graphController.getBigVertexById(14));
+        this.graphController.createEdge(this.graphController.getBigVertexById(14), this.graphController.getBigVertexById(15));
 
-        this.graph.registerEdge(this.graph.getVertices().get(5), this.graph.getVertices().get(15));
-        this.graph.registerEdge(this.graph.getVertices().get(7), this.graph.getVertices().get(16));
-        this.graph.registerEdge(this.graph.getVertices().get(9), this.graph.getVertices().get(17));
-        this.graph.registerEdge(this.graph.getVertices().get(11), this.graph.getVertices().get(18));
-        this.graph.registerEdge(this.graph.getVertices().get(13), this.graph.getVertices().get(19));
+        this.graphController.createEdge(this.graphController.getBigVertexById(5), this.graphController.getBigVertexById(15));
+        this.graphController.createEdge(this.graphController.getBigVertexById(7), this.graphController.getBigVertexById(16));
+        this.graphController.createEdge(this.graphController.getBigVertexById(9), this.graphController.getBigVertexById(17));
+        this.graphController.createEdge(this.graphController.getBigVertexById(11), this.graphController.getBigVertexById(18));
+        this.graphController.createEdge(this.graphController.getBigVertexById(13), this.graphController.getBigVertexById(19));
 
-        this.graph.registerEdge(this.graph.getVertices().get(15), this.graph.getVertices().get(16));
-        this.graph.registerEdge(this.graph.getVertices().get(16), this.graph.getVertices().get(17));
-        this.graph.registerEdge(this.graph.getVertices().get(17), this.graph.getVertices().get(18));
-        this.graph.registerEdge(this.graph.getVertices().get(18), this.graph.getVertices().get(19));
-        this.graph.registerEdge(this.graph.getVertices().get(19), this.graph.getVertices().get(15));
+        this.graphController.createEdge(this.graphController.getBigVertexById(15), this.graphController.getBigVertexById(16));
+        this.graphController.createEdge(this.graphController.getBigVertexById(16), this.graphController.getBigVertexById(17));
+        this.graphController.createEdge(this.graphController.getBigVertexById(17), this.graphController.getBigVertexById(18));
+        this.graphController.createEdge(this.graphController.getBigVertexById(18), this.graphController.getBigVertexById(19));
+        this.graphController.createEdge(this.graphController.getBigVertexById(19), this.graphController.getBigVertexById(15));
 
-        men = new ArrayList<>();
-        lions = new ArrayList<>();
-        men.add(new Man(this.graph.getVertices().get(0).getPosition(), new StrategyRunAwayGreedy()));
-        lions.add(new Lion(this.graph.getVertices().get(1).getPosition(), new StretegyAggroClever()));
-        lions.add(new Lion(this.graph.getVertices().get(18).getPosition(), new StretegyAggroClever()));
-        lions.add(new Lion(this.graph.getVertices().get(13).getPosition(), new StretegyAggroClever()));
+        this.graphController.setMan(new Man(this.graphController.getBigVertexById(0), new StrategyRunAwayGreedy()));
+        this.graphController.setLion(new Lion(this.graphController.getBigVertexById(1), new StretegyAggroClever()));
+        this.graphController.setLion(new Lion(this.graphController.getBigVertexById(18), new StretegyAggroClever()));
+        this.graphController.setLion(new Lion(this.graphController.getBigVertexById(13), new StretegyAggroClever()));
 
-        this.state = new State(men, lions);
+        this.state = new State(this.graphController.getMen(), this.graphController.getLions());
 
-
-        return this.graph;
+        return this.graphController;
     }
 
-    public Graph setDefaultGraph3() {
-        this.graph = new Graph();
-        // this.graph.registerVertex(new Point(5, 5));
-        this.graph.registerVertex(new Point(19, 9));
-        this.graph.registerVertex(new Point(9, 4));
-        this.graph.registerEdge(this.graph.getVertices().get(0), this.graph.getVertices().get(1));
+    public NEWGraphController setDefaultGraph3() {
+        this.graphController = new NEWGraphController();
 
-        men = new ArrayList<>();
-        lions = new ArrayList<>();
-        men.add(new Man(this.graph.getVertices().get(0).getPosition(), new StrategyRandom()));
-        lions.add(new Lion(this.graph.getVertices().get(1).getPosition(), new StrategyRandom()));
+        // this.graphController.createVertex(new Point(5, 5));
+        this.graphController.createVertex(new Point(19, 9));
+        this.graphController.createVertex(new Point(9, 4));
+        this.graphController.createEdge(this.graphController.getBigVertexById(0), this.graphController.getBigVertexById(1));
 
-        this.state = new State(men, lions);
+        this.graphController.setMan(new Man(this.graphController.getBigVertexById(0), new StrategyRandom()));
+        this.graphController.setLion(new Lion(this.graphController.getBigVertexById(1), new StrategyRandom()));
 
-        return this.graph;
+        this.state = new State(this.graphController.getMen(), this.graphController.getLions());
+
+        return this.graphController;
     }
 
-    public Graph setDefaultGraph4() {
+    public NEWGraphController setDefaultGraph4() {
         return this.setDefaultGraph1();
     }
 
-    public Graph setDefaultGraph5() {
+    public NEWGraphController setDefaultGraph5() {
+
+
+        this.graphController = new NEWGraphController();
+
+        graphController.createVertex(new Point(10, 10));
+        graphController.createVertex(new Point(80, 40));
+
+        graphController.createEdge(this.graphController.getBigVertexById(0), this.graphController.getBigVertexById(1), 4);
+
+        graphController.createVertex(new Point(20, 100));
+
+        graphController.relocateVertex(this.graphController.getBigVertexById(0), new Point(0, -100));
+
+
+        System.out.println(graphController.debugGraph());
+
+        graphController.createEdge(this.graphController.getBigVertexById(0), this.graphController.getBigVertexById(2), 2);
+        graphController.removeEdge(this.graphController.getBigVertexById(0),this.graphController.getBigVertexById(1));
+
+
+        System.out.println("#############################");
+        System.out.println(graphController.debugGraph());
+
+
+
         return this.setDefaultGraph1();
     }
 
 
-    public Graph setRandomGraph() {
+    public NEWGraphController setRandomGraph() {
         // TODO: implement random graph algorithm
         return this.setDefaultGraph1();
     }
 
 
-    public Graph setGraphFromFile(File file) throws Exception {
+    public NEWGraphController setGraphFromFile(File file) throws Exception {
         try {
             BufferedReader br = new BufferedReader(new FileReader(file));
             br.readLine();  //Skip type
             int yDim = Integer.valueOf(br.readLine().substring(7));  //Read height
             int xDim = Integer.valueOf(br.readLine().substring(6));  //Read width
-            this.graph = new Graph(); //init Map without passable fields
+//            this.graph = new Graph(); //init Map without passable fields
             br.readLine();  //Skip map
             String currentLine;
             for (int y = 0; (currentLine = br.readLine()) != null; y++) { //Read in MapRow
@@ -232,7 +249,7 @@ public class CoreController {
                     // TODO: do something nice with the file input
                 }
             }
-            return graph;
+            return graphController;
         } catch (Exception e) {
             // TODO: search up the right exception type
             throw new Exception("test");
@@ -244,13 +261,13 @@ public class CoreController {
     }
 
     public State simulateStep() {
-        for (Man man : men) {
+        for (Man man : this.graphController.getMen()) {
             man.goToNextPosition();
         }
-        for (Lion lion : lions) {
+        for (Lion lion : this.graphController.getLions()) {
             lion.goToNextPosition();
         }
-        this.state = new State(men, lions);
+        this.state = new State(this.graphController.getMen(), this.graphController.getLions());
         return this.state;
     }
 

@@ -2,20 +2,20 @@ package visualization;
 
 
 import core.State;
-import core.graph.Edge;
-import core.graph.Graph;
-import core.graph.Vertex;
+import core.entities.Entity;
+import core.graph.*;
 import core.util.Point;
 import javafx.scene.Group;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 
+import static visualization.VisConstants.COLOR_MAN;
 import static visualization.VisConstants.COLOR_NODE;
 
 
 public class GraphHolder {
 
-    private Graph graph;
+    private NEWGraphController graphController;
     private State state;
 
     private Group vertexShapes, edgeShapes, entityShapes;
@@ -37,9 +37,9 @@ public class GraphHolder {
 
     /* ------- Getter & Setter ------- */
 
-    void setGraph(Graph graph) {
+    void setGraph(NEWGraphController graphController) {
 
-        this.graph = graph;
+        this.graphController = graphController;
 
         refreshGraph();
         setGraphEditMode();
@@ -80,7 +80,7 @@ public class GraphHolder {
 //                hasDraggedStarted = false;
 //
 //                Point dragEnd = getPoint(event.getX(), event.getY());
-//                if (!graph.isVertex(dragEnd)) {
+//                if (!graphController.isVertex(dragEnd)) {
 //                    relocateNode(dragStart, dragEnd);
 //                } else {
 //                    if (event.getButton() == MouseButton.PRIMARY) {
@@ -113,31 +113,31 @@ public class GraphHolder {
     }
 
     private void addNode(Point coordinate) {
-        if (graph.registerVertex(coordinate)) {
+        if (graphController.createVertex(coordinate)) {
 //            this.refreshMap();
         }
     }
 
     private void removeNode(Point coordinate) {
-        if (graph.deleteVertex(coordinate)) {
+        if (graphController.deleteVertex(graphController.getVertexByCoordinate(coordinate))) {
 //            this.refreshMap();
         }
     }
 
     private void relocateNode(Point start, Point end) {
-        if (graph.relocateVertex(graph.getVertexByCoord(start), end)) {
+        if (graphController.relocateVertex(graphController.getVertexByCoordinate(start), end)) {
 //            this.refreshMap();
         }
     }
 
     private void addEdge(Point start, Point end) {
-        if (graph.registerEdge(start, end)) {
+        if (graphController.createEdge(graphController.getVertexByCoordinate(start), graphController.getVertexByCoordinate(end))) {
 //            this.refreshMap();
         }
     }
 
     private void removeEdge(Point start, Point end) {
-        if (graph.deleteEdge(start, end)) {
+        if (graphController.removeEdge(graphController.getVertexByCoordinate(start), graphController.getVertexByCoordinate(end))) {
 //            this.refreshMap();
         }
     }
@@ -152,29 +152,41 @@ public class GraphHolder {
 
 
     private void refreshGraph() {
-        if (graph == null) {
+        if (graphController == null) {
             return;
         }
         vertexShapes.getChildren().clear();
         edgeShapes.getChildren().clear();
         entityShapes.getChildren().clear();
 
-        for (Vertex vertex : graph.getVertices()) {
-            Circle elem = new Circle(vertex.getCoord().getX(), vertex.getCoord().getY(), 3, COLOR_NODE);
+        for (NEWBigVertex vertex : graphController.getBigVertices()) {
+            Circle elem = new Circle(vertex.getCoordinates().getX(), vertex.getCoordinates().getY(), 5, COLOR_NODE);
             elem.setOnMouseClicked(event -> {
-                System.out.println(vertex.getCoord());
+                System.out.println(vertex.getCoordinates());
             });
             vertexShapes.getChildren().add(elem);
         }
 
-        for (Edge edge : graph.getEdges()) {
-            Line elem = new Line(edge.getCoordStart().getX(), edge.getCoordStart().getY(), edge.getCoordEnd().getX(), edge.getCoordEnd().getY());
-            elem.setOnMouseClicked(event -> System.out.println("wow"));
-            edgeShapes.getChildren().add(elem);
+        for (NEWSmallVertex vertex : graphController.getSmallVertices()) {
+            Circle elem = new Circle(vertex.getCoordinates().getX(), vertex.getCoordinates().getY(), 2, COLOR_NODE);
+            elem.setOnMouseClicked(event -> {
+                System.out.println(vertex.getCoordinates());
+            });
+            vertexShapes.getChildren().add(elem);
         }
 
+//        for (Edge edge : graphController.getEdges()) {
+//            Line elem = new Line(edge.getCoordStart().getX(), edge.getCoordStart().getY(), edge.getCoordEnd().getX(), edge.getCoordEnd().getY());
+//            elem.setOnMouseClicked(event -> System.out.println("wow"));
+//            edgeShapes.getChildren().add(elem);
+//        }
+
 //        for (Entity man : state.getMen()) {
-//            // TODO: render men
+//            Circle elem = new Circle(man.getCoordinates().getX(), man.getCoordinates().getY(), 2, COLOR_MAN);
+//            elem.setOnMouseClicked(event -> {
+//                System.out.println(man.getCoordinates());
+//            });
+//            vertexShapes.getChildren().add(elem);
 //        }
 //
 //        for (Entity lion : state.getLions()) {

@@ -1,6 +1,6 @@
 package core.entities;
 
-import core.graph.Position;
+import core.graph.NEWVertex;
 import core.strategy.Strategy;
 
 /**
@@ -9,7 +9,7 @@ import core.strategy.Strategy;
 public class Man extends Entity {
     // TODO: implement Man class
 
-    public Man(Position startPosition, Strategy strategy) {
+    public Man(NEWVertex startPosition, Strategy strategy) {
         super(startPosition, strategy);
         men.add(this);
     }

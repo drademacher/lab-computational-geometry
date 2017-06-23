@@ -1,7 +1,7 @@
 package core.entities;
 
 
-import core.graph.Position;
+import core.graph.NEWVertex;
 import core.strategy.Strategy;
 
 /**
@@ -10,7 +10,7 @@ import core.strategy.Strategy;
 public class Lion extends Entity {
     // TODO: implement Lion class
 
-    public Lion(Position startPosition, Strategy strategy) {
+    public Lion(NEWVertex startPosition, Strategy strategy) {
         super(startPosition, strategy);
         lions.add(this);
     }

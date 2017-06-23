@@ -13,22 +13,23 @@ public class NEWGraph {
 
     private static int idCounter = -1;
 
-    private ArrayList<NEWBigVertex> vertices = new ArrayList<>();
+    private ArrayList<NEWBigVertex> bigVertices = new ArrayList<>();
+    private ArrayList<NEWSmallVertex> smallVertices = new ArrayList<>();
 
     public NEWGraph(){
 
     }
 
-    public NEWBigVertex createVertex(Point coordinate){
+    public boolean createVertex(Point coordinate){
 
-        //check duplicate and margin to other vertices
+        //check duplicate and margin to other bigVertices
         if(!validVertexPosition(coordinate)){
-            return null;
+            return false;
         }
 
         NEWBigVertex vertex =  new NEWBigVertex(getIdCounter(), coordinate);
-        vertices.add(vertex);
-        return vertex;
+        bigVertices.add(vertex);
+        return true;
     }
 
     public boolean relocateVertex(NEWBigVertex vertex, Point newCoordinate){
@@ -46,7 +47,7 @@ public class NEWGraph {
             int edgeWeight = edgeVerticesObject.getEdgeWeight();
             int i = 0;
 
-            //check edge orientation, if there are (enough) edge vertices
+            //check edge orientation, if there are (enough) edge bigVertices
             boolean reversedEdge = false;
             if(edgeWeight>2){
                 reversedEdge = !verticesAreAdjacent(edgeVerticesObject.getEdgeVertices().get(0), vertex);
@@ -66,7 +67,7 @@ public class NEWGraph {
     }
 
     public boolean deleteVertex(NEWBigVertex vertex){
-        vertices.remove(vertex);
+        bigVertices.remove(vertex);
         return vertex.deleteVertex();
     }
 
@@ -85,6 +86,7 @@ public class NEWGraph {
             NEWSmallVertex smallVertex = new NEWSmallVertex(getIdCounter(), calcSmallVertexCoordinates(vertex1, vertex2, weight, i));
 
             edgeVertices.add(smallVertex);
+            this.smallVertices.add(smallVertex);
 
             //pointer to prev vertex
             if(i>0){
@@ -92,7 +94,7 @@ public class NEWGraph {
                 edgeVertices.get(i-1).registerAdjacentVertex(smallVertex);
             }
 
-            //pointer to the big vertices
+            //pointer to the big bigVertices
             if(i==0){
                 smallVertex.registerAdjacentVertex(vertex1);
                 vertex1.registerAdjacentVertex(smallVertex);
@@ -115,15 +117,22 @@ public class NEWGraph {
     }
 
     public boolean removeEdge(NEWBigVertex vertex1, NEWBigVertex vertex2){
+        for(NEWBigVertex.EdgeVerticesObject edgeVerticesObject : vertex1.getEdgeVerticesObjects()){
+            if(edgeVerticesObject.getNeighbor().equals(vertex2)){
+                for(NEWSmallVertex smallVertex : edgeVerticesObject.getEdgeVertices()){
+                    this.smallVertices.remove(smallVertex);
+                }
+            }
+        }
         return vertex1.unregisterEdgeVerticeObject(vertex2) && vertex2.unregisterEdgeVerticeObject(vertex1);
     }
 
-    public NEWVertex getVertexByCoordinate(Point coordinate) {
+    public NEWBigVertex getVertexByCoordinate(Point coordinate) {
         return getVertexByCoordinate(coordinate, BIG_VERTEX_RADIUS);
     }
-    private NEWVertex getVertexByCoordinate(Point coordinate, int radius) {
+    private NEWBigVertex getVertexByCoordinate(Point coordinate, int radius) {
 
-        for(NEWBigVertex vertex : vertices){
+        for(NEWBigVertex vertex : bigVertices){
             Point vector = new Point(vertex.getCoordinates().getX() - coordinate.getX(), vertex.getCoordinates().getY() - coordinate.getY());
             double vectorLength = vector.length();
             if(vectorLength <= radius){
@@ -134,6 +143,22 @@ public class NEWGraph {
         return null;
     }
 
+    public NEWBigVertex getBigVertexById(int id){
+        for(NEWBigVertex vertex : bigVertices){
+            if(vertex.getId() == id){
+                return vertex;
+            }
+        }
+        return null;
+    }
+
+    public ArrayList<NEWBigVertex> getBigVertices() {
+        return bigVertices;
+    }
+
+    public ArrayList<NEWSmallVertex> getSmallVertices() {
+        return smallVertices;
+    }
 
     /* ***********************************
      *  PRIVATE HELPER FUNCTIONS
@@ -173,7 +198,7 @@ public class NEWGraph {
 
         String str = "";
 
-        for(NEWBigVertex vertex : vertices){
+        for(NEWBigVertex vertex : bigVertices){
             str += "\n"+vertex.getId() + " Coord: "+vertex.getCoordinates()+ " (";
             for(NEWVertex ver : vertex.getAdjacentVertices()){
                 str += ver.getId() + " ' ";

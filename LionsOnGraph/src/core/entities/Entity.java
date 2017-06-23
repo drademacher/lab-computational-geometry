@@ -1,8 +1,8 @@
 package core.entities;
 
-import core.graph.GraphPosition;
-import core.graph.Position;
+import core.graph.NEWVertex;
 import core.strategy.Strategy;
+import core.util.Point;
 
 import java.util.ArrayList;
 
@@ -14,25 +14,20 @@ public abstract class Entity {
     //TODO save men and lions in a better way / better place
     protected static ArrayList<Man> men = new ArrayList<>();
     protected static ArrayList<Lion> lions = new ArrayList<>();
-    protected Position position;
-    protected Position newposition;
+    protected NEWVertex position;
     protected Strategy strategy;
 
-    public Entity(Position startPosition, Strategy strategy) {
+    public Entity(NEWVertex startPosition, Strategy strategy) {
         this.position = startPosition;
         this.strategy = strategy;
-        this.position.registerEntity(this);
     }
 
-    public Position getNextPosition() {
+    public NEWVertex getNextPosition() {
         return strategy.getNextPosition(this, men, lions);
     }
 
-    public Position goToNextPosition() {
-        newposition = getNextPosition();
-        position.unregisterEntity(this);
-        position = newposition;
-        position.registerEntity(this);
+    public NEWVertex goToNextPosition() {
+        position = getNextPosition();
         return position;
     }
 
@@ -44,16 +39,16 @@ public abstract class Entity {
         this.strategy = strategy;
     }
 
-    public void setCurentPosition(Position currentPosition) {
+    public void setCurentPosition(NEWVertex currentPosition) {
         this.position = currentPosition;
     }
 
-    public Position getCurrentPosition() {
+    public NEWVertex getCurrentPosition() {
         return position;
     }
 
-    public GraphPosition getCurrentGraphPosition() {
-        return position.getGraphPosition();
+    public Point getCoordinates() {
+        return position.getCoordinates();
     }
 
     @Override

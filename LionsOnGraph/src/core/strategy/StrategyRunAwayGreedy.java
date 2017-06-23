@@ -3,8 +3,8 @@ package core.strategy;
 import core.entities.Entity;
 import core.entities.Lion;
 import core.entities.Man;
-import core.graph.GraphHelper;
-import core.graph.Position;
+import core.graph.NEWVertex;
+import core.util.Random;
 
 import java.util.ArrayList;
 
@@ -13,21 +13,28 @@ import java.util.ArrayList;
  */
 public class StrategyRunAwayGreedy implements Strategy {
     @Override
-    public Position getNextPosition(Entity e, ArrayList<Man> men, ArrayList<Lion> lions) {
-        GraphHelper helper = GraphHelper.createGraphHelper();
-
-        Position currentPosition = e.getCurrentPosition();
-
-        int bestSteps = helper.bestBFS(currentPosition, true);
-
-        for (Position neighborPosition : currentPosition.getAllNeighborPositions()) {
-            int steps = helper.BFS(currentPosition, neighborPosition);
-            if (bestSteps == steps) {
-                return neighborPosition;
-            }
-        }
-
-
-        return null;
+    public NEWVertex getNextPosition(Entity e, ArrayList<Man> men, ArrayList<Lion> lions) {
+        //TODO implement (at the moment random)
+        ArrayList<NEWVertex> neighborPositions = e.getCurrentPosition().getAdjacentVertices();
+        int rndInt = Random.getRandomInteger(neighborPositions.size());
+        return neighborPositions.get(rndInt);
     }
+//    @Override
+//    public Position getNextPosition(Entity e, ArrayList<Man> men, ArrayList<Lion> lions) {
+//        GraphHelper helper = GraphHelper.createGraphHelper();
+//
+//        Position currentPosition = e.getCurrentPosition();
+//
+//        int bestSteps = helper.bestBFS(currentPosition, true);
+//
+//        for (Position neighborPosition : currentPosition.getAllNeighborPositions()) {
+//            int steps = helper.BFS(currentPosition, neighborPosition);
+//            if (bestSteps == steps) {
+//                return neighborPosition;
+//            }
+//        }
+//
+//
+//        return null;
+//    }
 }

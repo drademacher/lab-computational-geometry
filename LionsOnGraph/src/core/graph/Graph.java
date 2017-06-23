@@ -127,10 +127,10 @@ public class Graph {
         return vertex1.unregisterEdgeVerticeObject(vertex2) && vertex2.unregisterEdgeVerticeObject(vertex1);
     }
 
-    public BigVertex getVertexByCoordinate(Point coordinate) {
-        return getVertexByCoordinate(coordinate, BIG_VERTEX_RADIUS);
+    public BigVertex getBigVertexByCoordinate(Point coordinate) {
+        return getBigVertexByCoordinate(coordinate, BIG_VERTEX_RADIUS);
     }
-    private BigVertex getVertexByCoordinate(Point coordinate, int radius) {
+    private BigVertex getBigVertexByCoordinate(Point coordinate, int radius) {
 
         for(BigVertex vertex : bigVertices){
             Point vector = new Point(vertex.getCoordinates().getX() - coordinate.getX(), vertex.getCoordinates().getY() - coordinate.getY());
@@ -139,7 +139,21 @@ public class Graph {
                 return vertex;
             }
         }
+        return null;
+    }
 
+    public SmallVertex getSmallVertexByCoordinate(Point coordinate) {
+        return getSmallVertexByCoordinate(coordinate, BIG_VERTEX_RADIUS);
+    }
+    private SmallVertex getSmallVertexByCoordinate(Point coordinate, int radius) {
+
+        for(SmallVertex vertex : smallVertices){
+            Point vector = new Point(vertex.getCoordinates().getX() - coordinate.getX(), vertex.getCoordinates().getY() - coordinate.getY());
+            double vectorLength = vector.length();
+            if(vectorLength <= radius){
+                return vertex;
+            }
+        }
         return null;
     }
 
@@ -174,7 +188,7 @@ public class Graph {
     }
 
     private boolean validVertexPosition(Point coordinates){
-        if(getVertexByCoordinate(coordinates, 2*BIG_VERTEX_RADIUS) != null){
+        if(getBigVertexByCoordinate(coordinates, 2*BIG_VERTEX_RADIUS) != null){
             return false;
         }
         return true;

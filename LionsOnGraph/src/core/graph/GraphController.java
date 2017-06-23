@@ -69,8 +69,8 @@ public class GraphController {
         return this.graph.removeEdge(vertex1, vertex2);
     }
 
-    public BigVertex getVertexByCoordinate(Point coordinate) {
-        return this.graph.getVertexByCoordinate(coordinate);
+    public BigVertex getBigVertexByCoordinate(Point coordinate) {
+        return this.graph.getBigVertexByCoordinate(coordinate);
     }
 
 

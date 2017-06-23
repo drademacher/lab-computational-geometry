@@ -116,25 +116,25 @@ public class GraphHolder {
     }
 
     private void removeNode(Point coordinate) {
-        if (graphController.deleteVertex(graphController.getVertexByCoordinate(coordinate))) {
+        if (graphController.deleteVertex(graphController.getBigVertexByCoordinate(coordinate))) {
 //            this.refreshMap();
         }
     }
 
     private void relocateNode(Point start, Point end) {
-        if (graphController.relocateVertex(graphController.getVertexByCoordinate(start), end)) {
+        if (graphController.relocateVertex(graphController.getBigVertexByCoordinate(start), end)) {
 //            this.refreshMap();
         }
     }
 
     private void addEdge(Point start, Point end) {
-        if (graphController.createEdge(graphController.getVertexByCoordinate(start), graphController.getVertexByCoordinate(end))) {
+        if (graphController.createEdge(graphController.getBigVertexByCoordinate(start), graphController.getBigVertexByCoordinate(end))) {
 //            this.refreshMap();
         }
     }
 
     private void removeEdge(Point start, Point end) {
-        if (graphController.removeEdge(graphController.getVertexByCoordinate(start), graphController.getVertexByCoordinate(end))) {
+        if (graphController.removeEdge(graphController.getBigVertexByCoordinate(start), graphController.getBigVertexByCoordinate(end))) {
 //            this.refreshMap();
         }
     }

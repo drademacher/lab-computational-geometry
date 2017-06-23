@@ -9,7 +9,7 @@ import java.util.ArrayList;
  */
 public abstract class Vertex {
 
-    protected ArrayList<Vertex> adjacentVertices = new ArrayList<>();
+    protected ArrayList<Edge> edges = new ArrayList<>();
     protected Point coordinates;
     protected int id;
 
@@ -19,12 +19,12 @@ public abstract class Vertex {
     }
 
 
-    public boolean registerAdjacentVertex(Vertex vertex){
-        return this.adjacentVertices.add(vertex);
+    public boolean registerEdge(Edge edge){
+        return this.edges.add(edge);
     }
 
-    public boolean unregisterAdjacentVertex(Vertex vertex){
-        return this.adjacentVertices.remove(vertex);
+    public boolean unregisterEdge(Edge edge){
+        return this.edges.remove(edge);
     }
 
     public void setCoordinates(Point coordinates){
@@ -39,8 +39,8 @@ public abstract class Vertex {
         return id;
     }
 
-    public ArrayList<Vertex> getAdjacentVertices() {
-        return adjacentVertices;
+    public ArrayList<Edge> getEdges() {
+        return edges;
     }
 
     @Override

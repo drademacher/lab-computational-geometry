@@ -9,7 +9,7 @@ import static core.graph.GraphConstants.BIG_VERTEX_RADIUS;
 /**
  * Created by Jens on 20.06.2017.
  */
-public class Graph {
+class Graph {
 
     private static int idCounter = -1;
 
@@ -90,18 +90,21 @@ public class Graph {
 
             //pointer to prev vertex
             if(i>0){
-                smallVertex.registerAdjacentVertex(edgeVertices.get(i-1));
-                edgeVertices.get(i-1).registerAdjacentVertex(smallVertex);
+                Edge edge = new Edge(smallVertex, edgeVertices.get(i-1));
+                smallVertex.registerEdge(edge);
+                edgeVertices.get(i-1).registerEdge(edge);
             }
 
             //pointer to the big bigVertices
             if(i==0){
-                smallVertex.registerAdjacentVertex(vertex1);
-                vertex1.registerAdjacentVertex(smallVertex);
+                Edge edge = new Edge(smallVertex, vertex1);
+                smallVertex.registerEdge(edge);
+                vertex1.registerEdge(edge);
             }
             if(i==weight-2){
-                smallVertex.registerAdjacentVertex(vertex2);
-                vertex2.registerAdjacentVertex(smallVertex);
+                Edge edge = new Edge(smallVertex, vertex2);
+                smallVertex.registerEdge(edge);
+                vertex2.registerEdge(edge);
             }
         }
 
@@ -110,8 +113,9 @@ public class Graph {
 
 
         if(weight <= 1){
-            vertex1.registerAdjacentVertex(vertex2);
-            vertex2.registerAdjacentVertex(vertex1);
+            Edge edge = new Edge(vertex1, vertex2);
+            vertex1.registerEdge(edge);
+            vertex2.registerEdge(edge);
         }
         return true;
     }
@@ -179,8 +183,8 @@ public class Graph {
      *********************************** */
 
     private boolean verticesAreAdjacent(Vertex vertex1, Vertex vertex2){
-        for(Vertex vertex : vertex1.getAdjacentVertices()){
-            if(vertex.equals(vertex2)){
+        for(Edge edge : vertex1.getEdges()){
+            if(edge.contains(vertex2)){
                 return true;
             }
         }
@@ -214,16 +218,16 @@ public class Graph {
 
         for(BigVertex vertex : bigVertices){
             str += "\n"+vertex.getId() + " Coord: "+vertex.getCoordinates()+ " (";
-            for(Vertex ver : vertex.getAdjacentVertices()){
-                str += ver.getId() + " ' ";
+            for(Edge ver : vertex.getEdges()){
+                str += ver.toString() + " ' ";
             }
             str += "), ";
             for(BigVertex.EdgeVerticesObject evObject : vertex.getEdgeVerticesObjects()){
                 str += "\n - to: " + evObject.getNeighbor().getId();
                 for(SmallVertex smallVertex : evObject.getEdgeVertices()){
                     str += "        \n --->   "+smallVertex.getId() + " Coord: "+smallVertex.getCoordinates() +" (";
-                    for(Vertex ver : smallVertex.getAdjacentVertices()){
-                        str += ver.getId() + " ' ";
+                    for(Edge ver : smallVertex.getEdges()){
+                        str += ver.toString() + " ' ";
                     }
                     str += "), ";
                 }

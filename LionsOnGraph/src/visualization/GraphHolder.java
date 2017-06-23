@@ -163,8 +163,8 @@ public class GraphHolder {
                 System.out.println(vertex.getCoordinates());
             });
 
-            for (Vertex edge : vertex.getAdjacentVertices()) {
-                Line line = new Line(vertex.getCoordinates().getX(), vertex.getCoordinates().getY(), edge.getCoordinates().getX(), edge.getCoordinates().getY());
+            for (Edge edge : vertex.getEdges()) {
+                Line line = new Line(edge.getVertices()[0].getCoordinates().getX(), edge.getVertices()[0].getCoordinates().getY(), edge.getVertices()[1].getCoordinates().getX(), edge.getVertices()[1].getCoordinates().getY());
 
                 edgeShapes.getChildren().add(line);
             }
@@ -180,8 +180,8 @@ public class GraphHolder {
                 System.out.println(vertex.getCoordinates());
             });
 
-            for (Vertex edge : vertex.getAdjacentVertices()) {
-                Line line = new Line(vertex.getCoordinates().getX(), vertex.getCoordinates().getY(), edge.getCoordinates().getX(), edge.getCoordinates().getY());
+            for (Edge edge : vertex.getEdges()) {
+                Line line = new Line(edge.getVertices()[0].getCoordinates().getX(), edge.getVertices()[0].getCoordinates().getY(), edge.getVertices()[1].getCoordinates().getX(), edge.getVertices()[1].getCoordinates().getY());
 
                 edgeShapes.getChildren().add(line);
             }

@@ -3,6 +3,7 @@ package core.strategy;
 import core.entities.Entity;
 import core.entities.Lion;
 import core.entities.Man;
+import core.graph.Edge;
 import core.graph.Vertex;
 import core.util.Random;
 
@@ -16,9 +17,9 @@ public class StretegyAggroClever implements Strategy {
     @Override
     public Vertex getNextPosition(Entity e, ArrayList<Man> men, ArrayList<Lion> lions) {
         //TODO implement (at the moment random)
-        ArrayList<Vertex> neighborPositions = e.getCurrentPosition().getAdjacentVertices();
+        ArrayList<Edge> neighborPositions = e.getCurrentPosition().getEdges();
         int rndInt = Random.getRandomInteger(neighborPositions.size());
-        return neighborPositions.get(rndInt);
+        return neighborPositions.get(rndInt).getNeighbor(e.getCurrentPosition());
     }
 //    @Override
 //    public Position getNextPosition(Entity e, ArrayList<Man> men, ArrayList<Lion> lions) {

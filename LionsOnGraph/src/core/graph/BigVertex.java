@@ -31,10 +31,18 @@ public class BigVertex extends Vertex {
         for(EdgeVerticesObject edgeVertex : edgeVerticesObjects){
             if(edgeVertex.getNeighbor().equals(neighbor)){
                 if(edgeVertex.getEdgeVertices().size() <= 0){
-                    unregisterAdjacentVertex(neighbor);
+                    for(Edge edge : edges){
+                        if(edge.contains(neighbor)){
+                            unregisterEdge(edge);
+                        }
+                    }
                 }
                 for(SmallVertex vertex : edgeVertex.getEdgeVertices()){
-                    unregisterAdjacentVertex(vertex);
+                    for(Edge edge : edges){
+                        if(edge.contains(vertex)){
+                            unregisterEdge(edge);
+                        }
+                    }
                 }
                 return edgeVerticesObjects.remove(edgeVertex);
             }
@@ -47,7 +55,7 @@ public class BigVertex extends Vertex {
     }
 
 
-    public class EdgeVerticesObject {
+    class EdgeVerticesObject {
         private BigVertex neighbor;
         private ArrayList<SmallVertex> edgeVertices = new ArrayList<>();
         private int weight;

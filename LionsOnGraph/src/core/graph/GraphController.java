@@ -9,15 +9,15 @@ import java.util.ArrayList;
 /**
  * Created by Jens on 20.06.2017.
  */
-public class NEWGraphController {
+public class GraphController {
 
     private ArrayList<Lion> lions = new ArrayList<>();
     private ArrayList<Man> men = new ArrayList<>();
 
-    private NEWGraph graph;
+    private Graph graph;
 
-    public NEWGraphController(){
-        this.graph = new NEWGraph();
+    public GraphController(){
+        this.graph = new Graph();
     }
 
     /* ****************************
@@ -33,14 +33,14 @@ public class NEWGraphController {
         return this.graph.createVertex(coordinate);
     }
 
-    public boolean relocateVertex(NEWBigVertex vertex, Point newCoordinate){
+    public boolean relocateVertex(BigVertex vertex, Point newCoordinate){
         if(vertex == null || newCoordinate == null){
             return false;
         }
         return this.graph.relocateVertex(vertex, newCoordinate);
     }
 
-    public boolean deleteVertex(NEWBigVertex vertex){
+    public boolean deleteVertex(BigVertex vertex){
         if(vertex == null){
             return false;
         }
@@ -48,20 +48,20 @@ public class NEWGraphController {
         return this.graph.deleteVertex(vertex);
     }
 
-    public boolean createEdge(NEWBigVertex vertex1, NEWBigVertex vertex2){
+    public boolean createEdge(BigVertex vertex1, BigVertex vertex2){
         if(vertex1 == null ||vertex2 == null){
             return false;
         }
         return createEdge(vertex1, vertex2, 4);
     }
-    public boolean createEdge(NEWBigVertex vertex1, NEWBigVertex vertex2, int weight){
+    public boolean createEdge(BigVertex vertex1, BigVertex vertex2, int weight){
         if(vertex1 == null || vertex2 == null || weight < 0){
             return false;
         }
         return this.graph.createEdge(vertex1, vertex2, weight);
     }
 
-    public boolean removeEdge(NEWBigVertex vertex1, NEWBigVertex vertex2){
+    public boolean removeEdge(BigVertex vertex1, BigVertex vertex2){
         if(vertex1 == null || vertex2 == null){
             return false;
         }
@@ -69,7 +69,7 @@ public class NEWGraphController {
         return this.graph.removeEdge(vertex1, vertex2);
     }
 
-    public NEWBigVertex getVertexByCoordinate(Point coordinate) {
+    public BigVertex getVertexByCoordinate(Point coordinate) {
         return this.graph.getVertexByCoordinate(coordinate);
     }
 
@@ -78,19 +78,19 @@ public class NEWGraphController {
         return graph.debugGraph();
     }
 
-    public NEWGraph getGraph() {
+    public Graph getGraph() {
         return graph;
     }
 
-    public NEWBigVertex getBigVertexById(int id){
+    public BigVertex getBigVertexById(int id){
         return this.graph.getBigVertexById(id);
     }
 
-    public ArrayList<NEWBigVertex> getBigVertices() {
+    public ArrayList<BigVertex> getBigVertices() {
         return this.graph.getBigVertices();
     }
 
-    public ArrayList<NEWSmallVertex> getSmallVertices() {
+    public ArrayList<SmallVertex> getSmallVertices() {
         return this.graph.getSmallVertices();
     }
 

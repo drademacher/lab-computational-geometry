@@ -3,7 +3,7 @@ package core.strategy;
 import core.entities.Entity;
 import core.entities.Lion;
 import core.entities.Man;
-import core.graph.NEWVertex;
+import core.graph.Vertex;
 
 import java.util.ArrayList;
 
@@ -13,6 +13,6 @@ import java.util.ArrayList;
 public interface Strategy {
     // TODO: think about interface for strategy pattern
 
-    NEWVertex getNextPosition(Entity e, ArrayList<Man> men, ArrayList<Lion> lions);
+    Vertex getNextPosition(Entity e, ArrayList<Man> men, ArrayList<Lion> lions);
 
 }

@@ -7,11 +7,11 @@ import java.util.ArrayList;
 /**
  * Created by Jens on 20.06.2017.
  */
-public class NEWBigVertex extends NEWVertex {
+public class BigVertex extends Vertex {
 
     protected ArrayList<EdgeVerticesObject> edgeVerticesObjects = new ArrayList<>();
 
-    public NEWBigVertex(int id, Point coordinates){
+    public BigVertex(int id, Point coordinates){
         super(id, coordinates);
     }
 
@@ -23,17 +23,17 @@ public class NEWBigVertex extends NEWVertex {
     }
 
 
-    public boolean registerEdgeVerticeObject(NEWBigVertex neighbor, ArrayList<NEWSmallVertex> edgeVertices, int weight){
+    public boolean registerEdgeVerticeObject(BigVertex neighbor, ArrayList<SmallVertex> edgeVertices, int weight){
         return this.edgeVerticesObjects.add(new EdgeVerticesObject(neighbor, edgeVertices,weight));
     }
 
-    public boolean unregisterEdgeVerticeObject(NEWBigVertex neighbor){
+    public boolean unregisterEdgeVerticeObject(BigVertex neighbor){
         for(EdgeVerticesObject edgeVertex : edgeVerticesObjects){
             if(edgeVertex.getNeighbor().equals(neighbor)){
                 if(edgeVertex.getEdgeVertices().size() <= 0){
                     unregisterAdjacentVertex(neighbor);
                 }
-                for(NEWSmallVertex vertex : edgeVertex.getEdgeVertices()){
+                for(SmallVertex vertex : edgeVertex.getEdgeVertices()){
                     unregisterAdjacentVertex(vertex);
                 }
                 return edgeVerticesObjects.remove(edgeVertex);
@@ -48,21 +48,21 @@ public class NEWBigVertex extends NEWVertex {
 
 
     public class EdgeVerticesObject {
-        private NEWBigVertex neighbor;
-        private ArrayList<NEWSmallVertex> edgeVertices = new ArrayList<>();
+        private BigVertex neighbor;
+        private ArrayList<SmallVertex> edgeVertices = new ArrayList<>();
         private int weight;
 
-        public EdgeVerticesObject(NEWBigVertex neighbor, ArrayList<NEWSmallVertex> edgeVertices, int weight){
+        public EdgeVerticesObject(BigVertex neighbor, ArrayList<SmallVertex> edgeVertices, int weight){
             this.neighbor = neighbor;
             this.edgeVertices = edgeVertices;
             this.weight = weight;
         }
 
-        public NEWBigVertex getNeighbor() {
+        public BigVertex getNeighbor() {
             return neighbor;
         }
 
-        public ArrayList<NEWSmallVertex> getEdgeVertices() {
+        public ArrayList<SmallVertex> getEdgeVertices() {
             return edgeVertices;
         }
 
@@ -70,8 +70,8 @@ public class NEWBigVertex extends NEWVertex {
             return weight;
         }
 
-        public boolean unregisterAll(NEWBigVertex vertex){
-            for(NEWSmallVertex edgeVertex : edgeVertices){
+        public boolean unregisterAll(BigVertex vertex){
+            for(SmallVertex edgeVertex : edgeVertices){
                 //TODO ?
             }
             return neighbor.unregisterEdgeVerticeObject(vertex);

@@ -3,7 +3,7 @@ package core.strategy;
 import core.entities.Entity;
 import core.entities.Lion;
 import core.entities.Man;
-import core.graph.NEWVertex;
+import core.graph.Vertex;
 import core.util.Random;
 
 import java.util.ArrayList;
@@ -13,9 +13,9 @@ import java.util.ArrayList;
  */
 public class StrategyAggroGreedy implements Strategy {
     @Override
-    public NEWVertex getNextPosition(Entity e, ArrayList<Man> men, ArrayList<Lion> lions) {
+    public Vertex getNextPosition(Entity e, ArrayList<Man> men, ArrayList<Lion> lions) {
         //TODO implement (at the moment random)
-        ArrayList<NEWVertex> neighborPositions = e.getCurrentPosition().getAdjacentVertices();
+        ArrayList<Vertex> neighborPositions = e.getCurrentPosition().getAdjacentVertices();
         int rndInt = Random.getRandomInteger(neighborPositions.size());
         return neighborPositions.get(rndInt);
     }

@@ -5,9 +5,9 @@ import core.util.Point;
 /**
  * Created by Jens on 20.06.2017.
  */
-public class NEWSmallVertex extends NEWVertex {
+public class SmallVertex extends Vertex {
 
-    public NEWSmallVertex(int id, Point coordinates){
+    public SmallVertex(int id, Point coordinates){
         super(id, coordinates);
     }
 

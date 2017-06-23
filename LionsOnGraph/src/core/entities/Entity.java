@@ -1,6 +1,6 @@
 package core.entities;
 
-import core.graph.NEWVertex;
+import core.graph.Vertex;
 import core.strategy.Strategy;
 import core.util.Point;
 
@@ -14,19 +14,19 @@ public abstract class Entity {
     //TODO save men and lions in a better way / better place
     protected static ArrayList<Man> men = new ArrayList<>();
     protected static ArrayList<Lion> lions = new ArrayList<>();
-    protected NEWVertex position;
+    protected Vertex position;
     protected Strategy strategy;
 
-    public Entity(NEWVertex startPosition, Strategy strategy) {
+    public Entity(Vertex startPosition, Strategy strategy) {
         this.position = startPosition;
         this.strategy = strategy;
     }
 
-    public NEWVertex getNextPosition() {
+    public Vertex getNextPosition() {
         return strategy.getNextPosition(this, men, lions);
     }
 
-    public NEWVertex goToNextPosition() {
+    public Vertex goToNextPosition() {
         position = getNextPosition();
         return position;
     }
@@ -39,11 +39,11 @@ public abstract class Entity {
         this.strategy = strategy;
     }
 
-    public void setCurentPosition(NEWVertex currentPosition) {
+    public void setCurentPosition(Vertex currentPosition) {
         this.position = currentPosition;
     }
 
-    public NEWVertex getCurrentPosition() {
+    public Vertex getCurrentPosition() {
         return position;
     }
 

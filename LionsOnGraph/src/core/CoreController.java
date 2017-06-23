@@ -2,9 +2,7 @@ package core;
 
 import core.entities.Lion;
 import core.entities.Man;
-import core.graph.NEWBigVertex;
-import core.graph.NEWGraph;
-import core.graph.NEWGraphController;
+import core.graph.GraphController;
 import core.strategy.StrategyAggroGreedy;
 import core.strategy.StrategyRandom;
 import core.strategy.StrategyRunAwayGreedy;
@@ -14,25 +12,24 @@ import core.util.Point;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.util.ArrayList;
 
 /**
  * Created by Danny on 17.05.2017.
  */
 public class CoreController {
-    private NEWGraphController graphController;
+    private GraphController graphController;
     private State state;
 
-    public NEWGraphController setEmptyGraph() {
-        this.graphController = new NEWGraphController();
+    public GraphController setEmptyGraph() {
+        this.graphController = new GraphController();
 
         this.state = new State(this.graphController.getMen(), this.graphController.getLions());
         return this.graphController;
     }
 
 
-    public NEWGraphController setDefaultGraph1() {
-        this.graphController = new NEWGraphController();
+    public GraphController setDefaultGraph1() {
+        this.graphController = new GraphController();
 
         this.graphController.createVertex(new Point(50, 20));
         this.graphController.createVertex(new Point(190, 20));
@@ -104,8 +101,8 @@ public class CoreController {
     }
 
 
-    public NEWGraphController setDefaultGraph2() {
-        this.graphController = new NEWGraphController();
+    public GraphController setDefaultGraph2() {
+        this.graphController = new GraphController();
 
         this.graphController.createVertex(new Point(50, 20));
         this.graphController.createVertex(new Point(190, 20));
@@ -175,8 +172,8 @@ public class CoreController {
         return this.graphController;
     }
 
-    public NEWGraphController setDefaultGraph3() {
-        this.graphController = new NEWGraphController();
+    public GraphController setDefaultGraph3() {
+        this.graphController = new GraphController();
 
         // this.graphController.createVertex(new Point(5, 5));
         this.graphController.createVertex(new Point(19, 9));
@@ -191,14 +188,14 @@ public class CoreController {
         return this.graphController;
     }
 
-    public NEWGraphController setDefaultGraph4() {
+    public GraphController setDefaultGraph4() {
         return this.setDefaultGraph1();
     }
 
-    public NEWGraphController setDefaultGraph5() {
+    public GraphController setDefaultGraph5() {
 
 
-        this.graphController = new NEWGraphController();
+        this.graphController = new GraphController();
 
         graphController.createVertex(new Point(10, 10));
         graphController.createVertex(new Point(80, 40));
@@ -225,13 +222,13 @@ public class CoreController {
     }
 
 
-    public NEWGraphController setRandomGraph() {
+    public GraphController setRandomGraph() {
         // TODO: implement random graph algorithm
         return this.setDefaultGraph1();
     }
 
 
-    public NEWGraphController setGraphFromFile(File file) throws Exception {
+    public GraphController setGraphFromFile(File file) throws Exception {
         try {
             BufferedReader br = new BufferedReader(new FileReader(file));
             br.readLine();  //Skip type

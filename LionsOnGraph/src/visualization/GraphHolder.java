@@ -2,20 +2,17 @@ package visualization;
 
 
 import core.State;
-import core.entities.Entity;
 import core.graph.*;
 import core.util.Point;
 import javafx.scene.Group;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Line;
 
-import static visualization.VisConstants.COLOR_MAN;
 import static visualization.VisConstants.COLOR_NODE;
 
 
 public class GraphHolder {
 
-    private NEWGraphController graphController;
+    private GraphController graphController;
     private State state;
 
     private Group vertexShapes, edgeShapes, entityShapes;
@@ -37,7 +34,7 @@ public class GraphHolder {
 
     /* ------- Getter & Setter ------- */
 
-    void setGraph(NEWGraphController graphController) {
+    void setGraph(GraphController graphController) {
 
         this.graphController = graphController;
 
@@ -159,7 +156,7 @@ public class GraphHolder {
         edgeShapes.getChildren().clear();
         entityShapes.getChildren().clear();
 
-        for (NEWBigVertex vertex : graphController.getBigVertices()) {
+        for (BigVertex vertex : graphController.getBigVertices()) {
             Circle elem = new Circle(vertex.getCoordinates().getX(), vertex.getCoordinates().getY(), 5, COLOR_NODE);
             elem.setOnMouseClicked(event -> {
                 System.out.println(vertex.getCoordinates());
@@ -167,7 +164,7 @@ public class GraphHolder {
             vertexShapes.getChildren().add(elem);
         }
 
-        for (NEWSmallVertex vertex : graphController.getSmallVertices()) {
+        for (SmallVertex vertex : graphController.getSmallVertices()) {
             Circle elem = new Circle(vertex.getCoordinates().getX(), vertex.getCoordinates().getY(), 2, COLOR_NODE);
             elem.setOnMouseClicked(event -> {
                 System.out.println(vertex.getCoordinates());

@@ -2,29 +2,28 @@ package core.graph;
 
 import core.util.Point;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
  * Created by Jens on 20.06.2017.
  */
-public abstract class NEWVertex {
+public abstract class Vertex {
 
-    protected ArrayList<NEWVertex> adjacentVertices = new ArrayList<>();
+    protected ArrayList<Vertex> adjacentVertices = new ArrayList<>();
     protected Point coordinates;
     protected int id;
 
-    public NEWVertex(int id, Point coordinates){
+    public Vertex(int id, Point coordinates){
         this.coordinates = coordinates;
         this.id = id;
     }
 
 
-    public boolean registerAdjacentVertex(NEWVertex vertex){
+    public boolean registerAdjacentVertex(Vertex vertex){
         return this.adjacentVertices.add(vertex);
     }
 
-    public boolean unregisterAdjacentVertex(NEWVertex vertex){
+    public boolean unregisterAdjacentVertex(Vertex vertex){
         return this.adjacentVertices.remove(vertex);
     }
 
@@ -40,7 +39,7 @@ public abstract class NEWVertex {
         return id;
     }
 
-    public ArrayList<NEWVertex> getAdjacentVertices() {
+    public ArrayList<Vertex> getAdjacentVertices() {
         return adjacentVertices;
     }
 
@@ -55,7 +54,7 @@ public abstract class NEWVertex {
         // type check and cast
         if (getClass() != o.getClass())
             return false;
-        NEWVertex vertex = (NEWVertex) o;
+        Vertex vertex = (Vertex) o;
         // field comparison
         return vertex.getId() == getId() && vertex.getCoordinates().equals(getCoordinates());
     }

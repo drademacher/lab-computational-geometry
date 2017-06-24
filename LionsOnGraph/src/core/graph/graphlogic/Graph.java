@@ -155,7 +155,7 @@ class Graph {
         return getBigVertexByCoordinate(coordinate, BIG_VERTEX_RADIUS);
     }
 
-    private BigVertexShape getBigVertexByCoordinate(Point coordinate, int radius) {
+    private BigVertexShape getBigVertexByCoordinate(Point coordinate, double radius) {
 
         for (BigVertexShape vertex : bigVertices) {
             Point vector = new Point(vertex.getCoordinates().getX() - coordinate.getX(), vertex.getCoordinates().getY() - coordinate.getY());
@@ -171,7 +171,7 @@ class Graph {
         return getSmallVertexByCoordinate(coordinate, BIG_VERTEX_RADIUS);
     }
 
-    private SmallVertexShape getSmallVertexByCoordinate(Point coordinate, int radius) {
+    private SmallVertexShape getSmallVertexByCoordinate(Point coordinate, double radius) {
 
         for (SmallVertexShape vertex : smallVertices) {
             Point vector = new Point(vertex.getCoordinates().getX() - coordinate.getX(), vertex.getCoordinates().getY() - coordinate.getY());

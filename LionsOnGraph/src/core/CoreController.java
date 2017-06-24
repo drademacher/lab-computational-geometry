@@ -17,6 +17,10 @@ import java.io.FileReader;
  * Created by Danny on 17.05.2017.
  */
 public class CoreController {
+    public GraphController getGraphController() {
+        return graphController;
+    }
+
     private GraphController graphController;
     private State state;
 

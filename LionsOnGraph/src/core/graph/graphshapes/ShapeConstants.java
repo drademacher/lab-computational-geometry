@@ -5,6 +5,6 @@ package core.graph.graphshapes;
  */
 public class ShapeConstants {
 
-    public static final int BIG_VERTEX_RADIUS = 3;
-    public static final int SMALL_VERTEX_RADIUS = 2;
+    public static final double BIG_VERTEX_RADIUS = 3;
+    public static final double SMALL_VERTEX_RADIUS = 1.2;
 }

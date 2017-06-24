@@ -1,6 +1,7 @@
 package visualization;
 
 import core.CoreController;
+import core.util.Point;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -47,7 +48,7 @@ public class VisController implements Initializable {
     // TODO: inject the coreController here
     private CoreController coreController = new CoreController();
 
-    private GraphHolder graphHolder;
+//    private GraphHolder graphHolder;
 
     private Stage stage;
 
@@ -75,7 +76,7 @@ public class VisController implements Initializable {
         System.out.println(canvas.getHeight());*/
 
         //Init mapHolder
-        this.graphHolder = new GraphHolder(zoomScrollPane); // baseCanvas, edgeLengthCanvas, edgeStepsActiveCanvas, edgeStepsAllCanvas, shortestDistanceCanvas, shortestPathCanvas
+//        this.graphHolder = new GraphHolder(zoomScrollPane); // baseCanvas, edgeLengthCanvas, edgeStepsActiveCanvas, edgeStepsAllCanvas, shortestDistanceCanvas, shortestPathCanvas
 
 
         // TODO: global key commands here!
@@ -93,12 +94,18 @@ public class VisController implements Initializable {
 //        initRemoveEdgeButton();
         useModeToggle.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue == this.editGraphModeButton) {
-                graphHolder.setGraphEditMode();
+//                graphHolder.setGraphEditMode();
             } else if (newValue == this.editEntityModeButton) {
-                graphHolder.setEntityEditMode();
+//                graphHolder.setEntityEditMode();
             } else if (newValue == this.playModeButton) {
-                graphHolder.setPlayMode();
+//                graphHolder.setPlayMode();
             }
+        });
+
+        zoomScrollPane.setOnMouseClicked(event -> {
+            System.out.println("click: " + event.getX() + event.getY());
+
+            this.coreController.getGraphController().createVertex(new Point((int) event.getX(), (int) event.getY()));
         });
 
         initViews();
@@ -108,50 +115,53 @@ public class VisController implements Initializable {
         emptyMapMenuItem.setOnAction(event -> {
 
             this.zoomScrollPane.clear();
-            this.graphHolder.setGraph(coreController.setEmptyGraph());
-            this.graphHolder.setState(coreController.getState());
+            coreController.setEmptyGraph();
+//            this.graphHolder.setGraph(coreController.setEmptyGraph());
+//            this.graphHolder.setState(coreController.getState());
             this.editGraphModeButton.setSelected(true);
         });
 
         graph1MenuItem.setOnAction(event -> {
             this.zoomScrollPane.clear();
-            this.graphHolder.setGraph(coreController.setDefaultGraph1());
-            this.graphHolder.setState(coreController.getState());
+            coreController.setDefaultGraph1();
+//            this.graphHolder.setGraph(coreController.setDefaultGraph1());
+//            this.graphHolder.setState(coreController.getState());
             this.editGraphModeButton.setSelected(true);
         });
 
         graph2MenuItem.setOnAction(event -> {
             this.zoomScrollPane.clear();
-            this.graphHolder.setGraph(coreController.setDefaultGraph2());
-            this.graphHolder.setState(coreController.getState());
+            coreController.setDefaultGraph2();
+//            this.graphHolder.setGraph(coreController.setDefaultGraph2());
+//            this.graphHolder.setState(coreController.getState());
             this.editGraphModeButton.setSelected(true);
         });
 
         graph3MenuItem.setOnAction(event -> {
             this.zoomScrollPane.clear();
-            this.graphHolder.setGraph(coreController.setDefaultGraph3());
-            this.graphHolder.setState(coreController.getState());
+//            this.graphHolder.setGraph(coreController.setDefaultGraph3());
+//            this.graphHolder.setState(coreController.getState());
             this.editGraphModeButton.setSelected(true);
         });
 
         graph4MenuItem.setOnAction(event -> {
             this.zoomScrollPane.clear();
-            this.graphHolder.setGraph(coreController.setDefaultGraph4());
-            this.graphHolder.setState(coreController.getState());
+//            this.graphHolder.setGraph(coreController.setDefaultGraph4());
+//            this.graphHolder.setState(coreController.getState());
             this.editGraphModeButton.setSelected(true);
         });
 
         graph5MenuItem.setOnAction(event -> {
             this.zoomScrollPane.clear();
-            this.graphHolder.setGraph(coreController.setDefaultGraph5());
-            this.graphHolder.setState(coreController.getState());
+//            this.graphHolder.setGraph(coreController.setDefaultGraph5());
+//            this.graphHolder.setState(coreController.getState());
             this.editGraphModeButton.setSelected(true);
         });
 
         randomGraphMenuItem.setOnAction(event -> {
             this.zoomScrollPane.clear();
-            this.graphHolder.setGraph(coreController.setRandomGraph());
-            this.graphHolder.setState(coreController.getState());
+//            this.graphHolder.setGraph(coreController.setRandomGraph());
+//            this.graphHolder.setState(coreController.getState());
             this.editGraphModeButton.setSelected(true);
         });
 
@@ -164,7 +174,8 @@ public class VisController implements Initializable {
             File selectedFile = fileChooser.showOpenDialog(this.stage);
             if (selectedFile != null) {
                 try {
-                    this.graphHolder.setGraph(coreController.setGraphFromFile(selectedFile));
+                    coreController.setGraphFromFile(selectedFile);
+//                    this.graphHolder.setGraph(coreController.setGraphFromFile(selectedFile));
                 } catch (Exception e) {
                     e.printStackTrace();
                     //Todo: openMapMenuItem.setOnAction - nice exception handling!!!

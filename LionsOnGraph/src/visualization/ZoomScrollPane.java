@@ -3,6 +3,7 @@ package visualization;
 import core.graph.graphshapes.BigVertexShape;
 import core.graph.graphshapes.EdgeShape;
 import core.graph.graphshapes.SmallVertexShape;
+import core.util.Point;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
@@ -19,13 +20,16 @@ import javafx.scene.layout.StackPane;
 public class ZoomScrollPane extends ScrollPane {
     private Group mainGroup = new Group();
 
+    private double scaleFactor;
+    private Point scrollOffset;
 
     public ZoomScrollPane() {
         final double SCALE_DELTA = 1.1;
         final StackPane zoomPane = new StackPane();
 
-        zoomPane.getChildren().add(mainGroup);
 
+
+        zoomPane.getChildren().add(mainGroup);
 
         final Group scrollContent = new Group(zoomPane);
         this.setContent(scrollContent);
@@ -46,12 +50,12 @@ public class ZoomScrollPane extends ScrollPane {
                 return;
             }
 
-            double scaleFactor = (event.getDeltaY() > 0) ? SCALE_DELTA
+            scaleFactor = (event.getDeltaY() > 0) ? SCALE_DELTA
                     : 1 / SCALE_DELTA;
 
             // amount of scrolling in each direction in scrollContent coordinate
             // units
-            Point2D scrollOffset = figureScrollOffset(scrollContent, scroller);
+            scrollOffset = figureScrollOffset(scrollContent, scroller);
 
             mainGroup.setScaleX(mainGroup.getScaleX() * scaleFactor);
             mainGroup.setScaleY(mainGroup.getScaleY() * scaleFactor);
@@ -85,17 +89,17 @@ public class ZoomScrollPane extends ScrollPane {
 
     }
 
-    private Point2D figureScrollOffset(Node scrollContent, ScrollPane scroller) {
+    private Point figureScrollOffset(Node scrollContent, ScrollPane scroller) {
         double extraWidth = scrollContent.getLayoutBounds().getWidth() - scroller.getViewportBounds().getWidth();
         double hScrollProportion = ((Double.isNaN(scroller.getHvalue()) ? 0 : scroller.getHvalue()) - scroller.getHmin()) / (scroller.getHmax() - scroller.getHmin());
         double scrollXOffset = hScrollProportion * Math.max(0, extraWidth);
         double extraHeight = scrollContent.getLayoutBounds().getHeight() - scroller.getViewportBounds().getHeight();
         double vScrollProportion = ((Double.isNaN(scroller.getVvalue()) ? 0 : scroller.getVvalue()) - scroller.getVmin()) / (scroller.getVmax() - scroller.getVmin());
         double scrollYOffset = vScrollProportion * Math.max(0, extraHeight);
-        return new Point2D(scrollXOffset, scrollYOffset);
+        return new Point((int) scrollXOffset, (int) scrollYOffset);
     }
 
-    private void repositionScroller(Node scrollContent, ScrollPane scroller, double scaleFactor, Point2D scrollOffset) {
+    private void repositionScroller(Node scrollContent, ScrollPane scroller, double scaleFactor, Point scrollOffset) {
         double scrollXOffset = scrollOffset.getX();
         double scrollYOffset = scrollOffset.getY();
         double extraWidth = scrollContent.getLayoutBounds().getWidth() - scroller.getViewportBounds().getWidth();
@@ -116,9 +120,17 @@ public class ZoomScrollPane extends ScrollPane {
         }
     }
 
+    private Point undoScaling(Point point) {
+        return point.sub(scrollOffset).mul(1/scaleFactor);
+    }
+
 
     public ObservableList<Node> getNodesHolder() {
         return mainGroup.getChildren();
+    }
+
+    public Group getMainGroup() {
+        return mainGroup;
     }
 
     public void clear() {

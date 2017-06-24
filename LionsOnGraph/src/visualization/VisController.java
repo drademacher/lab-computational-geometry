@@ -102,8 +102,9 @@ public class VisController implements Initializable {
             }
         });
 
-        zoomScrollPane.setOnMouseClicked(event -> {
-            System.out.println("click: " + event.getX() + event.getY());
+
+        zoomScrollPane.getMainGroup().setOnMouseClicked(event -> {
+            System.out.println("click: " + event.getX() + " - " + event.getY());
 
             this.coreController.getGraphController().createVertex(new Point((int) event.getX(), (int) event.getY()));
         });

@@ -1,9 +1,9 @@
 package graph;
 
-import shapes.BigVertexShape;
-import shapes.EdgeShape;
-import shapes.SmallVertexShape;
-import shapes.VertexShape;
+import shapes.ShapedBigVertex;
+import shapes.ShapedEdge;
+import shapes.ShapedSmallVertex;
+import shapes.ShapedVertex;
 import util.Point;
 
 import java.util.ArrayList;
@@ -15,9 +15,9 @@ class Graph {
     private static int idCounter = -1;
 
     //vertices
-    private ArrayList<BigVertexShape> bigVertices = new ArrayList<>();
-    private ArrayList<SmallVertexShape> smallVertices = new ArrayList<>();
-    private ArrayList<EdgeShape> edges = new ArrayList<>();
+    private ArrayList<ShapedBigVertex> bigVertices = new ArrayList<>();
+    private ArrayList<ShapedSmallVertex> smallVertices = new ArrayList<>();
+    private ArrayList<ShapedEdge> edges = new ArrayList<>();
 
 
     public Graph() {
@@ -29,7 +29,7 @@ class Graph {
         return idCounter;
     }
 
-//    public boolean relocateVertex(BigVertexShape vertex, Point newCoordinate){
+//    public boolean relocateVertex(ShapedBigVertex vertex, Point newCoordinate){
 //
 //        //check duplicate
 //        if(!validVertexPosition(newCoordinate)){
@@ -69,17 +69,17 @@ class Graph {
             return false;
         }
 
-        BigVertexShape vertex = new BigVertexShape(getIdCounter(), coordinate);
+        ShapedBigVertex vertex = new ShapedBigVertex(getIdCounter(), coordinate);
         bigVertices.add(vertex);
         return true;
     }
 
-    public boolean deleteVertex(BigVertexShape vertex) {
+    public boolean deleteVertex(ShapedBigVertex vertex) {
         bigVertices.remove(vertex);
         return vertex.deleteVertex();
     }
 
-    public boolean createEdge(BigVertexShape vertex1, BigVertexShape vertex2, int weight) {
+    public boolean createEdge(ShapedBigVertex vertex1, ShapedBigVertex vertex2, int weight) {
 
         //check duplicate
         for (BigVertex.EdgeVerticesObject edgeVerticesObject : vertex1.getEdgeVerticesObjects()) {
@@ -91,14 +91,14 @@ class Graph {
         ArrayList<SmallVertex> edgeVertices = new ArrayList<>();
         for (int i = 0; i < weight - 1; i++) {
 
-            SmallVertexShape smallVertex = new SmallVertexShape(getIdCounter(), calcSmallVertexCoordinates(vertex1, vertex2, weight, i));
+            ShapedSmallVertex smallVertex = new ShapedSmallVertex(getIdCounter(), calcSmallVertexCoordinates(vertex1, vertex2, weight, i));
 
             edgeVertices.add(smallVertex);
             this.smallVertices.add(smallVertex);
 
             //pointer to prev vertex
             if (i > 0) {
-                EdgeShape edge = new EdgeShape(smallVertex, edgeVertices.get(i - 1));
+                ShapedEdge edge = new ShapedEdge(smallVertex, edgeVertices.get(i - 1));
                 smallVertex.registerEdge(edge);
                 edgeVertices.get(i - 1).registerEdge(edge);
                 this.edges.add(edge);
@@ -106,13 +106,13 @@ class Graph {
 
             //pointer to the big bigVertices
             if (i == 0) {
-                EdgeShape edge = new EdgeShape(smallVertex, vertex1);
+                ShapedEdge edge = new ShapedEdge(smallVertex, vertex1);
                 smallVertex.registerEdge(edge);
                 vertex1.registerEdge(edge);
                 this.edges.add(edge);
             }
             if (i == weight - 2) {
-                EdgeShape edge = new EdgeShape(smallVertex, vertex2);
+                ShapedEdge edge = new ShapedEdge(smallVertex, vertex2);
                 smallVertex.registerEdge(edge);
                 vertex2.registerEdge(edge);
                 this.edges.add(edge);
@@ -124,7 +124,7 @@ class Graph {
 
 
         if (weight <= 1) {
-            EdgeShape edge = new EdgeShape(vertex1, vertex2);
+            ShapedEdge edge = new ShapedEdge(vertex1, vertex2);
             vertex1.registerEdge(edge);
             vertex2.registerEdge(edge);
             this.edges.add(edge);
@@ -132,7 +132,7 @@ class Graph {
         return true;
     }
 
-    public boolean removeEdge(BigVertexShape vertex1, BigVertexShape vertex2) {
+    public boolean removeEdge(ShapedBigVertex vertex1, ShapedBigVertex vertex2) {
         for (BigVertex.EdgeVerticesObject edgeVerticesObject : vertex1.getEdgeVerticesObjects()) {
             if (edgeVerticesObject.getNeighbor().equals(vertex2)) {
                 for (SmallVertex smallVertex : edgeVerticesObject.getEdgeVertices()) {
@@ -148,13 +148,13 @@ class Graph {
         return vertex1.unregisterEdgeVerticeObject(vertex2) && vertex2.unregisterEdgeVerticeObject(vertex1);
     }
 
-    public BigVertexShape getBigVertexByCoordinate(Point coordinate) {
+    public ShapedBigVertex getBigVertexByCoordinate(Point coordinate) {
         return getBigVertexByCoordinate(coordinate, BIG_VERTEX_RADIUS);
     }
 
-    private BigVertexShape getBigVertexByCoordinate(Point coordinate, double radius) {
+    private ShapedBigVertex getBigVertexByCoordinate(Point coordinate, double radius) {
 
-        for (BigVertexShape vertex : bigVertices) {
+        for (ShapedBigVertex vertex : bigVertices) {
             Point vector = new Point(vertex.getCoordinates().getX() - coordinate.getX(), vertex.getCoordinates().getY() - coordinate.getY());
             double vectorLength = vector.length();
             if (vectorLength <= radius) {
@@ -164,13 +164,13 @@ class Graph {
         return null;
     }
 
-    public SmallVertexShape getSmallVertexByCoordinate(Point coordinate) {
+    public ShapedSmallVertex getSmallVertexByCoordinate(Point coordinate) {
         return getSmallVertexByCoordinate(coordinate, BIG_VERTEX_RADIUS);
     }
 
-    private SmallVertexShape getSmallVertexByCoordinate(Point coordinate, double radius) {
+    private ShapedSmallVertex getSmallVertexByCoordinate(Point coordinate, double radius) {
 
-        for (SmallVertexShape vertex : smallVertices) {
+        for (ShapedSmallVertex vertex : smallVertices) {
             Point vector = new Point(vertex.getCoordinates().getX() - coordinate.getX(), vertex.getCoordinates().getY() - coordinate.getY());
             double vectorLength = vector.length();
             if (vectorLength <= radius) {
@@ -180,8 +180,8 @@ class Graph {
         return null;
     }
 
-    public BigVertexShape getBigVertexById(int id) {
-        for (BigVertexShape vertex : bigVertices) {
+    public ShapedBigVertex getBigVertexById(int id) {
+        for (ShapedBigVertex vertex : bigVertices) {
             if (vertex.getId() == id) {
                 return vertex;
             }
@@ -189,11 +189,11 @@ class Graph {
         return null;
     }
 
-    public ArrayList<BigVertexShape> getBigVertices() {
+    public ArrayList<ShapedBigVertex> getBigVertices() {
         return bigVertices;
     }
 
-    public ArrayList<SmallVertexShape> getSmallVertices() {
+    public ArrayList<ShapedSmallVertex> getSmallVertices() {
         return smallVertices;
     }
 
@@ -201,11 +201,11 @@ class Graph {
      *  PRIVATE HELPER FUNCTIONS
      *********************************** */
 
-    public ArrayList<EdgeShape> getEdges() {
+    public ArrayList<ShapedEdge> getEdges() {
         return edges;
     }
 
-    private boolean verticesAreAdjacent(VertexShape vertex1, VertexShape vertex2) {
+    private boolean verticesAreAdjacent(ShapedVertex vertex1, ShapedVertex vertex2) {
         for (Edge edge : vertex1.getEdges()) {
             if (edge.contains(vertex2)) {
                 return true;
@@ -221,7 +221,7 @@ class Graph {
         return true;
     }
 
-    private Point calcSmallVertexCoordinates(BigVertexShape vertex1, BigVertexShape vertex2, int weight, int index) {
+    private Point calcSmallVertexCoordinates(ShapedBigVertex vertex1, ShapedBigVertex vertex2, int weight, int index) {
         Point vector = new Point(vertex2.getCoordinates().getX() - vertex1.getCoordinates().getX(), vertex2.getCoordinates().getY() - vertex1.getCoordinates().getY());
         double vectorLength = vector.length();
         double factor = (index + 1) * (vectorLength / weight) / vectorLength;

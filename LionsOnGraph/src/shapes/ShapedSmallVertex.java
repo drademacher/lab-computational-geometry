@@ -8,18 +8,18 @@ import util.Point;
 import static shapes.ShapeConstants.COLOR_EDGE_STEPS;
 import static shapes.ShapeConstants.SMALL_VERTEX_RADIUS;
 
-public class SmallVertexShape extends SmallVertex {
+public class ShapedSmallVertex extends SmallVertex {
     private static Group shapeGroup = new Group();
 
     private Circle shape;
 
-    public SmallVertexShape(int id, Point coords) {
+    public ShapedSmallVertex(int id, Point coords) {
         super(id, coords);
         shape = new Circle(coords.getX(), coords.getY(), SMALL_VERTEX_RADIUS, COLOR_EDGE_STEPS);
         shapeGroup.getChildren().add(shape);
     }
 
     public static void setShapeGroup(Group shapeGroup) {
-        SmallVertexShape.shapeGroup = shapeGroup;
+        ShapedSmallVertex.shapeGroup = shapeGroup;
     }
 }

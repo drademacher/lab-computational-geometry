@@ -2,9 +2,9 @@ package graph;
 
 import entities.Lion;
 import entities.Man;
-import shapes.BigVertexShape;
-import shapes.EdgeShape;
-import shapes.SmallVertexShape;
+import shapes.ShapedBigVertex;
+import shapes.ShapedEdge;
+import shapes.ShapedSmallVertex;
 import strategy.StrategyAggroGreedy;
 import strategy.StrategyRunAwayGreedy;
 import strategy.StretegyAggroClever;
@@ -48,7 +48,7 @@ public class GraphController {
 //        return this.graph.relocateVertex(vertex, newCoordinate);
 //    }
 
-    public boolean deleteVertex(BigVertexShape vertex) {
+    public boolean deleteVertex(ShapedBigVertex vertex) {
         if (vertex == null) {
             return false;
         }
@@ -56,21 +56,21 @@ public class GraphController {
         return this.graph.deleteVertex(vertex);
     }
 
-    public boolean createEdge(BigVertexShape vertex1, BigVertexShape vertex2) {
+    public boolean createEdge(ShapedBigVertex vertex1, ShapedBigVertex vertex2) {
         if (vertex1 == null || vertex2 == null) {
             return false;
         }
         return createEdge(vertex1, vertex2, 4);
     }
 
-    public boolean createEdge(BigVertexShape vertex1, BigVertexShape vertex2, int weight) {
+    public boolean createEdge(ShapedBigVertex vertex1, ShapedBigVertex vertex2, int weight) {
         if (vertex1 == null || vertex2 == null || weight < 0) {
             return false;
         }
         return this.graph.createEdge(vertex1, vertex2, weight);
     }
 
-    public boolean removeEdge(BigVertexShape vertex1, BigVertexShape vertex2) {
+    public boolean removeEdge(ShapedBigVertex vertex1, ShapedBigVertex vertex2) {
         if (vertex1 == null || vertex2 == null) {
             return false;
         }
@@ -78,7 +78,7 @@ public class GraphController {
         return this.graph.removeEdge(vertex1, vertex2);
     }
 
-    public BigVertexShape getBigVertexByCoordinate(Point coordinate) {
+    public ShapedBigVertex getBigVertexByCoordinate(Point coordinate) {
         return this.graph.getBigVertexByCoordinate(coordinate);
     }
 
@@ -91,19 +91,19 @@ public class GraphController {
         return graph;
     }
 
-    public BigVertexShape getBigVertexById(int id) {
+    public ShapedBigVertex getBigVertexById(int id) {
         return this.graph.getBigVertexById(id);
     }
 
-    public ArrayList<BigVertexShape> getBigVertices() {
+    public ArrayList<ShapedBigVertex> getBigVertices() {
         return this.graph.getBigVertices();
     }
 
-    public ArrayList<SmallVertexShape> getSmallVertices() {
+    public ArrayList<ShapedSmallVertex> getSmallVertices() {
         return this.graph.getSmallVertices();
     }
 
-    public ArrayList<EdgeShape> getEdges() {
+    public ArrayList<ShapedEdge> getEdges() {
         return this.graph.getEdges();
     }
 

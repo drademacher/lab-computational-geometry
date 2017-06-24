@@ -3,9 +3,9 @@ package shapes;
 import graph.Vertex;
 import util.Point;
 
-public class VertexShape extends Vertex {
+public class ShapedVertex extends Vertex {
 
-    public VertexShape(int id, Point coordinates) {
+    public ShapedVertex(int id, Point coordinates) {
         super(id, coordinates);
     }
 

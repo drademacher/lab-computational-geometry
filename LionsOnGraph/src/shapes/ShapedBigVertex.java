@@ -11,14 +11,14 @@ import util.Point;
 import static shapes.ShapeConstants.BIG_VERTEX_RADIUS;
 import static shapes.ShapeConstants.COLOR_NODE;
 
-public class BigVertexShape extends BigVertex {
-    private static Group groundGroup;
+public class ShapedBigVertex extends BigVertex {
+    private static Group mainGroup;
     private static Group shapeGroup;
 
     private Circle shape;
 
 
-    public BigVertexShape(int id, Point coords) {
+    public ShapedBigVertex(int id, Point coords) {
         super(id, coords);
         shape = new Circle(coords.getX(), coords.getY(), BIG_VERTEX_RADIUS, COLOR_NODE);
         shapeGroup.getChildren().add(shape);
@@ -32,46 +32,41 @@ public class BigVertexShape extends BigVertex {
             MenuItem closeItem = new MenuItem("Close");
 
             item1.setOnAction(event2 -> {
-                groundGroup.setOnMouseClicked(event3 -> {
+                mainGroup.setOnMouseClicked(event3 -> {
                     // this.setCoordinates(new Point((int) event3.getX(), (int) event3.getY()));
                     shape.relocate((int) event3.getX(), (int) event3.getY());
-                    groundGroup.setOnMouseClicked(null);
+                    mainGroup.setOnMouseClicked(null);
 
                 });
             });
 
             item4.setOnAction(event2 -> {
+                shapeGroup.getChildren().remove(shape);
                 this.deleteVertex();
+
             });
 
             item2.setOnAction(event2 -> {
-                System.out.println("Add Lion");
+                System.out.println("Add Man");
+                // TODO: something like new Man(vertex.getCoordinates());
             });
 
             item3.setOnAction(event2 -> {
                 System.out.println("Add Lion");
+                // TODO: something like new Lion(vertex.getCoordinates());
             });
 
             contextMenu.getItems().addAll(item1, item4, new SeparatorMenuItem(), item2, item3, new SeparatorMenuItem(), closeItem);
             contextMenu.show(shape, event1.getScreenX(), event1.getScreenY());
         });
 
-
-
-        shape.setOnMouseDragEntered(event -> {
-            System.out.println(event.getX() + " + " + event.getY());
-        });
-
-
-
-
     }
 
-    public static void setGroundGroup(Group groundGroup) {
-        BigVertexShape.groundGroup = groundGroup;
+    public static void setMainGroup(Group mainGroup) {
+        ShapedBigVertex.mainGroup = mainGroup;
     }
 
     public static void setShapeGroup(Group shapeGroup) {
-        BigVertexShape.shapeGroup = shapeGroup;
+        ShapedBigVertex.shapeGroup = shapeGroup;
     }
 }

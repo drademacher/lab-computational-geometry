@@ -154,6 +154,7 @@ public class ZoomScrollPane extends ScrollPane {
         });
 
 
+        BigVertexShape.setGroundGroup(mainGroup);
         BigVertexShape.setShapeGroup(vertexShapes);
         SmallVertexShape.setShapeGroup(vertexShapes);
         EdgeShape.setShapeGroup(edgeShapes);

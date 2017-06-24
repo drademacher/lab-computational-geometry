@@ -36,7 +36,9 @@ public class GraphController {
         if (coordinate == null) {
             return false;
         }
-        return this.graph.createVertex(coordinate);
+        boolean bool = this.graph.createVertex(coordinate);
+
+        return bool;
     }
 
 //    public boolean relocateVertex(BigVertex vertex, Point newCoordinate){

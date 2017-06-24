@@ -65,13 +65,14 @@ public class VisController implements Initializable {
         });
 
 
-        zoomScrollPane.getMainGroup().setOnMousePressed(event -> {
-//            Point p = new Point((int) event.getX(), (int) event.getY());
-//            coreController.getGraphController().createVertex(new Point((int) event.getX(), (int) event.getY()));
-        });
+        initContextMenu();
 
 
-        zoomScrollPane.getMainGroup().setOnContextMenuRequested(event1 -> {
+        initViews();
+    }
+
+    private void initContextMenu() {
+        zoomScrollPane.getGround().setOnContextMenuRequested(event1 -> {
             final ContextMenu contextMenu = new ContextMenu();
             MenuItem item1 = new MenuItem("Add Node");
             item1.setOnAction(event2 -> {
@@ -80,11 +81,8 @@ public class VisController implements Initializable {
             MenuItem item2 = new MenuItem("Close");
 
             contextMenu.getItems().addAll(item1, item2);
-            contextMenu.show(zoomScrollPane.getMainGroup(), event1.getScreenX(), event1.getScreenY());
+            contextMenu.show(zoomScrollPane.getGround(), event1.getScreenX(), event1.getScreenY());
         });
-
-
-        initViews();
     }
 
     private void initGraphButtons() {

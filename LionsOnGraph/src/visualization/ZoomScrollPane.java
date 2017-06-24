@@ -9,9 +9,9 @@ import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
-import shapes.BigVertexShape;
-import shapes.EdgeShape;
-import shapes.SmallVertexShape;
+import shapes.ShapedBigVertex;
+import shapes.ShapedEdge;
+import shapes.ShapedSmallVertex;
 import util.Point;
 
 import static shapes.ShapeConstants.BIG_VERTEX_RADIUS;
@@ -24,6 +24,7 @@ import static shapes.ShapeConstants.COLOR_BACKGROUND;
  */
 public class ZoomScrollPane extends ScrollPane {
     private Group mainGroup = new Group();
+    private Group groundGround = new Group();
 
     private double scaleFactor = 1;
     private Point scrollOffset = new Point(0, 0);
@@ -127,33 +128,33 @@ public class ZoomScrollPane extends ScrollPane {
         return mainGroup.getChildren();
     }
 
-    public Group getMainGroup() {
-        return mainGroup;
+    public Node getGround() {
+        return groundGround; // .getChildren().get(0);
     }
 
     public void clear() {
-        Rectangle base = new Rectangle(0, 0, 0, 0);
-        base.setFill(COLOR_BACKGROUND);
-        Group baseRect = new Group(base);
+        Rectangle groundRectangle = new Rectangle(0, 0, 0, 0);
+        groundRectangle.setFill(COLOR_BACKGROUND);
+        groundGround.getChildren().add(groundRectangle);
         Group vertexShapes = new Group();
         Group edgeShapes = new Group();
 
         getNodesHolder().clear();
-        getNodesHolder().addAll(baseRect, edgeShapes, vertexShapes);
+        getNodesHolder().addAll(groundGround, edgeShapes, vertexShapes);
 
 
         vertexShapes.layoutBoundsProperty().addListener((observable, oldValue, newValue) -> {
             final double PADDING_FACTOR = 0.1, PADDING_CONST = 20;
             double w = newValue.getWidth(), h = newValue.getHeight();
-            base.setWidth(w * (1 + 2 * PADDING_FACTOR) + 2 * PADDING_CONST);
-            base.setHeight(h * (1 + 2 * PADDING_FACTOR) + 2 * PADDING_CONST);
-            base.relocate(-(w * PADDING_FACTOR + PADDING_CONST + BIG_VERTEX_RADIUS), -(h * PADDING_FACTOR + PADDING_CONST + BIG_VERTEX_RADIUS));
+            groundRectangle.setWidth(w * (1 + 2 * PADDING_FACTOR) + 2 * PADDING_CONST);
+            groundRectangle.setHeight(h * (1 + 2 * PADDING_FACTOR) + 2 * PADDING_CONST);
+            groundRectangle.relocate(-(w * PADDING_FACTOR + PADDING_CONST + BIG_VERTEX_RADIUS), -(h * PADDING_FACTOR + PADDING_CONST + BIG_VERTEX_RADIUS));
         });
 
 
-        BigVertexShape.setShapeGroup(vertexShapes);
-        SmallVertexShape.setShapeGroup(vertexShapes);
-        EdgeShape.setShapeGroup(edgeShapes);
+        ShapedBigVertex.setShapeGroup(vertexShapes);
+        ShapedSmallVertex.setShapeGroup(vertexShapes);
+        ShapedEdge.setShapeGroup(edgeShapes);
     }
 
 }

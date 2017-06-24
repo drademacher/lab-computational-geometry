@@ -1,6 +1,7 @@
 package shapes;
 
 import graph.BigVertex;
+import graph.GraphController;
 import javafx.scene.Group;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
@@ -11,16 +12,20 @@ import util.Point;
 import static shapes.ShapeConstants.BIG_VERTEX_RADIUS;
 import static shapes.ShapeConstants.COLOR_NODE;
 
-public class ShapedBigVertex extends BigVertex {
+public class ShapedBigVertex {
     private static Group mainGroup;
     private static Group shapeGroup;
 
     private Circle shape;
+    private BigVertex vertex;
+    private GraphController graphController;
 
 
-    public ShapedBigVertex(int id, Point coords) {
-        super(id, coords);
-        shape = new Circle(coords.getX(), coords.getY(), BIG_VERTEX_RADIUS, COLOR_NODE);
+    public ShapedBigVertex(GraphController graphController, BigVertex vertex) {
+        this.vertex = vertex;
+        this.graphController = graphController;
+
+        shape = new Circle(vertex.getCoordinates().getX(), vertex.getCoordinates().getY(), BIG_VERTEX_RADIUS, COLOR_NODE);
         shapeGroup.getChildren().add(shape);
 
         shape.setOnContextMenuRequested(event1 -> {
@@ -34,16 +39,17 @@ public class ShapedBigVertex extends BigVertex {
             item1.setOnAction(event2 -> {
                 mainGroup.setOnMouseClicked(event3 -> {
                     // this.setCoordinates(new Point((int) event3.getX(), (int) event3.getY()));
-                    shape.relocate((int) event3.getX(), (int) event3.getY());
+//                    shape.relocate((int) event3.getX(), (int) event3.getY());
                     mainGroup.setOnMouseClicked(null);
+
+                    graphController.relocateVertex(vertex, new Point((int) event3.getX(), (int) event3.getY()));
 
                 });
             });
 
             item4.setOnAction(event2 -> {
-                shapeGroup.getChildren().remove(shape);
-                this.deleteVertex();
-
+                graphController.deleteVertex(vertex);
+//                shapeGroup.getChildren().remove(shape);
             });
 
             item2.setOnAction(event2 -> {
@@ -61,6 +67,15 @@ public class ShapedBigVertex extends BigVertex {
         });
 
     }
+
+    public void relocate() {
+        shape.relocate(vertex.getCoordinates().getX(), vertex.getCoordinates().getY());
+    }
+
+    public void delete() {
+        shapeGroup.getChildren().remove(shape);
+    }
+
 
     public static void setMainGroup(Group mainGroup) {
         ShapedBigVertex.mainGroup = mainGroup;

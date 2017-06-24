@@ -1,9 +1,5 @@
 package graph;
 
-import shapes.ShapedBigVertex;
-import shapes.ShapedEdge;
-import shapes.ShapedSmallVertex;
-import shapes.ShapedVertex;
 import util.Point;
 
 import java.util.ArrayList;
@@ -13,15 +9,16 @@ import static shapes.ShapeConstants.BIG_VERTEX_RADIUS;
 class Graph {
 
     private static int idCounter = -1;
+    private GraphController graphController;
 
     //vertices
-    private ArrayList<ShapedBigVertex> bigVertices = new ArrayList<>();
-    private ArrayList<ShapedSmallVertex> smallVertices = new ArrayList<>();
-    private ArrayList<ShapedEdge> edges = new ArrayList<>();
+    private ArrayList<BigVertex> bigVertices = new ArrayList<>();
+    private ArrayList<SmallVertex> smallVertices = new ArrayList<>();
+    private ArrayList<Edge> edges = new ArrayList<>();
 
 
-    public Graph() {
-
+    public Graph(GraphController graphController) {
+        this.graphController = graphController;
     }
 
     private static int getIdCounter() {
@@ -29,38 +26,47 @@ class Graph {
         return idCounter;
     }
 
-//    public boolean relocateVertex(ShapedBigVertex vertex, Point newCoordinate){
-//
-//        //check duplicate
-//        if(!validVertexPosition(newCoordinate)){
-//            return false;
-//        }
-//
-//        vertex.setCoordinates(newCoordinate);
-//
-//        //update position of SmallVertices
-//        for(BigVertex.EdgeVerticesObject edgeVerticesObject : vertex.getEdgeVerticesObjects()){
-//            BigVertex neighbor = edgeVerticesObject.getNeighbor();
-//            int edgeWeight = edgeVerticesObject.getEdgeWeight();
-//            int i = 0;
-//
-//            //check edge orientation, if there are (enough) edge bigVertices
-//            boolean reversedEdge = false;
-//            if(edgeWeight>2){
-//                reversedEdge = !verticesAreAdjacent(edgeVerticesObject.getEdgeVertices().get(0), vertex);
-//            }
-//
-//            for(SmallVertex smallVertex : edgeVerticesObject.getEdgeVertices()){
-//                if(reversedEdge){
-//                    smallVertex.setCoordinates(calcSmallVertexCoordinates(neighbor, vertex, edgeWeight, i));
-//                }else{
-//                    smallVertex.setCoordinates(calcSmallVertexCoordinates(vertex, neighbor, edgeWeight, i));
-//                }
-//                i++;
-//            }
-//        }
-//        return false;
-//    }
+    public boolean relocateVertex(BigVertex vertex, Point newCoordinate) {
+
+        //check duplicate
+        if (!validVertexPosition(newCoordinate)) {
+            return false;
+        }
+
+        vertex.setCoordinates(newCoordinate);
+        vertex.getShape().relocate();
+
+        //update position of SmallVertices
+        for (BigVertex.EdgeVerticesObject edgeVerticesObject : vertex.getEdgeVerticesObjects()) {
+            BigVertex neighbor = edgeVerticesObject.getNeighbor();
+            int edgeWeight = edgeVerticesObject.getEdgeWeight();
+            int i = 0;
+
+            //check edge orientation, if there are (enough) edge bigVertices
+            boolean reversedEdge = false;
+            if (edgeWeight > 2) {
+                reversedEdge = !verticesAreAdjacent(edgeVerticesObject.getEdgeVertices().get(0), vertex);
+            }
+
+            for (SmallVertex smallVertex : edgeVerticesObject.getEdgeVertices()) {
+                if (reversedEdge) {
+                    Point coordinates = calcSmallVertexCoordinates(neighbor, vertex, edgeWeight, i);
+                    smallVertex.setCoordinates(coordinates);
+
+                } else {
+                    Point coordinates = calcSmallVertexCoordinates(vertex, neighbor, edgeWeight, i);
+                    smallVertex.setCoordinates(coordinates);
+                }
+                //relocate shapes
+                smallVertex.getShape().relocate();
+                for (Edge edge : smallVertex.getEdges()) {
+                    edge.getShape().relocate();
+                }
+                i++;
+            }
+        }
+        return false;
+    }
 
     public boolean createVertex(Point coordinate) {
 
@@ -69,17 +75,49 @@ class Graph {
             return false;
         }
 
-        ShapedBigVertex vertex = new ShapedBigVertex(getIdCounter(), coordinate);
+        BigVertex vertex = BigVertex.createBigVertex(graphController, getIdCounter(), coordinate);
         bigVertices.add(vertex);
         return true;
     }
 
-    public boolean deleteVertex(ShapedBigVertex vertex) {
+    public boolean deleteVertex(BigVertex vertex) {
+        System.out.println("ok #2");
         bigVertices.remove(vertex);
+        System.out.println("ok #3");
+
+        vertex.getShape().delete();
+
         return vertex.deleteVertex();
+
+//        for (int j = vertex.getEdgeVerticesObjects().size() - 1; j >= 0; j++) {
+//            BigVertex.EdgeVerticesObject edgeVertices = vertex.getEdgeVerticesObjects().get(j);
+//                if (edgeVertices.getNeighbor().equals(edgeVertices.getNeighbor())) {
+//                    if (edgeVertices.getEdgeVertices().size() <= 0) {
+//                        for (int i = edges.size() - 1; i >= 0; i--) {
+//                            if (edges.get(i).contains(edgeVertices.getNeighbor())) {
+//                                vertex.unregisterEdge(edges.get(i));
+//                                edges.get(i).getShape().delete();
+//                                edges.remove(edges.get(i));
+//                            }
+//                        }
+//                    }
+//                    for (SmallVertex smallVertex : edgeVertices.getEdgeVertices()) {
+//                        for (int i = edges.size() - 1; i >= 0; i--) {
+//                            if (edges.get(i).contains(smallVertex)) {
+//                                vertex.unregisterEdge(edges.get(i));
+//                                edges.get(i).getShape().delete();
+//                                smallVertex.getShape().delete();
+//                                edges.remove(edges.get(i));
+//                            }
+//                        }
+//                    }
+//                    return vertex.edgeVerticesObjects.remove(edgeVertices) && edgeVertices.getNeighbor().edgeVerticesObjects.remove(edgeVertices);
+//                }
+//            }
+//        return false;
     }
 
-    public boolean createEdge(ShapedBigVertex vertex1, ShapedBigVertex vertex2, int weight) {
+    public boolean createEdge(BigVertex vertex1, BigVertex vertex2, int weight) {
 
         //check duplicate
         for (BigVertex.EdgeVerticesObject edgeVerticesObject : vertex1.getEdgeVerticesObjects()) {
@@ -91,14 +129,14 @@ class Graph {
         ArrayList<SmallVertex> edgeVertices = new ArrayList<>();
         for (int i = 0; i < weight - 1; i++) {
 
-            ShapedSmallVertex smallVertex = new ShapedSmallVertex(getIdCounter(), calcSmallVertexCoordinates(vertex1, vertex2, weight, i));
+            SmallVertex smallVertex = SmallVertex.createSmallVertex(graphController, getIdCounter(), calcSmallVertexCoordinates(vertex1, vertex2, weight, i));
 
             edgeVertices.add(smallVertex);
             this.smallVertices.add(smallVertex);
 
             //pointer to prev vertex
             if (i > 0) {
-                ShapedEdge edge = new ShapedEdge(smallVertex, edgeVertices.get(i - 1));
+                Edge edge = Edge.createEdge(graphController, smallVertex, edgeVertices.get(i - 1));
                 smallVertex.registerEdge(edge);
                 edgeVertices.get(i - 1).registerEdge(edge);
                 this.edges.add(edge);
@@ -106,13 +144,13 @@ class Graph {
 
             //pointer to the big bigVertices
             if (i == 0) {
-                ShapedEdge edge = new ShapedEdge(smallVertex, vertex1);
+                Edge edge = Edge.createEdge(graphController, smallVertex, vertex1);
                 smallVertex.registerEdge(edge);
                 vertex1.registerEdge(edge);
                 this.edges.add(edge);
             }
             if (i == weight - 2) {
-                ShapedEdge edge = new ShapedEdge(smallVertex, vertex2);
+                Edge edge = Edge.createEdge(graphController, smallVertex, vertex2);
                 smallVertex.registerEdge(edge);
                 vertex2.registerEdge(edge);
                 this.edges.add(edge);
@@ -124,7 +162,7 @@ class Graph {
 
 
         if (weight <= 1) {
-            ShapedEdge edge = new ShapedEdge(vertex1, vertex2);
+            Edge edge = Edge.createEdge(graphController, vertex1, vertex2);
             vertex1.registerEdge(edge);
             vertex2.registerEdge(edge);
             this.edges.add(edge);
@@ -132,7 +170,7 @@ class Graph {
         return true;
     }
 
-    public boolean removeEdge(ShapedBigVertex vertex1, ShapedBigVertex vertex2) {
+    public boolean removeEdge(BigVertex vertex1, BigVertex vertex2) {
         for (BigVertex.EdgeVerticesObject edgeVerticesObject : vertex1.getEdgeVerticesObjects()) {
             if (edgeVerticesObject.getNeighbor().equals(vertex2)) {
                 for (SmallVertex smallVertex : edgeVerticesObject.getEdgeVertices()) {
@@ -148,13 +186,13 @@ class Graph {
         return vertex1.unregisterEdgeVerticeObject(vertex2) && vertex2.unregisterEdgeVerticeObject(vertex1);
     }
 
-    public ShapedBigVertex getBigVertexByCoordinate(Point coordinate) {
+    public BigVertex getBigVertexByCoordinate(Point coordinate) {
         return getBigVertexByCoordinate(coordinate, BIG_VERTEX_RADIUS);
     }
 
-    private ShapedBigVertex getBigVertexByCoordinate(Point coordinate, double radius) {
+    private BigVertex getBigVertexByCoordinate(Point coordinate, double radius) {
 
-        for (ShapedBigVertex vertex : bigVertices) {
+        for (BigVertex vertex : bigVertices) {
             Point vector = new Point(vertex.getCoordinates().getX() - coordinate.getX(), vertex.getCoordinates().getY() - coordinate.getY());
             double vectorLength = vector.length();
             if (vectorLength <= radius) {
@@ -164,13 +202,13 @@ class Graph {
         return null;
     }
 
-    public ShapedSmallVertex getSmallVertexByCoordinate(Point coordinate) {
+    public SmallVertex getSmallVertexByCoordinate(Point coordinate) {
         return getSmallVertexByCoordinate(coordinate, BIG_VERTEX_RADIUS);
     }
 
-    private ShapedSmallVertex getSmallVertexByCoordinate(Point coordinate, double radius) {
+    private SmallVertex getSmallVertexByCoordinate(Point coordinate, double radius) {
 
-        for (ShapedSmallVertex vertex : smallVertices) {
+        for (SmallVertex vertex : smallVertices) {
             Point vector = new Point(vertex.getCoordinates().getX() - coordinate.getX(), vertex.getCoordinates().getY() - coordinate.getY());
             double vectorLength = vector.length();
             if (vectorLength <= radius) {
@@ -180,8 +218,8 @@ class Graph {
         return null;
     }
 
-    public ShapedBigVertex getBigVertexById(int id) {
-        for (ShapedBigVertex vertex : bigVertices) {
+    public BigVertex getBigVertexById(int id) {
+        for (BigVertex vertex : bigVertices) {
             if (vertex.getId() == id) {
                 return vertex;
             }
@@ -189,11 +227,11 @@ class Graph {
         return null;
     }
 
-    public ArrayList<ShapedBigVertex> getBigVertices() {
+    public ArrayList<BigVertex> getBigVertices() {
         return bigVertices;
     }
 
-    public ArrayList<ShapedSmallVertex> getSmallVertices() {
+    public ArrayList<SmallVertex> getSmallVertices() {
         return smallVertices;
     }
 
@@ -201,11 +239,11 @@ class Graph {
      *  PRIVATE HELPER FUNCTIONS
      *********************************** */
 
-    public ArrayList<ShapedEdge> getEdges() {
+    public ArrayList<Edge> getEdges() {
         return edges;
     }
 
-    private boolean verticesAreAdjacent(ShapedVertex vertex1, ShapedVertex vertex2) {
+    private boolean verticesAreAdjacent(Vertex vertex1, Vertex vertex2) {
         for (Edge edge : vertex1.getEdges()) {
             if (edge.contains(vertex2)) {
                 return true;
@@ -221,7 +259,7 @@ class Graph {
         return true;
     }
 
-    private Point calcSmallVertexCoordinates(ShapedBigVertex vertex1, ShapedBigVertex vertex2, int weight, int index) {
+    private Point calcSmallVertexCoordinates(BigVertex vertex1, BigVertex vertex2, int weight, int index) {
         Point vector = new Point(vertex2.getCoordinates().getX() - vertex1.getCoordinates().getX(), vertex2.getCoordinates().getY() - vertex1.getCoordinates().getY());
         double vectorLength = vector.length();
         double factor = (index + 1) * (vectorLength / weight) / vectorLength;

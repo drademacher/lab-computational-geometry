@@ -1,10 +1,20 @@
 package graph;
 
+import shapes.ShapedEdge;
+
 public class Edge {
 
     private Vertex[] vertices = new Vertex[2];
 
-    public Edge(Vertex start, Vertex end) {
+    private ShapedEdge shape;
+
+    public static Edge createEdge(GraphController graphController, Vertex start, Vertex end) {
+        Edge edge = new Edge(start, end);
+        edge.shape = new ShapedEdge(graphController, edge);
+        return edge;
+    }
+
+    private Edge(Vertex start, Vertex end) {
         this.vertices[0] = start;
         this.vertices[1] = end;
 
@@ -29,6 +39,10 @@ public class Edge {
 
     public Vertex[] getVertices() {
         return vertices;
+    }
+
+    public ShapedEdge getShape() {
+        return shape;
     }
 
     @Override

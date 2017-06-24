@@ -2,9 +2,6 @@ package graph;
 
 import entities.Lion;
 import entities.Man;
-import shapes.ShapedBigVertex;
-import shapes.ShapedEdge;
-import shapes.ShapedSmallVertex;
 import strategy.StrategyAggroGreedy;
 import strategy.StrategyRunAwayGreedy;
 import strategy.StretegyAggroClever;
@@ -23,7 +20,7 @@ public class GraphController {
     private Graph graph;
 
     public GraphController() {
-        this.graph = new Graph();
+        this.graph = new Graph(this);
     }
 
     /* ****************************
@@ -41,36 +38,38 @@ public class GraphController {
         return bool;
     }
 
-//    public boolean relocateVertex(BigVertex vertex, Point newCoordinate){
-//        if(vertex == null || newCoordinate == null){
-//            return false;
-//        }
-//        return this.graph.relocateVertex(vertex, newCoordinate);
-//    }
+    public boolean relocateVertex(BigVertex vertex, Point newCoordinate) {
+        if (vertex == null || newCoordinate == null) {
+            return false;
+        }
+        return this.graph.relocateVertex(vertex, newCoordinate);
+    }
 
-    public boolean deleteVertex(ShapedBigVertex vertex) {
+    public boolean deleteVertex(BigVertex vertex) {
         if (vertex == null) {
+            System.out.println("false #1");
             return false;
         }
         //TODO Entity?
+        System.out.println("ok #1");
         return this.graph.deleteVertex(vertex);
     }
 
-    public boolean createEdge(ShapedBigVertex vertex1, ShapedBigVertex vertex2) {
+    public boolean createEdge(BigVertex vertex1, BigVertex vertex2) {
         if (vertex1 == null || vertex2 == null) {
             return false;
         }
         return createEdge(vertex1, vertex2, 4);
     }
 
-    public boolean createEdge(ShapedBigVertex vertex1, ShapedBigVertex vertex2, int weight) {
+    public boolean createEdge(BigVertex vertex1, BigVertex vertex2, int weight) {
         if (vertex1 == null || vertex2 == null || weight < 0) {
             return false;
         }
         return this.graph.createEdge(vertex1, vertex2, weight);
     }
 
-    public boolean removeEdge(ShapedBigVertex vertex1, ShapedBigVertex vertex2) {
+    public boolean removeEdge(BigVertex vertex1, BigVertex vertex2) {
         if (vertex1 == null || vertex2 == null) {
             return false;
         }
@@ -78,7 +77,7 @@ public class GraphController {
         return this.graph.removeEdge(vertex1, vertex2);
     }
 
-    public ShapedBigVertex getBigVertexByCoordinate(Point coordinate) {
+    public BigVertex getBigVertexByCoordinate(Point coordinate) {
         return this.graph.getBigVertexByCoordinate(coordinate);
     }
 
@@ -91,19 +90,19 @@ public class GraphController {
         return graph;
     }
 
-    public ShapedBigVertex getBigVertexById(int id) {
+    public BigVertex getBigVertexById(int id) {
         return this.graph.getBigVertexById(id);
     }
 
-    public ArrayList<ShapedBigVertex> getBigVertices() {
+    public ArrayList<BigVertex> getBigVertices() {
         return this.graph.getBigVertices();
     }
 
-    public ArrayList<ShapedSmallVertex> getSmallVertices() {
+    public ArrayList<SmallVertex> getSmallVertices() {
         return this.graph.getSmallVertices();
     }
 
-    public ArrayList<ShapedEdge> getEdges() {
+    public ArrayList<Edge> getEdges() {
         return this.graph.getEdges();
     }
 
@@ -156,12 +155,12 @@ public class GraphController {
      * ****************************/
 
     public void setEmptyGraph() {
-        this.graph = new Graph();
+        this.graph = new Graph(this);
     }
 
 
     public void setDefaultGraph1() {
-        this.graph = new Graph();
+        this.graph = new Graph(this);
 
         this.createVertex(new Point(50, 20));
         this.createVertex(new Point(190, 20));
@@ -226,7 +225,7 @@ public class GraphController {
 
 
     public void setDefaultGraph2() {
-        this.graph = new Graph();
+        this.graph = new Graph(this);
 
         this.createVertex(new Point(50, 20));
         this.createVertex(new Point(190, 20));
@@ -293,11 +292,15 @@ public class GraphController {
     }
 
     public void setDefaultGraph3() {
-        this.graph = new Graph();
+        this.graph = new Graph(this);
 
         // this.createVertex(new Point(5, 5));
-        this.createVertex(new Point(19, 9));
+        this.createVertex(new Point(40, 20));
         this.createVertex(new Point(0, 0));
+
+        this.createVertex(new Point(10, 30));
+
+        this.createEdge(this.getBigVertexByCoordinate(new Point(40, 20)), this.getBigVertexByCoordinate(new Point(0, 0)));
 
     }
 
@@ -308,7 +311,7 @@ public class GraphController {
     public void setDefaultGraph5() {
 
 
-        this.graph = new Graph();
+        this.graph = new Graph(this);
 
         this.createVertex(new Point(10, 10));
         this.createVertex(new Point(80, 40));

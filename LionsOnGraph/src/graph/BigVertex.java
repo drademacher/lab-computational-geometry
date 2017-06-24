@@ -1,5 +1,6 @@
 package graph;
 
+import shapes.ShapedBigVertex;
 import util.Point;
 
 import java.util.ArrayList;
@@ -10,8 +11,15 @@ import java.util.ArrayList;
 public class BigVertex extends Vertex {
 
     protected ArrayList<EdgeVerticesObject> edgeVerticesObjects = new ArrayList<>();
+    private ShapedBigVertex shape;
 
-    public BigVertex(int id, Point coordinates) {
+    public static BigVertex createBigVertex(GraphController graphController, int id, Point coordinates) {
+        BigVertex vertex = new BigVertex(id, coordinates);
+        vertex.shape = new ShapedBigVertex(graphController, vertex);
+        return vertex;
+    }
+
+    private BigVertex(int id, Point coordinates) {
         super(id, coordinates);
     }
 
@@ -30,15 +38,21 @@ public class BigVertex extends Vertex {
     public boolean unregisterEdgeVerticeObject(BigVertex neighbor) {
         for (EdgeVerticesObject edgeVertex : edgeVerticesObjects) {
             if (edgeVertex.getNeighbor().equals(neighbor)) {
+
                 if (edgeVertex.getEdgeVertices().size() <= 0) {
-                    for (Edge edge : edges) {
-                        if (edge.contains(neighbor)) {
-                            unregisterEdge(edge);
+                    for (int i = edges.size() - 1; i >= 0; i--) {
+                        if (edges.get(i).contains(neighbor)) {
+                            edges.get(i).getShape().delete();
+                            unregisterEdge(edges.get(i));
                         }
                     }
                 }
                 for (SmallVertex vertex : edgeVertex.getEdgeVertices()) {
-                    for (Edge edge : edges) {
+                    for (int i = vertex.getEdges().size() - 1; i >= 0; i--) {
+                        Edge edge = vertex.getEdges().get(i);
+                        vertex.getShape().delete();
+                        edge.getShape().delete();
+                        vertex.unregisterEdge(edge);
                         if (edge.contains(vertex)) {
                             unregisterEdge(edge);
                         }
@@ -54,6 +68,9 @@ public class BigVertex extends Vertex {
         return edgeVerticesObjects;
     }
 
+    public ShapedBigVertex getShape() {
+        return shape;
+    }
 
     class EdgeVerticesObject {
         private BigVertex neighbor;

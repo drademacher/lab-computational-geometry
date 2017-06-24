@@ -1,6 +1,7 @@
 package shapes;
 
 import graph.Edge;
+import graph.GraphController;
 import graph.Vertex;
 import javafx.scene.Group;
 import javafx.scene.shape.Line;
@@ -8,17 +9,33 @@ import javafx.scene.shape.Line;
 import static shapes.ShapeConstants.COLOR_EDGE;
 
 
-public class ShapedEdge extends Edge {
+public class ShapedEdge {
     private static Group shapeGroup = new Group();
 
-
+    private GraphController graphController;
+    private Edge edge;
     private Line shape;
 
-    public ShapedEdge(Vertex start, Vertex end) {
-        super(start, end);
-        shape = new Line(start.getCoordinates().getX(), start.getCoordinates().getY(), end.getCoordinates().getX(), end.getCoordinates().getY());
+    public ShapedEdge(GraphController graphController, Edge edge) {
+
+        this.graphController = graphController;
+        this.edge = edge;
+
+        shape = new Line(edge.getVertices()[0].getCoordinates().getX(), edge.getVertices()[0].getCoordinates().getY(),
+                edge.getVertices()[1].getCoordinates().getX(), edge.getVertices()[1].getCoordinates().getY());
         shape.setStroke(COLOR_EDGE);
         shapeGroup.getChildren().add(shape);
+    }
+
+    public void relocate() {
+        shape.setStartX(edge.getVertices()[0].getCoordinates().getX());
+        shape.setStartY(edge.getVertices()[0].getCoordinates().getY());
+        shape.setEndX(edge.getVertices()[1].getCoordinates().getX());
+        shape.setEndY(edge.getVertices()[1].getCoordinates().getY());
+    }
+
+    public void delete() {
+        shapeGroup.getChildren().remove(shape);
     }
 
     public static void setShapeGroup(Group shapeGroup) {

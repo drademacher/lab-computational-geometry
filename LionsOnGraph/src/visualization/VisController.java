@@ -106,6 +106,7 @@ public class VisController implements Initializable {
 
     private void initGraphButtons() {
         emptyMapMenuItem.setOnAction(event -> {
+
             this.zoomScrollPane.clear();
             this.graphHolder.setGraph(coreController.setEmptyGraph());
             this.graphHolder.setState(coreController.getState());

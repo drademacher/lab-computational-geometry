@@ -5,6 +5,7 @@ import core.graph.graphshapes.EdgeShape;
 import core.graph.graphshapes.SmallVertexShape;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.ObservableList;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -16,18 +17,15 @@ import javafx.scene.layout.StackPane;
  * https://stackoverflow.com/questions/16680295/javafx-correct-scaling
  */
 public class ZoomScrollPane extends ScrollPane {
-    private Group vertexShapes = new Group();
-    private Group edgeShapes = new Group();
-    private Group entityShapes = new Group();
+    private Group mainGroup = new Group();
+
 
     public ZoomScrollPane() {
         final double SCALE_DELTA = 1.1;
         final StackPane zoomPane = new StackPane();
 
-        zoomPane.getChildren().addAll(edgeShapes, vertexShapes, entityShapes);
-        BigVertexShape.setShapeGroup(vertexShapes);
-        SmallVertexShape.setShapeGroup(vertexShapes);
-        EdgeShape.setShapeGroup(edgeShapes);
+        zoomPane.getChildren().add(mainGroup);
+
 
         final Group scrollContent = new Group(zoomPane);
         this.setContent(scrollContent);
@@ -55,12 +53,9 @@ public class ZoomScrollPane extends ScrollPane {
             // units
             Point2D scrollOffset = figureScrollOffset(scrollContent, scroller);
 
-            vertexShapes.setScaleX(vertexShapes.getScaleX() * scaleFactor);
-            vertexShapes.setScaleY(vertexShapes.getScaleY() * scaleFactor);
-            edgeShapes.setScaleX(edgeShapes.getScaleX() * scaleFactor);
-            edgeShapes.setScaleY(edgeShapes.getScaleY() * scaleFactor);
-            entityShapes.setScaleX(entityShapes.getScaleX() * scaleFactor);
-            entityShapes.setScaleY(entityShapes.getScaleY() * scaleFactor);
+            mainGroup.setScaleX(mainGroup.getScaleX() * scaleFactor);
+            mainGroup.setScaleY(mainGroup.getScaleY() * scaleFactor);
+
 
             // move viewport so that old center remains in the center after the
             // scaling
@@ -121,10 +116,21 @@ public class ZoomScrollPane extends ScrollPane {
         }
     }
 
+
+    public ObservableList<Node> getNodesHolder() {
+        return mainGroup.getChildren();
+    }
+
     public void clear() {
-        vertexShapes.getChildren().clear();
-        edgeShapes.getChildren().clear();
-        entityShapes.getChildren().clear();
+        Group vertexShapes = new Group();
+        Group edgeShapes = new Group();
+
+        getNodesHolder().clear();
+        getNodesHolder().addAll(edgeShapes, vertexShapes);
+
+        BigVertexShape.setShapeGroup(vertexShapes);
+        SmallVertexShape.setShapeGroup(vertexShapes);
+        EdgeShape.setShapeGroup(edgeShapes);
     }
 
 }

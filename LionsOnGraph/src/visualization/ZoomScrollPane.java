@@ -1,5 +1,6 @@
 package visualization;
 
+import graph.BigVertex;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
@@ -9,9 +10,10 @@ import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
-import shapes.ShapedBigVertex;
-import shapes.ShapedEdge;
-import shapes.ShapedSmallVertex;
+
+import shapes.BigVertexShape;
+import shapes.EdgeShape;
+import shapes.SmallVertexShape;
 import util.Point;
 
 import static shapes.ShapeConstants.BIG_VERTEX_RADIUS;
@@ -152,9 +154,9 @@ public class ZoomScrollPane extends ScrollPane {
         });
 
 
-        ShapedBigVertex.setShapeGroup(vertexShapes);
-        ShapedSmallVertex.setShapeGroup(vertexShapes);
-        ShapedEdge.setShapeGroup(edgeShapes);
+        BigVertexShape.setShapeGroup(vertexShapes);
+        SmallVertexShape.setShapeGroup(vertexShapes);
+        EdgeShape.setShapeGroup(edgeShapes);
     }
 
 }

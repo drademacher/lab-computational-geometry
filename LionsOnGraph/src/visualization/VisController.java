@@ -2,12 +2,16 @@ package visualization;
 
 import core.CoreController;
 import core.util.Point;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.io.File;
 import java.net.URL;
@@ -103,11 +107,28 @@ public class VisController implements Initializable {
         });
 
 
-        zoomScrollPane.getMainGroup().setOnMouseClicked(event -> {
-            System.out.println("click: " + event.getX() + " - " + event.getY());
 
-            this.coreController.getGraphController().createVertex(new Point((int) event.getX(), (int) event.getY()));
+        zoomScrollPane.getMainGroup().setOnMousePressed(event -> {
+//            Point p = new Point((int) event.getX(), (int) event.getY());
+//            coreController.getGraphController().createVertex(new Point((int) event.getX(), (int) event.getY()));
         });
+
+
+
+
+        zoomScrollPane.getMainGroup().setOnContextMenuRequested(event1 -> {
+            final ContextMenu contextMenu = new ContextMenu();
+            MenuItem item1 = new MenuItem("Add Node");
+            item1.setOnAction(event2 -> {
+                coreController.getGraphController().createVertex(new Point((int) event1.getX(), (int) event1.getY()));
+            });
+//            MenuItem item2 = new MenuItem("Preferences");
+//            item2.setOnAction(e -> System.out.println("Preferences"));
+            contextMenu.getItems().addAll(item1);
+            contextMenu.show(zoomScrollPane.getMainGroup(), event1.getScreenX(), event1.getScreenY());
+        });
+
+
 
         initViews();
     }
@@ -140,7 +161,8 @@ public class VisController implements Initializable {
 
         graph3MenuItem.setOnAction(event -> {
             this.zoomScrollPane.clear();
-//            this.graphHolder.setGraph(coreController.setDefaultGraph3());
+            coreController.setDefaultGraph3();
+//            this.graphHolder.setGraph();
 //            this.graphHolder.setState(coreController.getState());
             this.editGraphModeButton.setSelected(true);
         });

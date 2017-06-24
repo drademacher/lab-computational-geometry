@@ -36,24 +36,7 @@
                         <MenuItem fx:id="saveMapMenuItem" mnemonicParsing="false" text="Save" />
                     </items>
                 </Menu>
-                <Menu mnemonicParsing="false" text="View">
-                    <items>
-                        <Menu mnemonicParsing="false" text="Edge Steps">
-                            <items>
-                                <RadioMenuItem fx:id="viewAllEdgeStepsMenuItem" mnemonicParsing="false" text="All Edge Steps">
-                                    <toggleGroup>
-                                        <ToggleGroup fx:id="edgeStepsToggleGroup" />
-                                    </toggleGroup>
-                                </RadioMenuItem>
-                                <RadioMenuItem fx:id="viewActiveEdgeStepsMenuItem" mnemonicParsing="false" selected="true" text="Active Edge Steps" toggleGroup="$edgeStepsToggleGroup" />
-                                <RadioMenuItem fx:id="viewNoEdgeStepsMenuItem" mnemonicParsing="false" text="No Edge Steps" toggleGroup="$edgeStepsToggleGroup" />
-                            </items>
-                        </Menu>
-                        <CheckMenuItem fx:id="shortestDistanceButton" mnemonicParsing="false" selected="true" text="Closed Distance To Men" />
-                        <CheckMenuItem fx:id="shortestPathButton" mnemonicParsing="false" selected="true" text="Shortest Path To Men" />
-                        <CheckMenuItem fx:id="edgeLengthButton" mnemonicParsing="false" selected="true" text="Edge Length" />
-                    </items>
-                </Menu>
+
                 <Menu mnemonicParsing="false" text="Edit">
                     <items>
                         <RadioMenuItem fx:id="editGraphModeButton" mnemonicParsing="false" selected="true" text="Edit Graph Mode">
@@ -73,32 +56,7 @@
                         </Menu>
                     </items>
                 </Menu>
-                <Menu mnemonicParsing="false" text="Algorithms">
-                    <items>
-                        <Menu mnemonicParsing="false" text="Choose Lions Strategy">
-                            <items>
-                                <RadioMenuItem mnemonicParsing="false" selected="true" text="Wait">
-                                    <toggleGroup>
-                                        <ToggleGroup fx:id="lionStrategyToggleGroup" />
-                                    </toggleGroup>
-                                </RadioMenuItem>
-                                <RadioMenuItem mnemonicParsing="false" text="Random Walk" toggleGroup="$lionStrategyToggleGroup" />
-                                <RadioMenuItem mnemonicParsing="false" text="Greedy" toggleGroup="$lionStrategyToggleGroup" />
-                            </items>
-                        </Menu>
-                        <Menu mnemonicParsing="false" text="Choose Men Strategy">
-                            <items>
-                                <RadioMenuItem mnemonicParsing="false" selected="true" text="Wait">
-                                    <toggleGroup>
-                                        <ToggleGroup fx:id="menStrategyToggleGroup" />
-                                    </toggleGroup>
-                                </RadioMenuItem>
-                                <RadioMenuItem mnemonicParsing="false" text="Random Walk" toggleGroup="$menStrategyToggleGroup" />
-                                <RadioMenuItem mnemonicParsing="false" text="Paper Strategy" toggleGroup="$menStrategyToggleGroup" />
-                            </items>
-                        </Menu>
-                    </items>
-                </Menu>
+
             </menus>
             <contextMenu>
                 <ContextMenu>

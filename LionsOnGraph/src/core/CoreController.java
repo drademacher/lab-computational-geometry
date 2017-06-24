@@ -176,13 +176,13 @@ public class CoreController {
 
         // this.graphController.createVertex(new Point(5, 5));
         this.graphController.createVertex(new Point(19, 9));
-        this.graphController.createVertex(new Point(9, 4));
-        this.graphController.createEdge(this.graphController.getBigVertexByCoordinate(new Point(50, 20)), this.graphController.getBigVertexByCoordinate(new Point(190, 20)));
+        this.graphController.createVertex(new Point(0, 0));
+//        this.graphController.createEdge(this.graphController.getBigVertexByCoordinate(new Point(50, 20)), this.graphController.getBigVertexByCoordinate(new Point(190, 20)));
 
-        this.graphController.setMan(new Man(this.graphController.getBigVertexByCoordinate(new Point(50, 20)), new StrategyRandom()));
-        this.graphController.setLion(new Lion(this.graphController.getBigVertexByCoordinate(new Point(190, 20)), new StrategyRandom()));
+//        this.graphController.setMan(new Man(this.graphController.getBigVertexByCoordinate(new Point(50, 20)), new StrategyRandom()));
+//        this.graphController.setLion(new Lion(this.graphController.getBigVertexByCoordinate(new Point(190, 20)), new StrategyRandom()));
 
-        this.state = new State(this.graphController.getMen(), this.graphController.getLions());
+//        this.state = new State(this.graphController.getMen(), this.graphController.getLions());
 
         return this.graphController;
     }

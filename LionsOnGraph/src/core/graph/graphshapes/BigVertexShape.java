@@ -24,7 +24,7 @@ public class BigVertexShape extends BigVertex {
         shapeGroup.getChildren().add(shape);
 
         shape.setOnMouseClicked(event -> {
-            System.out.println("vertex: " + event.getX() + " - " + event.getY());
+//            System.out.println("vertex: " + event.getX() + " - " + event.getY());
 
             if (event.getButton() == MouseButton.SECONDARY) {
                 this.deleteVertex();

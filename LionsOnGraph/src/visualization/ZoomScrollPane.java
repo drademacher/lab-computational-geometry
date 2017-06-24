@@ -77,7 +77,7 @@ public class ZoomScrollPane extends ScrollPane {
 
             double deltaY = event.getY() - lastMouseCoordinates.get().getY();
             double extraHeight = scrollContent.getLayoutBounds().getHeight() - zoomScrollPane.getViewportBounds().getHeight();
-            double deltaV = deltaY * (zoomScrollPane.getHmax() - zoomScrollPane.getHmin()) / extraHeight;
+            double deltaV = deltaY * (zoomScrollPane.getVmax() - zoomScrollPane.getVmin()) / extraHeight;
             double desiredV = zoomScrollPane.getVvalue() - deltaV;
             zoomScrollPane.setVvalue(Math.max(0, Math.min(zoomScrollPane.getVmax(), desiredV)));
         });

@@ -1,14 +1,15 @@
 package core.graph.graphshapes;
 
 import core.graph.graphlogic.BigVertex;
+import core.util.Point;
 
 /**
  * Created by Danny on 23.06.2017.
  */
-public class BigVertexShape {
-    BigVertex vertex;
+public class BigVertexShape extends BigVertex{
 
-    public BigVertexShape(BigVertex vertex) {
-        this.vertex = vertex;
+
+    public BigVertexShape(int id, Point coordinatesPoint) {
+        super(id, coordinatesPoint);
     }
 }

@@ -199,7 +199,7 @@ public class CoreController {
 
         graphController.createVertex(new Point(20, 100));
 
-        graphController.relocateVertex(this.graphController.getBigVertexByCoordinate(new Point(50, 20)), new Point(0, -100));
+//        graphController.relocateVertex(this.graphController.getBigVertexByCoordinate(new Point(50, 20)), new Point(0, -100));
 
 
         System.out.println(graphController.debugGraph());

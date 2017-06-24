@@ -125,11 +125,11 @@ public class GraphHolder {
         }
     }
 
-    private void relocateNode(Point start, Point end) {
-        if (graphController.relocateVertex(graphController.getBigVertexByCoordinate(start), end)) {
-//            this.refreshMap();
-        }
-    }
+//    private void relocateNode(Point start, Point end) {
+//        if (graphController.relocateVertex(graphController.getBigVertexByCoordinate(start), end)) {
+////            this.refreshMap();
+//        }
+//    }
 
     private void addEdge(Point start, Point end) {
         if (graphController.createEdge(graphController.getBigVertexByCoordinate(start), graphController.getBigVertexByCoordinate(end))) {

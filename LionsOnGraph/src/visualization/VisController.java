@@ -1,6 +1,6 @@
 package visualization;
 
-import graph.CoreController;
+import graph.GraphController;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ContextMenu;
@@ -41,7 +41,7 @@ public class VisController implements Initializable {
 
 
     // TODO: inject the coreController here
-    private CoreController coreController = new CoreController();
+    private GraphController coreController = new GraphController();
 
 
     private Stage stage;
@@ -51,41 +51,9 @@ public class VisController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         this.stage = (Stage) resources.getObject(null);
 
-/*        StackPane pane = (StackPane) baseCanvas.getParent();
-
-        Point2D cameraDim = new Point2D.Double(pane.getWidth(), pane.getHeight());
-
-
-        Canvas canvas = baseCanvas.getGraphicsContext2D().getCanvas();
-        GraphicsContext gc = baseCanvas.getGraphicsContext2D();
-
-        canvas.setHeight(cameraDim.getX());
-        canvas.setWidth(cameraDim.getY());
-
-        canvas.getGraphicsContext2D().clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-
-        gc.setFill(Color.BLACK);
-        gc.fillRect(10, 10, 10,10);
-
-        System.out.println(canvas.getHeight());*/
-
-        //Init mapHolder
-//        this.graphHolder = new GraphHolder(zoomScrollPane); // baseCanvas, edgeLengthCanvas, edgeStepsActiveCanvas, edgeStepsAllCanvas, shortestDistanceCanvas, shortestPathCanvas
-
-
-        // TODO: global key commands here!
-//        mainPane.sceneProperty().addListener((observableScene, oldScene, newScene) -> {
-//            if (oldScene != null) oldScene.removeEventHandler(KeyEvent.KEY_PRESSED, keyEventHandler);
-//            if (newScene != null) newScene.addEventHandler(KeyEvent.KEY_PRESSED, keyEventHandler);
-//        });
-
 
         initGraphButtons();
-//        initAddNodeButton();
-//        initRemoveNodeButton();
-//        initRelocateNodeButton();
-//        initAddEdgeButton();
-//        initRemoveEdgeButton();
+
         useModeToggle.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue == this.editGraphModeButton) {
 //                graphHolder.setGraphEditMode();
@@ -107,7 +75,7 @@ public class VisController implements Initializable {
             final ContextMenu contextMenu = new ContextMenu();
             MenuItem item1 = new MenuItem("Add Node");
             item1.setOnAction(event2 -> {
-                coreController.getGraphController().createVertex(new Point((int) event1.getX(), (int) event1.getY()));
+                coreController.createVertex(new Point((int) event1.getX(), (int) event1.getY()));
             });
             MenuItem item2 = new MenuItem("Close");
 

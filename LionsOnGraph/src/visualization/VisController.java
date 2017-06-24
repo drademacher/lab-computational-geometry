@@ -109,42 +109,49 @@ public class VisController implements Initializable {
 
     private void initGraphButtons() {
         emptyMapMenuItem.setOnAction(event -> {
+            this.zoomScrollPane.clear();
             this.graphHolder.setGraph(coreController.setEmptyGraph());
             this.graphHolder.setState(coreController.getState());
             this.editGraphModeButton.setSelected(true);
         });
 
         graph1MenuItem.setOnAction(event -> {
+            this.zoomScrollPane.clear();
             this.graphHolder.setGraph(coreController.setDefaultGraph1());
             this.graphHolder.setState(coreController.getState());
             this.editGraphModeButton.setSelected(true);
         });
 
         graph2MenuItem.setOnAction(event -> {
+            this.zoomScrollPane.clear();
             this.graphHolder.setGraph(coreController.setDefaultGraph2());
             this.graphHolder.setState(coreController.getState());
             this.editGraphModeButton.setSelected(true);
         });
 
         graph3MenuItem.setOnAction(event -> {
+            this.zoomScrollPane.clear();
             this.graphHolder.setGraph(coreController.setDefaultGraph3());
             this.graphHolder.setState(coreController.getState());
             this.editGraphModeButton.setSelected(true);
         });
 
         graph4MenuItem.setOnAction(event -> {
+            this.zoomScrollPane.clear();
             this.graphHolder.setGraph(coreController.setDefaultGraph4());
             this.graphHolder.setState(coreController.getState());
             this.editGraphModeButton.setSelected(true);
         });
 
         graph5MenuItem.setOnAction(event -> {
+            this.zoomScrollPane.clear();
             this.graphHolder.setGraph(coreController.setDefaultGraph5());
             this.graphHolder.setState(coreController.getState());
             this.editGraphModeButton.setSelected(true);
         });
 
         randomGraphMenuItem.setOnAction(event -> {
+            this.zoomScrollPane.clear();
             this.graphHolder.setGraph(coreController.setRandomGraph());
             this.graphHolder.setState(coreController.getState());
             this.editGraphModeButton.setSelected(true);

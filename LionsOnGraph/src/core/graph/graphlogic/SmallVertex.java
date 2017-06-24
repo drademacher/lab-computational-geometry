@@ -7,7 +7,7 @@ import core.util.Point;
  */
 public class SmallVertex extends Vertex {
 
-    public SmallVertex(int id, Point coordinates){
+    public SmallVertex(int id, Point coordinates) {
         super(id, coordinates);
     }
 

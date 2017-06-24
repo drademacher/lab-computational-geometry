@@ -11,35 +11,35 @@ public class BigVertex extends Vertex {
 
     protected ArrayList<EdgeVerticesObject> edgeVerticesObjects = new ArrayList<>();
 
-    public BigVertex(int id, Point coordinates){
+    public BigVertex(int id, Point coordinates) {
         super(id, coordinates);
     }
 
     public boolean deleteVertex() {
-        for(EdgeVerticesObject edgeVertices : edgeVerticesObjects){
+        for (EdgeVerticesObject edgeVertices : edgeVerticesObjects) {
             edgeVertices.unregisterAll(this);
         }
         return false;
     }
 
 
-    public boolean registerEdgeVerticeObject(BigVertex neighbor, ArrayList<SmallVertex> edgeVertices, int weight){
-        return this.edgeVerticesObjects.add(new EdgeVerticesObject(neighbor, edgeVertices,weight));
+    public boolean registerEdgeVerticeObject(BigVertex neighbor, ArrayList<SmallVertex> edgeVertices, int weight) {
+        return this.edgeVerticesObjects.add(new EdgeVerticesObject(neighbor, edgeVertices, weight));
     }
 
-    public boolean unregisterEdgeVerticeObject(BigVertex neighbor){
-        for(EdgeVerticesObject edgeVertex : edgeVerticesObjects){
-            if(edgeVertex.getNeighbor().equals(neighbor)){
-                if(edgeVertex.getEdgeVertices().size() <= 0){
-                    for(Edge edge : edges){
-                        if(edge.contains(neighbor)){
+    public boolean unregisterEdgeVerticeObject(BigVertex neighbor) {
+        for (EdgeVerticesObject edgeVertex : edgeVerticesObjects) {
+            if (edgeVertex.getNeighbor().equals(neighbor)) {
+                if (edgeVertex.getEdgeVertices().size() <= 0) {
+                    for (Edge edge : edges) {
+                        if (edge.contains(neighbor)) {
                             unregisterEdge(edge);
                         }
                     }
                 }
-                for(SmallVertex vertex : edgeVertex.getEdgeVertices()){
-                    for(Edge edge : edges){
-                        if(edge.contains(vertex)){
+                for (SmallVertex vertex : edgeVertex.getEdgeVertices()) {
+                    for (Edge edge : edges) {
+                        if (edge.contains(vertex)) {
                             unregisterEdge(edge);
                         }
                     }
@@ -50,7 +50,7 @@ public class BigVertex extends Vertex {
         return false;
     }
 
-    public ArrayList<EdgeVerticesObject> getEdgeVerticesObjects(){
+    public ArrayList<EdgeVerticesObject> getEdgeVerticesObjects() {
         return edgeVerticesObjects;
     }
 
@@ -60,7 +60,7 @@ public class BigVertex extends Vertex {
         private ArrayList<SmallVertex> edgeVertices = new ArrayList<>();
         private int weight;
 
-        public EdgeVerticesObject(BigVertex neighbor, ArrayList<SmallVertex> edgeVertices, int weight){
+        public EdgeVerticesObject(BigVertex neighbor, ArrayList<SmallVertex> edgeVertices, int weight) {
             this.neighbor = neighbor;
             this.edgeVertices = edgeVertices;
             this.weight = weight;
@@ -74,12 +74,12 @@ public class BigVertex extends Vertex {
             return edgeVertices;
         }
 
-        public int getEdgeWeight(){
+        public int getEdgeWeight() {
             return weight;
         }
 
-        public boolean unregisterAll(BigVertex vertex){
-            for(SmallVertex edgeVertex : edgeVertices){
+        public boolean unregisterAll(BigVertex vertex) {
+            for (SmallVertex edgeVertex : edgeVertices) {
                 //TODO ?
             }
             return neighbor.unregisterEdgeVerticeObject(vertex);

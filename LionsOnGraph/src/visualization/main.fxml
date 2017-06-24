@@ -117,7 +117,7 @@
 
     </bottom>
     <center>
-        <ZoomScrollPane fx:id="canvasStacker" style="-fx-background-color: #999999;">
+        <ZoomScrollPane fx:id="zoomScrollPane" style="-fx-background-color: #999999;">
             <opaqueInsets>
                 <Insets/>
             </opaqueInsets>

@@ -2,16 +2,9 @@ package visualization;
 
 
 import core.State;
-import core.graph.graphlogic.BigVertex;
-import core.graph.graphlogic.Edge;
 import core.graph.graphlogic.GraphController;
-import core.graph.graphlogic.SmallVertex;
 import core.util.Point;
 import javafx.scene.Group;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Line;
-
-import static visualization.VisConstants.COLOR_NODE;
 
 
 public class GraphHolder {
@@ -28,9 +21,9 @@ public class GraphHolder {
     GraphHolder(ZoomScrollPane superPane) {
         super();
 
-        vertexShapes = superPane.getVertexShapes();
-        edgeShapes = superPane.getEdgeShapes();
-        entityShapes = superPane.getEntityShapes();
+//        vertexShapes = superPane.getVertexShapes();
+//        edgeShapes = superPane.getEdgeShapes();
+//        entityShapes = superPane.getEntityShapes();
     }
 
 
@@ -156,48 +149,47 @@ public class GraphHolder {
         if (graphController == null) {
             return;
         }
-        vertexShapes.getChildren().clear();
-        edgeShapes.getChildren().clear();
-        entityShapes.getChildren().clear();
-
-        for (BigVertex vertex : graphController.getBigVertices()) {
-            Circle elem = new Circle(vertex.getCoordinates().getX(), vertex.getCoordinates().getY(), 5, COLOR_NODE);
-            elem.setOnMouseClicked(event -> {
-                System.out.println(vertex.getCoordinates());
-            });
-
-//            for (Edge edge : vertex.getEdges()) {
-//                Line line = new Line(edge.getVertices()[0].getCoordinates().getX(), edge.getVertices()[0].getCoordinates().getY(), edge.getVertices()[1].getCoordinates().getX(), edge.getVertices()[1].getCoordinates().getY());
+//        vertexShapes.getChildren().clear();
+//        edgeShapes.getChildren().clear();
+//        entityShapes.getChildren().clear();
 //
-//                edgeShapes.getChildren().add(line);
-//            }
-
-            vertexShapes.getChildren().add(elem);
-        }
-
-        // System.out.println(graphController.getSmallVertices());
-
-        for (SmallVertex vertex : graphController.getSmallVertices()) {
-            Circle elem = new Circle(vertex.getCoordinates().getX(), vertex.getCoordinates().getY(), 2, COLOR_NODE);
-            elem.setOnMouseClicked(event -> {
-                System.out.println(vertex.getCoordinates());
-            });
-
-//            for (Edge edge : vertex.getEdges()) {
-//                Line line = new Line(edge.getVertices()[0].getCoordinates().getX(), edge.getVertices()[0].getCoordinates().getY(), edge.getVertices()[1].getCoordinates().getX(), edge.getVertices()[1].getCoordinates().getY());
+//        for (BigVertex vertex : graphController.getBigVertices()) {
+//            Circle elem = new Circle(vertex.getCoordinates().getX(), vertex.getCoordinates().getY(), 5, COLOR_NODE);
+//            elem.setOnMouseClicked(event -> {
+//                System.out.println(vertex.getCoordinates());
+//            });
 //
-//                edgeShapes.getChildren().add(line);
-//            }
-
-            vertexShapes.getChildren().add(elem);
-        }
-
-        for(Edge edge : graphController.getEdges()){
-            Line line = new Line(edge.getVertices()[0].getCoordinates().getX(), edge.getVertices()[0].getCoordinates().getY(), edge.getVertices()[1].getCoordinates().getX(), edge.getVertices()[1].getCoordinates().getY());
-
-            edgeShapes.getChildren().add(line);
-        }
-
+////            for (Edge edge : vertex.getEdges()) {
+////                Line line = new Line(edge.getVertices()[0].getCoordinates().getX(), edge.getVertices()[0].getCoordinates().getY(), edge.getVertices()[1].getCoordinates().getX(), edge.getVertices()[1].getCoordinates().getY());
+////
+////                edgeShapes.getChildren().add(line);
+////            }
+//
+//            vertexShapes.getChildren().add(elem);
+//        }
+//
+//        // System.out.println(graphController.getSmallVertices());
+//
+//        for (SmallVertex vertex : graphController.getSmallVertices()) {
+//            Circle elem = new Circle(vertex.getCoordinates().getX(), vertex.getCoordinates().getY(), 2, COLOR_NODE);
+//            elem.setOnMouseClicked(event -> {
+//                System.out.println(vertex.getCoordinates());
+//            });
+//
+////            for (Edge edge : vertex.getEdges()) {
+////                Line line = new Line(edge.getVertices()[0].getCoordinates().getX(), edge.getVertices()[0].getCoordinates().getY(), edge.getVertices()[1].getCoordinates().getX(), edge.getVertices()[1].getCoordinates().getY());
+////
+////                edgeShapes.getChildren().add(line);
+////            }
+//
+//            vertexShapes.getChildren().add(elem);
+//        }
+//
+//        for(Edge edge : graphController.getEdges()){
+//            Line line = new Line(edge.getVertices()[0].getCoordinates().getX(), edge.getVertices()[0].getCoordinates().getY(), edge.getVertices()[1].getCoordinates().getX(), edge.getVertices()[1].getCoordinates().getY());
+//
+//            edgeShapes.getChildren().add(line);
+//        }
 
 
 //        for (Edge edge : graphController.getEdges()) {

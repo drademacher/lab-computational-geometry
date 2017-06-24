@@ -1,12 +1,10 @@
 package visualization;
 
-import core.graph.graphlogic.SmallVertex;
 import core.graph.graphshapes.BigVertexShape;
 import core.graph.graphshapes.EdgeShape;
 import core.graph.graphshapes.SmallVertexShape;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.collections.ObservableList;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -80,13 +78,13 @@ public class ZoomScrollPane extends ScrollPane {
             double deltaX = event.getX() - lastMouseCoordinates.get().getX();
             double extraWidth = scrollContent.getLayoutBounds().getWidth() - zoomScrollPane.getViewportBounds().getWidth();
             double deltaH = deltaX * (zoomScrollPane.getHmax() - zoomScrollPane.getHmin()) / extraWidth;
-            double desiredH = ( Double.isNaN(zoomScrollPane.getHvalue()) ? 0 : zoomScrollPane.getHvalue() ) - deltaH;
+            double desiredH = (Double.isNaN(zoomScrollPane.getHvalue()) ? 0 : zoomScrollPane.getHvalue()) - deltaH;
             zoomScrollPane.setHvalue(Math.max(0, Math.min(zoomScrollPane.getHmax(), desiredH)));
 
             double deltaY = event.getY() - lastMouseCoordinates.get().getY();
             double extraHeight = scrollContent.getLayoutBounds().getHeight() - zoomScrollPane.getViewportBounds().getHeight();
             double deltaV = deltaY * (zoomScrollPane.getVmax() - zoomScrollPane.getVmin()) / extraHeight;
-            double desiredV = ( Double.isNaN(zoomScrollPane.getVvalue()) ? 0 : zoomScrollPane.getVvalue() ) - deltaV;
+            double desiredV = (Double.isNaN(zoomScrollPane.getVvalue()) ? 0 : zoomScrollPane.getVvalue()) - deltaV;
             zoomScrollPane.setVvalue(Math.max(0, Math.min(zoomScrollPane.getVmax(), desiredV)));
         });
 
@@ -94,10 +92,10 @@ public class ZoomScrollPane extends ScrollPane {
 
     private Point2D figureScrollOffset(Node scrollContent, ScrollPane scroller) {
         double extraWidth = scrollContent.getLayoutBounds().getWidth() - scroller.getViewportBounds().getWidth();
-        double hScrollProportion = (( Double.isNaN(scroller.getHvalue()) ? 0 : scroller.getHvalue() ) - scroller.getHmin()) / (scroller.getHmax() - scroller.getHmin());
+        double hScrollProportion = ((Double.isNaN(scroller.getHvalue()) ? 0 : scroller.getHvalue()) - scroller.getHmin()) / (scroller.getHmax() - scroller.getHmin());
         double scrollXOffset = hScrollProportion * Math.max(0, extraWidth);
         double extraHeight = scrollContent.getLayoutBounds().getHeight() - scroller.getViewportBounds().getHeight();
-        double vScrollProportion = (( Double.isNaN(scroller.getVvalue()) ? 0 : scroller.getVvalue() ) - scroller.getVmin()) / (scroller.getVmax() - scroller.getVmin());
+        double vScrollProportion = ((Double.isNaN(scroller.getVvalue()) ? 0 : scroller.getVvalue()) - scroller.getVmin()) / (scroller.getVmax() - scroller.getVmin());
         double scrollYOffset = vScrollProportion * Math.max(0, extraHeight);
         return new Point2D(scrollXOffset, scrollYOffset);
     }

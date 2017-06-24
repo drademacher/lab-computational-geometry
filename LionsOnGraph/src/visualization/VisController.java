@@ -31,7 +31,7 @@ public class VisController implements Initializable {
     private MenuItem addNodeButton, removeNodeButton, relocateNodeButton, addEdgeButton, removeEdgeButton;
 
     @FXML
-    private ZoomScrollPane canvasStacker;
+    private ZoomScrollPane zoomScrollPane;
 
     @FXML
     private CheckMenuItem edgeLengthButton, shortestDistanceButton, shortestPathButton;
@@ -78,7 +78,7 @@ public class VisController implements Initializable {
         System.out.println(canvas.getHeight());*/
 
         //Init mapHolder
-        this.graphHolder = new GraphHolder(canvasStacker); // baseCanvas, edgeLengthCanvas, edgeStepsActiveCanvas, edgeStepsAllCanvas, shortestDistanceCanvas, shortestPathCanvas
+        this.graphHolder = new GraphHolder(zoomScrollPane); // baseCanvas, edgeLengthCanvas, edgeStepsActiveCanvas, edgeStepsAllCanvas, shortestDistanceCanvas, shortestPathCanvas
 
 
         // TODO: global key commands here!

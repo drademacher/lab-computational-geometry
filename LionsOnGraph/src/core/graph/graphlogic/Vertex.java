@@ -13,29 +13,29 @@ public abstract class Vertex {
     protected Point coordinates;
     protected int id;
 
-    public Vertex(int id, Point coordinates){
+    public Vertex(int id, Point coordinates) {
         this.coordinates = coordinates;
         this.id = id;
     }
 
 
-    public boolean registerEdge(Edge edge){
+    public boolean registerEdge(Edge edge) {
         return this.edges.add(edge);
     }
 
-    public boolean unregisterEdge(Edge edge){
+    public boolean unregisterEdge(Edge edge) {
         return this.edges.remove(edge);
-    }
-
-    public void setCoordinates(Point coordinates){
-        this.coordinates = coordinates;
     }
 
     public Point getCoordinates() {
         return coordinates;
     }
 
-    public int getId(){
+    public void setCoordinates(Point coordinates) {
+        this.coordinates = coordinates;
+    }
+
+    public int getId() {
         return id;
     }
 

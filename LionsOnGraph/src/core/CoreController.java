@@ -205,12 +205,11 @@ public class CoreController {
         System.out.println(graphController.debugGraph());
 
         graphController.createEdge(this.graphController.getBigVertexByCoordinate(new Point(50, 20)), this.graphController.getBigVertexByCoordinate(new Point(220, 140)), 2);
-        graphController.removeEdge(this.graphController.getBigVertexByCoordinate(new Point(50, 20)),this.graphController.getBigVertexByCoordinate(new Point(190, 20)));
+        graphController.removeEdge(this.graphController.getBigVertexByCoordinate(new Point(50, 20)), this.graphController.getBigVertexByCoordinate(new Point(190, 20)));
 
 
         System.out.println("#############################");
         System.out.println(graphController.debugGraph());
-
 
 
         return this.setDefaultGraph1();

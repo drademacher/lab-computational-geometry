@@ -1,9 +1,5 @@
 package visualization;
 
-import core.graph.graphshapes.BigVertexShape;
-import core.graph.graphshapes.EdgeShape;
-import core.graph.graphshapes.SmallVertexShape;
-import core.util.Point;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
@@ -13,9 +9,14 @@ import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
+import shapes.BigVertexShape;
+import shapes.EdgeShape;
+import shapes.SmallVertexShape;
+import util.Point;
 
-import static core.graph.graphshapes.ShapeConstants.BIG_VERTEX_RADIUS;
-import static visualization.VisConstants.COLOR_BACKGROUND;
+import static shapes.ShapeConstants.BIG_VERTEX_RADIUS;
+import static shapes.ShapeConstants.COLOR_BACKGROUND;
+
 
 /***
  * Based on Source Code:
@@ -122,11 +123,6 @@ public class ZoomScrollPane extends ScrollPane {
         }
     }
 
-    public Point undoScaling(Point point) {
-        return point.sub(scrollOffset);
-    }
-
-
     public ObservableList<Node> getNodesHolder() {
         return mainGroup.getChildren();
     }
@@ -149,9 +145,9 @@ public class ZoomScrollPane extends ScrollPane {
         vertexShapes.layoutBoundsProperty().addListener((observable, oldValue, newValue) -> {
             final double PADDING_FACTOR = 0.1, PADDING_CONST = 20;
             double w = newValue.getWidth(), h = newValue.getHeight();
-            base.setWidth(w * (1 + 2 * PADDING_FACTOR) + 2* PADDING_CONST);
+            base.setWidth(w * (1 + 2 * PADDING_FACTOR) + 2 * PADDING_CONST);
             base.setHeight(h * (1 + 2 * PADDING_FACTOR) + 2 * PADDING_CONST);
-            base.relocate(- (w * PADDING_FACTOR + PADDING_CONST + BIG_VERTEX_RADIUS ), - (h * PADDING_FACTOR+ PADDING_CONST + BIG_VERTEX_RADIUS ));
+            base.relocate(-(w * PADDING_FACTOR + PADDING_CONST + BIG_VERTEX_RADIUS), -(h * PADDING_FACTOR + PADDING_CONST + BIG_VERTEX_RADIUS));
         });
 
 

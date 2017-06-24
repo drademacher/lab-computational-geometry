@@ -1,17 +1,16 @@
 package visualization;
 
-import core.CoreController;
-import core.util.Point;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import graph.CoreController;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.RadioMenuItem;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
+import util.Point;
 
 import java.io.File;
 import java.net.URL;
@@ -29,17 +28,9 @@ public class VisController implements Initializable {
     @FXML
     private MenuItem emptyMapMenuItem, graph1MenuItem, graph2MenuItem, graph3MenuItem, graph4MenuItem, graph5MenuItem, randomGraphMenuItem, openMapMenuItem, saveMapMenuItem;
 
-    @FXML
-    private MenuItem addNodeButton, removeNodeButton, relocateNodeButton, addEdgeButton, removeEdgeButton;
 
     @FXML
     private ZoomScrollPane zoomScrollPane;
-
-    @FXML
-    private CheckMenuItem edgeLengthButton, shortestDistanceButton, shortestPathButton;
-
-    @FXML
-    private RadioMenuItem viewAllEdgeStepsMenuItem;
 
 
     @FXML
@@ -52,7 +43,6 @@ public class VisController implements Initializable {
     // TODO: inject the coreController here
     private CoreController coreController = new CoreController();
 
-//    private GraphHolder graphHolder;
 
     private Stage stage;
 
@@ -107,13 +97,10 @@ public class VisController implements Initializable {
         });
 
 
-
         zoomScrollPane.getMainGroup().setOnMousePressed(event -> {
 //            Point p = new Point((int) event.getX(), (int) event.getY());
 //            coreController.getGraphController().createVertex(new Point((int) event.getX(), (int) event.getY()));
         });
-
-
 
 
         zoomScrollPane.getMainGroup().setOnContextMenuRequested(event1 -> {
@@ -122,12 +109,11 @@ public class VisController implements Initializable {
             item1.setOnAction(event2 -> {
                 coreController.getGraphController().createVertex(new Point((int) event1.getX(), (int) event1.getY()));
             });
-//            MenuItem item2 = new MenuItem("Preferences");
-//            item2.setOnAction(e -> System.out.println("Preferences"));
-            contextMenu.getItems().addAll(item1);
+            MenuItem item2 = new MenuItem("Close");
+
+            contextMenu.getItems().addAll(item1, item2);
             contextMenu.show(zoomScrollPane.getMainGroup(), event1.getScreenX(), event1.getScreenY());
         });
-
 
 
         initViews();

@@ -1,21 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ButtonBar?>
-<?import javafx.scene.control.CheckMenuItem?>
-<?import javafx.scene.control.ContextMenu?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.RadioMenuItem?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.SeparatorMenuItem?>
-<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.BorderPane?>
-
 <?import visualization.ZoomScrollPane?>
-<BorderPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visualization.VisController">
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity"
+            xmlns="http://javafx.com/javafx/8.0.102" fx:controller="visualization.VisController">
     <top>
         <MenuBar BorderPane.alignment="CENTER">
             <menus>
@@ -23,35 +13,38 @@
                     <items>
                         <Menu mnemonicParsing="false" text="New">
                             <items>
-                                <MenuItem fx:id="emptyMapMenuItem" mnemonicParsing="false" text="Empty Graph" />
-                                <MenuItem fx:id="graph1MenuItem" mnemonicParsing="false" text="Graph 1" />
-                                <MenuItem fx:id="graph2MenuItem" mnemonicParsing="false" text="Graph 2" />
-                                <MenuItem fx:id="graph3MenuItem" mnemonicParsing="false" text="Graph 3" />
-                                <MenuItem fx:id="graph4MenuItem" mnemonicParsing="false" text="Graph 4" />
-                                <MenuItem fx:id="graph5MenuItem" mnemonicParsing="false" text="Graph 5" />
-                                <MenuItem fx:id="randomGraphMenuItem" mnemonicParsing="false" text="Random Map" />
+                                <MenuItem fx:id="emptyMapMenuItem" mnemonicParsing="false" text="Empty Graph"/>
+                                <MenuItem fx:id="graph1MenuItem" mnemonicParsing="false" text="Graph 1"/>
+                                <MenuItem fx:id="graph2MenuItem" mnemonicParsing="false" text="Graph 2"/>
+                                <MenuItem fx:id="graph3MenuItem" mnemonicParsing="false" text="Graph 3"/>
+                                <MenuItem fx:id="graph4MenuItem" mnemonicParsing="false" text="Graph 4"/>
+                                <MenuItem fx:id="graph5MenuItem" mnemonicParsing="false" text="Graph 5"/>
+                                <MenuItem fx:id="randomGraphMenuItem" mnemonicParsing="false" text="Random Map"/>
                             </items>
                         </Menu>
-                        <MenuItem fx:id="openMapMenuItem" mnemonicParsing="false" text="Open" />
-                        <MenuItem fx:id="saveMapMenuItem" mnemonicParsing="false" text="Save" />
+                        <MenuItem fx:id="openMapMenuItem" mnemonicParsing="false" text="Open"/>
+                        <MenuItem fx:id="saveMapMenuItem" mnemonicParsing="false" text="Save"/>
                     </items>
                 </Menu>
 
                 <Menu mnemonicParsing="false" text="Edit">
                     <items>
-                        <RadioMenuItem fx:id="editGraphModeButton" mnemonicParsing="false" selected="true" text="Edit Graph Mode">
+                        <RadioMenuItem fx:id="editGraphModeButton" mnemonicParsing="false" selected="true"
+                                       text="Edit Graph Mode">
                             <toggleGroup>
-                                <ToggleGroup fx:id="useModeToggle" />
+                                <ToggleGroup fx:id="useModeToggle"/>
                             </toggleGroup>
                         </RadioMenuItem>
-                        <RadioMenuItem fx:id="editEntityModeButton" mnemonicParsing="false" text="Edit Entity Mode" toggleGroup="$useModeToggle" />
-                        <RadioMenuItem fx:id="playModeButton" mnemonicParsing="false" text="Play Mode" toggleGroup="$useModeToggle" />
-                        <SeparatorMenuItem />
+                        <RadioMenuItem fx:id="editEntityModeButton" mnemonicParsing="false" text="Edit Entity Mode"
+                                       toggleGroup="$useModeToggle"/>
+                        <RadioMenuItem fx:id="playModeButton" mnemonicParsing="false" text="Play Mode"
+                                       toggleGroup="$useModeToggle"/>
+                        <SeparatorMenuItem/>
                         <Menu mnemonicParsing="false" text="Change Edge Length">
                             <items>
-                                <MenuItem mnemonicParsing="false" text="Set All Edges" />
-                                <MenuItem mnemonicParsing="false" text="Increment All Edges" />
-                                <MenuItem mnemonicParsing="false" text="Decrement All Edges" />
+                                <MenuItem mnemonicParsing="false" text="Set All Edges"/>
+                                <MenuItem mnemonicParsing="false" text="Increment All Edges"/>
+                                <MenuItem mnemonicParsing="false" text="Decrement All Edges"/>
                             </items>
                         </Menu>
                     </items>
@@ -61,7 +54,7 @@
             <contextMenu>
                 <ContextMenu>
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Unspecified Action" />
+                        <MenuItem mnemonicParsing="false" text="Unspecified Action"/>
                     </items>
                 </ContextMenu>
             </contextMenu>
@@ -73,19 +66,19 @@
     <center>
         <ZoomScrollPane fx:id="zoomScrollPane" style="-fx-background-color: #999999;">
             <opaqueInsets>
-                <Insets />
+                <Insets/>
             </opaqueInsets>
             <BorderPane.margin>
-                <Insets />
+                <Insets/>
             </BorderPane.margin>
         </ZoomScrollPane>
     </center>
-   <bottom>
-      <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-        <buttons>
-          <Button alignment="CENTER" mnemonicParsing="false" text="Play" />
-            <Button alignment="CENTER" mnemonicParsing="false" text="Stop" />
-        </buttons>
-      </ButtonBar>
-   </bottom>
+    <bottom>
+        <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <buttons>
+                <Button alignment="CENTER" mnemonicParsing="false" text="Play"/>
+                <Button alignment="CENTER" mnemonicParsing="false" text="Stop"/>
+            </buttons>
+        </ButtonBar>
+    </bottom>
 </BorderPane>

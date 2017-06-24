@@ -166,11 +166,11 @@ public class GraphHolder {
                 System.out.println(vertex.getCoordinates());
             });
 
-            for (Edge edge : vertex.getEdges()) {
-                Line line = new Line(edge.getVertices()[0].getCoordinates().getX(), edge.getVertices()[0].getCoordinates().getY(), edge.getVertices()[1].getCoordinates().getX(), edge.getVertices()[1].getCoordinates().getY());
-
-                edgeShapes.getChildren().add(line);
-            }
+//            for (Edge edge : vertex.getEdges()) {
+//                Line line = new Line(edge.getVertices()[0].getCoordinates().getX(), edge.getVertices()[0].getCoordinates().getY(), edge.getVertices()[1].getCoordinates().getX(), edge.getVertices()[1].getCoordinates().getY());
+//
+//                edgeShapes.getChildren().add(line);
+//            }
 
             vertexShapes.getChildren().add(elem);
         }
@@ -183,13 +183,19 @@ public class GraphHolder {
                 System.out.println(vertex.getCoordinates());
             });
 
-            for (Edge edge : vertex.getEdges()) {
-                Line line = new Line(edge.getVertices()[0].getCoordinates().getX(), edge.getVertices()[0].getCoordinates().getY(), edge.getVertices()[1].getCoordinates().getX(), edge.getVertices()[1].getCoordinates().getY());
-
-                edgeShapes.getChildren().add(line);
-            }
+//            for (Edge edge : vertex.getEdges()) {
+//                Line line = new Line(edge.getVertices()[0].getCoordinates().getX(), edge.getVertices()[0].getCoordinates().getY(), edge.getVertices()[1].getCoordinates().getX(), edge.getVertices()[1].getCoordinates().getY());
+//
+//                edgeShapes.getChildren().add(line);
+//            }
 
             vertexShapes.getChildren().add(elem);
+        }
+
+        for(Edge edge : graphController.getEdges()){
+            Line line = new Line(edge.getVertices()[0].getCoordinates().getX(), edge.getVertices()[0].getCoordinates().getY(), edge.getVertices()[1].getCoordinates().getX(), edge.getVertices()[1].getCoordinates().getY());
+
+            edgeShapes.getChildren().add(line);
         }
 
 

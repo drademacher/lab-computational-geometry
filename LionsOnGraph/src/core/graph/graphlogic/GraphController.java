@@ -94,6 +94,10 @@ public class GraphController {
         return this.graph.getSmallVertices();
     }
 
+    public ArrayList<Edge> getEdges() {
+        return this.graph.getEdges();
+    }
+
     /* ****************************
      *
      *   ENTITY API

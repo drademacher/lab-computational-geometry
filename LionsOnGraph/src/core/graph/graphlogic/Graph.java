@@ -1,5 +1,8 @@
 package core.graph.graphlogic;
 
+import core.graph.graphshapes.BigVertexShape;
+import core.graph.graphshapes.EdgeShape;
+import core.graph.graphshapes.SmallVertexShape;
 import core.util.Point;
 
 import java.util.ArrayList;
@@ -13,8 +16,11 @@ class Graph {
 
     private static int idCounter = -1;
 
+    //vertices
     private ArrayList<BigVertex> bigVertices = new ArrayList<>();
     private ArrayList<SmallVertex> smallVertices = new ArrayList<>();
+    private ArrayList<Edge> edges = new ArrayList<>();
+
 
     public Graph(){
 
@@ -62,7 +68,6 @@ class Graph {
                 i++;
             }
         }
-
         return false;
     }
 
@@ -93,6 +98,7 @@ class Graph {
                 Edge edge = new Edge(smallVertex, edgeVertices.get(i-1));
                 smallVertex.registerEdge(edge);
                 edgeVertices.get(i-1).registerEdge(edge);
+                this.edges.add(edge);
             }
 
             //pointer to the big bigVertices
@@ -100,11 +106,13 @@ class Graph {
                 Edge edge = new Edge(smallVertex, vertex1);
                 smallVertex.registerEdge(edge);
                 vertex1.registerEdge(edge);
+                this.edges.add(edge);
             }
             if(i==weight-2){
                 Edge edge = new Edge(smallVertex, vertex2);
                 smallVertex.registerEdge(edge);
                 vertex2.registerEdge(edge);
+                this.edges.add(edge);
             }
         }
 
@@ -116,6 +124,7 @@ class Graph {
             Edge edge = new Edge(vertex1, vertex2);
             vertex1.registerEdge(edge);
             vertex2.registerEdge(edge);
+            this.edges.add(edge);
         }
         return true;
     }
@@ -125,6 +134,11 @@ class Graph {
             if(edgeVerticesObject.getNeighbor().equals(vertex2)){
                 for(SmallVertex smallVertex : edgeVerticesObject.getEdgeVertices()){
                     this.smallVertices.remove(smallVertex);
+                    for(int i = edges.size() -1; i>=0; i--){
+                        if(edges.get(i).contains(smallVertex)){
+                            edges.remove(edges.get(i));
+                        }
+                    }
                 }
             }
         }
@@ -176,6 +190,10 @@ class Graph {
 
     public ArrayList<SmallVertex> getSmallVertices() {
         return smallVertices;
+    }
+
+    public ArrayList<Edge> getEdges() {
+        return edges;
     }
 
     /* ***********************************

@@ -1,10 +1,10 @@
-package core.graph;
+package core.graph.graphlogic;
 
 import core.util.Point;
 
 import java.util.ArrayList;
 
-import static core.graph.GraphConstants.BIG_VERTEX_RADIUS;
+import static core.graph.graphlogic.GraphConstants.BIG_VERTEX_RADIUS;
 
 /**
  * Created by Jens on 20.06.2017.

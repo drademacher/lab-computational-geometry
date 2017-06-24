@@ -2,7 +2,7 @@ package core;
 
 import core.entities.Lion;
 import core.entities.Man;
-import core.graph.GraphController;
+import core.graph.graphlogic.GraphController;
 import core.strategy.StrategyAggroGreedy;
 import core.strategy.StrategyRandom;
 import core.strategy.StrategyRunAwayGreedy;
@@ -54,48 +54,43 @@ public class CoreController {
         this.graphController.createVertex(new Point(100, 140));
         this.graphController.createVertex(new Point(90, 100));
 
-        this.graphController.createEdge(this.graphController.getBigVertexById(0), this.graphController.getBigVertexById(1));
-        this.graphController.createEdge(this.graphController.getBigVertexById(1), this.graphController.getBigVertexById(2));
-        this.graphController.createEdge(this.graphController.getBigVertexById(2), this.graphController.getBigVertexById(3));
-        this.graphController.createEdge(this.graphController.getBigVertexById(3), this.graphController.getBigVertexById(4));
-        this.graphController.createEdge(this.graphController.getBigVertexById(4), this.graphController.getBigVertexById(0));
+        this.graphController.createEdge(this.graphController.getBigVertexByCoordinate(new Point(50, 20)), this.graphController.getBigVertexByCoordinate(new Point(190, 20)));
+        this.graphController.createEdge(this.graphController.getBigVertexByCoordinate(new Point(190, 20)), this.graphController.getBigVertexByCoordinate(new Point(220, 140)));
+        this.graphController.createEdge(this.graphController.getBigVertexByCoordinate(new Point(220, 140)), this.graphController.getBigVertexByCoordinate(new Point(120, 220)));
+        this.graphController.createEdge(this.graphController.getBigVertexByCoordinate(new Point(120, 220)), this.graphController.getBigVertexByCoordinate(new Point(20, 140)));
+        this.graphController.createEdge(this.graphController.getBigVertexByCoordinate(new Point(20, 140)), this.graphController.getBigVertexByCoordinate(new Point(50, 20)));
 
-        this.graphController.createEdge(this.graphController.getBigVertexById(0), this.graphController.getBigVertexById(14));
-        this.graphController.createEdge(this.graphController.getBigVertexById(1), this.graphController.getBigVertexById(6));
-        this.graphController.createEdge(this.graphController.getBigVertexById(2), this.graphController.getBigVertexById(8));
-        this.graphController.createEdge(this.graphController.getBigVertexById(3), this.graphController.getBigVertexById(10));
-        this.graphController.createEdge(this.graphController.getBigVertexById(4), this.graphController.getBigVertexById(12));
+        this.graphController.createEdge(this.graphController.getBigVertexByCoordinate(new Point(50, 20)), this.graphController.getBigVertexByCoordinate(new Point(80, 50)));
+        this.graphController.createEdge(this.graphController.getBigVertexByCoordinate(new Point(190, 20)), this.graphController.getBigVertexByCoordinate(new Point(160, 50)));
+        this.graphController.createEdge(this.graphController.getBigVertexByCoordinate(new Point(220, 140)), this.graphController.getBigVertexByCoordinate(new Point(190, 130)));
+        this.graphController.createEdge(this.graphController.getBigVertexByCoordinate(new Point(120, 220)), this.graphController.getBigVertexByCoordinate(new Point(120, 180)));
+        this.graphController.createEdge(this.graphController.getBigVertexByCoordinate(new Point(20, 140)), this.graphController.getBigVertexByCoordinate(new Point(50, 130)));
 
-        this.graphController.createEdge(this.graphController.getBigVertexById(5), this.graphController.getBigVertexById(6));
-        this.graphController.createEdge(this.graphController.getBigVertexById(6), this.graphController.getBigVertexById(7));
-        this.graphController.createEdge(this.graphController.getBigVertexById(7), this.graphController.getBigVertexById(8));
-        this.graphController.createEdge(this.graphController.getBigVertexById(8), this.graphController.getBigVertexById(9));
-        this.graphController.createEdge(this.graphController.getBigVertexById(9), this.graphController.getBigVertexById(10));
-        this.graphController.createEdge(this.graphController.getBigVertexById(10), this.graphController.getBigVertexById(11));
-        this.graphController.createEdge(this.graphController.getBigVertexById(11), this.graphController.getBigVertexById(12));
-        this.graphController.createEdge(this.graphController.getBigVertexById(12), this.graphController.getBigVertexById(13));
-        this.graphController.createEdge(this.graphController.getBigVertexById(13), this.graphController.getBigVertexById(14));
-        this.graphController.createEdge(this.graphController.getBigVertexById(14), this.graphController.getBigVertexById(15));
+        this.graphController.createEdge(this.graphController.getBigVertexByCoordinate(new Point(120, 40)), this.graphController.getBigVertexByCoordinate(new Point(160, 50)));
+        this.graphController.createEdge(this.graphController.getBigVertexByCoordinate(new Point(160, 50)), this.graphController.getBigVertexByCoordinate(new Point(190, 90)));
+        this.graphController.createEdge(this.graphController.getBigVertexByCoordinate(new Point(190, 90)), this.graphController.getBigVertexByCoordinate(new Point(190, 130)));
+        this.graphController.createEdge(this.graphController.getBigVertexByCoordinate(new Point(190, 130)), this.graphController.getBigVertexByCoordinate(new Point(160, 170)));
+        this.graphController.createEdge(this.graphController.getBigVertexByCoordinate(new Point(160, 170)), this.graphController.getBigVertexByCoordinate(new Point(120, 180)));
+        this.graphController.createEdge(this.graphController.getBigVertexByCoordinate(new Point(120, 180)), this.graphController.getBigVertexByCoordinate(new Point(80, 170)));
+        this.graphController.createEdge(this.graphController.getBigVertexByCoordinate(new Point(80, 170)), this.graphController.getBigVertexByCoordinate(new Point(50, 130)));
+        this.graphController.createEdge(this.graphController.getBigVertexByCoordinate(new Point(50, 130)), this.graphController.getBigVertexByCoordinate(new Point(50, 90)));
+        this.graphController.createEdge(this.graphController.getBigVertexByCoordinate(new Point(50, 90)), this.graphController.getBigVertexByCoordinate(new Point(80, 50)));
+        this.graphController.createEdge(this.graphController.getBigVertexByCoordinate(new Point(80, 50)), this.graphController.getBigVertexByCoordinate(new Point(120, 40)));
 
-        this.graphController.createEdge(this.graphController.getBigVertexById(5), this.graphController.getBigVertexById(15));
-        this.graphController.createEdge(this.graphController.getBigVertexById(7), this.graphController.getBigVertexById(16));
-        this.graphController.createEdge(this.graphController.getBigVertexById(9), this.graphController.getBigVertexById(17));
-        this.graphController.createEdge(this.graphController.getBigVertexById(11), this.graphController.getBigVertexById(18));
-        this.graphController.createEdge(this.graphController.getBigVertexById(13), this.graphController.getBigVertexById(19));
+        this.graphController.createEdge(this.graphController.getBigVertexByCoordinate(new Point(120, 40)), this.graphController.getBigVertexByCoordinate(new Point(120, 70)));
+        this.graphController.createEdge(this.graphController.getBigVertexByCoordinate(new Point(190, 90)), this.graphController.getBigVertexByCoordinate(new Point(150, 100)));
+        this.graphController.createEdge(this.graphController.getBigVertexByCoordinate(new Point(160, 170)), this.graphController.getBigVertexByCoordinate(new Point(140, 140)));
+        this.graphController.createEdge(this.graphController.getBigVertexByCoordinate(new Point(80, 170)), this.graphController.getBigVertexByCoordinate(new Point(100, 140)));
+        this.graphController.createEdge(this.graphController.getBigVertexByCoordinate(new Point(50, 90)), this.graphController.getBigVertexByCoordinate(new Point(90, 100)));
 
-        this.graphController.createEdge(this.graphController.getBigVertexById(15), this.graphController.getBigVertexById(16));
-        this.graphController.createEdge(this.graphController.getBigVertexById(16), this.graphController.getBigVertexById(17));
-        this.graphController.createEdge(this.graphController.getBigVertexById(17), this.graphController.getBigVertexById(18));
-        this.graphController.createEdge(this.graphController.getBigVertexById(18), this.graphController.getBigVertexById(19));
-        this.graphController.createEdge(this.graphController.getBigVertexById(19), this.graphController.getBigVertexById(15));
-
-        this.graphController.setMan(new Man(this.graphController.getBigVertexById(0), new StrategyRunAwayGreedy()));
-        this.graphController.setLion(new Lion(this.graphController.getBigVertexById(1), new StrategyAggroGreedy()));
-        this.graphController.setLion(new Lion(this.graphController.getBigVertexById(18), new StrategyAggroGreedy()));
-        this.graphController.setLion(new Lion(this.graphController.getBigVertexById(13), new StrategyAggroGreedy()));
+        this.graphController.createEdge(this.graphController.getBigVertexByCoordinate(new Point(120, 70)), this.graphController.getBigVertexByCoordinate(new Point(150, 100)));
+        this.graphController.createEdge(this.graphController.getBigVertexByCoordinate(new Point(150, 100)), this.graphController.getBigVertexByCoordinate(new Point(140, 140)));
+        this.graphController.createEdge(this.graphController.getBigVertexByCoordinate(new Point(140, 140)), this.graphController.getBigVertexByCoordinate(new Point(100, 140)));
+        this.graphController.createEdge(this.graphController.getBigVertexByCoordinate(new Point(100, 140)), this.graphController.getBigVertexByCoordinate(new Point(90, 100)));
+        this.graphController.createEdge(this.graphController.getBigVertexByCoordinate(new Point(90, 100)), this.graphController.getBigVertexByCoordinate(new Point(120, 70)));
+        this.graphController.setLion(new Lion(this.graphController.getBigVertexByCoordinate(new Point(50, 90)), new StrategyAggroGreedy()));
 
         this.state = new State(this.graphController.getMen(), this.graphController.getLions());
-
 
         return this.graphController;
     }
@@ -127,45 +122,45 @@ public class CoreController {
         this.graphController.createVertex(new Point(100, 140));
         this.graphController.createVertex(new Point(90, 100));
 
-        this.graphController.createEdge(this.graphController.getBigVertexById(0), this.graphController.getBigVertexById(1));
-        this.graphController.createEdge(this.graphController.getBigVertexById(1), this.graphController.getBigVertexById(2));
-        this.graphController.createEdge(this.graphController.getBigVertexById(2), this.graphController.getBigVertexById(3));
-        this.graphController.createEdge(this.graphController.getBigVertexById(3), this.graphController.getBigVertexById(4));
-        this.graphController.createEdge(this.graphController.getBigVertexById(4), this.graphController.getBigVertexById(0));
+        this.graphController.createEdge(this.graphController.getBigVertexByCoordinate(new Point(50, 20)), this.graphController.getBigVertexByCoordinate(new Point(190, 20)));
+        this.graphController.createEdge(this.graphController.getBigVertexByCoordinate(new Point(190, 20)), this.graphController.getBigVertexByCoordinate(new Point(220, 140)));
+        this.graphController.createEdge(this.graphController.getBigVertexByCoordinate(new Point(220, 140)), this.graphController.getBigVertexByCoordinate(new Point(120, 220)));
+        this.graphController.createEdge(this.graphController.getBigVertexByCoordinate(new Point(120, 220)), this.graphController.getBigVertexByCoordinate(new Point(20, 140)));
+        this.graphController.createEdge(this.graphController.getBigVertexByCoordinate(new Point(20, 140)), this.graphController.getBigVertexByCoordinate(new Point(50, 20)));
 
-        this.graphController.createEdge(this.graphController.getBigVertexById(0), this.graphController.getBigVertexById(14));
-        this.graphController.createEdge(this.graphController.getBigVertexById(1), this.graphController.getBigVertexById(6));
-        this.graphController.createEdge(this.graphController.getBigVertexById(2), this.graphController.getBigVertexById(8));
-        this.graphController.createEdge(this.graphController.getBigVertexById(3), this.graphController.getBigVertexById(10));
-        this.graphController.createEdge(this.graphController.getBigVertexById(4), this.graphController.getBigVertexById(12));
+        this.graphController.createEdge(this.graphController.getBigVertexByCoordinate(new Point(50, 20)), this.graphController.getBigVertexByCoordinate(new Point(80, 50)));
+        this.graphController.createEdge(this.graphController.getBigVertexByCoordinate(new Point(190, 20)), this.graphController.getBigVertexByCoordinate(new Point(160, 50)));
+        this.graphController.createEdge(this.graphController.getBigVertexByCoordinate(new Point(220, 140)), this.graphController.getBigVertexByCoordinate(new Point(190, 130)));
+        this.graphController.createEdge(this.graphController.getBigVertexByCoordinate(new Point(120, 220)), this.graphController.getBigVertexByCoordinate(new Point(120, 180)));
+        this.graphController.createEdge(this.graphController.getBigVertexByCoordinate(new Point(20, 140)), this.graphController.getBigVertexByCoordinate(new Point(50, 130)));
 
-        this.graphController.createEdge(this.graphController.getBigVertexById(5), this.graphController.getBigVertexById(6));
-        this.graphController.createEdge(this.graphController.getBigVertexById(6), this.graphController.getBigVertexById(7));
-        this.graphController.createEdge(this.graphController.getBigVertexById(7), this.graphController.getBigVertexById(8));
-        this.graphController.createEdge(this.graphController.getBigVertexById(8), this.graphController.getBigVertexById(9));
-        this.graphController.createEdge(this.graphController.getBigVertexById(9), this.graphController.getBigVertexById(10));
-        this.graphController.createEdge(this.graphController.getBigVertexById(10), this.graphController.getBigVertexById(11));
-        this.graphController.createEdge(this.graphController.getBigVertexById(11), this.graphController.getBigVertexById(12));
-        this.graphController.createEdge(this.graphController.getBigVertexById(12), this.graphController.getBigVertexById(13));
-        this.graphController.createEdge(this.graphController.getBigVertexById(13), this.graphController.getBigVertexById(14));
-        this.graphController.createEdge(this.graphController.getBigVertexById(14), this.graphController.getBigVertexById(15));
+        this.graphController.createEdge(this.graphController.getBigVertexByCoordinate(new Point(120, 40)), this.graphController.getBigVertexByCoordinate(new Point(160, 50)));
+        this.graphController.createEdge(this.graphController.getBigVertexByCoordinate(new Point(160, 50)), this.graphController.getBigVertexByCoordinate(new Point(190, 90)));
+        this.graphController.createEdge(this.graphController.getBigVertexByCoordinate(new Point(190, 90)), this.graphController.getBigVertexByCoordinate(new Point(190, 130)));
+        this.graphController.createEdge(this.graphController.getBigVertexByCoordinate(new Point(190, 130)), this.graphController.getBigVertexByCoordinate(new Point(160, 170)));
+        this.graphController.createEdge(this.graphController.getBigVertexByCoordinate(new Point(160, 170)), this.graphController.getBigVertexByCoordinate(new Point(120, 180)));
+        this.graphController.createEdge(this.graphController.getBigVertexByCoordinate(new Point(120, 180)), this.graphController.getBigVertexByCoordinate(new Point(80, 170)));
+        this.graphController.createEdge(this.graphController.getBigVertexByCoordinate(new Point(80, 170)), this.graphController.getBigVertexByCoordinate(new Point(50, 130)));
+        this.graphController.createEdge(this.graphController.getBigVertexByCoordinate(new Point(50, 130)), this.graphController.getBigVertexByCoordinate(new Point(50, 90)));
+        this.graphController.createEdge(this.graphController.getBigVertexByCoordinate(new Point(50, 90)), this.graphController.getBigVertexByCoordinate(new Point(80, 50)));
+        this.graphController.createEdge(this.graphController.getBigVertexByCoordinate(new Point(80, 50)), this.graphController.getBigVertexByCoordinate(new Point(120, 40)));
 
-        this.graphController.createEdge(this.graphController.getBigVertexById(5), this.graphController.getBigVertexById(15));
-        this.graphController.createEdge(this.graphController.getBigVertexById(7), this.graphController.getBigVertexById(16));
-        this.graphController.createEdge(this.graphController.getBigVertexById(9), this.graphController.getBigVertexById(17));
-        this.graphController.createEdge(this.graphController.getBigVertexById(11), this.graphController.getBigVertexById(18));
-        this.graphController.createEdge(this.graphController.getBigVertexById(13), this.graphController.getBigVertexById(19));
+        this.graphController.createEdge(this.graphController.getBigVertexByCoordinate(new Point(120, 40)), this.graphController.getBigVertexByCoordinate(new Point(120, 70)));
+        this.graphController.createEdge(this.graphController.getBigVertexByCoordinate(new Point(190, 90)), this.graphController.getBigVertexByCoordinate(new Point(150, 100)));
+        this.graphController.createEdge(this.graphController.getBigVertexByCoordinate(new Point(160, 170)), this.graphController.getBigVertexByCoordinate(new Point(140, 140)));
+        this.graphController.createEdge(this.graphController.getBigVertexByCoordinate(new Point(80, 170)), this.graphController.getBigVertexByCoordinate(new Point(100, 140)));
+        this.graphController.createEdge(this.graphController.getBigVertexByCoordinate(new Point(50, 90)), this.graphController.getBigVertexByCoordinate(new Point(90, 100)));
 
-        this.graphController.createEdge(this.graphController.getBigVertexById(15), this.graphController.getBigVertexById(16));
-        this.graphController.createEdge(this.graphController.getBigVertexById(16), this.graphController.getBigVertexById(17));
-        this.graphController.createEdge(this.graphController.getBigVertexById(17), this.graphController.getBigVertexById(18));
-        this.graphController.createEdge(this.graphController.getBigVertexById(18), this.graphController.getBigVertexById(19));
-        this.graphController.createEdge(this.graphController.getBigVertexById(19), this.graphController.getBigVertexById(15));
+        this.graphController.createEdge(this.graphController.getBigVertexByCoordinate(new Point(120, 70)), this.graphController.getBigVertexByCoordinate(new Point(150, 100)));
+        this.graphController.createEdge(this.graphController.getBigVertexByCoordinate(new Point(150, 100)), this.graphController.getBigVertexByCoordinate(new Point(140, 140)));
+        this.graphController.createEdge(this.graphController.getBigVertexByCoordinate(new Point(140, 140)), this.graphController.getBigVertexByCoordinate(new Point(100, 140)));
+        this.graphController.createEdge(this.graphController.getBigVertexByCoordinate(new Point(100, 140)), this.graphController.getBigVertexByCoordinate(new Point(90, 100)));
+        this.graphController.createEdge(this.graphController.getBigVertexByCoordinate(new Point(90, 100)), this.graphController.getBigVertexByCoordinate(new Point(120, 70)));
 
-        this.graphController.setMan(new Man(this.graphController.getBigVertexById(0), new StrategyRunAwayGreedy()));
-        this.graphController.setLion(new Lion(this.graphController.getBigVertexById(1), new StretegyAggroClever()));
-        this.graphController.setLion(new Lion(this.graphController.getBigVertexById(18), new StretegyAggroClever()));
-        this.graphController.setLion(new Lion(this.graphController.getBigVertexById(13), new StretegyAggroClever()));
+        this.graphController.setMan(new Man(this.graphController.getBigVertexByCoordinate(new Point(50, 20)), new StrategyRunAwayGreedy()));
+        this.graphController.setLion(new Lion(this.graphController.getBigVertexByCoordinate(new Point(190, 20)), new StretegyAggroClever()));
+        this.graphController.setLion(new Lion(this.graphController.getBigVertexByCoordinate(new Point(100, 140)), new StretegyAggroClever()));
+        this.graphController.setLion(new Lion(this.graphController.getBigVertexByCoordinate(new Point(50, 90)), new StretegyAggroClever()));
 
         this.state = new State(this.graphController.getMen(), this.graphController.getLions());
 
@@ -178,10 +173,10 @@ public class CoreController {
         // this.graphController.createVertex(new Point(5, 5));
         this.graphController.createVertex(new Point(19, 9));
         this.graphController.createVertex(new Point(9, 4));
-        this.graphController.createEdge(this.graphController.getBigVertexById(0), this.graphController.getBigVertexById(1));
+        this.graphController.createEdge(this.graphController.getBigVertexByCoordinate(new Point(50, 20)), this.graphController.getBigVertexByCoordinate(new Point(190, 20)));
 
-        this.graphController.setMan(new Man(this.graphController.getBigVertexById(0), new StrategyRandom()));
-        this.graphController.setLion(new Lion(this.graphController.getBigVertexById(1), new StrategyRandom()));
+        this.graphController.setMan(new Man(this.graphController.getBigVertexByCoordinate(new Point(50, 20)), new StrategyRandom()));
+        this.graphController.setLion(new Lion(this.graphController.getBigVertexByCoordinate(new Point(190, 20)), new StrategyRandom()));
 
         this.state = new State(this.graphController.getMen(), this.graphController.getLions());
 
@@ -200,17 +195,17 @@ public class CoreController {
         graphController.createVertex(new Point(10, 10));
         graphController.createVertex(new Point(80, 40));
 
-        graphController.createEdge(this.graphController.getBigVertexById(0), this.graphController.getBigVertexById(1), 4);
+        graphController.createEdge(this.graphController.getBigVertexByCoordinate(new Point(50, 20)), this.graphController.getBigVertexByCoordinate(new Point(190, 20)), 4);
 
         graphController.createVertex(new Point(20, 100));
 
-        graphController.relocateVertex(this.graphController.getBigVertexById(0), new Point(0, -100));
+        graphController.relocateVertex(this.graphController.getBigVertexByCoordinate(new Point(50, 20)), new Point(0, -100));
 
 
         System.out.println(graphController.debugGraph());
 
-        graphController.createEdge(this.graphController.getBigVertexById(0), this.graphController.getBigVertexById(2), 2);
-        graphController.removeEdge(this.graphController.getBigVertexById(0),this.graphController.getBigVertexById(1));
+        graphController.createEdge(this.graphController.getBigVertexByCoordinate(new Point(50, 20)), this.graphController.getBigVertexByCoordinate(new Point(220, 140)), 2);
+        graphController.removeEdge(this.graphController.getBigVertexByCoordinate(new Point(50, 20)),this.graphController.getBigVertexByCoordinate(new Point(190, 20)));
 
 
         System.out.println("#############################");

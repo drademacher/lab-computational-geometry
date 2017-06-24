@@ -1,4 +1,4 @@
-package core.graph;
+package core.graph.graphlogic;
 
 /**
  * Created by Jens on 22.06.2017.

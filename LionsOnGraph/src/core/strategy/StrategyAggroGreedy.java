@@ -3,8 +3,8 @@ package core.strategy;
 import core.entities.Entity;
 import core.entities.Lion;
 import core.entities.Man;
-import core.graph.Edge;
-import core.graph.Vertex;
+import core.graph.graphlogic.Edge;
+import core.graph.graphlogic.Vertex;
 import core.util.Random;
 
 import java.util.ArrayList;

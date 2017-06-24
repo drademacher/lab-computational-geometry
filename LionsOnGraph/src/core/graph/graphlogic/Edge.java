@@ -1,4 +1,4 @@
-package core.graph;
+package core.graph.graphlogic;
 
 /**
  * Created by Jens on 23.06.2017.
@@ -25,7 +25,7 @@ public class Edge {
             return vertices[1];
         }
         if(vertices[1].equals(vertex)){
-            return vertices[1];
+            return vertices[0];
         }
         return null;
     }

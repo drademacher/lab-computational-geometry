@@ -3,7 +3,7 @@ package core.strategy;
 import core.entities.Entity;
 import core.entities.Lion;
 import core.entities.Man;
-import core.graph.Vertex;
+import core.graph.graphlogic.Vertex;
 
 import java.util.ArrayList;
 

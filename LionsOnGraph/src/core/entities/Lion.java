@@ -1,7 +1,7 @@
 package core.entities;
 
 
-import core.graph.Vertex;
+import core.graph.graphlogic.Vertex;
 import core.strategy.Strategy;
 
 /**

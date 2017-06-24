@@ -2,7 +2,10 @@ package visualization;
 
 
 import core.State;
-import core.graph.*;
+import core.graph.graphlogic.BigVertex;
+import core.graph.graphlogic.Edge;
+import core.graph.graphlogic.GraphController;
+import core.graph.graphlogic.SmallVertex;
 import core.util.Point;
 import javafx.scene.Group;
 import javafx.scene.shape.Circle;

@@ -1,4 +1,4 @@
-package core.graph;
+package core.graph.graphlogic;
 
 import core.util.Point;
 

@@ -152,6 +152,7 @@ public class VisController implements Initializable {
 
             this.zoomScrollPane.clear();
             coreController.setEmptyGraph();
+            this.zoomScrollPane.autoZoom();
 //            this.graphHolder.setGraph(coreController.setEmptyGraph());
 //            this.graphHolder.setState(coreController.getState());
 //            this.editGraphModeButton.setSelected(true);
@@ -160,6 +161,7 @@ public class VisController implements Initializable {
         graph1MenuItem.setOnAction(event -> {
             this.zoomScrollPane.clear();
             coreController.setDefaultGraph1();
+            this.zoomScrollPane.autoZoom();
 //            this.graphHolder.setGraph(coreController.setDefaultGraph1());
 //            this.graphHolder.setState(coreController.getState());
 //            this.editGraphModeButton.setSelected(true);
@@ -168,6 +170,7 @@ public class VisController implements Initializable {
         graph2MenuItem.setOnAction(event -> {
             this.zoomScrollPane.clear();
             coreController.setDefaultGraph2();
+            this.zoomScrollPane.autoZoom();
 //            this.graphHolder.setGraph(coreController.setDefaultGraph2());
 //            this.graphHolder.setState(coreController.getState());
 //            this.editGraphModeButton.setSelected(true);
@@ -176,6 +179,7 @@ public class VisController implements Initializable {
         graph3MenuItem.setOnAction(event -> {
             this.zoomScrollPane.clear();
             coreController.setDefaultGraph3();
+            this.zoomScrollPane.autoZoom();
 //            this.graphHolder.setGraph();
 //            this.graphHolder.setState(coreController.getState());
 //            this.editGraphModeButton.setSelected(true);

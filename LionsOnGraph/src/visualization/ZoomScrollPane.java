@@ -144,6 +144,13 @@ public class ZoomScrollPane extends ScrollPane {
         }
     }
 
+    public void autoZoom() {
+        double scaleX = zoomScrollPane.getWidth() / mainGroup.getLayoutX();
+        double scaleY = zoomScrollPane.getHeight() / mainGroup.getLayoutY();
+        mainGroup.setScaleX(mainGroup.getScaleX() * Math.min(scaleX, scaleY));
+        mainGroup.setScaleY(mainGroup.getScaleY() * Math.min(scaleX, scaleY));
+    }
+
     public ObservableList<Node> getNodesHolder() {
         return mainGroup.getChildren();
     }
@@ -185,6 +192,7 @@ public class ZoomScrollPane extends ScrollPane {
         ShapedEdge.setShapeGroup(edgeShapes);
         ShapedMan.setShapeGroup(entityShapes);
         ShapedLion.setShapeGroup(entityShapes);
+
     }
 
 }

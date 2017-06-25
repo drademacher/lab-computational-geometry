@@ -47,20 +47,19 @@ public class ZoomScrollPane extends ScrollPane {
         zoomScrollPane.setOnMouseClicked(event1 -> {
             Bounds subValues = mainGroup.localToScene(mainGroup.getBoundsInLocal());
             Bounds addValues = zoomScrollPane.localToScene(mainGroup.getBoundsInLocal());
-            Bounds addValues2 = zoomScrollPane.localToScene(zoomScrollPane.getBoundsInLocal());
 
-//            System.out.println("bounds " + new Point((int)  addValues.getMinX(), (int)  addValues.getMinY()));
-
-            double scaleX = mainGroup.getScaleX(), scaleY = mainGroup.getScaleY();
-
-            // System.out.println(zoomScrollPane.getGround().getScaleX() + " - " + zoomScrollPane.getGround().getScaleY());
 
 //            System.out.println(event1.getX() + " - " + subValues.getMinX() + " - " + addValues.getMinX());
-//            System.out.println(newValues.getMinX());
-            System.out.println("new " + new Point((int) (event1.getX() - subValues.getMinX() + addValues.getMinX()), (int) (event1.getY() - subValues.getMinY() + addValues.getMinY())));
-//            System.out.println("new " + new Point((int) (event1.getX() / scaleX - subValues.getMinX() / scaleX + addValues.getMinX()),
-//                    (int) (event1.getY() / scaleY - subValues.getMinY() / scaleY + addValues.getMinY())
-//            ));
+
+            double positionX = event1.getX() - subValues.getMinX();
+            positionX -= scrollOffset.getX();
+            positionX /= mainGroup.getScaleX();
+
+            double positionY = event1.getY() - subValues.getMinY();
+            positionY -= scrollOffset.getY();
+            positionY /= mainGroup.getScaleY();
+
+            System.out.println("new " + new Point((int) (positionX + addValues.getMinX()), (int) (positionY + addValues.getMinY())));
         });
 
         zoomScrollPane.setOnScroll(event -> {

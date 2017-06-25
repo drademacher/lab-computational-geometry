@@ -14,12 +14,17 @@
                         <MenuItem fx:id="emptyMapMenuItem" mnemonicParsing="false" text="Empty Graph"/>
                         <Menu mnemonicParsing="false" text="New">
                             <items>
-                                <MenuItem fx:id="graph1MenuItem" mnemonicParsing="false" text="Paper Graph, 2 Lions fail"/>
-                                <MenuItem fx:id="graph2MenuItem" mnemonicParsing="false" text="Paper Graph, 3 Lions succeed"/>
+                                <MenuItem fx:id="graph1MenuItem" mnemonicParsing="false"
+                                          text="Paper Graph, 2 Lions fail"/>
+                                <MenuItem fx:id="graph2MenuItem" mnemonicParsing="false"
+                                          text="Paper Graph, 3 Lions succeed"/>
                                 <MenuItem fx:id="graph3MenuItem" mnemonicParsing="false" text="Small Graph"/>
-                                <MenuItem fx:id="graph4MenuItem" visible="false" mnemonicParsing="false" text="Graph 4"/>
-                                <MenuItem fx:id="graph5MenuItem" visible="false" mnemonicParsing="false" text="Graph 5"/>
-                                <MenuItem fx:id="randomGraphMenuItem" visible="false" mnemonicParsing="false" text="Random Map"/>
+                                <MenuItem fx:id="graph4MenuItem" visible="false" mnemonicParsing="false"
+                                          text="Graph 4"/>
+                                <MenuItem fx:id="graph5MenuItem" visible="false" mnemonicParsing="false"
+                                          text="Graph 5"/>
+                                <MenuItem fx:id="randomGraphMenuItem" visible="false" mnemonicParsing="false"
+                                          text="Random Map"/>
                             </items>
                         </Menu>
                         <MenuItem fx:id="openMapMenuItem" mnemonicParsing="false" text="Open"/>

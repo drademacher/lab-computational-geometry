@@ -55,4 +55,9 @@ public abstract class Vertex {
         // field comparison
         return vertex.getId() == getId() && vertex.getCoordinates().equals(getCoordinates());
     }
+
+    @Override
+    public String toString() {
+        return getId()+"";
+    }
 }

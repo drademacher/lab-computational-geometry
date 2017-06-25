@@ -26,7 +26,7 @@ public class ShapedSmallVertex {
     }
 
     public void relocate() {
-        shape.relocate(vertex.getCoordinates().getX(), vertex.getCoordinates().getY());
+        shape.relocate(vertex.getCoordinates().getX()-SMALL_VERTEX_RADIUS, vertex.getCoordinates().getY()-SMALL_VERTEX_RADIUS);
     }
 
     public void delete() {

@@ -81,40 +81,27 @@ class Graph {
     }
 
     public boolean deleteVertex(BigVertex vertex) {
-        System.out.println("ok #2");
         bigVertices.remove(vertex);
-        System.out.println("ok #3");
 
         vertex.getShape().delete();
 
-        return vertex.deleteVertex();
+        vertex.deleteVertex();
 
-//        for (int j = vertex.getEdgeVerticesObjects().size() - 1; j >= 0; j++) {
-//            BigVertex.EdgeVerticesObject edgeVertices = vertex.getEdgeVerticesObjects().get(j);
-//                if (edgeVertices.getNeighbor().equals(edgeVertices.getNeighbor())) {
-//                    if (edgeVertices.getEdgeVertices().size() <= 0) {
-//                        for (int i = edges.size() - 1; i >= 0; i--) {
-//                            if (edges.get(i).contains(edgeVertices.getNeighbor())) {
-//                                vertex.unregisterEdge(edges.get(i));
-//                                edges.get(i).getShape().delete();
-//                                edges.remove(edges.get(i));
-//                            }
-//                        }
-//                    }
-//                    for (SmallVertex smallVertex : edgeVertices.getEdgeVertices()) {
-//                        for (int i = edges.size() - 1; i >= 0; i--) {
-//                            if (edges.get(i).contains(smallVertex)) {
-//                                vertex.unregisterEdge(edges.get(i));
-//                                edges.get(i).getShape().delete();
-//                                smallVertex.getShape().delete();
-//                                edges.remove(edges.get(i));
-//                            }
-//                        }
-//                    }
-//                    return vertex.edgeVerticesObjects.remove(edgeVertices) && edgeVertices.getNeighbor().edgeVerticesObjects.remove(edgeVertices);
-//                }
-//            }
-//        return false;
+        for (BigVertex.EdgeVerticesObject edgeVerticesObject : vertex.getEdgeVerticesObjects()) {
+
+            for (SmallVertex smallVertex : edgeVerticesObject.getEdgeVertices()) {
+                this.smallVertices.remove(smallVertex);
+                for (int i = edges.size() - 1; i >= 0; i--) {
+                    Edge edge = edges.get(i);
+                    if (edge.contains(smallVertex)) {
+                        edges.remove(edge);
+                    }
+                }
+            }
+        }
+
+        //TODO
+        return true;
     }
 
     public boolean createEdge(BigVertex vertex1, BigVertex vertex2, int weight) {
@@ -171,19 +158,25 @@ class Graph {
     }
 
     public boolean removeEdge(BigVertex vertex1, BigVertex vertex2) {
+
         for (BigVertex.EdgeVerticesObject edgeVerticesObject : vertex1.getEdgeVerticesObjects()) {
             if (edgeVerticesObject.getNeighbor().equals(vertex2)) {
+
                 for (SmallVertex smallVertex : edgeVerticesObject.getEdgeVertices()) {
                     this.smallVertices.remove(smallVertex);
                     for (int i = edges.size() - 1; i >= 0; i--) {
-                        if (edges.get(i).contains(smallVertex)) {
-                            edges.remove(edges.get(i));
+                        Edge edge = edges.get(i);
+                        if (edge.contains(smallVertex)) {
+                            edges.remove(edge);
                         }
                     }
                 }
             }
         }
-        return vertex1.unregisterEdgeVerticeObject(vertex2) && vertex2.unregisterEdgeVerticeObject(vertex1);
+        boolean bool1 = vertex1.unregisterEdgeVerticeObject(vertex2);
+        boolean bool2 = vertex2.unregisterEdgeVerticeObject(vertex1);
+
+        return bool1 && bool2;
     }
 
     public BigVertex getBigVertexByCoordinate(Point coordinate) {
@@ -270,10 +263,15 @@ class Graph {
 
     public String debugGraph() {
 
-        String str = "";
+
+        String str = "\n#######################\n";
+
+        str += "bigVertices: " + this.bigVertices + "\n";
+        str += "smallVertices: " + this.smallVertices + "\n";
+        str += "edges: " + this.edges + "\n";
 
         for (BigVertex vertex : bigVertices) {
-            str += "\n" + vertex.getId() + " Coord: " + vertex.getCoordinates() + " (";
+            str += "\n"+vertex.getId() + " Coord: " + vertex.getCoordinates() + " (";
             for (Edge ver : vertex.getEdges()) {
                 str += ver.toString() + " ' ";
             }

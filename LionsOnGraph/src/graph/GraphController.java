@@ -47,11 +47,9 @@ public class GraphController {
 
     public boolean deleteVertex(BigVertex vertex) {
         if (vertex == null) {
-            System.out.println("false #1");
             return false;
         }
         //TODO Entity?
-        System.out.println("ok #1");
         return this.graph.deleteVertex(vertex);
     }
 
@@ -301,6 +299,12 @@ public class GraphController {
         this.createVertex(new Point(10, 30));
 
         this.createEdge(this.getBigVertexByCoordinate(new Point(40, 20)), this.getBigVertexByCoordinate(new Point(0, 0)));
+
+//        System.out.println(this.debugGraph());
+//
+//        this.removeEdge(this.getBigVertexByCoordinate(new Point(40, 20)), this.getBigVertexByCoordinate(new Point(0, 0)));
+//
+//        System.out.println(this.debugGraph());
 
     }
 

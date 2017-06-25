@@ -30,16 +30,37 @@ public class ShapedBigVertex {
 
         shape.setOnContextMenuRequested(event1 -> {
             final ContextMenu contextMenu = new ContextMenu();
-            MenuItem item1 = new MenuItem("Relocate Node");
-            MenuItem item4 = new MenuItem("Remove Node");
-            MenuItem item2 = new MenuItem("Add Man");
-            MenuItem item3 = new MenuItem("Add Lion");
+            MenuItem item0 = new MenuItem("Create Edge");
+            MenuItem item1 = new MenuItem("Remove Edge");
+            MenuItem item2 = new MenuItem("Relocate Node");
+            MenuItem item5 = new MenuItem("Remove Node");
+            MenuItem item3 = new MenuItem("Add Man");
+            MenuItem item4 = new MenuItem("Add Lion");
             MenuItem closeItem = new MenuItem("Close");
+
+            item0.setOnAction(event2 -> {
+                mainGroup.setOnMouseClicked(event3 -> {
+
+                    mainGroup.setOnMouseClicked(null);
+
+                    graphController.createEdge(vertex, graphController.getBigVertexByCoordinate(new Point((int) event3.getX(), (int) event3.getY())));
+
+                });
+            });
 
             item1.setOnAction(event2 -> {
                 mainGroup.setOnMouseClicked(event3 -> {
-                    // this.setCoordinates(new Point((int) event3.getX(), (int) event3.getY()));
-//                    shape.relocate((int) event3.getX(), (int) event3.getY());
+
+                    mainGroup.setOnMouseClicked(null);
+
+                    graphController.removeEdge(vertex, graphController.getBigVertexByCoordinate(new Point((int) event3.getX(), (int) event3.getY())));
+
+                });
+            });
+
+            item2.setOnAction(event2 -> {
+                mainGroup.setOnMouseClicked(event3 -> {
+
                     mainGroup.setOnMouseClicked(null);
 
                     graphController.relocateVertex(vertex, new Point((int) event3.getX(), (int) event3.getY()));
@@ -47,29 +68,29 @@ public class ShapedBigVertex {
                 });
             });
 
-            item4.setOnAction(event2 -> {
+            item5.setOnAction(event2 -> {
                 graphController.deleteVertex(vertex);
 //                shapeGroup.getChildren().remove(shape);
             });
 
-            item2.setOnAction(event2 -> {
+            item3.setOnAction(event2 -> {
                 System.out.println("Add Man");
                 // TODO: something like new Man(vertex.getCoordinates());
             });
 
-            item3.setOnAction(event2 -> {
+            item4.setOnAction(event2 -> {
                 System.out.println("Add Lion");
                 // TODO: something like new Lion(vertex.getCoordinates());
             });
 
-            contextMenu.getItems().addAll(item1, item4, new SeparatorMenuItem(), item2, item3, new SeparatorMenuItem(), closeItem);
+            contextMenu.getItems().addAll(item0, item1, new SeparatorMenuItem(), item2, item5, new SeparatorMenuItem(), item3, item4, new SeparatorMenuItem(), closeItem);
             contextMenu.show(shape, event1.getScreenX(), event1.getScreenY());
         });
 
     }
 
     public void relocate() {
-        shape.relocate(vertex.getCoordinates().getX(), vertex.getCoordinates().getY());
+        shape.relocate(vertex.getCoordinates().getX()-BIG_VERTEX_RADIUS, vertex.getCoordinates().getY()-BIG_VERTEX_RADIUS);
     }
 
     public void delete() {

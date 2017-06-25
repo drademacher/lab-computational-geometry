@@ -2,13 +2,15 @@ package shapes;
 
 import entities.Lion;
 import graph.GraphController;
-import graph.Vertex;
 import javafx.scene.Group;
 import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.shape.Circle;
 import strategy.Strategy;
+import strategy.StrategyAggroGreedy;
+import strategy.StrategyDoNothing;
 import strategy.StrategyRandom;
 
 import static shapes.ShapeConstants.COLOR_LION;
@@ -33,10 +35,18 @@ public class ShapedLion {
         shapeGroup.getChildren().add(shape);
 
         shape.setOnContextMenuRequested(event1 -> {
+            if (!this.graphController.isEditMode())
+                return;
+
             final ContextMenu contextMenu = new ContextMenu();
             MenuItem item0 = new MenuItem("Remove Lion");
-            MenuItem item1 = new MenuItem("Change Strategy");
             MenuItem closeItem = new MenuItem("Close");
+
+            Menu strategyMenu = new Menu("Set Strategy");
+            MenuItem item1 = new MenuItem("Wait");
+            MenuItem item2 = new MenuItem("Greedy");
+            MenuItem item3 = new MenuItem("Random");
+            strategyMenu.getItems().addAll(item1, item2, item3);
 
 
             item0.setOnAction(event2 -> {
@@ -44,15 +54,27 @@ public class ShapedLion {
             });
 
             item1.setOnAction(event2 -> {
-                System.out.println("TODO change Strategy");
-                //TODO DANNY choose strategy
+                Strategy strategy = new StrategyDoNothing();
+                graphController.setLionStrategy(lion, strategy);
+            });
+
+            item2.setOnAction(event2 -> {
+                Strategy strategy = new StrategyAggroGreedy();
+                graphController.setLionStrategy(lion, strategy);
+            });
+
+            item3.setOnAction(event2 -> {
                 Strategy strategy = new StrategyRandom();
                 graphController.setLionStrategy(lion, strategy);
             });
 
-            contextMenu.getItems().addAll(item0, item1, new SeparatorMenuItem(), closeItem);
+            contextMenu.getItems().addAll(item0, strategyMenu, new SeparatorMenuItem(), closeItem);
             contextMenu.show(shape, event1.getScreenX(), event1.getScreenY());
         });
+    }
+
+    public static void setShapeGroup(Group shapeGroup) {
+        ShapedLion.shapeGroup = shapeGroup;
     }
 
     public void relocate() {
@@ -61,9 +83,5 @@ public class ShapedLion {
 
     public void delete() {
         shapeGroup.getChildren().remove(shape);
-    }
-
-    public static void setShapeGroup(Group shapeGroup) {
-        ShapedLion.shapeGroup = shapeGroup;
     }
 }

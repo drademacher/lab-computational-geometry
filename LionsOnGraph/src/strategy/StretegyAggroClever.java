@@ -1,8 +1,6 @@
 package strategy;
 
 import entities.Entity;
-import entities.Lion;
-import entities.Man;
 import graph.Edge;
 import graph.GraphController;
 import graph.Vertex;

@@ -7,7 +7,10 @@ import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import shapes.*;
 import util.Point;
@@ -21,6 +24,7 @@ import static shapes.ShapeConstants.COLOR_BACKGROUND;
  * https://stackoverflow.com/questions/16680295/javafx-correct-scaling
  */
 public class ZoomScrollPane extends ScrollPane {
+    private final StackPane zoomPane = new StackPane();
     private Group mainGroup = new Group();
     private Group groundGround = new Group();
 
@@ -29,7 +33,6 @@ public class ZoomScrollPane extends ScrollPane {
 
     public ZoomScrollPane() {
         final double SCALE_DELTA = 1.1;
-        final StackPane zoomPane = new StackPane();
 
         zoomPane.getChildren().add(mainGroup);
 
@@ -131,6 +134,7 @@ public class ZoomScrollPane extends ScrollPane {
     }
 
     public void clear() {
+//        groundPane.setStyle("-fx-background-color: #0000FF;");
         Rectangle groundRectangle = new Rectangle(0, 0, 0, 0);
         groundRectangle.setFill(COLOR_BACKGROUND);
         groundGround.getChildren().add(groundRectangle);
@@ -141,6 +145,8 @@ public class ZoomScrollPane extends ScrollPane {
         getNodesHolder().clear();
         getNodesHolder().addAll(groundGround, edgeShapes, vertexShapes, entityShapes);
 
+
+//        zoomPane.setOnMouseClicked(event1 -> System.out.println("zoom " + new Point((int) event1.getX(), (int) event1.getY())));
 
         vertexShapes.layoutBoundsProperty().addListener((observable, oldValue, newValue) -> {
             final double PADDING_FACTOR = 0.1, PADDING_CONST = 20;

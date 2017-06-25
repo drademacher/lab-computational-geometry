@@ -19,39 +19,16 @@
                                 <MenuItem fx:id="graph2MenuItem" mnemonicParsing="false"
                                           text="Paper Graph, 3 Lions succeed"/>
                                 <MenuItem fx:id="graph3MenuItem" mnemonicParsing="false" text="Small Graph"/>
-                                <MenuItem fx:id="graph4MenuItem" visible="false" mnemonicParsing="false"
-                                          text="Graph 4"/>
-                                <MenuItem fx:id="graph5MenuItem" visible="false" mnemonicParsing="false"
-                                          text="Graph 5"/>
-                                <MenuItem fx:id="randomGraphMenuItem" visible="false" mnemonicParsing="false"
-                                          text="Random Map"/>
+                                <MenuItem fx:id="graph4MenuItem" mnemonicParsing="false" text="Graph 4"
+                                          visible="false"/>
+                                <MenuItem fx:id="graph5MenuItem" mnemonicParsing="false" text="Graph 5"
+                                          visible="false"/>
+                                <MenuItem fx:id="randomGraphMenuItem" mnemonicParsing="false" text="Random Map"
+                                          visible="false"/>
                             </items>
                         </Menu>
                         <MenuItem fx:id="openMapMenuItem" mnemonicParsing="false" text="Open"/>
                         <MenuItem fx:id="saveMapMenuItem" mnemonicParsing="false" text="Save"/>
-                    </items>
-                </Menu>
-
-                <Menu mnemonicParsing="false" text="Edit">
-                    <items>
-                        <RadioMenuItem fx:id="editGraphModeButton" mnemonicParsing="false" selected="true"
-                                       text="Edit Graph Mode">
-                            <toggleGroup>
-                                <ToggleGroup fx:id="useModeToggle"/>
-                            </toggleGroup>
-                        </RadioMenuItem>
-                        <RadioMenuItem fx:id="editEntityModeButton" mnemonicParsing="false" text="Edit Entity Mode"
-                                       toggleGroup="$useModeToggle"/>
-                        <RadioMenuItem fx:id="playModeButton" mnemonicParsing="false" text="Play Mode"
-                                       toggleGroup="$useModeToggle"/>
-                        <SeparatorMenuItem/>
-                        <Menu visible="false" mnemonicParsing="false" text="Change Edge Length">
-                            <items>
-                                <MenuItem mnemonicParsing="false" text="Set All Edges"/>
-                                <MenuItem mnemonicParsing="false" text="Increment All Edges"/>
-                                <MenuItem mnemonicParsing="false" text="Decrement All Edges"/>
-                            </items>
-                        </Menu>
                     </items>
                 </Menu>
 
@@ -69,7 +46,7 @@
 
     </bottom>
     <center>
-        <ZoomScrollPane fx:id="zoomScrollPane" style="-fx-background-color: #999999;">
+        <ZoomScrollPane fx:id="zoomScrollPane">
             <opaqueInsets>
                 <Insets/>
             </opaqueInsets>
@@ -79,10 +56,15 @@
         </ZoomScrollPane>
     </center>
     <bottom>
-        <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <ButtonBar nodeOrientation="RIGHT_TO_LEFT" BorderPane.alignment="CENTER">
             <buttons>
-                <Button alignment="CENTER" mnemonicParsing="false" text="Play"/>
-                <Button alignment="CENTER" mnemonicParsing="false" text="Stop"/>
+                <Button fx:id="stopAnimationButton" alignment="CENTER" mnemonicParsing="false" text="Stop"
+                        disable="true"/>
+                <Button fx:id="playAnimationButton" alignment="CENTER" mnemonicParsing="false" text="Play"
+                        disable="true"/>
+                <Button fx:id="stepAnimationButton" alignment="CENTER" mnemonicParsing="false" text="Single Step"
+                        disable="true"/>
+                <Button fx:id="animationToggleButton" alignment="CENTER" mnemonicParsing="false" text="Play Mode"/>
             </buttons>
         </ButtonBar>
     </bottom>

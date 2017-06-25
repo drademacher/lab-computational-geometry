@@ -10,7 +10,7 @@ import javafx.scene.shape.Circle;
 import util.Point;
 
 import static shapes.ShapeConstants.BIG_VERTEX_RADIUS;
-import static shapes.ShapeConstants.COLOR_NODE;
+import static shapes.ShapeConstants.COLOR_VERTEX;
 
 public class ShapedBigVertex {
     private static Group mainGroup;
@@ -25,10 +25,16 @@ public class ShapedBigVertex {
         this.vertex = vertex;
         this.graphController = graphController;
 
-        shape = new Circle(vertex.getCoordinates().getX(), vertex.getCoordinates().getY(), BIG_VERTEX_RADIUS, COLOR_NODE);
+        shape = new Circle(vertex.getCoordinates().getX(), vertex.getCoordinates().getY(), BIG_VERTEX_RADIUS, COLOR_VERTEX);
         shapeGroup.getChildren().add(shape);
 
+        shape.setOnMouseClicked(event -> event.consume());
         shape.setOnContextMenuRequested(event1 -> {
+            event1.consume();
+
+            if (!this.graphController.isEditMode())
+                return;
+
             final ContextMenu contextMenu = new ContextMenu();
             MenuItem item0 = new MenuItem("Create Edge");
             MenuItem item1 = new MenuItem("Remove Edge");
@@ -91,20 +97,19 @@ public class ShapedBigVertex {
 
     }
 
-    public void relocate() {
-        shape.relocate(vertex.getCoordinates().getX() - BIG_VERTEX_RADIUS, vertex.getCoordinates().getY() - BIG_VERTEX_RADIUS);
-    }
-
-    public void delete() {
-        shapeGroup.getChildren().remove(shape);
-    }
-
-
     public static void setMainGroup(Group mainGroup) {
         ShapedBigVertex.mainGroup = mainGroup;
     }
 
     public static void setShapeGroup(Group shapeGroup) {
         ShapedBigVertex.shapeGroup = shapeGroup;
+    }
+
+    public void relocate() {
+        shape.relocate(vertex.getCoordinates().getX() - BIG_VERTEX_RADIUS, vertex.getCoordinates().getY() - BIG_VERTEX_RADIUS);
+    }
+
+    public void delete() {
+        shapeGroup.getChildren().remove(shape);
     }
 }

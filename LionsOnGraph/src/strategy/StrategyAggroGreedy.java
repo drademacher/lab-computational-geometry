@@ -1,15 +1,10 @@
 package strategy;
 
 import entities.Entity;
-import entities.Lion;
-import entities.Man;
 import graph.Edge;
 import graph.GraphController;
 import graph.GraphHelper;
 import graph.Vertex;
-import util.Random;
-
-import java.util.ArrayList;
 
 public class StrategyAggroGreedy implements Strategy {
     @Override

@@ -58,6 +58,6 @@ public abstract class Vertex {
 
     @Override
     public String toString() {
-        return getId()+"";
+        return getId() + "";
     }
 }

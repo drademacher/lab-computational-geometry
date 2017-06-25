@@ -22,7 +22,6 @@ public class GraphHelper {
     }
 
 
-
     public int BFSToMen(Vertex startVertex, Vertex directionVertex) {
 
         Map<Vertex, Integer> map = new HashMap<>();
@@ -48,7 +47,7 @@ public class GraphHelper {
                 Vertex nextVertex = edge.getNeighbor(current);
 
                 if (!set.contains(nextVertex)) {
-                    map.put(nextVertex, map.get(current) +1);
+                    map.put(nextVertex, map.get(current) + 1);
                     set.add(nextVertex);
 
                     if (!graphController.isLionOnVertex(nextVertex)) {
@@ -87,7 +86,7 @@ public class GraphHelper {
                 Vertex nextVertex = edge.getNeighbor(current);
 
                 if (!set.contains(nextVertex)) {
-                    map.put(nextVertex, map.get(current) +1);
+                    map.put(nextVertex, map.get(current) + 1);
                     set.add(nextVertex);
 
                     if (!graphController.isManOnVertex(nextVertex)) {

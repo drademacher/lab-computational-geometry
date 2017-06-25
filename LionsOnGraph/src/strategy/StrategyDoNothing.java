@@ -14,6 +14,6 @@ public class StrategyDoNothing implements Strategy {
 
     @Override
     public Vertex getNextPosition(GraphController graphController, Entity e) {
-        return  e.getCurrentPosition();
+        return e.getCurrentPosition();
     }
 }

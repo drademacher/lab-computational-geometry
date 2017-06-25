@@ -39,7 +39,6 @@ public class ShapedMan {
             MenuItem closeItem = new MenuItem("Close");
 
 
-
             item0.setOnAction(event2 -> {
                 graphController.removeMan(man);
             });
@@ -57,7 +56,7 @@ public class ShapedMan {
     }
 
     public void relocate() {
-        shape.relocate(man.getCoordinates().getX()-ENTITY_RADIUS, man.getCoordinates().getY()-ENTITY_RADIUS);
+        shape.relocate(man.getCoordinates().getX() - ENTITY_RADIUS, man.getCoordinates().getY() - ENTITY_RADIUS);
     }
 
     public void delete() {

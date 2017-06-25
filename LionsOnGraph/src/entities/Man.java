@@ -31,6 +31,6 @@ public class Man extends Entity {
 
     @Override
     public String toString() {
-        return "Man @ "+position;
+        return "Man @ " + position;
     }
 }

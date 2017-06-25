@@ -92,7 +92,7 @@ public class ShapedBigVertex {
     }
 
     public void relocate() {
-        shape.relocate(vertex.getCoordinates().getX()-BIG_VERTEX_RADIUS, vertex.getCoordinates().getY()-BIG_VERTEX_RADIUS);
+        shape.relocate(vertex.getCoordinates().getX() - BIG_VERTEX_RADIUS, vertex.getCoordinates().getY() - BIG_VERTEX_RADIUS);
     }
 
     public void delete() {

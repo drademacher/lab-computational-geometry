@@ -51,6 +51,6 @@ public abstract class Entity {
 
     @Override
     public String toString() {
-        return "Entity @ "+position;
+        return "Entity @ " + position;
     }
 }

@@ -31,9 +31,9 @@ public class StrategyAggroGreedy implements Strategy {
             }
         }
 
-        if(bestNextPosition != null){
+        if (bestNextPosition != null) {
             return bestNextPosition;
-        } else{
+        } else {
             return currentPosition;
         }
 

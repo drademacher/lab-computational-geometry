@@ -53,10 +53,10 @@ public class BigVertex extends Vertex {
                         vertex.getShape().delete();
                         edge.getShape().delete();
                         vertex.unregisterEdge(edge);
-                        if(edge.contains(this)){
+                        if (edge.contains(this)) {
                             unregisterEdge(edge);
                         }
-                        if(edge.contains(neighbor)){
+                        if (edge.contains(neighbor)) {
                             neighbor.unregisterEdge(edge);
                         }
                     }

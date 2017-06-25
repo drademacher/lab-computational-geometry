@@ -49,7 +49,7 @@ public class GraphController {
         for (Lion lion : lions) {
             lion.getShape().relocate();
         }
-        
+
         return bool;
     }
 

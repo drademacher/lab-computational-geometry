@@ -39,7 +39,6 @@ public class ShapedLion {
             MenuItem closeItem = new MenuItem("Close");
 
 
-
             item0.setOnAction(event2 -> {
                 graphController.removeLion(lion);
             });
@@ -57,7 +56,7 @@ public class ShapedLion {
     }
 
     public void relocate() {
-        shape.relocate(lion.getCoordinates().getX()-ENTITY_RADIUS, lion.getCoordinates().getY()-ENTITY_RADIUS);
+        shape.relocate(lion.getCoordinates().getX() - ENTITY_RADIUS, lion.getCoordinates().getY() - ENTITY_RADIUS);
     }
 
     public void delete() {

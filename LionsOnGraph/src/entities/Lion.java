@@ -27,6 +27,6 @@ public class Lion extends Entity {
 
     @Override
     public String toString() {
-        return "Lion @ "+position;
+        return "Lion @ " + position;
     }
 }

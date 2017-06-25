@@ -271,7 +271,7 @@ class Graph {
         str += "edges: " + this.edges + "\n";
 
         for (BigVertex vertex : bigVertices) {
-            str += "\n"+vertex.getId() + " Coord: " + vertex.getCoordinates() + " (";
+            str += "\n" + vertex.getId() + " Coord: " + vertex.getCoordinates() + " (";
             for (Edge ver : vertex.getEdges()) {
                 str += ver.toString() + " ' ";
             }

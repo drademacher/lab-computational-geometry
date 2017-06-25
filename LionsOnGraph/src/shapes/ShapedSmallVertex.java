@@ -34,7 +34,6 @@ public class ShapedSmallVertex {
             MenuItem closeItem = new MenuItem("Close");
 
 
-
             item0.setOnAction(event2 -> {
                 System.out.println("Add Man");
                 // TODO: something like new Man(vertex.getCoordinates());
@@ -53,7 +52,7 @@ public class ShapedSmallVertex {
     }
 
     public void relocate() {
-        shape.relocate(vertex.getCoordinates().getX()-SMALL_VERTEX_RADIUS, vertex.getCoordinates().getY()-SMALL_VERTEX_RADIUS);
+        shape.relocate(vertex.getCoordinates().getX() - SMALL_VERTEX_RADIUS, vertex.getCoordinates().getY() - SMALL_VERTEX_RADIUS);
     }
 
     public void delete() {

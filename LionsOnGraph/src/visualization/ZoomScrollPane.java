@@ -44,6 +44,25 @@ public class ZoomScrollPane extends ScrollPane {
         this.setPrefViewportWidth(256);
         this.setPrefViewportHeight(256);
 
+        zoomScrollPane.setOnMouseClicked(event1 -> {
+            Bounds subValues = mainGroup.localToScene(mainGroup.getBoundsInLocal());
+            Bounds addValues = zoomScrollPane.localToScene(mainGroup.getBoundsInLocal());
+            Bounds addValues2 = zoomScrollPane.localToScene(zoomScrollPane.getBoundsInLocal());
+
+//            System.out.println("bounds " + new Point((int)  addValues.getMinX(), (int)  addValues.getMinY()));
+
+            double scaleX = mainGroup.getScaleX(), scaleY = mainGroup.getScaleY();
+
+            // System.out.println(zoomScrollPane.getGround().getScaleX() + " - " + zoomScrollPane.getGround().getScaleY());
+
+//            System.out.println(event1.getX() + " - " + subValues.getMinX() + " - " + addValues.getMinX());
+//            System.out.println(newValues.getMinX());
+            System.out.println("new " + new Point((int) (event1.getX() - subValues.getMinX() + addValues.getMinX()), (int) (event1.getY() - subValues.getMinY() + addValues.getMinY())));
+//            System.out.println("new " + new Point((int) (event1.getX() / scaleX - subValues.getMinX() / scaleX + addValues.getMinX()),
+//                    (int) (event1.getY() / scaleY - subValues.getMinY() / scaleY + addValues.getMinY())
+//            ));
+        });
+
         zoomScrollPane.setOnScroll(event -> {
             ZoomScrollPane scroller = ZoomScrollPane.this;
 
@@ -64,23 +83,7 @@ public class ZoomScrollPane extends ScrollPane {
             mainGroup.setScaleY(mainGroup.getScaleY() * scaleFactor);
 
 
-            zoomScrollPane.setOnMouseClicked(event1 -> {
-                Bounds subValues = mainGroup.localToScene(mainGroup.getBoundsInLocal());
-                Bounds addValues = zoomScrollPane.localToScene(mainGroup.getBoundsInLocal());
 
-//            System.out.println("bounds " + new Point((int)  addValues.getMinX(), (int)  addValues.getMinY()));
-
-                double scaleX = mainGroup.getScaleX(), scaleY = mainGroup.getScaleY();
-
-                // System.out.println(zoomScrollPane.getGround().getScaleX() + " - " + zoomScrollPane.getGround().getScaleY());
-
-                System.out.println(event1.getX() + " - " + subValues.getMinX() + " - " + addValues.getMinX());
-//            System.out.println(newValues.getMinX());
-//            System.out.println("new " + new Point((int) (event.getX() - subValues.getMinX() + addValues.getMinX()), (int) (event.getY() - subValues.getMinY() + addValues.getMinY())));
-                System.out.println("new " + new Point((int) (event1.getX() / scaleX - subValues.getMinX() / scaleX + addValues.getMinX()),
-                        (int) (event1.getY() / scaleY - subValues.getMinY() / scaleY + addValues.getMinY())
-                ));
-            });
 
 
             // move viewport so that old center remains in the center after the

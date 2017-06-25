@@ -3,8 +3,8 @@ package util;
 
 public class Point {
 
-    private int x;
-    private int y;
+    private double x;
+    private double y;
 
     /**
      * Init Vector instance with the input params.
@@ -12,7 +12,7 @@ public class Point {
      * @param x init x value
      * @param y init y value
      */
-    public Point(int x, int y) {
+    public Point(double x, double y) {
         this.x = x;
         this.y = y;
     }
@@ -22,7 +22,7 @@ public class Point {
      *
      * @return x
      */
-    public int getX() {
+    public double getX() {
         return x;
     }
 
@@ -36,7 +36,7 @@ public class Point {
      * @return y
      * @since 1.0
      */
-    public int getY() {
+    public double getY() {
         return y;
     }
 
@@ -82,9 +82,9 @@ public class Point {
 
     @Override
     public int hashCode() {
-        int result = x;
+        double result = x;
         result = 31 * result + y;
-        return result;
+        return (int)result;
     }
 
     @Override

@@ -76,11 +76,13 @@ public class ShapedBigVertex {
             item3.setOnAction(event2 -> {
                 System.out.println("Add Man");
                 // TODO: something like new Man(vertex.getCoordinates());
+                graphController.setMan(vertex);
             });
 
             item4.setOnAction(event2 -> {
                 System.out.println("Add Lion");
                 // TODO: something like new Lion(vertex.getCoordinates());
+                graphController.setLion(vertex);
             });
 
             contextMenu.getItems().addAll(item0, item1, new SeparatorMenuItem(), item2, item5, new SeparatorMenuItem(), item3, item4, new SeparatorMenuItem(), closeItem);

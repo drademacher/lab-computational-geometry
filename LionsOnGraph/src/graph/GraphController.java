@@ -2,10 +2,7 @@ package graph;
 
 import entities.Lion;
 import entities.Man;
-import strategy.Strategy;
-import strategy.StrategyAggroGreedy;
-import strategy.StrategyRunAwayGreedy;
-import strategy.StretegyAggroClever;
+import strategy.*;
 import util.Point;
 
 import java.io.BufferedReader;
@@ -111,12 +108,12 @@ public class GraphController {
      *
      * ****************************/
 
-    public boolean setMan(Man man) {
-        return men.add(man);
+    public boolean setMan(Vertex vertex) {
+        return men.add(Man.createMan(this, vertex, new StrategyDoNothing()));
     }
 
-    public boolean setLion(Lion lion) {
-        return lions.add(lion);
+    public boolean setLion(Vertex vertex) {
+        return lions.add(Lion.createLion(this, vertex, new StrategyDoNothing()));
     }
 
     public boolean removeMan(Man man) {
@@ -237,7 +234,7 @@ public class GraphController {
         this.createEdge(this.getBigVertexByCoordinate(new Point(140, 140)), this.getBigVertexByCoordinate(new Point(100, 140)));
         this.createEdge(this.getBigVertexByCoordinate(new Point(100, 140)), this.getBigVertexByCoordinate(new Point(90, 100)));
         this.createEdge(this.getBigVertexByCoordinate(new Point(90, 100)), this.getBigVertexByCoordinate(new Point(120, 70)));
-        this.setLion(Lion.createLion(this, this.getBigVertexByCoordinate(new Point(50, 90)), new StrategyAggroGreedy()));
+        this.setLion(this.getBigVertexByCoordinate(new Point(50, 90)));
 
     }
 
@@ -303,10 +300,10 @@ public class GraphController {
         this.createEdge(this.getBigVertexByCoordinate(new Point(100, 140)), this.getBigVertexByCoordinate(new Point(90, 100)));
         this.createEdge(this.getBigVertexByCoordinate(new Point(90, 100)), this.getBigVertexByCoordinate(new Point(120, 70)));
 
-        this.setMan(Man.createMan(this, this.getBigVertexByCoordinate(new Point(50, 20)), new StrategyRunAwayGreedy()));
-        this.setLion(Lion.createLion(this, this.getBigVertexByCoordinate(new Point(190, 20)), new StretegyAggroClever()));
-        this.setLion(Lion.createLion(this, this.getBigVertexByCoordinate(new Point(100, 140)), new StretegyAggroClever()));
-        this.setLion(Lion.createLion(this, this.getBigVertexByCoordinate(new Point(50, 90)), new StretegyAggroClever()));
+        this.setMan(this.getBigVertexByCoordinate(new Point(50, 20)));
+        this.setLion(this.getBigVertexByCoordinate(new Point(190, 20)));
+        this.setLion(this.getBigVertexByCoordinate(new Point(100, 140)));
+        this.setLion(this.getBigVertexByCoordinate(new Point(50, 90)));
     }
 
     public void setDefaultGraph3() {
@@ -320,7 +317,7 @@ public class GraphController {
 
         this.createEdge(this.getBigVertexByCoordinate(new Point(40, 20)), this.getBigVertexByCoordinate(new Point(0, 0)));
 
-        this.setLion(Lion.createLion(this, this.getBigVertexByCoordinate(new Point(40, 20)), new StretegyAggroClever()));
+        this.setLion(this.getBigVertexByCoordinate(new Point(40, 20)));
 
 //        System.out.println(this.debugGraph());
 //

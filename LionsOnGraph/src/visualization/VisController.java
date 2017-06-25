@@ -106,13 +106,7 @@ public class VisController implements Initializable {
 //            System.out.println(zoomScrollPane.getGround().localToParent(new Point2D(0, 0)));
 
         });
-        zoomScrollPane.setOnMouseClicked(event -> {
-            Bounds subValues = zoomScrollPane.getGround().localToScene(zoomScrollPane.getGround().getBoundsInLocal());
-            Bounds addValues = zoomScrollPane.localToScene(zoomScrollPane.getGround().getBoundsInLocal());
-//            System.out.println("bounds " + new Point((int)  addValues.getMinX(), (int)  addValues.getMinY()));
 
-            System.out.println("new " + new Point((int) (event.getX() - subValues.getMinX() + addValues.getMinX()), (int) (event.getY() - subValues.getMinY() + addValues.getMinY())));
-        });
 
         zoomScrollPane.getGround().setOnContextMenuRequested(event1 -> {
             if (!this.coreController.isEditMode())

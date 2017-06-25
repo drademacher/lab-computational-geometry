@@ -3,14 +3,12 @@ package visualization;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
+import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import shapes.*;
 import util.Point;
@@ -24,7 +22,7 @@ import static shapes.ShapeConstants.COLOR_BACKGROUND;
  * https://stackoverflow.com/questions/16680295/javafx-correct-scaling
  */
 public class ZoomScrollPane extends ScrollPane {
-    private final StackPane zoomPane = new StackPane();
+    private final StackPane zoomScrollPane = new StackPane();
     private Group mainGroup = new Group();
     private Group groundGround = new Group();
 
@@ -34,19 +32,19 @@ public class ZoomScrollPane extends ScrollPane {
     public ZoomScrollPane() {
         final double SCALE_DELTA = 1.1;
 
-        zoomPane.getChildren().add(mainGroup);
+        zoomScrollPane.getChildren().add(mainGroup);
 
-        final Group scrollContent = new Group(zoomPane);
+        final Group scrollContent = new Group(zoomScrollPane);
         this.setContent(scrollContent);
 
         this.viewportBoundsProperty().addListener((observable, oldValue, newValue) -> {
-            zoomPane.setMinSize(newValue.getWidth(), newValue.getHeight());
+            zoomScrollPane.setMinSize(newValue.getWidth(), newValue.getHeight());
         });
 
         this.setPrefViewportWidth(256);
         this.setPrefViewportHeight(256);
 
-        zoomPane.setOnScroll(event -> {
+        zoomScrollPane.setOnScroll(event -> {
             ZoomScrollPane scroller = ZoomScrollPane.this;
 
             event.consume();
@@ -66,6 +64,25 @@ public class ZoomScrollPane extends ScrollPane {
             mainGroup.setScaleY(mainGroup.getScaleY() * scaleFactor);
 
 
+            zoomScrollPane.setOnMouseClicked(event1 -> {
+                Bounds subValues = mainGroup.localToScene(mainGroup.getBoundsInLocal());
+                Bounds addValues = zoomScrollPane.localToScene(mainGroup.getBoundsInLocal());
+
+//            System.out.println("bounds " + new Point((int)  addValues.getMinX(), (int)  addValues.getMinY()));
+
+                double scaleX = mainGroup.getScaleX(), scaleY = mainGroup.getScaleY();
+
+                // System.out.println(zoomScrollPane.getGround().getScaleX() + " - " + zoomScrollPane.getGround().getScaleY());
+
+                System.out.println(event1.getX() + " - " + subValues.getMinX() + " - " + addValues.getMinX());
+//            System.out.println(newValues.getMinX());
+//            System.out.println("new " + new Point((int) (event.getX() - subValues.getMinX() + addValues.getMinX()), (int) (event.getY() - subValues.getMinY() + addValues.getMinY())));
+                System.out.println("new " + new Point((int) (event1.getX() / scaleX - subValues.getMinX() / scaleX + addValues.getMinX()),
+                        (int) (event1.getY() / scaleY - subValues.getMinY() / scaleY + addValues.getMinY())
+                ));
+            });
+
+
             // move viewport so that old center remains in the center after the
             // scaling
             repositionScroller(scrollContent, scroller, scaleFactor, scrollOffset);
@@ -77,19 +94,19 @@ public class ZoomScrollPane extends ScrollPane {
         scrollContent.setOnMousePressed(event -> lastMouseCoordinates.set(new Point2D(event.getX(), event.getY())));
 
         scrollContent.setOnMouseDragged(event -> {
-            ZoomScrollPane zoomScrollPane = ZoomScrollPane.this;
+            ZoomScrollPane scroller = ZoomScrollPane.this;
 
             double deltaX = event.getX() - lastMouseCoordinates.get().getX();
-            double extraWidth = scrollContent.getLayoutBounds().getWidth() - zoomScrollPane.getViewportBounds().getWidth();
-            double deltaH = deltaX * (zoomScrollPane.getHmax() - zoomScrollPane.getHmin()) / extraWidth;
-            double desiredH = (Double.isNaN(zoomScrollPane.getHvalue()) ? 0 : zoomScrollPane.getHvalue()) - deltaH;
-            zoomScrollPane.setHvalue(Math.max(0, Math.min(zoomScrollPane.getHmax(), desiredH)));
+            double extraWidth = scrollContent.getLayoutBounds().getWidth() - scroller.getViewportBounds().getWidth();
+            double deltaH = deltaX * (scroller.getHmax() - scroller.getHmin()) / extraWidth;
+            double desiredH = (Double.isNaN(scroller.getHvalue()) ? 0 : scroller.getHvalue()) - deltaH;
+            scroller.setHvalue(Math.max(0, Math.min(scroller.getHmax(), desiredH)));
 
             double deltaY = event.getY() - lastMouseCoordinates.get().getY();
-            double extraHeight = scrollContent.getLayoutBounds().getHeight() - zoomScrollPane.getViewportBounds().getHeight();
-            double deltaV = deltaY * (zoomScrollPane.getVmax() - zoomScrollPane.getVmin()) / extraHeight;
-            double desiredV = (Double.isNaN(zoomScrollPane.getVvalue()) ? 0 : zoomScrollPane.getVvalue()) - deltaV;
-            zoomScrollPane.setVvalue(Math.max(0, Math.min(zoomScrollPane.getVmax(), desiredV)));
+            double extraHeight = scrollContent.getLayoutBounds().getHeight() - scroller.getViewportBounds().getHeight();
+            double deltaV = deltaY * (scroller.getVmax() - scroller.getVmin()) / extraHeight;
+            double desiredV = (Double.isNaN(scroller.getVvalue()) ? 0 : scroller.getVvalue()) - deltaV;
+            scroller.setVvalue(Math.max(0, Math.min(scroller.getVmax(), desiredV)));
         });
 
     }
@@ -146,7 +163,10 @@ public class ZoomScrollPane extends ScrollPane {
         getNodesHolder().addAll(groundGround, edgeShapes, vertexShapes, entityShapes);
 
 
-//        zoomPane.setOnMouseClicked(event1 -> System.out.println("zoom " + new Point((int) event1.getX(), (int) event1.getY())));
+
+
+
+//        zoomScrollPane.setOnMouseClicked(event1 -> System.out.println("zoom " + new Point((int) event1.getX(), (int) event1.getY())));
 
         vertexShapes.layoutBoundsProperty().addListener((observable, oldValue, newValue) -> {
             final double PADDING_FACTOR = 0.1, PADDING_CONST = 20;

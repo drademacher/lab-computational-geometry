@@ -145,8 +145,8 @@ public class ZoomScrollPane extends ScrollPane {
     }
 
     public void autoZoom() {
-        double scaleX = zoomScrollPane.getWidth() / mainGroup.getLayoutX();
-        double scaleY = zoomScrollPane.getHeight() / mainGroup.getLayoutY();
+        double scaleX = zoomScrollPane.getWidth() / (mainGroup.getLayoutX() * mainGroup.getScaleX());
+        double scaleY = zoomScrollPane.getHeight() / (mainGroup.getLayoutY() * mainGroup.getScaleY());
         mainGroup.setScaleX(mainGroup.getScaleX() * Math.min(scaleX, scaleY));
         mainGroup.setScaleY(mainGroup.getScaleY() * Math.min(scaleX, scaleY));
     }

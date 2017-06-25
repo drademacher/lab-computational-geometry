@@ -9,9 +9,7 @@ import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
-import shapes.ShapedBigVertex;
-import shapes.ShapedEdge;
-import shapes.ShapedSmallVertex;
+import shapes.*;
 import util.Point;
 
 import static shapes.ShapeConstants.BIG_VERTEX_RADIUS;
@@ -138,9 +136,10 @@ public class ZoomScrollPane extends ScrollPane {
         groundGround.getChildren().add(groundRectangle);
         Group vertexShapes = new Group();
         Group edgeShapes = new Group();
+        Group entityShapes = new Group();
 
         getNodesHolder().clear();
-        getNodesHolder().addAll(groundGround, edgeShapes, vertexShapes);
+        getNodesHolder().addAll(groundGround, edgeShapes, vertexShapes, entityShapes);
 
 
         vertexShapes.layoutBoundsProperty().addListener((observable, oldValue, newValue) -> {
@@ -156,6 +155,8 @@ public class ZoomScrollPane extends ScrollPane {
         ShapedBigVertex.setShapeGroup(vertexShapes);
         ShapedSmallVertex.setShapeGroup(vertexShapes);
         ShapedEdge.setShapeGroup(edgeShapes);
+        ShapedMan.setShapeGroup(entityShapes);
+        ShapedLion.setShapeGroup(entityShapes);
     }
 
 }

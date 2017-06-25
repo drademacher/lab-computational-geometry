@@ -1,5 +1,6 @@
 package entities;
 
+import graph.GraphController;
 import graph.Vertex;
 import strategy.Strategy;
 import util.Point;
@@ -8,19 +9,19 @@ import java.util.ArrayList;
 
 public abstract class Entity {
 
-    //TODO save men and lions in a better way / better place
-    protected static ArrayList<Man> men = new ArrayList<>();
-    protected static ArrayList<Lion> lions = new ArrayList<>();
+
     protected Vertex position;
     protected Strategy strategy;
+    protected GraphController graphController;
 
-    public Entity(Vertex startPosition, Strategy strategy) {
+    public Entity(Vertex startPosition, Strategy strategy, GraphController graphController) {
         this.position = startPosition;
         this.strategy = strategy;
+        this.graphController = graphController;
     }
 
     public Vertex getNextPosition() {
-        return strategy.getNextPosition(this, men, lions);
+        return strategy.getNextPosition(this, graphController.getMen(), graphController.getLions());
     }
 
     public Vertex goToNextPosition() {
@@ -50,6 +51,6 @@ public abstract class Entity {
 
     @Override
     public String toString() {
-        return super.toString();
+        return "Entity @ "+position;
     }
 }

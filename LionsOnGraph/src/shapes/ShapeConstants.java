@@ -12,6 +12,7 @@ public class ShapeConstants {
     public static final Color COLOR_LION = (Color) Paint.valueOf("#e8745a");
 
 
-    public static final double BIG_VERTEX_RADIUS = 4;
+    public static final double BIG_VERTEX_RADIUS = 3;
     public static final double SMALL_VERTEX_RADIUS = 2;
+    public static final double ENTITY_RADIUS = 1;
 }

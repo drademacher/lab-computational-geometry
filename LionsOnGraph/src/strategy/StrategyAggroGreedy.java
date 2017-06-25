@@ -15,8 +15,6 @@ public class StrategyAggroGreedy implements Strategy {
     @Override
     public Vertex getNextPosition(GraphController graphController, Entity e) {
 
-        System.out.println("AggroGreedy Strategy from "+e);
-
         GraphHelper helper = GraphHelper.createGraphHelper(graphController);
 
         Vertex currentPosition = e.getCurrentPosition();
@@ -27,7 +25,6 @@ public class StrategyAggroGreedy implements Strategy {
             Vertex possibleVertex = edge.getNeighbor(currentPosition);
 
             int calculatedSteps = helper.BFSToMen(currentPosition, possibleVertex);
-            System.out.println("steps "+steps+"  vs.  calcedStels: "+calculatedSteps);
             if (calculatedSteps < steps) {
                 steps = calculatedSteps;
                 bestNextPosition = possibleVertex;
@@ -35,10 +32,8 @@ public class StrategyAggroGreedy implements Strategy {
         }
 
         if(bestNextPosition != null){
-            System.out.println("return "+bestNextPosition);
             return bestNextPosition;
         } else{
-            System.out.println("return current "+currentPosition);
             return currentPosition;
         }
 

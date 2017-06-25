@@ -109,7 +109,7 @@ public class GraphController {
      * ****************************/
 
     public boolean setMan(Vertex vertex) {
-        return men.add(Man.createMan(this, vertex, new StrategyDoNothing()));
+        return men.add(Man.createMan(this, vertex, new StrategyRunAwayGreedy()));
     }
     public boolean isManOnVertex(Vertex vertex){
         for(Man man : men){

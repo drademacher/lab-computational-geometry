@@ -20,12 +20,17 @@ public class Man extends Entity {
         super(startPosition, strategy, graphController);
     }
 
-    Lion getNearestLion() {
+    public Lion getNearestLion() {
         // TODO: could be useful for a lot of strategies
         return null;
     }
 
     public ShapedMan getShape() {
         return shape;
+    }
+
+    @Override
+    public String toString() {
+        return "Man @ "+position;
     }
 }

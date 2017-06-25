@@ -61,4 +61,43 @@ public class GraphHelper {
         return Integer.MAX_VALUE;
 
     }
+
+    public int BFSToLion(Vertex startVertex, Vertex directionVertex) {
+
+        Map<Vertex, Integer> map = new HashMap<>();
+        Set<Vertex> set = new HashSet<>();
+        Queue<Vertex> queue = new LinkedList<>();
+        Vertex current = null;
+
+        map.put(directionVertex, 1);
+
+        set.add(startVertex);
+        set.add(directionVertex);
+        queue.add(directionVertex);
+
+        while (!queue.isEmpty()) {
+            current = queue.poll();
+
+            // check break condition
+            if (graphController.isLionOnVertex(current)) {
+                return map.get(current);
+            }
+
+            for (Edge edge : current.getEdges()) {
+                Vertex nextVertex = edge.getNeighbor(current);
+
+                if (!set.contains(nextVertex)) {
+                    map.put(nextVertex, map.get(current) +1);
+                    set.add(nextVertex);
+
+                    if (!graphController.isManOnVertex(nextVertex)) {
+                        queue.add(nextVertex);
+                    }
+                }
+            }
+        }
+
+        return Integer.MAX_VALUE;
+
+    }
 }

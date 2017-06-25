@@ -2,12 +2,17 @@ package shapes;
 
 import entities.Lion;
 import graph.GraphController;
+import javafx.animation.PathTransition;
 import javafx.scene.Group;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.LineTo;
+import javafx.scene.shape.MoveTo;
+import javafx.scene.shape.Path;
+import javafx.util.Duration;
 import strategy.Strategy;
 import strategy.StrategyAggroGreedy;
 import strategy.StrategyDoNothing;
@@ -78,7 +83,18 @@ public class ShapedLion {
     }
 
     public void relocate() {
+        // TODO: jens, start und ziel angeben, dann kann man das auch schön machen
+
+//        Path path = new Path();
+//        path.getElements().add(new MoveTo(shape.getCenterX(), shape.getCenterY()));
+//        path.getElements().add(new LineTo(lion.getCoordinates().getX() - ENTITY_RADIUS, lion.getCoordinates().getY() - ENTITY_RADIUS));
+//        PathTransition pathTransition = new PathTransition();
+//        pathTransition.setDuration(Duration.millis(250));
+//        pathTransition.setPath(path);
+//        pathTransition.setNode(shape);
+
         shape.relocate(lion.getCoordinates().getX() - ENTITY_RADIUS, lion.getCoordinates().getY() - ENTITY_RADIUS);
+//        pathTransition.play();
     }
 
     public void delete() {

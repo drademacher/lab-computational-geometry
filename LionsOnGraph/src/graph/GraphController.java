@@ -111,16 +111,35 @@ public class GraphController {
     public boolean setMan(Vertex vertex) {
         return men.add(Man.createMan(this, vertex, new StrategyDoNothing()));
     }
+    public boolean isManOnVertex(Vertex vertex){
+        for(Man man : men){
+            if(man.getCurrentPosition().equals(vertex)){
+                return true;
+            }
+        }
+        return false;
+    }
 
     public boolean setLion(Vertex vertex) {
-        return lions.add(Lion.createLion(this, vertex, new StrategyDoNothing()));
+        return lions.add(Lion.createLion(this, vertex, new StrategyAggroGreedy()));
+    }
+
+    public boolean isLionOnVertex(Vertex vertex){
+        for(Lion lion : lions){
+            if(lion.getCurrentPosition().equals(vertex)){
+                return true;
+            }
+        }
+        return false;
     }
 
     public boolean removeMan(Man man) {
+        man.getShape().delete();
         return men.remove(man);
     }
 
     public boolean removeLion(Lion lion) {
+        lion.getShape().delete();
         return lions.remove(lion);
     }
 

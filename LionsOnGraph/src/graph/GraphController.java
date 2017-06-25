@@ -2,6 +2,7 @@ package graph;
 
 import entities.Lion;
 import entities.Man;
+import strategy.Strategy;
 import strategy.StrategyAggroGreedy;
 import strategy.StrategyRunAwayGreedy;
 import strategy.StretegyAggroClever;
@@ -134,6 +135,25 @@ public class GraphController {
         return lions;
     }
 
+    public void setManStrategy(Man man, Strategy strategy){
+        man.setStrategy(strategy);
+    }
+
+    public void setLionStrategy(Lion lion, Strategy strategy){
+        lion.setStrategy(strategy);
+    }
+
+    public void setAllManStrategy(Strategy strategy){
+        for(Man man : men){
+            man.setStrategy(strategy);
+        }
+    }
+
+    public void setAllLionStrategy(Strategy strategy){
+        for(Lion lion : lions){
+            lion.setStrategy(strategy);
+        }
+    }
 
 
 

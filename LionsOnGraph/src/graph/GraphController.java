@@ -40,7 +40,17 @@ public class GraphController {
         if (vertex == null || newCoordinate == null) {
             return false;
         }
-        return this.graph.relocateVertex(vertex, newCoordinate);
+
+        boolean bool = this.graph.relocateVertex(vertex, newCoordinate);
+
+        for (Man man : men) {
+            man.getShape().relocate();
+        }
+        for (Lion lion : lions) {
+            lion.getShape().relocate();
+        }
+        
+        return bool;
     }
 
     public boolean deleteVertex(BigVertex vertex) {
@@ -111,9 +121,10 @@ public class GraphController {
     public boolean setMan(Vertex vertex) {
         return men.add(Man.createMan(this, vertex, new StrategyRunAwayGreedy()));
     }
-    public boolean isManOnVertex(Vertex vertex){
-        for(Man man : men){
-            if(man.getCurrentPosition().equals(vertex)){
+
+    public boolean isManOnVertex(Vertex vertex) {
+        for (Man man : men) {
+            if (man.getCurrentPosition().equals(vertex)) {
                 return true;
             }
         }
@@ -124,9 +135,9 @@ public class GraphController {
         return lions.add(Lion.createLion(this, vertex, new StrategyAggroGreedy()));
     }
 
-    public boolean isLionOnVertex(Vertex vertex){
-        for(Lion lion : lions){
-            if(lion.getCurrentPosition().equals(vertex)){
+    public boolean isLionOnVertex(Vertex vertex) {
+        for (Lion lion : lions) {
+            if (lion.getCurrentPosition().equals(vertex)) {
                 return true;
             }
         }
@@ -151,22 +162,22 @@ public class GraphController {
         return lions;
     }
 
-    public void setManStrategy(Man man, Strategy strategy){
+    public void setManStrategy(Man man, Strategy strategy) {
         man.setStrategy(strategy);
     }
 
-    public void setLionStrategy(Lion lion, Strategy strategy){
+    public void setLionStrategy(Lion lion, Strategy strategy) {
         lion.setStrategy(strategy);
     }
 
-    public void setAllManStrategy(Strategy strategy){
-        for(Man man : men){
+    public void setAllManStrategy(Strategy strategy) {
+        for (Man man : men) {
             man.setStrategy(strategy);
         }
     }
 
-    public void setAllLionStrategy(Strategy strategy){
-        for(Lion lion : lions){
+    public void setAllLionStrategy(Strategy strategy) {
+        for (Lion lion : lions) {
             lion.setStrategy(strategy);
         }
     }

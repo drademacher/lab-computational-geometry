@@ -21,7 +21,7 @@ public abstract class Entity {
     }
 
     public Vertex getNextPosition() {
-        return strategy.getNextPosition(this, graphController.getMen(), graphController.getLions());
+        return strategy.getNextPosition(graphController, this);
     }
 
     public Vertex goToNextPosition() {

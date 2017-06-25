@@ -24,4 +24,9 @@ public class Lion extends Entity {
     public ShapedLion getShape() {
         return shape;
     }
+
+    @Override
+    public String toString() {
+        return "Lion @ "+position;
+    }
 }

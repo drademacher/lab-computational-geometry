@@ -34,7 +34,7 @@ public class VisController implements Initializable {
 
 
     @FXML
-    private Button animationToggleButton, stepAnimationButton, playAnimationButton, stopAnimationButton;
+    private Button initButton, animationToggleButton, stepAnimationButton, playAnimationButton, stopAnimationButton;
 
 
     private BooleanProperty editMode, activePlaying;
@@ -74,6 +74,7 @@ public class VisController implements Initializable {
             if (editMode.getValue()) {
                 editMode.set(false);
                 animationToggleButton.setText("Edit Mode");
+                zoomScrollPane.autoZoom();
             } else {
                 editMode.set(true);
                 animationToggleButton.setText("Play Mode");
@@ -100,11 +101,16 @@ public class VisController implements Initializable {
     }
 
     private void initContextMenu() {
-        zoomScrollPane.getGround().setOnMouseClicked(event1 -> {
-            System.out.println("ground " + new Point((int) event1.getX(), (int) event1.getY()));
-//            System.out.println("scene " + new Point((int) event1.getSceneX(), (int) event1.getSceneY()));
-//            System.out.println(zoomScrollPane.getGround().localToParent(new Point2D(0, 0)));
+//        zoomScrollPane.getGround().setOnMouseClicked(event1 -> {
+//            System.out.println("ground " + new Point((int) event1.getX(), (int) event1.getY()));
+////            System.out.println("scene " + new Point((int) event1.getSceneX(), (int) event1.getSceneY()));
+////            System.out.println(zoomScrollPane.getGround().localToParent(new Point2D(0, 0)));
+//
+//        });
 
+        zoomScrollPane.setOnMouseClicked(event1 -> {
+            Point p = zoomScrollPane.getLocalCoordinates(event1.getX(), event1.getY());
+            System.out.println(p);
         });
 
 
@@ -234,6 +240,15 @@ public class VisController implements Initializable {
             if (selectedFile != null) {
                 this.coreController.saveGraphToFile(selectedFile);
             }
+        });
+
+        initButton.setOnAction(event -> {
+            this.zoomScrollPane.clear();
+            coreController.setDefaultGraph2();
+            this.zoomScrollPane.autoZoom();
+//            this.graphHolder.setGraph(coreController.setDefaultGraph2());
+//            this.graphHolder.setState(coreController.getState());
+//            this.editGraphModeButton.setSelected(true);
         });
 
     }

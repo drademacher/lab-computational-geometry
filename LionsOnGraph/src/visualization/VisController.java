@@ -78,6 +78,7 @@ public class VisController implements Initializable {
             } else {
                 editMode.set(true);
                 animationToggleButton.setText("Play Mode");
+                activePlaying.set(false);
             }
         });
 
@@ -90,21 +91,30 @@ public class VisController implements Initializable {
         });
 
         playAnimationButton.setOnMouseClicked(event -> {
-            animationTimer.start();
+
             activePlaying.set(true);
         });
 
         stopAnimationButton.setOnMouseClicked(event -> {
-            animationTimer.stop();
+
             activePlaying.set(false);
+        });
+
+        activePlaying.addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                animationTimer.start();
+            } else {
+                animationTimer.stop();
+            }
+
         });
     }
 
     private void initContextMenu() {
-//        zoomScrollPane.setOnMouseClicked(event1 -> {
-//            Point p = zoomScrollPane.getLocalCoordinates(event1.getX(), event1.getY());
-//            System.out.println(p);
-//        });
+        zoomScrollPane.setOnMouseClicked(event1 -> {
+            Point p = zoomScrollPane.getLocalCoordinates(event1.getX(), event1.getY());
+            System.out.println(p);
+        });
 
 
         zoomScrollPane.setOnContextMenuRequested(event1 -> {
@@ -152,8 +162,6 @@ public class VisController implements Initializable {
 
         zoomScrollPane.getNodesHolder().clear();
         zoomScrollPane.getNodesHolder().addAll(edgeShapes, vertexShapes, entityShapes);
-
-
 
 
 

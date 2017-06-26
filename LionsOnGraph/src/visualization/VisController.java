@@ -8,11 +8,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
+import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import shapes.*;
 import util.Point;
 
 import java.io.File;
@@ -44,10 +46,6 @@ public class VisController implements Initializable {
     private double time = 0;
     private int tickAccount = 0;
     final private int TICKS_PER_STEP = 20;
-
-
-    ContextMenu contextMenu;
-
 
     private GraphController coreController = new GraphController();
 
@@ -110,15 +108,10 @@ public class VisController implements Initializable {
 
 
         zoomScrollPane.setOnContextMenuRequested(event1 -> {
-            if (contextMenu != null) {
-                contextMenu.hide();
-                contextMenu = null;
-            }
-
             if (!this.coreController.isEditMode())
                 return;
 
-            contextMenu = new ContextMenu();
+            ContextMenu contextMenu = ContextMenuHolder.getFreshContextMenu();
             MenuItem item1 = new MenuItem("Add Node");
             item1.setOnAction(event2 -> {
                 coreController.createVertex(zoomScrollPane.getLocalCoordinates(event1.getX(), event1.getY()));
@@ -152,11 +145,32 @@ public class VisController implements Initializable {
         };
     }
 
+    public void initMainPane() {
+        Group vertexShapes = new Group();
+        Group edgeShapes = new Group();
+        Group entityShapes = new Group();
+
+        zoomScrollPane.getNodesHolder().clear();
+        zoomScrollPane.getNodesHolder().addAll(edgeShapes, vertexShapes, entityShapes);
+
+
+
+
+
+        ShapedBigVertex.setMainPane(zoomScrollPane);
+        ShapedBigVertex.setShapeGroup(vertexShapes);
+        ShapedSmallVertex.setShapeGroup(vertexShapes);
+        ShapedEdge.setShapeGroup(edgeShapes);
+        ShapedMan.setShapeGroup(entityShapes);
+        ShapedLion.setShapeGroup(entityShapes);
+
+    }
+
 
     private void initGraphButtons() {
         emptyMapMenuItem.setOnAction(event -> {
 
-            this.zoomScrollPane.clear();
+            this.initMainPane();
             coreController.setEmptyGraph();
             this.zoomScrollPane.autoZoom();
 //            this.graphHolder.setGraph(coreController.setEmptyGraph());
@@ -165,7 +179,7 @@ public class VisController implements Initializable {
         });
 
         graph1MenuItem.setOnAction(event -> {
-            this.zoomScrollPane.clear();
+            this.initMainPane();
             coreController.setDefaultGraph1();
             this.zoomScrollPane.autoZoom();
 //            this.graphHolder.setGraph(coreController.setDefaultGraph1());
@@ -174,7 +188,7 @@ public class VisController implements Initializable {
         });
 
         graph2MenuItem.setOnAction(event -> {
-            this.zoomScrollPane.clear();
+            this.initMainPane();
             coreController.setDefaultGraph2();
             this.zoomScrollPane.autoZoom();
 //            this.graphHolder.setGraph(coreController.setDefaultGraph2());
@@ -183,7 +197,7 @@ public class VisController implements Initializable {
         });
 
         graph3MenuItem.setOnAction(event -> {
-            this.zoomScrollPane.clear();
+            this.initMainPane();
             coreController.setDefaultGraph3();
             this.zoomScrollPane.autoZoom();
 //            this.graphHolder.setGraph();
@@ -192,21 +206,21 @@ public class VisController implements Initializable {
         });
 
         graph4MenuItem.setOnAction(event -> {
-            this.zoomScrollPane.clear();
+            this.initMainPane();
 //            this.graphHolder.setGraph(coreController.setDefaultGraph4());
 //            this.graphHolder.setState(coreController.getState());
 //            this.editGraphModeButton.setSelected(true);
         });
 
         graph5MenuItem.setOnAction(event -> {
-            this.zoomScrollPane.clear();
+            this.initMainPane();
 //            this.graphHolder.setGraph(coreController.setDefaultGraph5());
 //            this.graphHolder.setState(coreController.getState());
 //            this.editGraphModeButton.setSelected(true);
         });
 
         randomGraphMenuItem.setOnAction(event -> {
-            this.zoomScrollPane.clear();
+            this.initMainPane();
 //            this.graphHolder.setGraph(coreController.setRandomGraph());
 //            this.graphHolder.setState(coreController.getState());
 //            this.editGraphModeButton.setSelected(true);
@@ -243,7 +257,7 @@ public class VisController implements Initializable {
         });
 
         initButton.setOnAction(event -> {
-            this.zoomScrollPane.clear();
+            this.initMainPane();
             coreController.setDefaultGraph2();
             this.zoomScrollPane.autoZoom();
 //            this.graphHolder.setGraph(coreController.setDefaultGraph2());

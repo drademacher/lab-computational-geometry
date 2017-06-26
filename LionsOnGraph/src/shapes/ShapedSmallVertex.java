@@ -28,10 +28,12 @@ public class ShapedSmallVertex {
         shapeGroup.getChildren().add(shape);
 
         shape.setOnContextMenuRequested(event1 -> {
+            event1.consume();
+
             if (!this.graphController.isEditMode())
                 return;
 
-            final ContextMenu contextMenu = new ContextMenu();
+            final ContextMenu contextMenu = ContextMenuHolder.getFreshContextMenu();
             MenuItem item0 = new MenuItem("Add Man");
             MenuItem item1 = new MenuItem("Add Lion");
             MenuItem closeItem = new MenuItem("Close");

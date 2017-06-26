@@ -3,22 +3,19 @@ package shapes;
 import graph.BigVertex;
 import graph.GraphController;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.Region;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import util.Point;
+import visualization.ZoomScrollPane;
 
 import static shapes.ShapeConstants.BIG_VERTEX_RADIUS;
 import static shapes.ShapeConstants.COLOR_BACKGROUND;
 import static shapes.ShapeConstants.COLOR_VERTEX;
 
 public class ShapedBigVertex {
-    private static Group mainGroup;
+    private static ZoomScrollPane mainPane;
     private static Group shapeGroup;
 
     private Circle shape;
@@ -44,7 +41,7 @@ public class ShapedBigVertex {
             if (!this.graphController.isEditMode())
                 return;
 
-            final ContextMenu contextMenu = new ContextMenu();
+            ContextMenu contextMenu = ContextMenuHolder.getFreshContextMenu();
             MenuItem item0 = new MenuItem("Create Edge");
             MenuItem item1 = new MenuItem("Remove Edge");
             MenuItem item2 = new MenuItem("Relocate Node");
@@ -54,31 +51,32 @@ public class ShapedBigVertex {
             MenuItem closeItem = new MenuItem("Close");
 
             item0.setOnAction(event2 -> {
-                mainGroup.setOnMouseClicked(event3 -> {
+                mainPane.setOnMouseClicked(event3 -> {
 
-                    mainGroup.setOnMouseClicked(null);
+                    mainPane.setOnMouseClicked(null);
 
-                    graphController.createEdge(vertex, graphController.getBigVertexByCoordinate(new Point((int) event3.getX(), (int) event3.getY())));
+                    graphController.createEdge(vertex, graphController.getBigVertexByCoordinate(mainPane.getLocalCoordinates(event3.getX(), event3.getY())));
 
                 });
             });
 
             item1.setOnAction(event2 -> {
-                mainGroup.setOnMouseClicked(event3 -> {
+                mainPane.setOnMouseClicked(event3 -> {
 
-                    mainGroup.setOnMouseClicked(null);
+                    mainPane.setOnMouseClicked(null);
 
-                    graphController.removeEdge(vertex, graphController.getBigVertexByCoordinate(new Point((int) event3.getX(), (int) event3.getY())));
+                    graphController.removeEdge(vertex, graphController.getBigVertexByCoordinate(mainPane.getLocalCoordinates(event3.getX(), event3.getY())));
 
                 });
             });
 
             item2.setOnAction(event2 -> {
-                mainGroup.setOnMouseClicked(event3 -> {
+                mainPane.setOnMouseClicked(event3 -> {
 
-                    mainGroup.setOnMouseClicked(null);
+                    mainPane.setOnMouseClicked(null);
 
-                    graphController.relocateVertex(vertex, new Point((int) event3.getX(), (int) event3.getY()));
+//                    System.out.println(mainPane.getLocalCoordinates(event3.getX(), event3.getY()));
+                    graphController.relocateVertex(vertex, mainPane.getLocalCoordinates(event3.getX(), event3.getY()));
 
                 });
             });
@@ -106,8 +104,8 @@ public class ShapedBigVertex {
 
     }
 
-    public static void setMainGroup(Group mainGroup) {
-        ShapedBigVertex.mainGroup = mainGroup;
+    public static void setMainPane(ZoomScrollPane mainPane) {
+        ShapedBigVertex.mainPane = mainPane;
     }
 
     public static void setShapeGroup(Group shapeGroup) {

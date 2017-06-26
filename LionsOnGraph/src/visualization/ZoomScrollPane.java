@@ -3,18 +3,17 @@ package visualization;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
-import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.StackPane;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import shapes.*;
 import util.Point;
-
-import static shapes.ShapeConstants.BIG_VERTEX_RADIUS;
-import static shapes.ShapeConstants.COLOR_BACKGROUND;
 
 
 /***
@@ -31,9 +30,9 @@ public class ZoomScrollPane extends ScrollPane {
 
     public ZoomScrollPane() {
         final double SCALE_DELTA = 1.1;
-//
-//        ZoomScrollPane.this.setStyle("-fx-background-color: #dbdbdb");
-//        mainPane.setStyle("-fx-background-color: #dbdbdb");
+
+        ZoomScrollPane.this.setBackground(new Background(new BackgroundFill(null, null, null)));
+
 
         mainPane.getChildren().add(mainGroup);
 
@@ -163,32 +162,13 @@ public class ZoomScrollPane extends ScrollPane {
     public Point getLocalCoordinates(double x, double y) {
         Point2D localPoint = mainGroup.sceneToLocal(new Point2D(x, y));
         Point2D offset = new Point2D(mainPane.sceneToLocal(0, 0).getX() / mainGroup.getScaleX(),
-                mainPane.sceneToLocal(0, 0).getY() / mainGroup.getScaleX());
+                mainPane.sceneToLocal(0, 0).getY() / mainGroup.getScaleY());
 
         Point2D res = localPoint.subtract(offset);
 
         return new Point((int) res.getX(), (int) res.getY());
     }
 
-    public void clear() {
-        Group vertexShapes = new Group();
-        Group edgeShapes = new Group();
-        Group entityShapes = new Group();
 
-        getNodesHolder().clear();
-        getNodesHolder().addAll(edgeShapes, vertexShapes, entityShapes);
-
-
-
-
-
-        ShapedBigVertex.setMainGroup(mainGroup);
-        ShapedBigVertex.setShapeGroup(vertexShapes);
-        ShapedSmallVertex.setShapeGroup(vertexShapes);
-        ShapedEdge.setShapeGroup(edgeShapes);
-        ShapedMan.setShapeGroup(entityShapes);
-        ShapedLion.setShapeGroup(entityShapes);
-
-    }
 
 }

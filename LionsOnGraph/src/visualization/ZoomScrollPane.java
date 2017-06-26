@@ -24,18 +24,13 @@ import static shapes.ShapeConstants.COLOR_BACKGROUND;
 public class ZoomScrollPane extends ScrollPane {
     private final StackPane mainPane = new StackPane();
     private Group mainGroup = new Group();
-    private Group groundGround = new Group();
 
-//    private double scaleFactor = 1;
-    private Point2D scrollOffset = new Point2D(0, 0);
+//    private Point2D scrollOffset = new Point2D(0, 0);
 
 
 
     public ZoomScrollPane() {
         final double SCALE_DELTA = 1.1;
-
-//        ZoomScrollPane.this.setHbarPolicy(ScrollBarPolicy.NEVER);
-//        ZoomScrollPane.this.setVbarPolicy(ScrollBarPolicy.NEVER);
 
         mainPane.getChildren().add(mainGroup);
 
@@ -81,7 +76,7 @@ public class ZoomScrollPane extends ScrollPane {
 
             // amount of scrolling in each direction in scrollContent coordinate
             // units
-            scrollOffset = figureScrollOffset(scrollContent, scroller);
+            Point2D scrollOffset = figureScrollOffset(scrollContent, scroller);
 
             mainGroup.setScaleX(mainGroup.getScaleX() * scaleFactor);
             mainGroup.setScaleY(mainGroup.getScaleY() * scaleFactor);
@@ -161,9 +156,6 @@ public class ZoomScrollPane extends ScrollPane {
         return mainGroup.getChildren();
     }
 
-    public Node getGround() {
-        return groundGround; // .getChildren().get(0);
-    }
 
     public Point getLocalCoordinates(double x, double y) {
         Point2D localPoint = mainGroup.sceneToLocal(new Point2D(x, y));
@@ -176,34 +168,15 @@ public class ZoomScrollPane extends ScrollPane {
     }
 
     public void clear() {
-//        groundPane.setStyle("-fx-background-color: #0000FF;");
-        Rectangle groundRectangle = new Rectangle(0, 0, 0, 0);
-        groundRectangle.setFill(COLOR_BACKGROUND);
-        groundGround.getChildren().add(groundRectangle);
         Group vertexShapes = new Group();
         Group edgeShapes = new Group();
         Group entityShapes = new Group();
 
         getNodesHolder().clear();
-        getNodesHolder().addAll(groundGround, edgeShapes, vertexShapes, entityShapes);
+        getNodesHolder().addAll(edgeShapes, vertexShapes, entityShapes);
 
 
 
-
-        groundGround.setOnMouseClicked(event1 -> {
-//            debug = new Point2D(event1.getX(), event1.getY());
-            System.out.println("ground " + new Point((int) event1.getX(), (int) event1.getY()));
-        });
-
-//        mainPane.setOnMouseClicked(event1 -> System.out.println("zoom " + new Point((int) event1.getX(), (int) event1.getY())));
-
-        vertexShapes.layoutBoundsProperty().addListener((observable, oldValue, newValue) -> {
-            final double PADDING_FACTOR = 0.1, PADDING_CONST = 20;
-            double w = newValue.getWidth(), h = newValue.getHeight();
-            groundRectangle.setWidth(w * (1 + 2 * PADDING_FACTOR) + 2 * PADDING_CONST);
-            groundRectangle.setHeight(h * (1 + 2 * PADDING_FACTOR) + 2 * PADDING_CONST);
-            groundRectangle.relocate(-(w * PADDING_FACTOR + PADDING_CONST + BIG_VERTEX_RADIUS), -(h * PADDING_FACTOR + PADDING_CONST + BIG_VERTEX_RADIUS));
-        });
 
 
         ShapedBigVertex.setMainGroup(mainGroup);

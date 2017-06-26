@@ -101,32 +101,25 @@ public class VisController implements Initializable {
     }
 
     private void initContextMenu() {
-//        zoomScrollPane.getGround().setOnMouseClicked(event1 -> {
-//            System.out.println("ground " + new Point((int) event1.getX(), (int) event1.getY()));
-////            System.out.println("scene " + new Point((int) event1.getSceneX(), (int) event1.getSceneY()));
-////            System.out.println(zoomScrollPane.getGround().localToParent(new Point2D(0, 0)));
-//
-//        });
-
         zoomScrollPane.setOnMouseClicked(event1 -> {
             Point p = zoomScrollPane.getLocalCoordinates(event1.getX(), event1.getY());
             System.out.println(p);
         });
 
 
-        zoomScrollPane.getGround().setOnContextMenuRequested(event1 -> {
+        zoomScrollPane.setOnContextMenuRequested(event1 -> {
             if (!this.coreController.isEditMode())
                 return;
 
             final ContextMenu contextMenu = new ContextMenu();
             MenuItem item1 = new MenuItem("Add Node");
             item1.setOnAction(event2 -> {
-                coreController.createVertex(new Point((int) event1.getX(), (int) event1.getY()));
+                coreController.createVertex(zoomScrollPane.getLocalCoordinates(event1.getX(), event1.getY()));
             });
             MenuItem item2 = new MenuItem("Close");
 
             contextMenu.getItems().addAll(item1, item2);
-            contextMenu.show(zoomScrollPane.getGround(), event1.getScreenX(), event1.getScreenY());
+            contextMenu.show(zoomScrollPane, event1.getScreenX(), event1.getScreenY());
         });
     }
 

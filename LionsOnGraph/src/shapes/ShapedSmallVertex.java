@@ -8,8 +8,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.shape.Circle;
 
-import static shapes.ShapeConstants.COLOR_SMALL_VERTEX;
-import static shapes.ShapeConstants.SMALL_VERTEX_RADIUS;
+import static shapes.ShapeConstants.*;
 
 public class ShapedSmallVertex {
     private static Group shapeGroup = new Group();
@@ -23,7 +22,9 @@ public class ShapedSmallVertex {
         this.graphController = graphController;
         this.vertex = vertex;
 
-        shape = new Circle(vertex.getCoordinates().getX(), vertex.getCoordinates().getY(), SMALL_VERTEX_RADIUS, COLOR_SMALL_VERTEX);
+        shape = new Circle(vertex.getCoordinates().getX(), vertex.getCoordinates().getY(), SMALL_VERTEX_RADIUS);
+        shape.setStroke(COLOR_SMALL_VERTEX);
+        shape.setFill(COLOR_BACKGROUND);
         shapeGroup.getChildren().add(shape);
 
         shape.setOnContextMenuRequested(event1 -> {

@@ -31,6 +31,9 @@ public class ZoomScrollPane extends ScrollPane {
 
     public ZoomScrollPane() {
         final double SCALE_DELTA = 1.1;
+//
+//        ZoomScrollPane.this.setStyle("-fx-background-color: #dbdbdb");
+//        mainPane.setStyle("-fx-background-color: #dbdbdb");
 
         mainPane.getChildren().add(mainGroup);
 

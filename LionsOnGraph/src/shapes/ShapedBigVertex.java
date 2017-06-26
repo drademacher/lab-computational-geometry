@@ -3,13 +3,18 @@ package shapes;
 import graph.BigVertex;
 import graph.GraphController;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import util.Point;
 
 import static shapes.ShapeConstants.BIG_VERTEX_RADIUS;
+import static shapes.ShapeConstants.COLOR_BACKGROUND;
 import static shapes.ShapeConstants.COLOR_VERTEX;
 
 public class ShapedBigVertex {
@@ -25,10 +30,14 @@ public class ShapedBigVertex {
         this.vertex = vertex;
         this.graphController = graphController;
 
-        shape = new Circle(vertex.getCoordinates().getX(), vertex.getCoordinates().getY(), BIG_VERTEX_RADIUS, COLOR_VERTEX);
+
+
+        shape = new Circle(vertex.getCoordinates().getX(), vertex.getCoordinates().getY(), BIG_VERTEX_RADIUS);
+        shape.setStroke(COLOR_VERTEX);
+        shape.setFill(COLOR_BACKGROUND);
         shapeGroup.getChildren().add(shape);
 
-        shape.setOnMouseClicked(event -> event.consume());
+//        shape.setOnMouseClicked(event -> event.consume());
         shape.setOnContextMenuRequested(event1 -> {
             event1.consume();
 
@@ -91,7 +100,7 @@ public class ShapedBigVertex {
                 graphController.setLion(vertex);
             });
 
-            contextMenu.getItems().addAll(item0, item1, new SeparatorMenuItem(), item2, item5, new SeparatorMenuItem(), item3, item4, new SeparatorMenuItem(), closeItem);
+            contextMenu.getItems().addAll(item2, item5,  new SeparatorMenuItem(), item0, item1,new SeparatorMenuItem(), item3, item4, new SeparatorMenuItem(), closeItem);
             contextMenu.show(shape, event1.getScreenX(), event1.getScreenY());
         });
 

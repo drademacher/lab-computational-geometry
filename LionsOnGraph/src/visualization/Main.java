@@ -9,6 +9,7 @@ import java.util.Enumeration;
 import java.util.ResourceBundle;
 
 public class Main extends Application {
+    private static Scene scene;
 
     public static void main(String[] args) {
         launch(args);
@@ -29,12 +30,21 @@ public class Main extends Application {
             }
         };
         fxmlLoader.setResources(bundle);
-        Scene scene = new Scene(fxmlLoader.load(getClass().getResource("main.fxml").openStream()));
+        setScene(new Scene(fxmlLoader.load(getClass().getResource("main.fxml").openStream())));
         primaryStage.setTitle("Lab Computational Geometry");
-        primaryStage.setScene(scene);
+        primaryStage.setScene(getScene());
         primaryStage.setWidth(VisConstants.WINDOW_WIDTH);
         primaryStage.setHeight(VisConstants.WINDOW_HEIGHT);
         primaryStage.setResizable(true);
         primaryStage.show();
+
+    }
+
+    public static Scene getScene() {
+        return scene;
+    }
+
+    public void setScene(Scene scene) {
+        this.scene = scene;
     }
 }

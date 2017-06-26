@@ -46,6 +46,8 @@ public class VisController implements Initializable {
     final private int TICKS_PER_STEP = 20;
 
 
+    ContextMenu contextMenu;
+
 
     private GraphController coreController = new GraphController();
 
@@ -101,17 +103,22 @@ public class VisController implements Initializable {
     }
 
     private void initContextMenu() {
-        zoomScrollPane.setOnMouseClicked(event1 -> {
-            Point p = zoomScrollPane.getLocalCoordinates(event1.getX(), event1.getY());
-            System.out.println(p);
-        });
+//        zoomScrollPane.setOnMouseClicked(event1 -> {
+//            Point p = zoomScrollPane.getLocalCoordinates(event1.getX(), event1.getY());
+//            System.out.println(p);
+//        });
 
 
         zoomScrollPane.setOnContextMenuRequested(event1 -> {
+            if (contextMenu != null) {
+                contextMenu.hide();
+                contextMenu = null;
+            }
+
             if (!this.coreController.isEditMode())
                 return;
 
-            final ContextMenu contextMenu = new ContextMenu();
+            contextMenu = new ContextMenu();
             MenuItem item1 = new MenuItem("Add Node");
             item1.setOnAction(event2 -> {
                 coreController.createVertex(zoomScrollPane.getLocalCoordinates(event1.getX(), event1.getY()));

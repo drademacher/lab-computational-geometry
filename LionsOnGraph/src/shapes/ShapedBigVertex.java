@@ -10,9 +10,7 @@ import javafx.scene.shape.Circle;
 import util.Point;
 import visualization.ZoomScrollPane;
 
-import static shapes.ShapeConstants.BIG_VERTEX_RADIUS;
-import static shapes.ShapeConstants.COLOR_BACKGROUND;
-import static shapes.ShapeConstants.COLOR_VERTEX;
+import static shapes.ShapeConstants.*;
 
 public class ShapedBigVertex {
     private static ZoomScrollPane mainPane;
@@ -30,6 +28,7 @@ public class ShapedBigVertex {
 
 
         shape = new Circle(vertex.getCoordinates().getX(), vertex.getCoordinates().getY(), BIG_VERTEX_RADIUS);
+        shape.setStrokeWidth(BIG_VERTEX_RADIUS / 5);
         shape.setStroke(COLOR_VERTEX);
         shape.setFill(COLOR_BACKGROUND);
         shapeGroup.getChildren().add(shape);

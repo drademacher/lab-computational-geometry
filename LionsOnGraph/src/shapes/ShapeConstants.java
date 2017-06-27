@@ -18,7 +18,7 @@ public class ShapeConstants {
 
     public static final double BIG_VERTEX_RADIUS = 3;
     public static final double SMALL_VERTEX_RADIUS = 2;
-    public static final double ENTITY_RADIUS = 1;
+    public static final double ENTITY_RADIUS = 1.5;
 
     public static String getHexString(Color color) {
         String hex = String.format( "#%02X%02X%02X",

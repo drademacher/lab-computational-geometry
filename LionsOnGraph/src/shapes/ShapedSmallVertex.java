@@ -23,6 +23,7 @@ public class ShapedSmallVertex {
         this.vertex = vertex;
 
         shape = new Circle(vertex.getCoordinates().getX(), vertex.getCoordinates().getY(), SMALL_VERTEX_RADIUS);
+        shape.setStrokeWidth(SMALL_VERTEX_RADIUS / 5);
         shape.setStroke(COLOR_SMALL_VERTEX);
         shape.setFill(COLOR_BACKGROUND);
         shapeGroup.getChildren().add(shape);

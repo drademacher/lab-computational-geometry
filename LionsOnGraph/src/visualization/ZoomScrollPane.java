@@ -166,13 +166,13 @@ public class ZoomScrollPane extends ScrollPane {
     public Point getLocalCoordinates(double x, double y) {
 //        double scale = mainGroup.getScaleX();
 
-        Point2D localPoint = mainGroup.sceneToLocal(new Point2D(x, y));
+        Point2D res = mainGroup.sceneToLocal(new Point2D(x, y));
         Point2D offset = new Point2D((mainPane.sceneToLocal(0, 0).getX() )/ mainGroup.getScaleX(),
                 mainPane.sceneToLocal(0, 0).getY() / mainGroup.getScaleY());
 
-        Point2D res = localPoint.subtract(offset);
+//        Point2D res = localPoint; // .subtract(offset);
 
-        return new Point((int) res.getX(), (int) res.getY());
+        return new Point((int) (res.getX() + .5), (int) (res.getY() + .5));
     }
 
 

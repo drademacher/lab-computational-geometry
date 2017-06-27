@@ -11,6 +11,7 @@ import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -38,6 +39,9 @@ public class VisController implements Initializable {
     @FXML
     private Button initButton, animationToggleButton, stepAnimationButton, playAnimationButton, stopAnimationButton;
 
+    @FXML
+    private MenuButton setGraphButton;
+
 
     private BooleanProperty editMode, activePlaying;
     private AnimationTimer animationTimer;
@@ -58,9 +62,10 @@ public class VisController implements Initializable {
         this.stage = (Stage) resources.getObject(null);
 
         initAnimationTimer();
-        initGraphButtons();
-        initButtonBar();
         initContextMenu();
+        initButtonBar();
+        initGraphButtons();
+
     }
 
     private void initButtonBar() {
@@ -164,7 +169,6 @@ public class VisController implements Initializable {
         zoomScrollPane.getNodesHolder().addAll(edgeShapes, vertexShapes, entityShapes);
 
 
-
         ShapedBigVertex.setMainPane(zoomScrollPane);
         ShapedBigVertex.setShapeGroup(vertexShapes);
         ShapedSmallVertex.setShapeGroup(vertexShapes);
@@ -176,63 +180,31 @@ public class VisController implements Initializable {
 
 
     private void initGraphButtons() {
-        emptyMapMenuItem.setOnAction(event -> {
+        setGraphButton.disableProperty().bind(editMode.not());
 
+        emptyMapMenuItem.setOnAction(event -> {
             this.initMainPane();
             coreController.setEmptyGraph();
-            this.zoomScrollPane.autoZoom();
-//            this.graphHolder.setGraph(coreController.setEmptyGraph());
-//            this.graphHolder.setState(coreController.getState());
-//            this.editGraphModeButton.setSelected(true);
         });
 
         graph1MenuItem.setOnAction(event -> {
             this.initMainPane();
             coreController.setDefaultGraph1();
             this.zoomScrollPane.autoZoom();
-//            this.graphHolder.setGraph(coreController.setDefaultGraph1());
-//            this.graphHolder.setState(coreController.getState());
-//            this.editGraphModeButton.setSelected(true);
         });
 
         graph2MenuItem.setOnAction(event -> {
             this.initMainPane();
             coreController.setDefaultGraph2();
             this.zoomScrollPane.autoZoom();
-//            this.graphHolder.setGraph(coreController.setDefaultGraph2());
-//            this.graphHolder.setState(coreController.getState());
-//            this.editGraphModeButton.setSelected(true);
         });
 
         graph3MenuItem.setOnAction(event -> {
             this.initMainPane();
             coreController.setDefaultGraph3();
             this.zoomScrollPane.autoZoom();
-//            this.graphHolder.setGraph();
-//            this.graphHolder.setState(coreController.getState());
-//            this.editGraphModeButton.setSelected(true);
         });
 
-        graph4MenuItem.setOnAction(event -> {
-            this.initMainPane();
-//            this.graphHolder.setGraph(coreController.setDefaultGraph4());
-//            this.graphHolder.setState(coreController.getState());
-//            this.editGraphModeButton.setSelected(true);
-        });
-
-        graph5MenuItem.setOnAction(event -> {
-            this.initMainPane();
-//            this.graphHolder.setGraph(coreController.setDefaultGraph5());
-//            this.graphHolder.setState(coreController.getState());
-//            this.editGraphModeButton.setSelected(true);
-        });
-
-        randomGraphMenuItem.setOnAction(event -> {
-            this.initMainPane();
-//            this.graphHolder.setGraph(coreController.setRandomGraph());
-//            this.graphHolder.setState(coreController.getState());
-//            this.editGraphModeButton.setSelected(true);
-        });
 
         openMapMenuItem.setOnAction(event -> {
             FileChooser fileChooser = new FileChooser();

@@ -6,8 +6,9 @@ import util.Point;
 import java.util.ArrayList;
 
 import static shapes.ShapeConstants.BIG_VERTEX_RADIUS;
+import static shapes.ShapeConstants.SMALL_VERTEX_RADIUS;
 
-class Graph implements Api{
+class Graph implements Api {
 
     private static int idCounter = -1;
     private GraphController graphController;
@@ -162,7 +163,7 @@ class Graph implements Api{
     }
 
 
-    private Edge removeEdge(Edge edge){
+    private Edge removeEdge(Edge edge) {
 
         BigVertex vertex1 = edge.getVertices()[0];
         BigVertex vertex2 = edge.getVertices()[1];
@@ -174,28 +175,28 @@ class Graph implements Api{
 
         this.NEWedges.remove(edge);
 
-        for(SmallVertex smallVertex : edge.getEdgeVertices()){
+        for (SmallVertex smallVertex : edge.getEdgeVertices()) {
 
             this.smallVertices.remove(smallVertex);
 
-            for(int i = vertex1.getConnections().size() -1; i >= 0; i--){
+            for (int i = vertex1.getConnections().size() - 1; i >= 0; i--) {
                 Connection connection = vertex1.getConnections().get(i);
-                if(connection.contains(smallVertex)){
+                if (connection.contains(smallVertex)) {
                     vertex1.unregisterConnection(connection);
                 }
             }
 
-            for(int i = vertex2.getConnections().size() -1; i >= 0; i--){
+            for (int i = vertex2.getConnections().size() - 1; i >= 0; i--) {
                 Connection connection = vertex2.getConnections().get(i);
-                if(connection.contains(smallVertex)){
+                if (connection.contains(smallVertex)) {
                     vertex2.unregisterConnection(connection);
                 }
             }
         }
 
-        if(edge.getEdgeVertices().size() == 0){
-            for(Connection connection : vertex1.getConnections()){
-                if(connection.contains(vertex1) && connection.contains(vertex2)){
+        if (edge.getEdgeVertices().size() == 0) {
+            for (Connection connection : vertex1.getConnections()) {
+                if (connection.contains(vertex1) && connection.contains(vertex2)) {
                     vertex1.unregisterConnection(connection);
                     vertex2.unregisterConnection(connection);
                 }
@@ -212,8 +213,7 @@ class Graph implements Api{
     public BigVertex getBigVertexByCoordinate(Point coordinate) {
         return getBigVertexByCoordinate(coordinate, BIG_VERTEX_RADIUS);
     }
-
-    private BigVertex getBigVertexByCoordinate(Point coordinate, double radius) {
+    public BigVertex getBigVertexByCoordinate(Point coordinate, double radius) {
 
         for (BigVertex vertex : bigVertices) {
             Point vector = new Point(vertex.getCoordinates().getX() - coordinate.getX(), vertex.getCoordinates().getY() - coordinate.getY());
@@ -226,25 +226,39 @@ class Graph implements Api{
     }
 
     public SmallVertex getSmallVertexByCoordinate(Point coordinate) {
-        return getSmallVertexByCoordinate(coordinate, BIG_VERTEX_RADIUS);
-    }
-
-    private SmallVertex getSmallVertexByCoordinate(Point coordinate, double radius) {
 
         for (SmallVertex vertex : smallVertices) {
             Point vector = new Point(vertex.getCoordinates().getX() - coordinate.getX(), vertex.getCoordinates().getY() - coordinate.getY());
             double vectorLength = vector.length();
-            if (vectorLength <= radius) {
+            if (vectorLength <= SMALL_VERTEX_RADIUS) {
                 return vertex;
             }
         }
         return null;
     }
 
+    public Vertex getVertexByCoordinate(Point coordinate) {
+
+        Vertex vertex = getBigVertexByCoordinate(coordinate);
+        if(vertex == null){
+            vertex = getSmallVertexByCoordinate(coordinate);
+        }
+        return vertex;
+    }
+
     public BigVertex getBigVertexById(int id) {
         for (BigVertex vertex : bigVertices) {
             if (vertex.getId() == id) {
                 return vertex;
+            }
+        }
+        return null;
+    }
+
+    public Edge getEdgeByVertices(BigVertex vertex1, BigVertex vertex2) {
+        for (Edge edge : NEWedges) {
+            if (edge.contains(vertex1) && edge.contains(vertex2)) {
+                return edge;
             }
         }
         return null;
@@ -321,4 +335,5 @@ class Graph implements Api{
 
         System.out.println(str);
     }
+
 }

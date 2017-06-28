@@ -98,6 +98,18 @@ public class GraphController implements Api{
         return this.graph.getBigVertexByCoordinate(coordinate);
     }
 
+    public SmallVertex getSmallVertexByCoordinate(Point coordinate) {
+        return this.graph.getSmallVertexByCoordinate(coordinate);
+    }
+
+    public Vertex getVertexByCoordinate(Point coordinate) {
+        return this.graph.getVertexByCoordinate(coordinate);
+    }
+
+    public Edge getEdgeByVertices(BigVertex vertex1, BigVertex vertex2){
+        return this.graph.getEdgeByVertices(vertex1, vertex2);
+    }
+
 
     public void debugGraph() {
         graph.debugGraph();

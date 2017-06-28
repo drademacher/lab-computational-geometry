@@ -16,7 +16,7 @@ public class ShapeController {
     Map<Drawable, Shape> map = new HashMap<>();
     private GraphController graphController;
 
-    public ShapeController(GraphController graphController){
+    public ShapeController(GraphController graphController) {
         this.graphController = graphController;
     }
 
@@ -31,16 +31,16 @@ public class ShapeController {
         Shape shape = map.get(vertex);
         shape.relocate(newCoordinate);
 
-        for(Edge edge : vertex.getEdges()){
+        for (Edge edge : vertex.getEdges()) {
             Shape edgeShape = map.get(edge);
-            if(edgeShape instanceof ShapedEdge){
+            if (edgeShape instanceof ShapedEdge) {
                 //TODO how to solve the interface problem? -> ShapedEdges needs a special relocate() function
-                ((ShapedEdge)edgeShape).relocate(edge.getVertices()[0].getCoordinates(), edge.getVertices()[1].getCoordinates());
-            }else{
+                ((ShapedEdge) edgeShape).relocate(edge.getVertices()[0].getCoordinates(), edge.getVertices()[1].getCoordinates());
+            } else {
                 throw new IllegalArgumentException("Should be a ShapedEdge");
             }
 
-            for(SmallVertex smallVertex : edge.getEdgeVertices()){
+            for (SmallVertex smallVertex : edge.getEdgeVertices()) {
                 Shape smalLVertexShape = map.get(smallVertex);
                 smalLVertexShape.relocate(smallVertex.getCoordinates());
             }
@@ -57,12 +57,12 @@ public class ShapeController {
         shape.delete();
         map.remove(vertex);
 
-        for(Edge edge : vertex.getEdges()){
+        for (Edge edge : vertex.getEdges()) {
             Shape edgeShape = map.get(edge);
             map.remove(edge);
             edgeShape.delete();
 
-            for(SmallVertex smallVertex : edge.getEdgeVertices()){
+            for (SmallVertex smallVertex : edge.getEdgeVertices()) {
                 Shape smallVertexShape = map.get(smallVertex);
                 map.remove(smallVertex);
                 smallVertexShape.delete();
@@ -74,7 +74,7 @@ public class ShapeController {
         ShapedEdge shape = new ShapedEdge(graphController, edge.getStartCoordinates(), edge.getEndCoordinates());
         map.put(edge, shape);
 
-        for(SmallVertex smallVertex : edge.getEdgeVertices()){
+        for (SmallVertex smallVertex : edge.getEdgeVertices()) {
             ShapedSmallVertex smallVertexShape = new ShapedSmallVertex(graphController, smallVertex.getCoordinates());
             map.put(smallVertex, smallVertexShape);
         }
@@ -84,7 +84,7 @@ public class ShapeController {
         Shape shape = map.get(edge);
         shape.delete();
         map.remove(edge);
-        for(SmallVertex smallVertex : edge.getEdgeVertices()){
+        for (SmallVertex smallVertex : edge.getEdgeVertices()) {
             Shape smalLVertexShape = map.get(smallVertex);
             map.remove(smallVertex);
             smalLVertexShape.delete();
@@ -101,32 +101,32 @@ public class ShapeController {
      *
      * ****************************/
 
-    public void createMan(Man man){
+    public void createMan(Man man) {
         ShapedMan shape = new ShapedMan(graphController, man.getCoordinates());
         map.put(man, shape);
     }
 
-    public void createLion(Lion lion){
+    public void createLion(Lion lion) {
         ShapedLion shape = new ShapedLion(graphController, lion.getCoordinates());
         map.put(lion, shape);
     }
 
-    public void relocateMan(Man man){
+    public void relocateMan(Man man) {
         Shape shape = map.get(man);
         shape.relocate(man.getCoordinates());
     }
 
-    public void relocateLion(Lion lion){
+    public void relocateLion(Lion lion) {
         Shape shape = map.get(lion);
         shape.relocate(lion.getCoordinates());
     }
 
-    public void removeMan(Man man){
+    public void removeMan(Man man) {
         Shape shape = map.get(man);
         shape.delete();
     }
 
-    public void removeLion(Lion lion){
+    public void removeLion(Lion lion) {
         Shape shape = map.get(lion);
         shape.delete();
     }

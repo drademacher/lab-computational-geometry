@@ -27,7 +27,6 @@ public class ZoomScrollPane extends ScrollPane {
 //    private Point2D scrollOffset = new Point2D(0, 0);
 
 
-
     public ZoomScrollPane() {
         final double SCALE_DELTA = 1.1;
 
@@ -67,7 +66,6 @@ public class ZoomScrollPane extends ScrollPane {
         });
 
 
-
         mainPane.setOnScroll(event -> {
             ZoomScrollPane scroller = ZoomScrollPane.this;
 
@@ -86,9 +84,6 @@ public class ZoomScrollPane extends ScrollPane {
 
             mainGroup.setScaleX(mainGroup.getScaleX() * scaleFactor);
             mainGroup.setScaleY(mainGroup.getScaleY() * scaleFactor);
-
-
-
 
 
             // move viewport so that old center remains in the center after the
@@ -154,7 +149,7 @@ public class ZoomScrollPane extends ScrollPane {
     public void autoZoom() {
         double scaleX = mainPane.getWidth() / (mainGroup.getLayoutBounds().getWidth() * mainGroup.getScaleX());
         double scaleY = mainPane.getHeight() / (mainGroup.getLayoutBounds().getHeight() * mainGroup.getScaleY());
-        mainGroup.setScaleX(mainGroup.getScaleX() * Math.min(scaleX, scaleY)  * .9);
+        mainGroup.setScaleX(mainGroup.getScaleX() * Math.min(scaleX, scaleY) * .9);
         mainGroup.setScaleY(mainGroup.getScaleY() * Math.min(scaleX, scaleY) * .9);
     }
 
@@ -167,14 +162,13 @@ public class ZoomScrollPane extends ScrollPane {
 //        double scale = mainGroup.getScaleX();
 
         Point2D res = mainGroup.sceneToLocal(new Point2D(x, y));
-        Point2D offset = new Point2D((mainPane.sceneToLocal(0, 0).getX() )/ mainGroup.getScaleX(),
+        Point2D offset = new Point2D((mainPane.sceneToLocal(0, 0).getX()) / mainGroup.getScaleX(),
                 mainPane.sceneToLocal(0, 0).getY() / mainGroup.getScaleY());
 
 //        Point2D res = localPoint; // .subtract(offset);
 
         return new Point((int) (res.getX() + .5), (int) (res.getY() + .5));
     }
-
 
 
 }

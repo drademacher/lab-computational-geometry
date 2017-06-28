@@ -70,7 +70,7 @@ public class VisController implements Initializable {
 
     private void initButtonBar() {
         editMode = new SimpleBooleanProperty(true);
-        activePlaying  = new SimpleBooleanProperty(false);
+        activePlaying = new SimpleBooleanProperty(false);
         editMode.addListener((observable, oldValue, newValue) -> {
             this.coreController.setEditMode(newValue);
         });

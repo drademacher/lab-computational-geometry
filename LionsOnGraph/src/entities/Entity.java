@@ -35,7 +35,7 @@ public abstract class Entity {
         this.strategy = strategy;
     }
 
-    public void setPosition(Vertex vertex){
+    public void setPosition(Vertex vertex) {
         this.position = vertex;
     }
 

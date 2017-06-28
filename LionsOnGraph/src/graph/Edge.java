@@ -49,11 +49,11 @@ public class Edge implements Drawable {
         return vertices;
     }
 
-    public Point getStartCoordinates(){
+    public Point getStartCoordinates() {
         return vertices[0].getCoordinates();
     }
 
-    public Point getEndCoordinates(){
+    public Point getEndCoordinates() {
         return vertices[1].getCoordinates();
     }
 

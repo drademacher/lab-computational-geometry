@@ -14,7 +14,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
 
-public class GraphController implements Api{
+public class GraphController implements Api {
     private boolean editMode = true;
 
     private ArrayList<Lion> lions = new ArrayList<>();
@@ -66,7 +66,7 @@ public class GraphController implements Api{
 
         this.shapeController.deleteVertex(vertex);
         //TODO Entity?
-        vertex =  this.graph.deleteVertex(vertex);
+        vertex = this.graph.deleteVertex(vertex);
 
         return vertex; //TODO
     }
@@ -126,7 +126,7 @@ public class GraphController implements Api{
         return this.graph.getVertexByCoordinate(coordinate);
     }
 
-    public Edge getEdgeByVertices(BigVertex vertex1, BigVertex vertex2){
+    public Edge getEdgeByVertices(BigVertex vertex1, BigVertex vertex2) {
         return this.graph.getEdgeByVertices(vertex1, vertex2);
     }
 
@@ -164,6 +164,7 @@ public class GraphController implements Api{
     public boolean setMan(Vertex vertex) {
         return setMan(vertex, new StrategyRandom());
     }
+
     public boolean setMan(Vertex vertex, Strategy strategy) {
         Man man = new Man(vertex, strategy, this);
         shapeController.createMan(man);
@@ -182,6 +183,7 @@ public class GraphController implements Api{
     public boolean setLion(Vertex vertex) {
         return setLion(vertex, new StrategyRandom());
     }
+
     public boolean setLion(Vertex vertex, Strategy strategy) {
         Lion lion = new Lion(vertex, strategy, this);
         shapeController.createLion(lion);
@@ -207,12 +209,12 @@ public class GraphController implements Api{
         return lions.remove(lion);
     }
 
-    public void relocateMan(Man man, Vertex vertex){
+    public void relocateMan(Man man, Vertex vertex) {
         man.setPosition(vertex);
         shapeController.relocateMan(man);
     }
 
-    public void relocateLion(Lion lion, Vertex vertex){
+    public void relocateLion(Lion lion, Vertex vertex) {
         lion.setPosition(vertex);
         shapeController.relocateLion(lion);
     }
@@ -245,18 +247,18 @@ public class GraphController implements Api{
         }
     }
 
-    public Man getManByCoordinate(Point coordinates){
-        for(Man man : men){
-            if(man.getCoordinates().equals(coordinates)){
+    public Man getManByCoordinate(Point coordinates) {
+        for (Man man : men) {
+            if (man.getCoordinates().equals(coordinates)) {
                 return man;
             }
         }
         return null;
     }
 
-    public Lion getLionByCoordinate(Point coordinates){
-        for(Lion lion : lions){
-            if(lion.getCoordinates().equals(coordinates)){
+    public Lion getLionByCoordinate(Point coordinates) {
+        for (Lion lion : lions) {
+            if (lion.getCoordinates().equals(coordinates)) {
                 return lion;
             }
         }

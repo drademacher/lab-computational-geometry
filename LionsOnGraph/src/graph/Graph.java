@@ -84,7 +84,7 @@ class Graph implements Api {
     public BigVertex deleteVertex(BigVertex vertex) {
         bigVertices.remove(vertex);
 
-        for (int i = vertex.getEdges().size() -1 ; i >= 0; i--) {
+        for (int i = vertex.getEdges().size() - 1; i >= 0; i--) {
             Edge edge = vertex.getEdges().get(i);
             removeEdge(edge);
         }
@@ -147,7 +147,21 @@ class Graph implements Api {
     @Override
     public Edge changeEdgeWeight(BigVertex vertex1, BigVertex vertex2, int weight) {
 
-        //TODO implement
+        for (int i = NEWedges.size() - 1; i >= 0; i--) {
+            Edge edge = NEWedges.get(i);
+
+            if (edge.contains(vertex1) && edge.contains(vertex2)) {
+
+                //got the edge
+                if (edge.getEdgeWeight() > weight) {
+                    //TODO
+                } else if (edge.getEdgeWeight() > weight) {
+                    //TODO
+                } else {
+                    //do nothing, old weight == new weight
+                }
+            }
+        }
         return null;
     }
 
@@ -216,6 +230,7 @@ class Graph implements Api {
     public BigVertex getBigVertexByCoordinate(Point coordinate) {
         return getBigVertexByCoordinate(coordinate, BIG_VERTEX_RADIUS);
     }
+
     public BigVertex getBigVertexByCoordinate(Point coordinate, double radius) {
 
         for (BigVertex vertex : bigVertices) {
@@ -243,7 +258,7 @@ class Graph implements Api {
     public Vertex getVertexByCoordinate(Point coordinate) {
 
         Vertex vertex = getBigVertexByCoordinate(coordinate);
-        if(vertex == null){
+        if (vertex == null) {
             vertex = getSmallVertexByCoordinate(coordinate);
         }
         return vertex;

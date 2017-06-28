@@ -19,7 +19,7 @@ public class BigVertex extends Vertex implements Drawable {
         return this.NEWedges.add(edge);
     }
 
-    public boolean NEWunregisterEdge(Edge edge){
+    public boolean NEWunregisterEdge(Edge edge) {
         return this.NEWedges.remove(edge);
     }
 

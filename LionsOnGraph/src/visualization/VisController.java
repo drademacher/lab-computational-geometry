@@ -93,6 +93,7 @@ public class VisController implements Initializable {
 
         stepAnimationButton.setOnMouseClicked(event -> {
             this.coreController.simulateStep();
+            this.coreController.debugGraph();
         });
 
         playAnimationButton.setOnMouseClicked(event -> {

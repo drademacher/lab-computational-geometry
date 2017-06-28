@@ -1,10 +1,7 @@
 package strategy;
 
 import entities.Entity;
-import graph.Edge;
-import graph.GraphController;
-import graph.GraphHelper;
-import graph.Vertex;
+import graph.*;
 
 public class StrategyAggroGreedy implements Strategy {
     @Override
@@ -16,8 +13,8 @@ public class StrategyAggroGreedy implements Strategy {
 
         int steps = Integer.MAX_VALUE;
         Vertex bestNextPosition = null;
-        for (Edge edge : currentPosition.getEdges()) {
-            Vertex possibleVertex = edge.getNeighbor(currentPosition);
+        for (Connection connection : currentPosition.getConnections()) {
+            Vertex possibleVertex = connection.getNeighbor(currentPosition);
 
             int calculatedSteps = helper.BFSToMen(currentPosition, possibleVertex);
             if (calculatedSteps < steps) {

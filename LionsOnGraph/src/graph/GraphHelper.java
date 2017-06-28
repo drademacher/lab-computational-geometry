@@ -43,8 +43,8 @@ public class GraphHelper {
                 return map.get(current);
             }
 
-            for (Edge edge : current.getEdges()) {
-                Vertex nextVertex = edge.getNeighbor(current);
+            for (Connection connection : current.getConnections()) {
+                Vertex nextVertex = connection.getNeighbor(current);
 
                 if (!set.contains(nextVertex)) {
                     map.put(nextVertex, map.get(current) + 1);
@@ -82,8 +82,8 @@ public class GraphHelper {
                 return map.get(current);
             }
 
-            for (Edge edge : current.getEdges()) {
-                Vertex nextVertex = edge.getNeighbor(current);
+            for (Connection connection : current.getConnections()) {
+                Vertex nextVertex = connection.getNeighbor(current);
 
                 if (!set.contains(nextVertex)) {
                     map.put(nextVertex, map.get(current) + 1);

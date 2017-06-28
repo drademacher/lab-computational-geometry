@@ -1,6 +1,7 @@
 package strategy;
 
 import entities.Entity;
+import graph.Connection;
 import graph.Edge;
 import graph.GraphController;
 import graph.Vertex;
@@ -13,10 +14,10 @@ public class StrategyRandom implements Strategy {
 
     @Override
     public Vertex getNextPosition(GraphController graphController, Entity e) {
-        ArrayList<Edge> neighborPositions = e.getCurrentPosition().getEdges();
-        if (neighborPositions.size() > 0) {
-            int rndInt = Random.getRandomInteger(neighborPositions.size());
-            return neighborPositions.get(rndInt).getNeighbor(e.getCurrentPosition());
+        ArrayList<Connection> connections = e.getCurrentPosition().getConnections();
+        if (connections.size() > 0) {
+            int rndInt = Random.getRandomInteger(connections.size());
+            return connections.get(rndInt).getNeighbor(e.getCurrentPosition());
         } else {
             return e.getCurrentPosition();
         }

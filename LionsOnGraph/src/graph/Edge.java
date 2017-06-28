@@ -1,33 +1,41 @@
 package graph;
 
-import shapes.ShapedEdge;
+
+import java.util.ArrayList;
 
 public class Edge {
 
-    private Vertex[] vertices = new Vertex[2];
+    private BigVertex[] vertices = new BigVertex[2];
+    private ArrayList<SmallVertex> edgeVertices = new ArrayList<>();
+    private int weight;
 
-    private ShapedEdge shape;
-
-    private Edge(Vertex start, Vertex end) {
+    public Edge(BigVertex start, BigVertex end, ArrayList<SmallVertex> edgeVertices, int weight) {
         this.vertices[0] = start;
         this.vertices[1] = end;
+        this.edgeVertices = edgeVertices;
+        this.weight = weight;
+    }
 
-        if (start.equals(end)) {
-            throw new IllegalArgumentException("Edge need two different vertices");
+    public ArrayList<SmallVertex> getEdgeVertices() {
+        return edgeVertices;
+    }
+
+    public int getEdgeWeight() {
+        return weight;
+    }
+
+    public boolean unregisterAll(BigVertex vertex) {
+        for (SmallVertex edgeVertex : edgeVertices) {
+            //TODO ?
         }
+        return getNeighbor(vertex).unregisterEdge(this);
     }
 
-    public static Edge createEdge(GraphController graphController, Vertex start, Vertex end) {
-        Edge edge = new Edge(start, end);
-        edge.shape = new ShapedEdge(graphController, edge);
-        return edge;
-    }
-
-    public boolean contains(Vertex vertex) {
+    public boolean contains(BigVertex vertex) {
         return vertices[0].equals(vertex) || vertices[1].equals(vertex);
     }
 
-    public Vertex getNeighbor(Vertex vertex) {
+    public BigVertex getNeighbor(BigVertex vertex) {
         if (vertices[0].equals(vertex)) {
             return vertices[1];
         }
@@ -37,12 +45,8 @@ public class Edge {
         return null;
     }
 
-    public Vertex[] getVertices() {
+    public BigVertex[] getVertices() {
         return vertices;
-    }
-
-    public ShapedEdge getShape() {
-        return shape;
     }
 
     @Override

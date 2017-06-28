@@ -91,8 +91,8 @@ public class GraphController {
     }
 
 
-    public String debugGraph() {
-        return graph.debugGraph();
+    public void debugGraph() {
+        graph.debugGraph();
     }
 
     public Graph getGraph() {
@@ -366,6 +366,7 @@ public class GraphController {
         this.createVertex(new Point(10, 30));
 
         this.createEdge(this.getBigVertexByCoordinate(new Point(40, 20)), this.getBigVertexByCoordinate(new Point(0, 0)));
+        this.createEdge(this.getBigVertexByCoordinate(new Point(10, 30)), this.getBigVertexByCoordinate(new Point(0, 0)));
 
         this.setLion(this.getBigVertexByCoordinate(new Point(40, 20)));
 
@@ -396,14 +397,14 @@ public class GraphController {
 //        this.relocateVertex(this.getBigVertexByCoordinate(new Point(50, 20)), new Point(0, -100));
 
 
-        System.out.println(this.debugGraph());
+        this.debugGraph();
 
         this.createEdge(this.getBigVertexByCoordinate(new Point(50, 20)), this.getBigVertexByCoordinate(new Point(220, 140)), 2);
         this.removeEdge(this.getBigVertexByCoordinate(new Point(50, 20)), this.getBigVertexByCoordinate(new Point(190, 20)));
 
 
         System.out.println("#############################");
-        System.out.println(this.debugGraph());
+        this.debugGraph();
 
 
         this.setDefaultGraph1();

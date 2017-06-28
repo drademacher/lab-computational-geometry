@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public abstract class Vertex {
 
-    protected ArrayList<Edge> edges = new ArrayList<>();
+    protected ArrayList<Connection> connections = new ArrayList<>();
     protected Point coordinates;
     protected int id;
 
@@ -16,12 +16,12 @@ public abstract class Vertex {
     }
 
 
-    public boolean registerEdge(Edge edge) {
-        return this.edges.add(edge);
+    public boolean registerConnection(Connection connection) {
+        return this.connections.add(connection);
     }
 
-    public boolean unregisterEdge(Edge edge) {
-        return this.edges.remove(edge);
+    public boolean unregisterConnection(Connection connection) {
+        return this.connections.remove(connection);
     }
 
     public Point getCoordinates() {
@@ -36,8 +36,8 @@ public abstract class Vertex {
         return id;
     }
 
-    public ArrayList<Edge> getEdges() {
-        return edges;
+    public ArrayList<Connection> getConnections() {
+        return connections;
     }
 
     @Override

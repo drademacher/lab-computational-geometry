@@ -1,10 +1,7 @@
 package strategy;
 
 import entities.Entity;
-import graph.Edge;
-import graph.GraphController;
-import graph.GraphHelper;
-import graph.Vertex;
+import graph.*;
 
 public class StrategyRunAwayGreedy implements Strategy {
 
@@ -16,8 +13,8 @@ public class StrategyRunAwayGreedy implements Strategy {
 
         int steps = 0;
         Vertex bestNextPosition = null;
-        for (Edge edge : currentPosition.getEdges()) {
-            Vertex possibleVertex = edge.getNeighbor(currentPosition);
+        for (Connection connection : currentPosition.getConnections()) {
+            Vertex possibleVertex = connection.getNeighbor(currentPosition);
 
             int calculatedSteps = helper.BFSToLion(currentPosition, possibleVertex);
             if (calculatedSteps > steps) {

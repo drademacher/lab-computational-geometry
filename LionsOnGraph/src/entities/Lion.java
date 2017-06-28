@@ -1,12 +1,13 @@
 package entities;
 
 
+import graph.Drawable;
 import graph.GraphController;
 import graph.Vertex;
 import shapes.ShapedLion;
 import strategy.Strategy;
 
-public class Lion extends Entity {
+public class Lion extends Entity implements Drawable {
     // TODO: implement Lion class
 
 

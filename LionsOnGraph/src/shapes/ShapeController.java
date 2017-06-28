@@ -1,5 +1,7 @@
 package shapes;
 
+import entities.Lion;
+import entities.Man;
 import graph.*;
 import util.Point;
 
@@ -11,12 +13,18 @@ import java.util.Map;
  */
 public class ShapeController {
 
-    Map<GraphObject, Shape> map = new HashMap<>();
+    Map<Drawable, Shape> map = new HashMap<>();
     private GraphController graphController;
 
     public ShapeController(GraphController graphController){
         this.graphController = graphController;
     }
+
+    /* ****************************
+     *
+     *   Graph Shapes
+     *
+     * ****************************/
 
 
     public void relocateVertex(BigVertex vertex, Point newCoordinate) {
@@ -49,17 +57,15 @@ public class ShapeController {
         shape.delete();
         map.remove(vertex);
 
-        System.out.println("delete Vertex,...");
-        System.out.println("edges.... "+vertex.getEdges());
         for(Edge edge : vertex.getEdges()){
             Shape edgeShape = map.get(edge);
             map.remove(edge);
             edgeShape.delete();
 
             for(SmallVertex smallVertex : edge.getEdgeVertices()){
-                Shape smalLVertexShape = map.get(smallVertex);
+                Shape smallVertexShape = map.get(smallVertex);
                 map.remove(smallVertex);
-                smalLVertexShape.delete();
+                smallVertexShape.delete();
             }
         }
     }
@@ -88,4 +94,31 @@ public class ShapeController {
     public void changeEdgeWeight(Edge edge) {
         //TODO
     }
+
+    /* ****************************
+     *
+     *   ENTITY Shapes
+     *
+     * ****************************/
+
+    public void createMan(Man man){
+        ShapedMan shape = new ShapedMan(graphController, man.getCoordinates());
+        map.put(man, shape);
+    }
+
+    public void createLion(Lion lion){
+        ShapedLion shape = new ShapedLion(graphController, lion.getCoordinates());
+        map.put(lion, shape);
+    }
+
+    public void relocateMan(Man man){
+        Shape shape = map.get(man);
+        shape.relocate(man.getCoordinates());
+    }
+
+    public void relocateLion(Lion lion){
+        Shape shape = map.get(lion);
+        shape.relocate(lion.getCoordinates());
+    }
+
 }

@@ -1,9 +1,8 @@
 package graph;
 
-import shapes.ShapedSmallVertex;
 import util.Point;
 
-public class SmallVertex extends Vertex implements GraphObject{
+public class SmallVertex extends Vertex implements Drawable {
 
 
     public SmallVertex(int id, Point coordinates) {

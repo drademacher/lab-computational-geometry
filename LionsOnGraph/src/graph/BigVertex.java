@@ -1,6 +1,5 @@
 package graph;
 
-import shapes.ShapedBigVertex;
 import util.Point;
 
 import java.util.ArrayList;
@@ -8,7 +7,7 @@ import java.util.ArrayList;
 /**
  * Created by Jens on 20.06.2017.
  */
-public class BigVertex extends Vertex implements GraphObject{
+public class BigVertex extends Vertex implements Drawable {
 
     protected ArrayList<Edge> NEWedges = new ArrayList();
 

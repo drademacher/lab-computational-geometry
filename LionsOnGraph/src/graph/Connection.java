@@ -1,6 +1,6 @@
 package graph;
 
-public class Connection implements GraphObject{
+public class Connection implements Drawable {
 
     private Vertex[] vertices = new Vertex[2];
 

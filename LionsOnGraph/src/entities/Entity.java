@@ -35,6 +35,10 @@ public abstract class Entity {
         this.strategy = strategy;
     }
 
+    public void setPosition(Vertex vertex){
+        this.position = vertex;
+    }
+
     public void setCurentPosition(Vertex currentPosition) {
         this.position = currentPosition;
     }

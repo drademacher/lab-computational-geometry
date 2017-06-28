@@ -13,6 +13,7 @@ import strategy.StrategyAggroGreedy;
 import strategy.StrategyDoNothing;
 import strategy.StrategyRandom;
 import util.Point;
+import visualization.ZoomScrollPane;
 
 import static shapes.ShapeConstants.COLOR_LION;
 import static shapes.ShapeConstants.ENTITY_RADIUS;
@@ -21,6 +22,7 @@ import static shapes.ShapeConstants.ENTITY_RADIUS;
  * Created by Jens on 25.06.2017.
  */
 public class ShapedLion implements Shape {
+    private static ZoomScrollPane mainPane;
     private static Group shapeGroup = new Group();
 
     private Circle shape;
@@ -41,13 +43,14 @@ public class ShapedLion implements Shape {
 
             final ContextMenu contextMenu = ContextMenuHolder.getFreshContextMenu();
             MenuItem item0 = new MenuItem("Remove Lion");
+            MenuItem item1 = new MenuItem("Relocate Lion");
             MenuItem closeItem = new MenuItem("Close");
 
             Menu strategyMenu = new Menu("Set Strategy");
-            MenuItem item1 = new MenuItem("Wait");
-            MenuItem item2 = new MenuItem("Greedy");
-            MenuItem item3 = new MenuItem("Random");
-            strategyMenu.getItems().addAll(item1, item2, item3);
+            MenuItem item2 = new MenuItem("Wait");
+            MenuItem item3 = new MenuItem("Greedy");
+            MenuItem item4 = new MenuItem("Random");
+            strategyMenu.getItems().addAll(item2, item3, item4);
 
 
             item0.setOnAction(event2 -> {
@@ -55,23 +58,38 @@ public class ShapedLion implements Shape {
             });
 
             item1.setOnAction(event2 -> {
+                mainPane.setOnMouseClicked(event3 -> {
+
+                    mainPane.setOnMouseClicked(null);
+
+//                    System.out.println(mainPane.getLocalCoordinates(event3.getX(), event3.getY()));
+                    graphController.relocateLion(graphController.getLionByCoordinate(coordinates), graphController.getVertexByCoordinate(mainPane.getLocalCoordinates(event3.getX(), event3.getY())));
+
+                });
+            });
+
+            item2.setOnAction(event2 -> {
                 Strategy strategy = new StrategyDoNothing();
                 graphController.setLionStrategy(graphController.getLionByCoordinate(coordinates), strategy);
             });
 
-            item2.setOnAction(event2 -> {
+            item3.setOnAction(event2 -> {
                 Strategy strategy = new StrategyAggroGreedy();
                 graphController.setLionStrategy(graphController.getLionByCoordinate(coordinates), strategy);
             });
 
-            item3.setOnAction(event2 -> {
+            item4.setOnAction(event2 -> {
                 Strategy strategy = new StrategyRandom();
                 graphController.setLionStrategy(graphController.getLionByCoordinate(coordinates), strategy);
             });
 
-            contextMenu.getItems().addAll(item0, strategyMenu, new SeparatorMenuItem(), closeItem);
+            contextMenu.getItems().addAll(item0, item1, strategyMenu, new SeparatorMenuItem(), closeItem);
             contextMenu.show(shape, event1.getScreenX(), event1.getScreenY());
         });
+    }
+
+    public static void setMainPane(ZoomScrollPane mainPane) {
+        ShapedLion.mainPane = mainPane;
     }
 
     public static void setShapeGroup(Group shapeGroup) {

@@ -174,7 +174,9 @@ public class VisController implements Initializable {
         ShapedBigVertex.setShapeGroup(vertexShapes);
         ShapedSmallVertex.setShapeGroup(vertexShapes);
         ShapedEdge.setShapeGroup(edgeShapes);
+        ShapedMan.setMainPane(zoomScrollPane);
         ShapedMan.setShapeGroup(entityShapes);
+        ShapedLion.setMainPane(zoomScrollPane);
         ShapedLion.setShapeGroup(entityShapes);
 
     }

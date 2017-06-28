@@ -198,11 +198,23 @@ public class GraphController implements Api{
     }
 
     public boolean removeMan(Man man) {
+        shapeController.removeMan(man);
         return men.remove(man);
     }
 
     public boolean removeLion(Lion lion) {
+        shapeController.removeLion(lion);
         return lions.remove(lion);
+    }
+
+    public void relocateMan(Man man, Vertex vertex){
+        man.setPosition(vertex);
+        shapeController.relocateMan(man);
+    }
+
+    public void relocateLion(Lion lion, Vertex vertex){
+        lion.setPosition(vertex);
+        shapeController.relocateLion(lion);
     }
 
     public ArrayList<Man> getMen() {

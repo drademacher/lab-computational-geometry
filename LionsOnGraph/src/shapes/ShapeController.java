@@ -121,4 +121,14 @@ public class ShapeController {
         shape.relocate(lion.getCoordinates());
     }
 
+    public void removeMan(Man man){
+        Shape shape = map.get(man);
+        shape.delete();
+    }
+
+    public void removeLion(Lion lion){
+        Shape shape = map.get(lion);
+        shape.delete();
+    }
+
 }

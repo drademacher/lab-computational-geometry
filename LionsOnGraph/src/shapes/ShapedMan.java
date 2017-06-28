@@ -10,6 +10,7 @@ import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.shape.Circle;
 import strategy.*;
 import util.Point;
+import visualization.ZoomScrollPane;
 
 import static shapes.ShapeConstants.COLOR_MAN;
 import static shapes.ShapeConstants.ENTITY_RADIUS;
@@ -18,6 +19,7 @@ import static shapes.ShapeConstants.ENTITY_RADIUS;
  * Created by Jens on 25.06.2017.
  */
 public class ShapedMan implements Shape {
+    private static ZoomScrollPane mainPane;
     private static Group shapeGroup = new Group();
 
     private Circle shape;
@@ -38,26 +40,27 @@ public class ShapedMan implements Shape {
 
             final ContextMenu contextMenu = ContextMenuHolder.getFreshContextMenu();
             MenuItem item0 = new MenuItem("Remove Man");
+            MenuItem item1 = new MenuItem("Relocate Man");
             MenuItem closeItem = new MenuItem("Close");
 
             Menu strategyMenu = new Menu("Set Strategy");
-            MenuItem item1 = new MenuItem("Wait");
-            MenuItem item2 = new MenuItem("Greedy");
-            MenuItem item3 = new MenuItem("Random");
-            strategyMenu.getItems().addAll(item1, item2, item3);
+            MenuItem item2 = new MenuItem("Wait");
+            MenuItem item3 = new MenuItem("Greedy");
+            MenuItem item4 = new MenuItem("Random");
+            strategyMenu.getItems().addAll(item2, item3, item4);
 
 
-            item1.setOnAction(event2 -> {
+            item2.setOnAction(event2 -> {
                 Strategy strategy = new StrategyDoNothing();
                 graphController.setManStrategy(graphController.getManByCoordinate(coordinates), strategy);
             });
 
-            item2.setOnAction(event2 -> {
+            item3.setOnAction(event2 -> {
                 Strategy strategy = new StrategyRunAwayGreedy();
                 graphController.setManStrategy(graphController.getManByCoordinate(coordinates), strategy);
             });
 
-            item3.setOnAction(event2 -> {
+            item4.setOnAction(event2 -> {
                 Strategy strategy = new StrategyRandom();
                 graphController.setManStrategy(graphController.getManByCoordinate(coordinates), strategy);
             });
@@ -66,9 +69,24 @@ public class ShapedMan implements Shape {
                 graphController.removeMan(graphController.getManByCoordinate(coordinates));
             });
 
-            contextMenu.getItems().addAll(item0, strategyMenu, new SeparatorMenuItem(), closeItem);
+            item1.setOnAction(event2 -> {
+                mainPane.setOnMouseClicked(event3 -> {
+
+                    mainPane.setOnMouseClicked(null);
+
+//                    System.out.println(mainPane.getLocalCoordinates(event3.getX(), event3.getY()));
+                    graphController.relocateMan(graphController.getManByCoordinate(coordinates), graphController.getVertexByCoordinate(mainPane.getLocalCoordinates(event3.getX(), event3.getY())));
+
+                });
+            });
+
+            contextMenu.getItems().addAll(item0, item1, strategyMenu, new SeparatorMenuItem(), closeItem);
             contextMenu.show(shape, event1.getScreenX(), event1.getScreenY());
         });
+    }
+
+    public static void setMainPane(ZoomScrollPane mainPane) {
+        ShapedMan.mainPane = mainPane;
     }
 
     public static void setShapeGroup(Group shapeGroup) {

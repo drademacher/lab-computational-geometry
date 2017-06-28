@@ -7,10 +7,8 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.shape.Circle;
-import util.Point;
 
-import static shapes.ShapeConstants.COLOR_EDGE_STEPS;
-import static shapes.ShapeConstants.SMALL_VERTEX_RADIUS;
+import static shapes.ShapeConstants.*;
 
 public class ShapedSmallVertex {
     private static Group shapeGroup = new Group();
@@ -24,11 +22,19 @@ public class ShapedSmallVertex {
         this.graphController = graphController;
         this.vertex = vertex;
 
-        shape = new Circle(vertex.getCoordinates().getX(), vertex.getCoordinates().getY(), SMALL_VERTEX_RADIUS, COLOR_EDGE_STEPS);
+        shape = new Circle(vertex.getCoordinates().getX(), vertex.getCoordinates().getY(), SMALL_VERTEX_RADIUS);
+        shape.setStrokeWidth(SMALL_VERTEX_RADIUS / 5);
+        shape.setStroke(COLOR_SMALL_VERTEX);
+        shape.setFill(COLOR_BACKGROUND);
         shapeGroup.getChildren().add(shape);
 
         shape.setOnContextMenuRequested(event1 -> {
-            final ContextMenu contextMenu = new ContextMenu();
+            event1.consume();
+
+            if (!this.graphController.isEditMode())
+                return;
+
+            final ContextMenu contextMenu = ContextMenuHolder.getFreshContextMenu();
             MenuItem item0 = new MenuItem("Add Man");
             MenuItem item1 = new MenuItem("Add Lion");
             MenuItem closeItem = new MenuItem("Close");
@@ -51,15 +57,15 @@ public class ShapedSmallVertex {
         });
     }
 
+    public static void setShapeGroup(Group shapeGroup) {
+        ShapedSmallVertex.shapeGroup = shapeGroup;
+    }
+
     public void relocate() {
         shape.relocate(vertex.getCoordinates().getX() - SMALL_VERTEX_RADIUS, vertex.getCoordinates().getY() - SMALL_VERTEX_RADIUS);
     }
 
     public void delete() {
         shapeGroup.getChildren().remove(shape);
-    }
-
-    public static void setShapeGroup(Group shapeGroup) {
-        ShapedSmallVertex.shapeGroup = shapeGroup;
     }
 }

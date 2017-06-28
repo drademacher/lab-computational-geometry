@@ -5,8 +5,6 @@ import graph.Vertex;
 import strategy.Strategy;
 import util.Point;
 
-import java.util.ArrayList;
-
 public abstract class Entity {
 
 

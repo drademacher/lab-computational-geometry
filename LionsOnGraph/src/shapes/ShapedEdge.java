@@ -2,7 +2,6 @@ package shapes;
 
 import graph.Edge;
 import graph.GraphController;
-import graph.Vertex;
 import javafx.scene.Group;
 import javafx.scene.shape.Line;
 
@@ -27,6 +26,10 @@ public class ShapedEdge {
         shapeGroup.getChildren().add(shape);
     }
 
+    public static void setShapeGroup(Group shapeGroup) {
+        ShapedEdge.shapeGroup = shapeGroup;
+    }
+
     public void relocate() {
         shape.setStartX(edge.getVertices()[0].getCoordinates().getX());
         shape.setStartY(edge.getVertices()[0].getCoordinates().getY());
@@ -36,9 +39,5 @@ public class ShapedEdge {
 
     public void delete() {
         shapeGroup.getChildren().remove(shape);
-    }
-
-    public static void setShapeGroup(Group shapeGroup) {
-        ShapedEdge.shapeGroup = shapeGroup;
     }
 }

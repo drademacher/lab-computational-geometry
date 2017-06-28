@@ -10,14 +10,14 @@ public class Man extends Entity {
 
     private ShapedMan shape;
 
+    private Man(Vertex startPosition, Strategy strategy, GraphController graphController) {
+        super(startPosition, strategy, graphController);
+    }
+
     public static Man createMan(GraphController graphController, Vertex startPosition, Strategy strategy) {
         Man man = new Man(startPosition, strategy, graphController);
         man.shape = new ShapedMan(graphController, man);
         return man;
-    }
-
-    private Man(Vertex startPosition, Strategy strategy, GraphController graphController) {
-        super(startPosition, strategy, graphController);
     }
 
     public Lion getNearestLion() {

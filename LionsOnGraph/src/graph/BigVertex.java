@@ -13,14 +13,14 @@ public class BigVertex extends Vertex {
     protected ArrayList<EdgeVerticesObject> edgeVerticesObjects = new ArrayList<>();
     private ShapedBigVertex shape;
 
+    private BigVertex(int id, Point coordinates) {
+        super(id, coordinates);
+    }
+
     public static BigVertex createBigVertex(GraphController graphController, int id, Point coordinates) {
         BigVertex vertex = new BigVertex(id, coordinates);
         vertex.shape = new ShapedBigVertex(graphController, vertex);
         return vertex;
-    }
-
-    private BigVertex(int id, Point coordinates) {
-        super(id, coordinates);
     }
 
     public boolean deleteVertex() {

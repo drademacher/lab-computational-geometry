@@ -1,88 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import visualization.ZoomScrollPane?>
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity"
-            xmlns="http://javafx.com/javafx/8.0.102" fx:controller="visualization.VisController">
-    <top>
-        <MenuBar BorderPane.alignment="CENTER">
-            <menus>
-                <Menu mnemonicParsing="false" text="File">
-                    <items>
-                        <MenuItem fx:id="emptyMapMenuItem" mnemonicParsing="false" text="Empty Graph"/>
-                        <Menu mnemonicParsing="false" text="New">
-                            <items>
-                                <MenuItem fx:id="graph1MenuItem" mnemonicParsing="false"
-                                          text="Paper Graph, 2 Lions fail"/>
-                                <MenuItem fx:id="graph2MenuItem" mnemonicParsing="false"
-                                          text="Paper Graph, 3 Lions succeed"/>
-                                <MenuItem fx:id="graph3MenuItem" mnemonicParsing="false" text="Small Graph"/>
-                                <MenuItem fx:id="graph4MenuItem" visible="false" mnemonicParsing="false"
-                                          text="Graph 4"/>
-                                <MenuItem fx:id="graph5MenuItem" visible="false" mnemonicParsing="false"
-                                          text="Graph 5"/>
-                                <MenuItem fx:id="randomGraphMenuItem" visible="false" mnemonicParsing="false"
-                                          text="Random Map"/>
-                            </items>
-                        </Menu>
-                        <MenuItem fx:id="openMapMenuItem" mnemonicParsing="false" text="Open"/>
-                        <MenuItem fx:id="saveMapMenuItem" mnemonicParsing="false" text="Save"/>
-                    </items>
-                </Menu>
 
-                <Menu mnemonicParsing="false" text="Edit">
-                    <items>
-                        <RadioMenuItem fx:id="editGraphModeButton" mnemonicParsing="false" selected="true"
-                                       text="Edit Graph Mode">
-                            <toggleGroup>
-                                <ToggleGroup fx:id="useModeToggle"/>
-                            </toggleGroup>
-                        </RadioMenuItem>
-                        <RadioMenuItem fx:id="editEntityModeButton" mnemonicParsing="false" text="Edit Entity Mode"
-                                       toggleGroup="$useModeToggle"/>
-                        <RadioMenuItem fx:id="playModeButton" mnemonicParsing="false" text="Play Mode"
-                                       toggleGroup="$useModeToggle"/>
-                        <SeparatorMenuItem/>
-                        <Menu visible="false" mnemonicParsing="false" text="Change Edge Length">
-                            <items>
-                                <MenuItem mnemonicParsing="false" text="Set All Edges"/>
-                                <MenuItem mnemonicParsing="false" text="Increment All Edges"/>
-                                <MenuItem mnemonicParsing="false" text="Decrement All Edges"/>
-                            </items>
-                        </Menu>
-                    </items>
-                </Menu>
-
-            </menus>
-            <contextMenu>
-                <ContextMenu>
-                    <items>
-                        <MenuItem mnemonicParsing="false" text="Unspecified Action"/>
-                    </items>
-                </ContextMenu>
-            </contextMenu>
-        </MenuBar>
-    </top>
-    <bottom>
-
-    </bottom>
+<BorderPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visualization.VisController">
     <center>
-        <ZoomScrollPane fx:id="zoomScrollPane" style="-fx-background-color: #999999;">
+        <ZoomScrollPane fx:id="zoomScrollPane">
             <opaqueInsets>
-                <Insets/>
+                <Insets />
             </opaqueInsets>
             <BorderPane.margin>
-                <Insets/>
+                <Insets />
             </BorderPane.margin>
         </ZoomScrollPane>
     </center>
     <bottom>
-        <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <ButtonBar nodeOrientation="RIGHT_TO_LEFT" BorderPane.alignment="CENTER">
             <buttons>
-                <Button alignment="CENTER" mnemonicParsing="false" text="Play"/>
-                <Button alignment="CENTER" mnemonicParsing="false" text="Stop"/>
+                <Button fx:id="stopAnimationButton" alignment="CENTER" disable="true" mnemonicParsing="false" text="Stop" />
+                <Button fx:id="playAnimationButton" alignment="CENTER" disable="true" mnemonicParsing="false" text="Play" />
+                <Button fx:id="stepAnimationButton" alignment="CENTER" disable="true" mnemonicParsing="false" text="Single Step" />
+                <Button fx:id="animationToggleButton" alignment="CENTER" mnemonicParsing="false" text="Play Mode" />
+                <Button fx:id="initButton" alignment="CENTER" mnemonicParsing="false" text="Init" visible="false" />
+            <MenuButton fx:id="setGraphButton" mnemonicParsing="false" text="Set Graph">
+               <items>
+                        <MenuItem fx:id="emptyMapMenuItem" mnemonicParsing="false" text="Empty Graph" />
+                        <Menu mnemonicParsing="false" text="New">
+                            <items>
+                                <MenuItem fx:id="graph1MenuItem" mnemonicParsing="false" text="Paper Graph, 2 Lions fail" />
+                                <MenuItem fx:id="graph2MenuItem" mnemonicParsing="false" text="Paper Graph, 3 Lions succeed" />
+                                <MenuItem fx:id="graph3MenuItem" mnemonicParsing="false" text="Small Graph" />
+                                <MenuItem fx:id="graph4MenuItem" mnemonicParsing="false" text="Graph 4" visible="false" />
+                                <MenuItem fx:id="graph5MenuItem" mnemonicParsing="false" text="Graph 5" visible="false" />
+                                <MenuItem fx:id="randomGraphMenuItem" mnemonicParsing="false" text="Random Map" visible="false" />
+                            </items>
+                        </Menu>
+                        <MenuItem fx:id="openMapMenuItem" mnemonicParsing="false" text="Open" />
+                        <MenuItem fx:id="saveMapMenuItem" mnemonicParsing="false" text="Save" />
+               </items>
+            </MenuButton>
+
             </buttons>
         </ButtonBar>
     </bottom>

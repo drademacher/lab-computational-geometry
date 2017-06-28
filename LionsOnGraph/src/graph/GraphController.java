@@ -2,7 +2,9 @@ package graph;
 
 import entities.Lion;
 import entities.Man;
-import strategy.*;
+import strategy.Strategy;
+import strategy.StrategyAggroGreedy;
+import strategy.StrategyRunAwayGreedy;
 import util.Point;
 
 import java.io.BufferedReader;
@@ -11,6 +13,7 @@ import java.io.FileReader;
 import java.util.ArrayList;
 
 public class GraphController {
+    private boolean editMode = true;
 
     private ArrayList<Lion> lions = new ArrayList<>();
     private ArrayList<Man> men = new ArrayList<>();
@@ -193,7 +196,24 @@ public class GraphController {
 
 
 
-     /* ****************************
+    /* ****************************
+     *
+     *   EDIT MODE
+     *
+     * ****************************/
+
+    public boolean isEditMode() {
+        return editMode;
+    }
+
+    public void setEditMode(boolean editMode) {
+        this.editMode = editMode;
+    }
+
+
+
+
+    /* ****************************
      *
      *   GRAPH MANIPULATION
      *

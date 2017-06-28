@@ -1,15 +1,21 @@
 package visualization;
 
 import graph.GraphController;
+import javafx.animation.AnimationTimer;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Bounds;
+import javafx.geometry.Point2D;
+import javafx.scene.Group;
+import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.RadioMenuItem;
-import javafx.scene.control.ToggleGroup;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import shapes.*;
 import util.Point;
 
 import java.io.File;
@@ -23,9 +29,6 @@ public class VisController implements Initializable {
     // some end with MenuItem, some have prefix "view", or postfix "toggleGroup"
 
     @FXML
-    private BorderPane mainPane;
-
-    @FXML
     private MenuItem emptyMapMenuItem, graph1MenuItem, graph2MenuItem, graph3MenuItem, graph4MenuItem, graph5MenuItem, randomGraphMenuItem, openMapMenuItem, saveMapMenuItem;
 
 
@@ -34,13 +37,20 @@ public class VisController implements Initializable {
 
 
     @FXML
-    private ToggleGroup useModeToggle;
+    private Button initButton, animationToggleButton, stepAnimationButton, playAnimationButton, stopAnimationButton;
 
     @FXML
-    private RadioMenuItem editGraphModeButton, editEntityModeButton, playModeButton;
+    private MenuButton setGraphButton;
 
 
-    // TODO: inject the coreController here
+    private BooleanProperty editMode, activePlaying;
+    private AnimationTimer animationTimer;
+    private int passedTicks = 0;
+    private double lastNanoTime = System.nanoTime();
+    private double time = 0;
+    private int tickAccount = 0;
+    final private int TICKS_PER_STEP = 20;
+
     private GraphController coreController = new GraphController();
 
 
@@ -51,94 +61,150 @@ public class VisController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         this.stage = (Stage) resources.getObject(null);
 
-
+        initAnimationTimer();
+        initContextMenu();
+        initButtonBar();
         initGraphButtons();
 
-        useModeToggle.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue == this.editGraphModeButton) {
-//                graphHolder.setGraphEditMode();
-            } else if (newValue == this.editEntityModeButton) {
-//                graphHolder.setEntityEditMode();
-            } else if (newValue == this.playModeButton) {
-//                graphHolder.setPlayMode();
+    }
+
+    private void initButtonBar() {
+        editMode = new SimpleBooleanProperty(true);
+        activePlaying  = new SimpleBooleanProperty(false);
+        editMode.addListener((observable, oldValue, newValue) -> {
+            this.coreController.setEditMode(newValue);
+        });
+
+        animationToggleButton.setOnMouseClicked(event -> {
+            if (editMode.getValue()) {
+                editMode.set(false);
+                animationToggleButton.setText("Edit Mode");
+                zoomScrollPane.autoZoom();
+            } else {
+                editMode.set(true);
+                animationToggleButton.setText("Play Mode");
+                activePlaying.set(false);
             }
         });
 
+        stepAnimationButton.disableProperty().bind(editMode.or(activePlaying));
+        playAnimationButton.disableProperty().bind(editMode.or(activePlaying));
+        stopAnimationButton.disableProperty().bind(editMode.or(activePlaying.not()));
 
-        initContextMenu();
+        stepAnimationButton.setOnMouseClicked(event -> {
+            this.coreController.simulateStep();
+        });
 
+        playAnimationButton.setOnMouseClicked(event -> {
 
-        initViews();
+            activePlaying.set(true);
+        });
+
+        stopAnimationButton.setOnMouseClicked(event -> {
+
+            activePlaying.set(false);
+        });
+
+        activePlaying.addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                animationTimer.start();
+            } else {
+                animationTimer.stop();
+            }
+
+        });
     }
 
     private void initContextMenu() {
-        zoomScrollPane.getGround().setOnContextMenuRequested(event1 -> {
-            final ContextMenu contextMenu = new ContextMenu();
+        zoomScrollPane.setOnMouseClicked(event1 -> {
+            Point p = zoomScrollPane.getLocalCoordinates(event1.getX(), event1.getY());
+            System.out.println(p);
+        });
+
+
+        zoomScrollPane.setOnContextMenuRequested(event1 -> {
+            if (!this.coreController.isEditMode())
+                return;
+
+            ContextMenu contextMenu = ContextMenuHolder.getFreshContextMenu();
             MenuItem item1 = new MenuItem("Add Node");
             item1.setOnAction(event2 -> {
-                coreController.createVertex(new Point((int) event1.getX(), (int) event1.getY()));
+                coreController.createVertex(zoomScrollPane.getLocalCoordinates(event1.getX(), event1.getY()));
             });
             MenuItem item2 = new MenuItem("Close");
 
             contextMenu.getItems().addAll(item1, item2);
-            contextMenu.show(zoomScrollPane.getGround(), event1.getScreenX(), event1.getScreenY());
+            contextMenu.show(zoomScrollPane, event1.getScreenX(), event1.getScreenY());
         });
     }
 
-    private void initGraphButtons() {
-        emptyMapMenuItem.setOnAction(event -> {
+    private void initAnimationTimer() {
+        final double fps = 60.0;
+        animationTimer = new AnimationTimer() {
+            @Override
+            public void handle(long currentNanoTime) {
+                // calculate time since last update.
+                time += (currentNanoTime - lastNanoTime) / 1000000000.0;
+                lastNanoTime = currentNanoTime;
+                passedTicks = (int) Math.floor(time * fps);
+                time -= passedTicks / fps;
+                if (passedTicks >= 1) {
+                    // TODO: maybe make a tick counter, so just every 10 ticks the steps are done!?
+                    tickAccount += 1;
+                    if (tickAccount >= TICKS_PER_STEP) {
+                        tickAccount -= TICKS_PER_STEP;
+                        coreController.simulateStep();
+                    }
+                }
+            }
+        };
+    }
 
-            this.zoomScrollPane.clear();
+    public void initMainPane() {
+        Group vertexShapes = new Group();
+        Group edgeShapes = new Group();
+        Group entityShapes = new Group();
+
+        zoomScrollPane.getNodesHolder().clear();
+        zoomScrollPane.getNodesHolder().addAll(edgeShapes, vertexShapes, entityShapes);
+
+
+        ShapedBigVertex.setMainPane(zoomScrollPane);
+        ShapedBigVertex.setShapeGroup(vertexShapes);
+        ShapedSmallVertex.setShapeGroup(vertexShapes);
+        ShapedEdge.setShapeGroup(edgeShapes);
+        ShapedMan.setShapeGroup(entityShapes);
+        ShapedLion.setShapeGroup(entityShapes);
+
+    }
+
+
+    private void initGraphButtons() {
+        setGraphButton.disableProperty().bind(editMode.not());
+
+        emptyMapMenuItem.setOnAction(event -> {
+            this.initMainPane();
             coreController.setEmptyGraph();
-//            this.graphHolder.setGraph(coreController.setEmptyGraph());
-//            this.graphHolder.setState(coreController.getState());
-            this.editGraphModeButton.setSelected(true);
         });
 
         graph1MenuItem.setOnAction(event -> {
-            this.zoomScrollPane.clear();
+            this.initMainPane();
             coreController.setDefaultGraph1();
-//            this.graphHolder.setGraph(coreController.setDefaultGraph1());
-//            this.graphHolder.setState(coreController.getState());
-            this.editGraphModeButton.setSelected(true);
+            this.zoomScrollPane.autoZoom();
         });
 
         graph2MenuItem.setOnAction(event -> {
-            this.zoomScrollPane.clear();
+            this.initMainPane();
             coreController.setDefaultGraph2();
-//            this.graphHolder.setGraph(coreController.setDefaultGraph2());
-//            this.graphHolder.setState(coreController.getState());
-            this.editGraphModeButton.setSelected(true);
+            this.zoomScrollPane.autoZoom();
         });
 
         graph3MenuItem.setOnAction(event -> {
-            this.zoomScrollPane.clear();
+            this.initMainPane();
             coreController.setDefaultGraph3();
-//            this.graphHolder.setGraph();
-//            this.graphHolder.setState(coreController.getState());
-            this.editGraphModeButton.setSelected(true);
+            this.zoomScrollPane.autoZoom();
         });
 
-        graph4MenuItem.setOnAction(event -> {
-            this.zoomScrollPane.clear();
-//            this.graphHolder.setGraph(coreController.setDefaultGraph4());
-//            this.graphHolder.setState(coreController.getState());
-            this.editGraphModeButton.setSelected(true);
-        });
-
-        graph5MenuItem.setOnAction(event -> {
-            this.zoomScrollPane.clear();
-//            this.graphHolder.setGraph(coreController.setDefaultGraph5());
-//            this.graphHolder.setState(coreController.getState());
-            this.editGraphModeButton.setSelected(true);
-        });
-
-        randomGraphMenuItem.setOnAction(event -> {
-            this.zoomScrollPane.clear();
-//            this.graphHolder.setGraph(coreController.setRandomGraph());
-//            this.graphHolder.setState(coreController.getState());
-            this.editGraphModeButton.setSelected(true);
-        });
 
         openMapMenuItem.setOnAction(event -> {
             FileChooser fileChooser = new FileChooser();
@@ -159,7 +225,6 @@ public class VisController implements Initializable {
         });
 
         saveMapMenuItem.setOnAction(event -> {
-
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Save Current Map");
             fileChooser.getExtensionFilters().addAll(
@@ -169,24 +234,17 @@ public class VisController implements Initializable {
             if (selectedFile != null) {
                 this.coreController.saveGraphToFile(selectedFile);
             }
+        });
 
+        initButton.setOnAction(event -> {
+            this.initMainPane();
+            coreController.setDefaultGraph2();
+            this.zoomScrollPane.autoZoom();
+//            this.graphHolder.setGraph(coreController.setDefaultGraph2());
+//            this.graphHolder.setState(coreController.getState());
+//            this.editGraphModeButton.setSelected(true);
         });
 
     }
 
-
-    private void initViews() {
-        // TODO: visibiility properties set up is missing
-//        edgeLengthCanvas.visibleProperty().bind(edgeLengthButton.selectedProperty());
-//        edgeLengthCanvas.setMouseTransparent(true);
-//
-//        shortestDistanceCanvas.visibleProperty().bind(shortestDistanceButton.selectedProperty());
-//        shortestDistanceCanvas.setMouseTransparent(true);
-//
-//        shortestPathCanvas.visibleProperty().bind(shortestPathButton.selectedProperty());
-//        shortestPathCanvas.setMouseTransparent(true);
-//
-//        edgeStepsActiveCanvas.setMouseTransparent(true);
-//        edgeStepsAllCanvas.setMouseTransparent(true);
-    }
 }

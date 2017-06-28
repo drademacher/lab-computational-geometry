@@ -176,7 +176,7 @@ class Graph {
             }
 
             for(int i = vertex2.getConnections().size() -1; i >= 0; i--){
-                Connection connection = vertex1.getConnections().get(i);
+                Connection connection = vertex2.getConnections().get(i);
                 if(connection.contains(smallVertex)){
                     vertex2.unregisterConnection(connection);
                 }

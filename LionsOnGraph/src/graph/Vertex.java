@@ -4,7 +4,7 @@ import util.Point;
 
 import java.util.ArrayList;
 
-public abstract class Vertex {
+public abstract class Vertex implements GraphObject{
 
     protected ArrayList<Connection> connections = new ArrayList<>();
     protected Point coordinates;

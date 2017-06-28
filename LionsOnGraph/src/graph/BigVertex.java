@@ -8,7 +8,7 @@ import java.util.ArrayList;
 /**
  * Created by Jens on 20.06.2017.
  */
-public class BigVertex extends Vertex {
+public class BigVertex extends Vertex implements GraphObject{
 
     protected ArrayList<Edge> NEWedges = new ArrayList();
 

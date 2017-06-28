@@ -10,7 +10,7 @@ import javafx.scene.shape.Circle;
 
 import static shapes.ShapeConstants.*;
 
-public class ShapedSmallVertex {
+public class ShapedSmallVertex implements Shape {
     private static Group shapeGroup = new Group();
 
     private Circle shape;

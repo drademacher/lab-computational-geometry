@@ -16,7 +16,7 @@ import static shapes.ShapeConstants.ENTITY_RADIUS;
 /**
  * Created by Jens on 25.06.2017.
  */
-public class ShapedMan {
+public class ShapedMan implements Shape {
     private static Group shapeGroup = new Group();
 
     private Circle shape;

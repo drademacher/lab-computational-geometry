@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 import static shapes.ShapeConstants.BIG_VERTEX_RADIUS;
 
-class Graph {
+class Graph implements Api{
 
     private static int idCounter = -1;
     private GraphController graphController;
@@ -27,11 +27,12 @@ class Graph {
         return idCounter;
     }
 
-    public boolean relocateVertex(BigVertex vertex, Point newCoordinate) {
+    @Override
+    public BigVertex relocateVertex(BigVertex vertex, Point newCoordinate) {
 
         //check duplicate
         if (!validVertexPosition(newCoordinate)) {
-            return false;
+            return vertex;
         }
 
         vertex.setCoordinates(newCoordinate);
@@ -62,38 +63,40 @@ class Graph {
                 i++;
             }
         }
-        return false;
+        return vertex;
     }
 
-    public boolean createVertex(Point coordinate) {
+    @Override
+    public BigVertex createVertex(Point coordinate) {
 
         //check duplicate and margin to other bigVertices
         if (!validVertexPosition(coordinate)) {
-            return false;
+            return null;
         }
 
         BigVertex vertex = new BigVertex(getIdCounter(), coordinate);
         bigVertices.add(vertex);
-        return true;
+        return vertex;
     }
 
-    public boolean deleteVertex(BigVertex vertex) {
+    @Override
+    public BigVertex deleteVertex(BigVertex vertex) {
         bigVertices.remove(vertex);
 
         for (Edge edge : vertex.getEdges()) {
             removeEdge(edge);
         }
 
-        //TODO
-        return true;
+        return vertex;
     }
 
-    public boolean createEdge(BigVertex vertex1, BigVertex vertex2, int weight) {
+    @Override
+    public Edge createEdge(BigVertex vertex1, BigVertex vertex2, int weight) {
 
         //check duplicate
         for (Edge edge : vertex1.getEdges()) {
             if (edge.getNeighbor(vertex1).equals(vertex2)) {
-                return false; //dublicate
+                return null; //dublicate
             }
         }
 
@@ -136,23 +139,30 @@ class Graph {
             vertex1.registerConnection(connection);
             vertex2.registerConnection(connection);
         }
-        return true;
+        return edge;
     }
 
-    public boolean removeEdge(BigVertex vertex1, BigVertex vertex2) {
+    @Override
+    public Edge changeEdgeWeight(BigVertex vertex1, BigVertex vertex2, int weight) {
+        return null;
+    }
+
+    @Override
+    public Edge removeEdge(BigVertex vertex1, BigVertex vertex2) {
 
 
         for (int i = NEWedges.size() - 1; i >= 0; i--) {
             Edge edge = NEWedges.get(i);
 
             if (edge.contains(vertex1) && edge.contains(vertex2)) {
-                removeEdge(edge);
+                return removeEdge(edge);
             }
         }
-        return false;
+        return null;
     }
 
-    private boolean removeEdge(Edge edge){
+
+    private Edge removeEdge(Edge edge){
 
         BigVertex vertex1 = edge.getVertices()[0];
         BigVertex vertex2 = edge.getVertices()[1];
@@ -192,10 +202,10 @@ class Graph {
             }
         }
 
-        boolean bool1 = edge.getVertices()[0].NEWunregisterEdge(edge);
-        boolean bool2 = edge.getVertices()[1].NEWunregisterEdge(edge);
+        edge.getVertices()[0].NEWunregisterEdge(edge);
+        edge.getVertices()[1].NEWunregisterEdge(edge);
 
-        return bool1 && bool2;
+        return edge;
     }
 
 

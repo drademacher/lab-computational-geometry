@@ -1,6 +1,6 @@
 package graph;
 
-public class Connection {
+public class Connection implements GraphObject{
 
     private Vertex[] vertices = new Vertex[2];
 

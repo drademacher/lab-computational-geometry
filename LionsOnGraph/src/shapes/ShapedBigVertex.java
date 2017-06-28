@@ -12,22 +12,21 @@ import visualization.ZoomScrollPane;
 
 import static shapes.ShapeConstants.*;
 
-public class ShapedBigVertex {
+public class ShapedBigVertex implements Shape {
     private static ZoomScrollPane mainPane;
     private static Group shapeGroup;
 
     private Circle shape;
-    private BigVertex vertex;
     private GraphController graphController;
+    private Point coordinates;
 
 
-    public ShapedBigVertex(GraphController graphController, BigVertex vertex) {
-        this.vertex = vertex;
+    public ShapedBigVertex(GraphController graphController, Point coordinates) {
         this.graphController = graphController;
+        this.coordinates = coordinates;
 
 
-
-        shape = new Circle(vertex.getCoordinates().getX(), vertex.getCoordinates().getY(), BIG_VERTEX_RADIUS);
+        shape = new Circle(coordinates.getX(), coordinates.getY(), BIG_VERTEX_RADIUS);
         shape.setStrokeWidth(BIG_VERTEX_RADIUS / 5);
         shape.setStroke(COLOR_VERTEX);
         shape.setFill(COLOR_BACKGROUND);
@@ -54,7 +53,7 @@ public class ShapedBigVertex {
 
                     mainPane.setOnMouseClicked(null);
 
-                    graphController.createEdge(vertex, graphController.getBigVertexByCoordinate(mainPane.getLocalCoordinates(event3.getX(), event3.getY())));
+                    graphController.createEdge(graphController.getBigVertexByCoordinate(coordinates), graphController.getBigVertexByCoordinate(mainPane.getLocalCoordinates(event3.getX(), event3.getY())));
 
                 });
             });
@@ -64,7 +63,7 @@ public class ShapedBigVertex {
 
                     mainPane.setOnMouseClicked(null);
 
-                    graphController.removeEdge(vertex, graphController.getBigVertexByCoordinate(mainPane.getLocalCoordinates(event3.getX(), event3.getY())));
+                    graphController.removeEdge(graphController.getBigVertexByCoordinate(coordinates), graphController.getBigVertexByCoordinate(mainPane.getLocalCoordinates(event3.getX(), event3.getY())));
 
                 });
             });
@@ -75,29 +74,29 @@ public class ShapedBigVertex {
                     mainPane.setOnMouseClicked(null);
 
 //                    System.out.println(mainPane.getLocalCoordinates(event3.getX(), event3.getY()));
-                    graphController.relocateVertex(vertex, mainPane.getLocalCoordinates(event3.getX(), event3.getY()));
+                    graphController.relocateVertex(graphController.getBigVertexByCoordinate(coordinates), mainPane.getLocalCoordinates(event3.getX(), event3.getY()));
 
                 });
             });
 
             item5.setOnAction(event2 -> {
-                graphController.deleteVertex(vertex);
+                graphController.deleteVertex(graphController.getBigVertexByCoordinate(coordinates));
 //                shapeGroup.getChildren().remove(shape);
             });
 
             item3.setOnAction(event2 -> {
                 System.out.println("Add Man");
                 // TODO: something like new Man(vertex.getCoordinates());
-                graphController.setMan(vertex);
+                graphController.setMan(graphController.getBigVertexByCoordinate(coordinates));
             });
 
             item4.setOnAction(event2 -> {
                 System.out.println("Add Lion");
                 // TODO: something like new Lion(vertex.getCoordinates());
-                graphController.setLion(vertex);
+                graphController.setLion(graphController.getBigVertexByCoordinate(coordinates));
             });
 
-            contextMenu.getItems().addAll(item2, item5,  new SeparatorMenuItem(), item0, item1,new SeparatorMenuItem(), item3, item4, new SeparatorMenuItem(), closeItem);
+            contextMenu.getItems().addAll(item2, item5, new SeparatorMenuItem(), item0, item1, new SeparatorMenuItem(), item3, item4, new SeparatorMenuItem(), closeItem);
             contextMenu.show(shape, event1.getScreenX(), event1.getScreenY());
         });
 
@@ -111,8 +110,8 @@ public class ShapedBigVertex {
         ShapedBigVertex.shapeGroup = shapeGroup;
     }
 
-    public void relocate() {
-        shape.relocate(vertex.getCoordinates().getX() - BIG_VERTEX_RADIUS, vertex.getCoordinates().getY() - BIG_VERTEX_RADIUS);
+    public void relocate(Point coordinates) {
+        shape.relocate(coordinates.getX() - BIG_VERTEX_RADIUS, coordinates.getY() - BIG_VERTEX_RADIUS);
     }
 
     public void delete() {

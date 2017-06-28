@@ -3,7 +3,7 @@ package graph;
 
 import java.util.ArrayList;
 
-public class Edge {
+public class Edge implements GraphObject{
 
     private BigVertex[] vertices = new BigVertex[2];
     private ArrayList<SmallVertex> edgeVertices = new ArrayList<>();

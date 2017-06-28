@@ -8,7 +8,7 @@ import javafx.scene.shape.Line;
 import static shapes.ShapeConstants.COLOR_EDGE;
 
 
-public class ShapedEdge {
+public class ShapedEdge implements Shape {
     private static Group shapeGroup = new Group();
 
     private GraphController graphController;

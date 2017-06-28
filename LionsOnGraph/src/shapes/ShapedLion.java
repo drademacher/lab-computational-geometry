@@ -2,17 +2,12 @@ package shapes;
 
 import entities.Lion;
 import graph.GraphController;
-import javafx.animation.PathTransition;
 import javafx.scene.Group;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.LineTo;
-import javafx.scene.shape.MoveTo;
-import javafx.scene.shape.Path;
-import javafx.util.Duration;
 import strategy.Strategy;
 import strategy.StrategyAggroGreedy;
 import strategy.StrategyDoNothing;
@@ -24,7 +19,7 @@ import static shapes.ShapeConstants.ENTITY_RADIUS;
 /**
  * Created by Jens on 25.06.2017.
  */
-public class ShapedLion {
+public class ShapedLion implements Shape {
     private static Group shapeGroup = new Group();
 
     private Circle shape;

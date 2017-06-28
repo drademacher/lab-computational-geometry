@@ -12,7 +12,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
 
-public class GraphController {
+public class GraphController implements Api{
     private boolean editMode = true;
 
     private ArrayList<Lion> lions = new ArrayList<>();
@@ -30,60 +30,68 @@ public class GraphController {
      *
      * ****************************/
 
-    public boolean createVertex(Point coordinate) {
+    @Override
+    public BigVertex createVertex(Point coordinate) {
         if (coordinate == null) {
-            return false;
+            return null;
         }
-        boolean bool = this.graph.createVertex(coordinate);
+        BigVertex vertex = this.graph.createVertex(coordinate);
 
-        return bool;
+        return vertex;//TODO
     }
 
-    public boolean relocateVertex(BigVertex vertex, Point newCoordinate) {
+    @Override
+    public BigVertex relocateVertex(BigVertex vertex, Point newCoordinate) {
         if (vertex == null || newCoordinate == null) {
-            return false;
+            return null;
         }
 
-        boolean bool = this.graph.relocateVertex(vertex, newCoordinate);
+        vertex = this.graph.relocateVertex(vertex, newCoordinate);
 
-        for (Man man : men) {
-            man.getShape().relocate();
-        }
-        for (Lion lion : lions) {
-            lion.getShape().relocate();
-        }
-
-        return bool;
+        return vertex;//TODO
     }
 
-    public boolean deleteVertex(BigVertex vertex) {
+    @Override
+    public BigVertex deleteVertex(BigVertex vertex) {
         if (vertex == null) {
-            return false;
+            return null;
         }
         //TODO Entity?
-        return this.graph.deleteVertex(vertex);
+        vertex =  this.graph.deleteVertex(vertex);
+
+        return vertex; //TODO
     }
 
-    public boolean createEdge(BigVertex vertex1, BigVertex vertex2) {
+    public Edge createEdge(BigVertex vertex1, BigVertex vertex2) {
         if (vertex1 == null || vertex2 == null) {
-            return false;
+            return null;
         }
         return createEdge(vertex1, vertex2, 4);
     }
 
-    public boolean createEdge(BigVertex vertex1, BigVertex vertex2, int weight) {
+    @Override
+    public Edge createEdge(BigVertex vertex1, BigVertex vertex2, int weight) {
         if (vertex1 == null || vertex2 == null || weight < 0) {
-            return false;
+            return null;
         }
-        return this.graph.createEdge(vertex1, vertex2, weight);
+        Edge edge = this.graph.createEdge(vertex1, vertex2, weight);
+
+        return edge;//TODO
     }
 
-    public boolean removeEdge(BigVertex vertex1, BigVertex vertex2) {
+    @Override
+    public Edge removeEdge(BigVertex vertex1, BigVertex vertex2) {
         if (vertex1 == null || vertex2 == null) {
-            return false;
+            return null;
         }
         //TODO Entity?
-        return this.graph.removeEdge(vertex1, vertex2);
+        Edge edge = this.graph.removeEdge(vertex1, vertex2);
+        return edge;//TODO
+    }
+
+    @Override
+    public Edge changeEdgeWeight(BigVertex vertex1, BigVertex vertex2, int weight) {
+        return null;
     }
 
     public BigVertex getBigVertexByCoordinate(Point coordinate) {
@@ -122,7 +130,7 @@ public class GraphController {
      * ****************************/
 
     public boolean setMan(Vertex vertex) {
-        return men.add(Man.createMan(this, vertex, new StrategyRunAwayGreedy()));
+        return men.add(new Man(vertex, new StrategyRunAwayGreedy(), this));
     }
 
     public boolean isManOnVertex(Vertex vertex) {
@@ -135,7 +143,7 @@ public class GraphController {
     }
 
     public boolean setLion(Vertex vertex) {
-        return lions.add(Lion.createLion(this, vertex, new StrategyAggroGreedy()));
+        return lions.add(new Lion(vertex, new StrategyAggroGreedy(), this));
     }
 
     public boolean isLionOnVertex(Vertex vertex) {
@@ -148,12 +156,10 @@ public class GraphController {
     }
 
     public boolean removeMan(Man man) {
-        man.getShape().delete();
         return men.remove(man);
     }
 
     public boolean removeLion(Lion lion) {
-        lion.getShape().delete();
         return lions.remove(lion);
     }
 
@@ -448,13 +454,11 @@ public class GraphController {
     public void simulateStep() {
         for (Man man : this.getMen()) {
             man.goToNextPosition();
-            man.getShape().relocate();
         }
 
         System.out.println(lions);
         for (Lion lion : this.getLions()) {
             lion.goToNextPosition();
-            lion.getShape().relocate();
         }
         System.out.println(lions);
 //        this.state = new State(this.getMen(), this.getLions());

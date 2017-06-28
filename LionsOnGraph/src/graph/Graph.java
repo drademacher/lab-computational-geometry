@@ -84,7 +84,8 @@ class Graph implements Api {
     public BigVertex deleteVertex(BigVertex vertex) {
         bigVertices.remove(vertex);
 
-        for (Edge edge : vertex.getEdges()) {
+        for (int i = vertex.getEdges().size() -1 ; i >= 0; i--) {
+            Edge edge = vertex.getEdges().get(i);
             removeEdge(edge);
         }
 
@@ -145,6 +146,8 @@ class Graph implements Api {
 
     @Override
     public Edge changeEdgeWeight(BigVertex vertex1, BigVertex vertex2, int weight) {
+
+        //TODO implement
         return null;
     }
 
@@ -256,6 +259,7 @@ class Graph implements Api {
     }
 
     public Edge getEdgeByVertices(BigVertex vertex1, BigVertex vertex2) {
+
         for (Edge edge : NEWedges) {
             if (edge.contains(vertex1) && edge.contains(vertex2)) {
                 return edge;

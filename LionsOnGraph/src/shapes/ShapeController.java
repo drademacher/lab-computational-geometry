@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * Created by Jens on 28.06.2017.
  */
-public class ShapeController implements Api {
+public class ShapeController {
 
     Map<GraphObject, Shape> map = new HashMap<>();
     private GraphController graphController;
@@ -19,8 +19,7 @@ public class ShapeController implements Api {
     }
 
 
-    @Override
-    public BigVertex relocateVertex(BigVertex vertex, Point newCoordinate) {
+    public void relocateVertex(BigVertex vertex, Point newCoordinate) {
         Shape shape = map.get(vertex);
         shape.relocate(newCoordinate);
 
@@ -38,22 +37,20 @@ public class ShapeController implements Api {
                 smalLVertexShape.relocate(smallVertex.getCoordinates());
             }
         }
-        return null;
     }
 
-    @Override
-    public BigVertex createVertex(Point coordinate) {
+    public void createVertex(Point coordinate) {
         ShapedBigVertex shape = new ShapedBigVertex(graphController, coordinate);
         map.put(graphController.getBigVertexByCoordinate(coordinate), shape);
-        return null;
     }
 
-    @Override
-    public BigVertex deleteVertex(BigVertex vertex) {
+    public void deleteVertex(BigVertex vertex) {
         Shape shape = map.get(vertex);
         shape.delete();
         map.remove(vertex);
 
+        System.out.println("delete Vertex,...");
+        System.out.println("edges.... "+vertex.getEdges());
         for(Edge edge : vertex.getEdges()){
             Shape edgeShape = map.get(edge);
             map.remove(edge);
@@ -65,33 +62,30 @@ public class ShapeController implements Api {
                 smalLVertexShape.delete();
             }
         }
-        return null;
     }
 
-    @Override
-    public Edge createEdge(BigVertex vertex1, BigVertex vertex2, int weight) {
-        Edge edge = graphController.getEdgeByVertices(vertex1, vertex2);
-        ShapedEdge shape = new ShapedEdge(graphController, vertex1.getCoordinates(), vertex2.getCoordinates());
+    public void createEdge(Edge edge) {
+        ShapedEdge shape = new ShapedEdge(graphController, edge.getStartCoordinates(), edge.getEndCoordinates());
         map.put(edge, shape);
 
         for(SmallVertex smallVertex : edge.getEdgeVertices()){
             ShapedSmallVertex smallVertexShape = new ShapedSmallVertex(graphController, smallVertex.getCoordinates());
-            map.put(edge, shape);
+            map.put(smallVertex, smallVertexShape);
         }
-        return null;
     }
 
-    @Override
-    public Edge removeEdge(BigVertex vertex1, BigVertex vertex2) {
-        Shape shape = map.get(graphController.getEdgeByVertices(vertex1, vertex2));
+    public void removeEdge(Edge edge) {
+        Shape shape = map.get(edge);
         shape.delete();
-        map.remove(graphController.getEdgeByVertices(vertex1, vertex2));
-        return null;
+        map.remove(edge);
+        for(SmallVertex smallVertex : edge.getEdgeVertices()){
+            Shape smalLVertexShape = map.get(smallVertex);
+            map.remove(smallVertex);
+            smalLVertexShape.delete();
+        }
     }
 
-    @Override
-    public Edge changeEdgeWeight(BigVertex vertex1, BigVertex vertex2, int weight) {
+    public void changeEdgeWeight(Edge edge) {
         //TODO
-        return null;
     }
 }

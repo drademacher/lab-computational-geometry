@@ -9,6 +9,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.shape.Circle;
 import strategy.*;
+import util.Point;
 
 import static shapes.ShapeConstants.COLOR_MAN;
 import static shapes.ShapeConstants.ENTITY_RADIUS;
@@ -20,15 +21,13 @@ public class ShapedMan implements Shape {
     private static Group shapeGroup = new Group();
 
     private Circle shape;
-    private Man man;
     private GraphController graphController;
 
-    public ShapedMan(GraphController graphController, Man man) {
+    public ShapedMan(GraphController graphController, Point coordinates) {
 
         this.graphController = graphController;
-        this.man = man;
 
-        shape = new Circle(man.getCoordinates().getX(), man.getCoordinates().getY(), ENTITY_RADIUS, COLOR_MAN);
+        shape = new Circle(coordinates.getX(), coordinates.getY(), ENTITY_RADIUS, COLOR_MAN);
         shapeGroup.getChildren().add(shape);
 
         shape.setOnContextMenuRequested(event1 -> {
@@ -50,21 +49,21 @@ public class ShapedMan implements Shape {
 
             item1.setOnAction(event2 -> {
                 Strategy strategy = new StrategyDoNothing();
-                graphController.setManStrategy(man, strategy);
+                graphController.setManStrategy(graphController.getManByCoordinate(coordinates), strategy);
             });
 
             item2.setOnAction(event2 -> {
                 Strategy strategy = new StrategyRunAwayGreedy();
-                graphController.setManStrategy(man, strategy);
+                graphController.setManStrategy(graphController.getManByCoordinate(coordinates), strategy);
             });
 
             item3.setOnAction(event2 -> {
                 Strategy strategy = new StrategyRandom();
-                graphController.setManStrategy(man, strategy);
+                graphController.setManStrategy(graphController.getManByCoordinate(coordinates), strategy);
             });
 
             item0.setOnAction(event2 -> {
-                graphController.removeMan(man);
+                graphController.removeMan(graphController.getManByCoordinate(coordinates));
             });
 
             contextMenu.getItems().addAll(item0, strategyMenu, new SeparatorMenuItem(), closeItem);
@@ -76,8 +75,9 @@ public class ShapedMan implements Shape {
         ShapedMan.shapeGroup = shapeGroup;
     }
 
-    public void relocate() {
-        shape.relocate(man.getCoordinates().getX() - ENTITY_RADIUS, man.getCoordinates().getY() - ENTITY_RADIUS);
+    @Override
+    public void relocate(Point coordinates) {
+        shape.relocate(coordinates.getX() - ENTITY_RADIUS, coordinates.getY() - ENTITY_RADIUS);
     }
 
     public void delete() {

@@ -1,6 +1,8 @@
 package graph;
 
 
+import util.Point;
+
 import java.util.ArrayList;
 
 public class Edge implements GraphObject{
@@ -45,6 +47,14 @@ public class Edge implements GraphObject{
 
     public BigVertex[] getVertices() {
         return vertices;
+    }
+
+    public Point getStartCoordinates(){
+        return vertices[0].getCoordinates();
+    }
+
+    public Point getEndCoordinates(){
+        return vertices[1].getCoordinates();
     }
 
     @Override

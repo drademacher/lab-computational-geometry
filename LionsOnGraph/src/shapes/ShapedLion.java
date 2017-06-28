@@ -12,6 +12,7 @@ import strategy.Strategy;
 import strategy.StrategyAggroGreedy;
 import strategy.StrategyDoNothing;
 import strategy.StrategyRandom;
+import util.Point;
 
 import static shapes.ShapeConstants.COLOR_LION;
 import static shapes.ShapeConstants.ENTITY_RADIUS;
@@ -23,15 +24,13 @@ public class ShapedLion implements Shape {
     private static Group shapeGroup = new Group();
 
     private Circle shape;
-    private Lion lion;
     private GraphController graphController;
 
-    public ShapedLion(GraphController graphController, Lion lion) {
+    public ShapedLion(GraphController graphController, Point coordinates) {
 
         this.graphController = graphController;
-        this.lion = lion;
 
-        shape = new Circle(lion.getCoordinates().getX(), lion.getCoordinates().getY(), ENTITY_RADIUS, COLOR_LION);
+        shape = new Circle(coordinates.getX(), coordinates.getY(), ENTITY_RADIUS, COLOR_LION);
         shapeGroup.getChildren().add(shape);
 
         shape.setOnContextMenuRequested(event1 -> {
@@ -52,22 +51,22 @@ public class ShapedLion implements Shape {
 
 
             item0.setOnAction(event2 -> {
-                graphController.removeLion(lion);
+                graphController.removeLion(graphController.getLionByCoordinate(coordinates));
             });
 
             item1.setOnAction(event2 -> {
                 Strategy strategy = new StrategyDoNothing();
-                graphController.setLionStrategy(lion, strategy);
+                graphController.setLionStrategy(graphController.getLionByCoordinate(coordinates), strategy);
             });
 
             item2.setOnAction(event2 -> {
                 Strategy strategy = new StrategyAggroGreedy();
-                graphController.setLionStrategy(lion, strategy);
+                graphController.setLionStrategy(graphController.getLionByCoordinate(coordinates), strategy);
             });
 
             item3.setOnAction(event2 -> {
                 Strategy strategy = new StrategyRandom();
-                graphController.setLionStrategy(lion, strategy);
+                graphController.setLionStrategy(graphController.getLionByCoordinate(coordinates), strategy);
             });
 
             contextMenu.getItems().addAll(item0, strategyMenu, new SeparatorMenuItem(), closeItem);
@@ -79,7 +78,7 @@ public class ShapedLion implements Shape {
         ShapedLion.shapeGroup = shapeGroup;
     }
 
-    public void relocate() {
+    public void relocate(Point coordinates) {
         // TODO: jens, start und ziel angeben, dann kann man das auch schön machen
 
 //        Path path = new Path();
@@ -90,7 +89,7 @@ public class ShapedLion implements Shape {
 //        pathTransition.setPath(path);
 //        pathTransition.setNode(shape);
 
-        shape.relocate(lion.getCoordinates().getX() - ENTITY_RADIUS, lion.getCoordinates().getY() - ENTITY_RADIUS);
+        shape.relocate(coordinates.getX() - ENTITY_RADIUS, coordinates.getY() - ENTITY_RADIUS);
 //        pathTransition.play();
     }
 

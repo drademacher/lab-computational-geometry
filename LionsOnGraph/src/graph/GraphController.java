@@ -2,6 +2,7 @@ package graph;
 
 import entities.Lion;
 import entities.Man;
+import shapes.ShapeController;
 import strategy.Strategy;
 import strategy.StrategyAggroGreedy;
 import strategy.StrategyRunAwayGreedy;
@@ -19,9 +20,12 @@ public class GraphController implements Api{
     private ArrayList<Man> men = new ArrayList<>();
 
     private Graph graph;
+    private ShapeController shapeController;
 
     public GraphController() {
         this.graph = new Graph(this);
+        this.shapeController = new ShapeController(this);
+
     }
 
     /* ****************************
@@ -37,6 +41,7 @@ public class GraphController implements Api{
         }
         BigVertex vertex = this.graph.createVertex(coordinate);
 
+        this.shapeController.createVertex(coordinate);
         return vertex;//TODO
     }
 
@@ -48,6 +53,7 @@ public class GraphController implements Api{
 
         vertex = this.graph.relocateVertex(vertex, newCoordinate);
 
+        this.shapeController.relocateVertex(vertex, newCoordinate);
         return vertex;//TODO
     }
 
@@ -56,6 +62,8 @@ public class GraphController implements Api{
         if (vertex == null) {
             return null;
         }
+
+        this.shapeController.deleteVertex(vertex);
         //TODO Entity?
         vertex =  this.graph.deleteVertex(vertex);
 
@@ -66,6 +74,7 @@ public class GraphController implements Api{
         if (vertex1 == null || vertex2 == null) {
             return null;
         }
+
         return createEdge(vertex1, vertex2, 4);
     }
 
@@ -76,6 +85,7 @@ public class GraphController implements Api{
         }
         Edge edge = this.graph.createEdge(vertex1, vertex2, weight);
 
+        this.shapeController.createEdge(edge);
         return edge;//TODO
     }
 
@@ -86,12 +96,21 @@ public class GraphController implements Api{
         }
         //TODO Entity?
         Edge edge = this.graph.removeEdge(vertex1, vertex2);
+
+        this.shapeController.removeEdge(edge);
         return edge;//TODO
     }
 
     @Override
     public Edge changeEdgeWeight(BigVertex vertex1, BigVertex vertex2, int weight) {
-        return null;
+
+        if (vertex1 == null || vertex2 == null || weight < 0) {
+            return null;
+        }
+        Edge edge = this.graph.changeEdgeWeight(vertex1, vertex2, weight);
+
+        this.shapeController.changeEdgeWeight(edge);
+        return edge;
     }
 
     public BigVertex getBigVertexByCoordinate(Point coordinate) {
@@ -201,6 +220,24 @@ public class GraphController implements Api{
         for (Lion lion : lions) {
             lion.setStrategy(strategy);
         }
+    }
+
+    public Man getManByCoordinate(Point coordinates){
+        for(Man man : men){
+            if(man.getCoordinates().equals(coordinates)){
+                return man;
+            }
+        }
+        return null;
+    }
+
+    public Lion getLionByCoordinate(Point coordinates){
+        for(Lion lion : lions){
+            if(lion.getCoordinates().equals(coordinates)){
+                return lion;
+            }
+        }
+        return null;
     }
 
 

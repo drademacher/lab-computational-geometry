@@ -80,21 +80,8 @@ class Graph {
     public boolean deleteVertex(BigVertex vertex) {
         bigVertices.remove(vertex);
 
-        vertex.deleteVertex();
-
         for (Edge edge : vertex.getEdges()) {
-
-            NEWedges.remove(edge);
-
-            for (SmallVertex smallVertex : edge.getEdgeVertices()) {
-                this.smallVertices.remove(smallVertex);
-//                for (int i = edges.size() - 1; i >= 0; i--) {
-//                    Connection connection = edges.get(i);
-//                    if (connection.contains(smallVertex)) {
-//                        edges.remove(edge);
-//                    }
-//                }
-            }
+            removeEdge(edge);
         }
 
         //TODO
@@ -154,33 +141,63 @@ class Graph {
 
     public boolean removeEdge(BigVertex vertex1, BigVertex vertex2) {
 
-        for (Edge edge : vertex1.getEdges()) {
-            if (edge.getNeighbor(vertex1).equals(vertex2)) {
 
-                for (SmallVertex smallVertex : edge.getEdgeVertices()) {
-                    this.smallVertices.remove(smallVertex);
-//                    for (int i = edges.size() - 1; i >= 0; i--) {
-//                        Edge edge = edges.get(i);
-//                        if (edge.contains(smallVertex)) {
-//                            edges.remove(edge);
-//                        }
-//                    }
+        for (int i = NEWedges.size() - 1; i >= 0; i--) {
+            Edge edge = NEWedges.get(i);
+
+            if (edge.contains(vertex1) && edge.contains(vertex2)) {
+                removeEdge(edge);
+            }
+        }
+        return false;
+    }
+
+    private boolean removeEdge(Edge edge){
+
+        BigVertex vertex1 = edge.getVertices()[0];
+        BigVertex vertex2 = edge.getVertices()[1];
+
+
+        for (SmallVertex smallVertex : edge.getEdgeVertices()) {
+            this.smallVertices.remove(smallVertex);
+        }
+
+        this.NEWedges.remove(edge);
+
+        for(SmallVertex smallVertex : edge.getEdgeVertices()){
+
+            this.smallVertices.remove(smallVertex);
+
+            for(int i = vertex1.getConnections().size() -1; i >= 0; i--){
+                Connection connection = vertex1.getConnections().get(i);
+                if(connection.contains(smallVertex)){
+                    vertex1.unregisterConnection(connection);
+                }
+            }
+
+            for(int i = vertex2.getConnections().size() -1; i >= 0; i--){
+                Connection connection = vertex1.getConnections().get(i);
+                if(connection.contains(smallVertex)){
+                    vertex2.unregisterConnection(connection);
                 }
             }
         }
 
-        boolean bool1 = false;
-        boolean bool2 = false;
-        for(int i = NEWedges.size() - 1; i >= 0; i--){
-            Edge edge = NEWedges.get(i);
-            if(edge.contains(vertex1) && edge.contains(vertex2)){
-                bool1 = vertex1.unregisterEdge(edge);
-                bool2 = vertex2.unregisterEdge(edge);
-                NEWedges.remove(edge);
+        if(edge.getEdgeVertices().size() == 0){
+            for(Connection connection : vertex1.getConnections()){
+                if(connection.contains(vertex1) && connection.contains(vertex2)){
+                    vertex1.unregisterConnection(connection);
+                    vertex2.unregisterConnection(connection);
+                }
             }
         }
+
+        boolean bool1 = edge.getVertices()[0].NEWunregisterEdge(edge);
+        boolean bool2 = edge.getVertices()[1].NEWunregisterEdge(edge);
+
         return bool1 && bool2;
     }
+
 
     public BigVertex getBigVertexByCoordinate(Point coordinate) {
         return getBigVertexByCoordinate(coordinate, BIG_VERTEX_RADIUS);

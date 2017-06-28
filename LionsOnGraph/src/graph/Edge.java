@@ -14,6 +14,11 @@ public class Edge {
         this.vertices[1] = end;
         this.edgeVertices = edgeVertices;
         this.weight = weight;
+
+        if (start.equals(end)) {
+            throw new IllegalArgumentException("Edge need two different vertices");
+        }
+
     }
 
     public ArrayList<SmallVertex> getEdgeVertices() {
@@ -22,13 +27,6 @@ public class Edge {
 
     public int getEdgeWeight() {
         return weight;
-    }
-
-    public boolean unregisterAll(BigVertex vertex) {
-        for (SmallVertex edgeVertex : edgeVertices) {
-            //TODO ?
-        }
-        return getNeighbor(vertex).unregisterEdge(this);
     }
 
     public boolean contains(BigVertex vertex) {

@@ -370,11 +370,11 @@ public class GraphController {
 
         this.setLion(this.getBigVertexByCoordinate(new Point(40, 20)));
 
-//        System.out.println(this.debugGraph());
-//
-//        this.removeEdge(this.getBigVertexByCoordinate(new Point(40, 20)), this.getBigVertexByCoordinate(new Point(0, 0)));
-//
-//        System.out.println(this.debugGraph());
+        debugGraph();
+
+        this.removeEdge(this.getBigVertexByCoordinate(new Point(40, 20)), this.getBigVertexByCoordinate(new Point(0, 0)));
+
+        debugGraph();
 
     }
 

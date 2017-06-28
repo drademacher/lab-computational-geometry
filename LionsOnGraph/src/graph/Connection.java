@@ -1,7 +1,5 @@
 package graph;
 
-import shapes.ShapedEdge;
-
 public class Connection {
 
     private Vertex[] vertices = new Vertex[2];
@@ -11,15 +9,10 @@ public class Connection {
         this.vertices[1] = end;
 
         if (start.equals(end)) {
-            throw new IllegalArgumentException("Edge need two different vertices");
+            throw new IllegalArgumentException("Connection need two different vertices");
         }
     }
 
-//    public static Connection createEdge(GraphController graphController, Vertex start, Vertex end) {
-//        Connection edge = new Connection(start, end);
-//        edge.shape = new ShapedEdge(graphController, edge);
-//        return edge;
-//    }
 
     public boolean contains(Vertex vertex) {
         return vertices[0].equals(vertex) || vertices[1].equals(vertex);

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 /**
  * Created by Jens on 20.06.2017.
  */
-public class BigVertex extends Vertex implements Drawable {
+public class BigVertex extends Vertex {
 
     protected ArrayList<Edge> NEWedges = new ArrayList();
 

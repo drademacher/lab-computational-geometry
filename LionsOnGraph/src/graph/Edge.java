@@ -5,7 +5,7 @@ import util.Point;
 
 import java.util.ArrayList;
 
-public class Edge implements Drawable {
+public class Edge {
 
     private BigVertex[] vertices = new BigVertex[2];
     private ArrayList<SmallVertex> edgeVertices = new ArrayList<>();

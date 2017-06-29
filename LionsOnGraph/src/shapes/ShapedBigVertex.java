@@ -1,6 +1,5 @@
 package shapes;
 
-import graph.BigVertex;
 import graph.GraphController;
 import javafx.scene.Group;
 import javafx.scene.control.ContextMenu;
@@ -12,7 +11,7 @@ import visualization.ZoomScrollPane;
 
 import static shapes.ShapeConstants.*;
 
-public class ShapedBigVertex implements Shape {
+public class ShapedBigVertex implements ShapedVertex{
     private static ZoomScrollPane mainPane;
     private static Group shapeGroup;
 

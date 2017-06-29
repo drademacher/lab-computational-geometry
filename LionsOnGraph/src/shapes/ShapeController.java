@@ -1,5 +1,6 @@
 package shapes;
 
+import entities.Entity;
 import entities.Lion;
 import entities.Man;
 import graph.*;
@@ -13,7 +14,9 @@ import java.util.Map;
  */
 public class ShapeController {
 
-    Map<Drawable, Shape> map = new HashMap<>();
+    private Map<Vertex, ShapedVertex> mapVertices = new HashMap<>();
+    private Map<Entity, ShapedEntity> mapEntities = new HashMap<>();
+    private Map<Edge, ShapedEdge> mapEdges = new HashMap<>();
     private GraphController graphController;
 
     public ShapeController(GraphController graphController) {
@@ -28,20 +31,15 @@ public class ShapeController {
 
 
     public void relocateVertex(BigVertex vertex, Point newCoordinate) {
-        Shape shape = map.get(vertex);
+        ShapedVertex shape = mapVertices.get(vertex);
         shape.relocate(newCoordinate);
 
         for (Edge edge : vertex.getEdges()) {
-            Shape edgeShape = map.get(edge);
-            if (edgeShape instanceof ShapedEdge) {
-                //TODO how to solve the interface problem? -> ShapedEdges needs a special relocate() function
-                ((ShapedEdge) edgeShape).relocate(edge.getVertices()[0].getCoordinates(), edge.getVertices()[1].getCoordinates());
-            } else {
-                throw new IllegalArgumentException("Should be a ShapedEdge");
-            }
+            ShapedEdge edgeShape = mapEdges.get(edge);
+            edgeShape.relocate(edge.getVertices()[0].getCoordinates(), edge.getVertices()[1].getCoordinates());
 
             for (SmallVertex smallVertex : edge.getEdgeVertices()) {
-                Shape smalLVertexShape = map.get(smallVertex);
+                ShapedVertex smalLVertexShape = mapVertices.get(smallVertex);
                 smalLVertexShape.relocate(smallVertex.getCoordinates());
             }
         }
@@ -49,22 +47,22 @@ public class ShapeController {
 
     public void createVertex(Point coordinate) {
         ShapedBigVertex shape = new ShapedBigVertex(graphController, coordinate);
-        map.put(graphController.getBigVertexByCoordinate(coordinate), shape);
+        mapVertices.put(graphController.getBigVertexByCoordinate(coordinate), shape);
     }
 
     public void deleteVertex(BigVertex vertex) {
-        Shape shape = map.get(vertex);
+        ShapedVertex shape = mapVertices.get(vertex);
         shape.delete();
-        map.remove(vertex);
+        mapVertices.remove(vertex);
 
         for (Edge edge : vertex.getEdges()) {
-            Shape edgeShape = map.get(edge);
-            map.remove(edge);
+            ShapedEdge edgeShape = mapEdges.get(edge);
+            mapEdges.remove(edge);
             edgeShape.delete();
 
             for (SmallVertex smallVertex : edge.getEdgeVertices()) {
-                Shape smallVertexShape = map.get(smallVertex);
-                map.remove(smallVertex);
+                ShapedVertex smallVertexShape = mapVertices.get(smallVertex);
+                mapVertices.remove(smallVertex);
                 smallVertexShape.delete();
             }
         }
@@ -72,21 +70,21 @@ public class ShapeController {
 
     public void createEdge(Edge edge) {
         ShapedEdge shape = new ShapedEdge(graphController, edge.getStartCoordinates(), edge.getEndCoordinates());
-        map.put(edge, shape);
+        mapEdges.put(edge, shape);
 
         for (SmallVertex smallVertex : edge.getEdgeVertices()) {
             ShapedSmallVertex smallVertexShape = new ShapedSmallVertex(graphController, smallVertex.getCoordinates());
-            map.put(smallVertex, smallVertexShape);
+            mapVertices.put(smallVertex, smallVertexShape);
         }
     }
 
     public void removeEdge(Edge edge) {
-        Shape shape = map.get(edge);
+        ShapedEdge shape = mapEdges.get(edge);
         shape.delete();
-        map.remove(edge);
+        mapEdges.remove(edge);
         for (SmallVertex smallVertex : edge.getEdgeVertices()) {
-            Shape smalLVertexShape = map.get(smallVertex);
-            map.remove(smallVertex);
+            ShapedVertex smalLVertexShape = mapVertices.get(smallVertex);
+            mapVertices.remove(smallVertex);
             smalLVertexShape.delete();
         }
     }
@@ -103,31 +101,31 @@ public class ShapeController {
 
     public void createMan(Man man) {
         ShapedMan shape = new ShapedMan(graphController, man.getCoordinates());
-        map.put(man, shape);
+        mapEntities.put(man, shape);
     }
 
     public void createLion(Lion lion) {
         ShapedLion shape = new ShapedLion(graphController, lion.getCoordinates());
-        map.put(lion, shape);
+        mapEntities.put(lion, shape);
     }
 
     public void relocateMan(Man man) {
-        Shape shape = map.get(man);
+        ShapedEntity shape = mapEntities.get(man);
         shape.relocate(man.getCoordinates());
     }
 
     public void relocateLion(Lion lion) {
-        Shape shape = map.get(lion);
+        ShapedEntity shape = mapEntities.get(lion);
         shape.relocate(lion.getCoordinates());
     }
 
     public void removeMan(Man man) {
-        Shape shape = map.get(man);
+        ShapedEntity shape = mapEntities.get(man);
         shape.delete();
     }
 
     public void removeLion(Lion lion) {
-        Shape shape = map.get(lion);
+        ShapedEntity shape = mapEntities.get(lion);
         shape.delete();
     }
 

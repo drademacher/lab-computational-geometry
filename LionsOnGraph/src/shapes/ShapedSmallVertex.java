@@ -1,7 +1,6 @@
 package shapes;
 
 import graph.GraphController;
-import graph.SmallVertex;
 import javafx.scene.Group;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
@@ -11,7 +10,7 @@ import util.Point;
 
 import static shapes.ShapeConstants.*;
 
-public class ShapedSmallVertex implements Shape {
+public class ShapedSmallVertex implements ShapedVertex{
     private static Group shapeGroup = new Group();
 
     private Circle shape;

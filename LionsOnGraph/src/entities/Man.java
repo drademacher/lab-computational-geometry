@@ -1,12 +1,10 @@
 package entities;
 
-import graph.Drawable;
 import graph.GraphController;
 import graph.Vertex;
-import shapes.ShapedMan;
 import strategy.Strategy;
 
-public class Man extends Entity implements Drawable {
+public class Man extends Entity {
     // TODO: implement Man class
 
 

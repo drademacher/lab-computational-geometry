@@ -1,6 +1,5 @@
 package shapes;
 
-import graph.Edge;
 import graph.GraphController;
 import javafx.scene.Group;
 import javafx.scene.shape.Line;
@@ -9,7 +8,7 @@ import util.Point;
 import static shapes.ShapeConstants.COLOR_EDGE;
 
 
-public class ShapedEdge implements Shape {
+public class ShapedEdge {
     private static Group shapeGroup = new Group();
 
     private GraphController graphController;
@@ -33,12 +32,6 @@ public class ShapedEdge implements Shape {
         shape.setStartY(from.getY());
         shape.setEndX(to.getX());
         shape.setEndY(to.getY());
-    }
-
-    @Override
-    public void relocate(Point coordinates) {
-        //TODO how to solve the interface problem? -> ShapedEdges needs a special relocate() function
-        throw new IllegalArgumentException("ShapedEdges needs a special relocate() function");
     }
 
     public void delete() {

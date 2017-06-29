@@ -1,6 +1,5 @@
 package shapes;
 
-import entities.Lion;
 import graph.GraphController;
 import javafx.scene.Group;
 import javafx.scene.control.ContextMenu;
@@ -21,7 +20,7 @@ import static shapes.ShapeConstants.ENTITY_RADIUS;
 /**
  * Created by Jens on 25.06.2017.
  */
-public class ShapedLion implements Shape {
+public class ShapedLion  implements ShapedEntity{
     private static ZoomScrollPane mainPane;
     private static Group shapeGroup = new Group();
 

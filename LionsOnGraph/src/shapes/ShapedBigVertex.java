@@ -1,6 +1,6 @@
 package shapes;
 
-import graph.GraphController;
+import graph.CoreController;
 import javafx.scene.Group;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
@@ -16,12 +16,12 @@ public class ShapedBigVertex implements ShapedVertex{
     private static Group shapeGroup;
 
     private Circle shape;
-    private GraphController graphController;
+    private CoreController coreController;
     private Point coordinates;
 
 
-    public ShapedBigVertex(GraphController graphController, Point coordinates) {
-        this.graphController = graphController;
+    public ShapedBigVertex(CoreController coreController, Point coordinates) {
+        this.coreController = coreController;
         this.coordinates = coordinates;
 
 
@@ -35,7 +35,7 @@ public class ShapedBigVertex implements ShapedVertex{
         shape.setOnContextMenuRequested(event1 -> {
             event1.consume();
 
-            if (!this.graphController.isEditMode())
+            if (!this.coreController.isEditMode())
                 return;
 
             ContextMenu contextMenu = ContextMenuHolder.getFreshContextMenu();
@@ -52,7 +52,7 @@ public class ShapedBigVertex implements ShapedVertex{
 
                     mainPane.setOnMouseClicked(null);
 
-                    graphController.createEdge(graphController.getBigVertexByCoordinate(coordinates), graphController.getBigVertexByCoordinate(mainPane.getLocalCoordinates(event3.getX(), event3.getY())));
+                    coreController.createEdge(coreController.getBigVertexByCoordinate(coordinates), coreController.getBigVertexByCoordinate(mainPane.getLocalCoordinates(event3.getX(), event3.getY())));
 
                 });
             });
@@ -62,7 +62,7 @@ public class ShapedBigVertex implements ShapedVertex{
 
                     mainPane.setOnMouseClicked(null);
 
-                    graphController.removeEdge(graphController.getBigVertexByCoordinate(coordinates), graphController.getBigVertexByCoordinate(mainPane.getLocalCoordinates(event3.getX(), event3.getY())));
+                    coreController.removeEdge(coreController.getBigVertexByCoordinate(coordinates), coreController.getBigVertexByCoordinate(mainPane.getLocalCoordinates(event3.getX(), event3.getY())));
 
                 });
             });
@@ -73,26 +73,26 @@ public class ShapedBigVertex implements ShapedVertex{
                     mainPane.setOnMouseClicked(null);
 
 //                    System.out.println(mainPane.getLocalCoordinates(event3.getX(), event3.getY()));
-                    graphController.relocateVertex(graphController.getBigVertexByCoordinate(coordinates), mainPane.getLocalCoordinates(event3.getX(), event3.getY()));
+                    coreController.relocateVertex(coreController.getBigVertexByCoordinate(coordinates), mainPane.getLocalCoordinates(event3.getX(), event3.getY()));
 
                 });
             });
 
             item5.setOnAction(event2 -> {
-                graphController.deleteVertex(graphController.getBigVertexByCoordinate(coordinates));
+                coreController.deleteVertex(coreController.getBigVertexByCoordinate(coordinates));
 //                shapeGroup.getChildren().remove(shape);
             });
 
             item3.setOnAction(event2 -> {
                 System.out.println("Add Man");
                 // TODO: something like new Man(vertex.getCoordinates());
-                graphController.setMan(graphController.getBigVertexByCoordinate(coordinates));
+                coreController.setMan(coreController.getBigVertexByCoordinate(coordinates));
             });
 
             item4.setOnAction(event2 -> {
                 System.out.println("Add Lion");
                 // TODO: something like new Lion(vertex.getCoordinates());
-                graphController.setLion(graphController.getBigVertexByCoordinate(coordinates));
+                coreController.setLion(coreController.getBigVertexByCoordinate(coordinates));
             });
 
             contextMenu.getItems().addAll(item2, item5, new SeparatorMenuItem(), item0, item1, new SeparatorMenuItem(), item3, item4, new SeparatorMenuItem(), closeItem);

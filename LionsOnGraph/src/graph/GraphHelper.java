@@ -8,15 +8,15 @@ import java.util.*;
 public class GraphHelper {
 
     private static GraphHelper graphHelper;
-    private GraphController graphController;
+    private CoreController coreController;
 
-    private GraphHelper(GraphController graphController) {
-        this.graphController = graphController;
+    private GraphHelper(CoreController coreController) {
+        this.coreController = coreController;
     }
 
-    public static GraphHelper createGraphHelper(GraphController graphController) {
+    public static GraphHelper createGraphHelper(CoreController coreController) {
         if (graphHelper == null) {
-            graphHelper = new GraphHelper(graphController);
+            graphHelper = new GraphHelper(coreController);
         }
         return graphHelper;
     }
@@ -39,7 +39,7 @@ public class GraphHelper {
             current = queue.poll();
 
             // check break condition
-            if (graphController.isManOnVertex(current)) {
+            if (coreController.isManOnVertex(current)) {
                 return map.get(current);
             }
 
@@ -50,7 +50,7 @@ public class GraphHelper {
                     map.put(nextVertex, map.get(current) + 1);
                     set.add(nextVertex);
 
-                    if (!graphController.isLionOnVertex(nextVertex)) {
+                    if (!coreController.isLionOnVertex(nextVertex)) {
                         queue.add(nextVertex);
                     }
                 }
@@ -78,7 +78,7 @@ public class GraphHelper {
             current = queue.poll();
 
             // check break condition
-            if (graphController.isLionOnVertex(current)) {
+            if (coreController.isLionOnVertex(current)) {
                 return map.get(current);
             }
 
@@ -89,7 +89,7 @@ public class GraphHelper {
                     map.put(nextVertex, map.get(current) + 1);
                     set.add(nextVertex);
 
-                    if (!graphController.isManOnVertex(nextVertex)) {
+                    if (!coreController.isManOnVertex(nextVertex)) {
                         queue.add(nextVertex);
                     }
                 }

@@ -1,6 +1,6 @@
 package shapes;
 
-import graph.GraphController;
+import graph.CoreController;
 import javafx.scene.Group;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
@@ -14,11 +14,11 @@ public class ShapedSmallVertex implements ShapedVertex{
     private static Group shapeGroup = new Group();
 
     private Circle shape;
-    private GraphController graphController;
+    private CoreController coreController;
 
-    public ShapedSmallVertex(GraphController graphController, Point coordinates) {
+    public ShapedSmallVertex(CoreController coreController, Point coordinates) {
 
-        this.graphController = graphController;
+        this.coreController = coreController;
 
         shape = new Circle(coordinates.getX(), coordinates.getY(), SMALL_VERTEX_RADIUS);
         shape.setStrokeWidth(SMALL_VERTEX_RADIUS / 5);
@@ -29,7 +29,7 @@ public class ShapedSmallVertex implements ShapedVertex{
         shape.setOnContextMenuRequested(event1 -> {
             event1.consume();
 
-            if (!this.graphController.isEditMode())
+            if (!this.coreController.isEditMode())
                 return;
 
             final ContextMenu contextMenu = ContextMenuHolder.getFreshContextMenu();
@@ -41,13 +41,13 @@ public class ShapedSmallVertex implements ShapedVertex{
             item0.setOnAction(event2 -> {
                 System.out.println("Add Man");
                 // TODO: something like new Man(vertex.getCoordinates());
-                graphController.setMan(graphController.getSmallVertexByCoordinate(coordinates));
+                coreController.setMan(coreController.getSmallVertexByCoordinate(coordinates));
             });
 
             item1.setOnAction(event2 -> {
                 System.out.println("Add Lion");
                 // TODO: something like new Lion(vertex.getCoordinates());
-                graphController.setLion(graphController.getSmallVertexByCoordinate(coordinates));
+                coreController.setLion(coreController.getSmallVertexByCoordinate(coordinates));
             });
 
             contextMenu.getItems().addAll(item0, item1, new SeparatorMenuItem(), closeItem);

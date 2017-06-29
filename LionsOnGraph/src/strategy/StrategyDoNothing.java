@@ -1,13 +1,13 @@
 package strategy;
 
 import entities.Entity;
-import graph.GraphController;
+import graph.CoreController;
 import graph.Vertex;
 
 public class StrategyDoNothing implements Strategy {
 
     @Override
-    public Vertex getNextPosition(GraphController graphController, Entity e) {
+    public Vertex getNextPosition(CoreController coreController, Entity e) {
         return e.getCurrentPosition();
     }
 }

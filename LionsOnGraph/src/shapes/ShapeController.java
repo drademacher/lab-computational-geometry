@@ -17,10 +17,10 @@ public class ShapeController {
     private Map<Vertex, ShapedVertex> mapVertices = new HashMap<>();
     private Map<Entity, ShapedEntity> mapEntities = new HashMap<>();
     private Map<Edge, ShapedEdge> mapEdges = new HashMap<>();
-    private GraphController graphController;
+    private CoreController coreController;
 
-    public ShapeController(GraphController graphController) {
-        this.graphController = graphController;
+    public ShapeController(CoreController coreController) {
+        this.coreController = coreController;
     }
 
     /* ****************************
@@ -46,8 +46,8 @@ public class ShapeController {
     }
 
     public void createVertex(Point coordinate) {
-        ShapedBigVertex shape = new ShapedBigVertex(graphController, coordinate);
-        mapVertices.put(graphController.getBigVertexByCoordinate(coordinate), shape);
+        ShapedBigVertex shape = new ShapedBigVertex(coreController, coordinate);
+        mapVertices.put(coreController.getBigVertexByCoordinate(coordinate), shape);
     }
 
     public void deleteVertex(BigVertex vertex) {
@@ -69,11 +69,11 @@ public class ShapeController {
     }
 
     public void createEdge(Edge edge) {
-        ShapedEdge shape = new ShapedEdge(graphController, edge.getStartCoordinates(), edge.getEndCoordinates());
+        ShapedEdge shape = new ShapedEdge(coreController, edge.getStartCoordinates(), edge.getEndCoordinates());
         mapEdges.put(edge, shape);
 
         for (SmallVertex smallVertex : edge.getEdgeVertices()) {
-            ShapedSmallVertex smallVertexShape = new ShapedSmallVertex(graphController, smallVertex.getCoordinates());
+            ShapedSmallVertex smallVertexShape = new ShapedSmallVertex(coreController, smallVertex.getCoordinates());
             mapVertices.put(smallVertex, smallVertexShape);
         }
     }
@@ -100,12 +100,12 @@ public class ShapeController {
      * ****************************/
 
     public void createMan(Man man) {
-        ShapedMan shape = new ShapedMan(graphController, man.getCoordinates());
+        ShapedMan shape = new ShapedMan(coreController, man.getCoordinates());
         mapEntities.put(man, shape);
     }
 
     public void createLion(Lion lion) {
-        ShapedLion shape = new ShapedLion(graphController, lion.getCoordinates());
+        ShapedLion shape = new ShapedLion(coreController, lion.getCoordinates());
         mapEntities.put(lion, shape);
     }
 

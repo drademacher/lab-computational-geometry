@@ -1,6 +1,6 @@
 package shapes;
 
-import graph.GraphController;
+import graph.CoreController;
 import javafx.scene.Group;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Menu;
@@ -25,11 +25,11 @@ public class ShapedLion  implements ShapedEntity{
     private static Group shapeGroup = new Group();
 
     private Circle shape;
-    private GraphController graphController;
+    private CoreController coreController;
 
-    public ShapedLion(GraphController graphController, Point coordinates) {
+    public ShapedLion(CoreController coreController, Point coordinates) {
 
-        this.graphController = graphController;
+        this.coreController = coreController;
 
         shape = new Circle(coordinates.getX(), coordinates.getY(), ENTITY_RADIUS, COLOR_LION);
         shapeGroup.getChildren().add(shape);
@@ -37,7 +37,7 @@ public class ShapedLion  implements ShapedEntity{
         shape.setOnContextMenuRequested(event1 -> {
             event1.consume();
 
-            if (!this.graphController.isEditMode())
+            if (!this.coreController.isEditMode())
                 return;
 
             final ContextMenu contextMenu = ContextMenuHolder.getFreshContextMenu();
@@ -53,7 +53,7 @@ public class ShapedLion  implements ShapedEntity{
 
 
             item0.setOnAction(event2 -> {
-                graphController.removeLion(graphController.getLionByCoordinate(coordinates));
+                coreController.removeLion(coreController.getLionByCoordinate(coordinates));
             });
 
             item1.setOnAction(event2 -> {
@@ -62,24 +62,24 @@ public class ShapedLion  implements ShapedEntity{
                     mainPane.setOnMouseClicked(null);
 
 //                    System.out.println(mainPane.getLocalCoordinates(event3.getX(), event3.getY()));
-                    graphController.relocateLion(graphController.getLionByCoordinate(coordinates), graphController.getVertexByCoordinate(mainPane.getLocalCoordinates(event3.getX(), event3.getY())));
+                    coreController.relocateLion(coreController.getLionByCoordinate(coordinates), coreController.getVertexByCoordinate(mainPane.getLocalCoordinates(event3.getX(), event3.getY())));
 
                 });
             });
 
             item2.setOnAction(event2 -> {
                 Strategy strategy = new StrategyDoNothing();
-                graphController.setLionStrategy(graphController.getLionByCoordinate(coordinates), strategy);
+                coreController.setLionStrategy(coreController.getLionByCoordinate(coordinates), strategy);
             });
 
             item3.setOnAction(event2 -> {
                 Strategy strategy = new StrategyAggroGreedy();
-                graphController.setLionStrategy(graphController.getLionByCoordinate(coordinates), strategy);
+                coreController.setLionStrategy(coreController.getLionByCoordinate(coordinates), strategy);
             });
 
             item4.setOnAction(event2 -> {
                 Strategy strategy = new StrategyRandom();
-                graphController.setLionStrategy(graphController.getLionByCoordinate(coordinates), strategy);
+                coreController.setLionStrategy(coreController.getLionByCoordinate(coordinates), strategy);
             });
 
             contextMenu.getItems().addAll(item0, item1, strategyMenu, new SeparatorMenuItem(), closeItem);

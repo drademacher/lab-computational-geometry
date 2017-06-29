@@ -1,6 +1,6 @@
 package shapes;
 
-import graph.GraphController;
+import graph.CoreController;
 import javafx.scene.Group;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Menu;
@@ -22,11 +22,11 @@ public class ShapedMan implements ShapedEntity{
     private static Group shapeGroup = new Group();
 
     private Circle shape;
-    private GraphController graphController;
+    private CoreController coreController;
 
-    public ShapedMan(GraphController graphController, Point coordinates) {
+    public ShapedMan(CoreController coreController, Point coordinates) {
 
-        this.graphController = graphController;
+        this.coreController = coreController;
 
         shape = new Circle(coordinates.getX(), coordinates.getY(), ENTITY_RADIUS, COLOR_MAN);
         shapeGroup.getChildren().add(shape);
@@ -34,7 +34,7 @@ public class ShapedMan implements ShapedEntity{
         shape.setOnContextMenuRequested(event1 -> {
             event1.consume();
 
-            if (!this.graphController.isEditMode())
+            if (!this.coreController.isEditMode())
                 return;
 
             final ContextMenu contextMenu = ContextMenuHolder.getFreshContextMenu();
@@ -51,21 +51,21 @@ public class ShapedMan implements ShapedEntity{
 
             item2.setOnAction(event2 -> {
                 Strategy strategy = new StrategyDoNothing();
-                graphController.setManStrategy(graphController.getManByCoordinate(coordinates), strategy);
+                coreController.setManStrategy(coreController.getManByCoordinate(coordinates), strategy);
             });
 
             item3.setOnAction(event2 -> {
                 Strategy strategy = new StrategyRunAwayGreedy();
-                graphController.setManStrategy(graphController.getManByCoordinate(coordinates), strategy);
+                coreController.setManStrategy(coreController.getManByCoordinate(coordinates), strategy);
             });
 
             item4.setOnAction(event2 -> {
                 Strategy strategy = new StrategyRandom();
-                graphController.setManStrategy(graphController.getManByCoordinate(coordinates), strategy);
+                coreController.setManStrategy(coreController.getManByCoordinate(coordinates), strategy);
             });
 
             item0.setOnAction(event2 -> {
-                graphController.removeMan(graphController.getManByCoordinate(coordinates));
+                coreController.removeMan(coreController.getManByCoordinate(coordinates));
             });
 
             item1.setOnAction(event2 -> {
@@ -74,7 +74,7 @@ public class ShapedMan implements ShapedEntity{
                     mainPane.setOnMouseClicked(null);
 
 //                    System.out.println(mainPane.getLocalCoordinates(event3.getX(), event3.getY()));
-                    graphController.relocateMan(graphController.getManByCoordinate(coordinates), graphController.getVertexByCoordinate(mainPane.getLocalCoordinates(event3.getX(), event3.getY())));
+                    coreController.relocateMan(coreController.getManByCoordinate(coordinates), coreController.getVertexByCoordinate(mainPane.getLocalCoordinates(event3.getX(), event3.getY())));
 
                 });
             });

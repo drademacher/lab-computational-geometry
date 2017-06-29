@@ -1,6 +1,6 @@
 package entities;
 
-import graph.GraphController;
+import graph.CoreController;
 import graph.Vertex;
 import strategy.Strategy;
 
@@ -8,8 +8,8 @@ public class Man extends Entity {
     // TODO: implement Man class
 
 
-    public Man(Vertex startPosition, Strategy strategy, GraphController graphController) {
-        super(startPosition, strategy, graphController);
+    public Man(Vertex startPosition, Strategy strategy, CoreController coreController) {
+        super(startPosition, strategy, coreController);
     }
 
     public Lion getNearestLion() {

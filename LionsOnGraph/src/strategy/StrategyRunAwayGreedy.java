@@ -6,8 +6,8 @@ import graph.*;
 public class StrategyRunAwayGreedy implements Strategy {
 
     @Override
-    public Vertex getNextPosition(GraphController graphController, Entity e) {
-        GraphHelper helper = GraphHelper.createGraphHelper(graphController);
+    public Vertex getNextPosition(CoreController coreController, Entity e) {
+        GraphHelper helper = GraphHelper.createGraphHelper(coreController);
 
         Vertex currentPosition = e.getCurrentPosition();
 

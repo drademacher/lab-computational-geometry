@@ -1,13 +1,11 @@
 package visualization;
 
-import graph.GraphController;
+import graph.CoreController;
 import javafx.animation.AnimationTimer;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Bounds;
-import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
@@ -51,7 +49,7 @@ public class VisController implements Initializable {
     private int tickAccount = 0;
     final private int TICKS_PER_STEP = 20;
 
-    private GraphController coreController = new GraphController();
+    private CoreController coreController = new CoreController();
 
 
     private Stage stage;

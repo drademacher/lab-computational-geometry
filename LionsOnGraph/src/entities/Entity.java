@@ -1,6 +1,6 @@
 package entities;
 
-import graph.GraphController;
+import graph.CoreController;
 import graph.Vertex;
 import strategy.Strategy;
 import util.Point;
@@ -10,16 +10,16 @@ public abstract class Entity {
 
     protected Vertex position;
     protected Strategy strategy;
-    protected GraphController graphController;
+    protected CoreController coreController;
 
-    public Entity(Vertex startPosition, Strategy strategy, GraphController graphController) {
+    public Entity(Vertex startPosition, Strategy strategy, CoreController coreController) {
         this.position = startPosition;
         this.strategy = strategy;
-        this.graphController = graphController;
+        this.coreController = coreController;
     }
 
     public Vertex getNextPosition() {
-        return strategy.getNextPosition(graphController, this);
+        return strategy.getNextPosition(coreController, this);
     }
 
     public Vertex goToNextPosition() {

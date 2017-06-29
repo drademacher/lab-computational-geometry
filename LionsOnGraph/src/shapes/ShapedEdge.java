@@ -1,6 +1,6 @@
 package shapes;
 
-import graph.GraphController;
+import graph.CoreController;
 import javafx.scene.Group;
 import javafx.scene.shape.Line;
 import util.Point;
@@ -11,12 +11,12 @@ import static shapes.ShapeConstants.COLOR_EDGE;
 public class ShapedEdge {
     private static Group shapeGroup = new Group();
 
-    private GraphController graphController;
+    private CoreController coreController;
     private Line shape;
 
-    public ShapedEdge(GraphController graphController, Point from, Point to) {
+    public ShapedEdge(CoreController coreController, Point from, Point to) {
 
-        this.graphController = graphController;
+        this.coreController = coreController;
 
         shape = new Line(from.getX(), from.getY(), to.getX(), to.getY());
         shape.setStroke(COLOR_EDGE);

@@ -5,9 +5,9 @@ import graph.*;
 
 public class StrategyAggroGreedy implements Strategy {
     @Override
-    public Vertex getNextPosition(GraphController graphController, Entity e) {
+    public Vertex getNextPosition(CoreController coreController, Entity e) {
 
-        GraphHelper helper = GraphHelper.createGraphHelper(graphController);
+        GraphHelper helper = GraphHelper.createGraphHelper(coreController);
 
         Vertex currentPosition = e.getCurrentPosition();
 

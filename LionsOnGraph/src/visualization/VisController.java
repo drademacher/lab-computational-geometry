@@ -91,7 +91,6 @@ public class VisController implements Initializable {
 
         stepAnimationButton.setOnMouseClicked(event -> {
             this.coreController.simulateStep();
-            this.coreController.debugGraph();
         });
 
         playAnimationButton.setOnMouseClicked(event -> {
@@ -163,9 +162,10 @@ public class VisController implements Initializable {
         Group vertexShapes = new Group();
         Group edgeShapes = new Group();
         Group entityShapes = new Group();
+        Group lionRangeShapes = new Group();
 
         zoomScrollPane.getNodesHolder().clear();
-        zoomScrollPane.getNodesHolder().addAll(edgeShapes, vertexShapes, entityShapes);
+        zoomScrollPane.getNodesHolder().addAll(edgeShapes, vertexShapes, lionRangeShapes, entityShapes);
 
 
         ShapedBigVertex.setMainPane(zoomScrollPane);
@@ -176,6 +176,7 @@ public class VisController implements Initializable {
         ShapedMan.setShapeGroup(entityShapes);
         ShapedLion.setMainPane(zoomScrollPane);
         ShapedLion.setShapeGroup(entityShapes);
+        ShapedRange.setShapeGroup(entityShapes);
 
     }
 

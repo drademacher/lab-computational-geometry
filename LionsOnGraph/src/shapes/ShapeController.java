@@ -6,6 +6,7 @@ import entities.Man;
 import graph.*;
 import util.Point;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,6 +18,7 @@ public class ShapeController {
     private Map<Vertex, ShapedVertex> mapVertices = new HashMap<>();
     private Map<Entity, ShapedEntity> mapEntities = new HashMap<>();
     private Map<Edge, ShapedEdge> mapEdges = new HashMap<>();
+    private Map<Lion, ArrayList<ShapedRange>> mapLionRange = new HashMap<>();
     private CoreController coreController;
 
     public ShapeController(CoreController coreController) {
@@ -113,6 +115,7 @@ public class ShapeController {
     public void createLion(Lion lion) {
         ShapedLion shape = new ShapedLion(coreController, lion.getCoordinates());
         mapEntities.put(lion, shape);
+        updateLionRange(lion);
     }
 
     public void relocateMan(Man man) {
@@ -123,6 +126,7 @@ public class ShapeController {
     public void relocateLion(Lion lion) {
         ShapedEntity shape = mapEntities.get(lion);
         shape.relocate(lion.getCoordinates());
+        updateLionRange(lion);
     }
 
     public void removeMan(Man man) {
@@ -135,4 +139,29 @@ public class ShapeController {
         shape.delete();
     }
 
+    public void updateLionRange(Lion lion) {
+        System.out.println("UPDATE LION RANGE");
+        ArrayList<ShapedRange> rangeVertices = mapLionRange.get(lion);
+        if(rangeVertices == null){
+            System.out.println("== null...");
+            rangeVertices = new ArrayList<ShapedRange>();
+        }
+        System.out.println(lion.getRangeVertices().size());
+        while(lion.getRangeVertices().size() > rangeVertices.size()){
+            System.out.println("adding...");
+            rangeVertices.add(new ShapedRange(coreController, new Point(0,0)));
+        }
+        while(lion.getRangeVertices().size() < rangeVertices.size()){
+            System.out.println("deleting...");
+            rangeVertices.get(0).delete();
+            rangeVertices.remove(0);
+        }
+
+        //update
+        for(int i = 0; i < rangeVertices.size(); i++){
+            rangeVertices.get(i).relocate(lion.getRangeVertices().get(i).getCoordinates());
+        }
+
+        mapLionRange.put(lion, rangeVertices);
+    }
 }

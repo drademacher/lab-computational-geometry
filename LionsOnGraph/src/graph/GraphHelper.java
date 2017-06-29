@@ -99,4 +99,41 @@ public class GraphHelper {
         return Integer.MAX_VALUE;
 
     }
+
+    public ArrayList<Vertex> BFSgetAllVerticesTill(Vertex startVertex, int number) {
+
+        ArrayList<Vertex> result = new ArrayList<>();
+
+        Map<Vertex, Integer> map = new HashMap<>();
+        Set<Vertex> set = new HashSet<>();
+        Queue<Vertex> queue = new LinkedList<>();
+        Vertex current = null;
+
+        map.put(startVertex, 0);
+
+        set.add(startVertex);
+        queue.add(startVertex);
+
+        while (!queue.isEmpty()) {
+            current = queue.poll();
+
+            // check break condition
+            if (map.get(current) <= number && map.get(current) > 0) {
+                result.add(current);
+            }
+
+            for (Connection connection : current.getConnections()) {
+                Vertex nextVertex = connection.getNeighbor(current);
+
+                if (!set.contains(nextVertex)) {
+                    map.put(nextVertex, map.get(current) + 1);
+                    set.add(nextVertex);
+
+                    queue.add(nextVertex);
+                }
+            }
+        }
+
+        return result;
+    }
 }

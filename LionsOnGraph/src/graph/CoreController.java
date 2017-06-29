@@ -265,6 +265,14 @@ public class CoreController implements Api {
         return null;
     }
 
+    public void setLionRange(Lion lion, int range){
+        if(range < 0){
+            return;
+        }
+        lion.setRange(range);
+        shapeController.updateLionRange(lion);
+    }
+
 
 
 
@@ -449,6 +457,8 @@ public class CoreController implements Api {
         this.createEdge(this.getBigVertexByCoordinate(new Point(10, 30)), this.getBigVertexByCoordinate(new Point(0, 0)));
 
         this.setLion(this.getBigVertexByCoordinate(new Point(40, 20)), new StrategyRandom());
+        Lion lion = this.getLions().get(0);
+        lion.setRange(3);
 
         debugGraph();
 
@@ -477,10 +487,14 @@ public class CoreController implements Api {
 //        this.relocateVertex(this.getBigVertexByCoordinate(new Point(50, 20)), new Point(0, -100));
 
 
-        this.debugGraph();
 
         this.createEdge(this.getBigVertexByCoordinate(new Point(50, 20)), this.getBigVertexByCoordinate(new Point(220, 140)), 2);
-        this.removeEdge(this.getBigVertexByCoordinate(new Point(50, 20)), this.getBigVertexByCoordinate(new Point(190, 20)));
+
+
+        this.setLion(this.getBigVertexByCoordinate(new Point(50, 20)), new StrategyRandom());
+        Lion lion = this.getLions().get(0);
+        lion.setRange(3);
+
 
 
         System.out.println("#############################");
@@ -530,13 +544,10 @@ public class CoreController implements Api {
             man.goToNextPosition();
             shapeController.relocateMan(man);
         }
-
-        System.out.println(lions);
         for (Lion lion : this.getLions()) {
             lion.goToNextPosition();
             shapeController.relocateLion(lion);
         }
-        System.out.println(lions);
 //        this.state = new State(this.getMen(), this.getLions());
 //        return this.state;
     }

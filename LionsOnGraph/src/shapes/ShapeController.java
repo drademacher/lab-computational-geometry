@@ -43,6 +43,12 @@ public class ShapeController {
                 smalLVertexShape.relocate(smallVertex.getCoordinates());
             }
         }
+        for(Map.Entry<Entity, ShapedEntity> entry : mapEntities.entrySet()) {
+            Entity entity = entry.getKey();
+            ShapedEntity shapedEntity = entry.getValue();
+
+            shapedEntity.relocate(entity.getCoordinates());
+        }
     }
 
     public void createVertex(Point coordinate) {

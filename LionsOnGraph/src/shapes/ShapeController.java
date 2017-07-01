@@ -45,7 +45,7 @@ public class ShapeController {
                 smalLVertexShape.relocate(smallVertex.getCoordinates());
             }
         }
-        for(Map.Entry<Entity, ShapedEntity> entry : mapEntities.entrySet()) {
+        for (Map.Entry<Entity, ShapedEntity> entry : mapEntities.entrySet()) {
             Entity entity = entry.getKey();
             ShapedEntity shapedEntity = entry.getValue();
 
@@ -141,28 +141,28 @@ public class ShapeController {
 
     public void updateLionRange(Lion lion) {
         ArrayList<ShapedRange> rangeVertices = mapLionRange.get(lion);
-        if(rangeVertices == null){
+        if (rangeVertices == null) {
             rangeVertices = new ArrayList<ShapedRange>();
         }
 
-        while(lion.getRangeVertices().size() > rangeVertices.size()){
-            rangeVertices.add(new ShapedRange(coreController, new Point(0,0)));
+        while (lion.getRangeVertices().size() > rangeVertices.size()) {
+            rangeVertices.add(new ShapedRange(coreController, new Point(0, 0)));
         }
-        while(lion.getRangeVertices().size() < rangeVertices.size()){
+        while (lion.getRangeVertices().size() < rangeVertices.size()) {
             rangeVertices.get(0).delete();
             rangeVertices.remove(0);
         }
 
         //update
-        for(int i = 0; i < rangeVertices.size(); i++){
+        for (int i = 0; i < rangeVertices.size(); i++) {
             rangeVertices.get(i).relocate(lion.getRangeVertices().get(i).getCoordinates());
         }
 
         mapLionRange.put(lion, rangeVertices);
     }
 
-    public void updateAllLionRanges(ArrayList<Lion> lions){
-        for(Lion lion : lions){
+    public void updateAllLionRanges(ArrayList<Lion> lions) {
+        for (Lion lion : lions) {
             updateLionRange(lion);
         }
     }

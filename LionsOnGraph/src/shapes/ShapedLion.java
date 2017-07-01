@@ -20,7 +20,7 @@ import static shapes.ShapeConstants.ENTITY_RADIUS;
 /**
  * Created by Jens on 25.06.2017.
  */
-public class ShapedLion  implements ShapedEntity{
+public class ShapedLion implements ShapedEntity {
     private static ZoomScrollPane mainPane;
     private static Group shapeGroup = new Group();
 
@@ -61,8 +61,6 @@ public class ShapedLion  implements ShapedEntity{
             MenuItem iteme3 = new MenuItem("Set");
 
 
-
-
             iteme1.setOnAction(event2 -> {
                 Lion lion = coreController.getLionByCoordinate(coordinates);
                 coreController.incrementLionRange(coordinates);
@@ -89,11 +87,6 @@ public class ShapedLion  implements ShapedEntity{
             });
 
             edgeMenu.getItems().addAll(iteme1, iteme2, iteme3);
-
-
-
-
-
 
 
             item0.setOnAction(event2 -> {

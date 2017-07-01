@@ -19,6 +19,7 @@ public class Lion extends Entity {
     public Lion(Vertex startPosition, CoreController coreController) {
         this(startPosition, 0, coreController);
     }
+
     public Lion(Vertex startPosition, int range, CoreController coreController) {
         super(startPosition, coreController);
         this.range = range;
@@ -37,7 +38,7 @@ public class Lion extends Entity {
         this.range = range;
     }
 
-    public ArrayList<Vertex> getRangeVertices(){
+    public ArrayList<Vertex> getRangeVertices() {
         GraphHelper graphHelper = GraphHelper.createGraphHelper(coreController);
         return graphHelper.BFSgetAllVerticesTill(position, getRange());
     }

@@ -32,7 +32,7 @@ public abstract class StrategyLion implements Strategy {
 
         //fallback
         ArrayList<Vertex> result = calculatePossibleSteps();
-        if(result.size() > 0) {
+        if (result.size() > 0) {
             return calculatePossibleSteps().get(0) != null ? calculatePossibleSteps().get(0) : lion.getCurrentPosition();
         }
         return lion.getCurrentPosition();

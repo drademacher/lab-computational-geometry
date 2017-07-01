@@ -11,7 +11,7 @@ import visualization.ZoomScrollPane;
 
 import static shapes.ShapeConstants.*;
 
-public class ShapedBigVertex implements ShapedVertex{
+public class ShapedBigVertex implements ShapedVertex {
     private static ZoomScrollPane mainPane;
     private static Group shapeGroup;
 

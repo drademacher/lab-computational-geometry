@@ -10,7 +10,7 @@ import util.Point;
 
 import static shapes.ShapeConstants.*;
 
-public class ShapedSmallVertex implements ShapedVertex{
+public class ShapedSmallVertex implements ShapedVertex {
     private static Group shapeGroup = new Group();
 
     private Circle shape;

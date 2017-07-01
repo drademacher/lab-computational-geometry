@@ -159,8 +159,8 @@ public class CoreController implements Api {
     public void debugGraph() {
 
         System.out.println("##############");
-        System.out.println("men: "+men);
-        System.out.println("lions: "+lions);
+        System.out.println("men: " + men);
+        System.out.println("lions: " + lions);
         graph.debugGraph();
     }
 
@@ -391,7 +391,7 @@ public class CoreController implements Api {
             return;
         }
 
-        setLionRange(lionCoordinate, lion.getRange() +1);
+        setLionRange(lionCoordinate, lion.getRange() + 1);
     }
 
     public void decrementLionRange(Point lionCoordinate) {
@@ -403,7 +403,7 @@ public class CoreController implements Api {
             return;
         }
 
-        setLionRange(lionCoordinate, lion.getRange() -1);
+        setLionRange(lionCoordinate, lion.getRange() - 1);
     }
 
     public void setLionRange(Point lionCoordinate, int range) {
@@ -431,13 +431,6 @@ public class CoreController implements Api {
         man.setDistance(distance);
         man.setKeepDistanceExact(keepExactDistance);
     }
-
-
-
-
-
-
-
 
 
 

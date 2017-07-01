@@ -24,18 +24,12 @@ public class StrategyRunAwayGreedy extends StrategyMan {
 
             int calculatedSteps = helper.BFSToLion(currentPosition, possibleVertex);
 
-
-            System.out.println("##################");
-            System.out.println(result);
             if (calculatedSteps > steps) {
-                System.out.println("case #1");
                 steps = calculatedSteps;
                 result.add(0, possibleVertex);
             } else {
-                System.out.println("case #2");
                 result.add(possibleVertex);
             }
-            System.out.println(result);
         }
 
         return result;

@@ -29,7 +29,7 @@ public class Man extends Entity {
         return distance;
     }
 
-    public void removeDistance(){
+    public void removeDistance() {
         this.distance = 0;
         this.keepDistanceExact = false;
     }

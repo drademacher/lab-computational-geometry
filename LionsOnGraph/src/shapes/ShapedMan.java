@@ -21,7 +21,7 @@ import static shapes.ShapeConstants.ENTITY_RADIUS;
 /**
  * Created by Jens on 25.06.2017.
  */
-public class ShapedMan implements ShapedEntity{
+public class ShapedMan implements ShapedEntity {
     private static ZoomScrollPane mainPane;
     private static Group shapeGroup = new Group();
 

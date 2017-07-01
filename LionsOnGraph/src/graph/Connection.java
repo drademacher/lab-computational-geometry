@@ -34,6 +34,6 @@ public class Connection {
 
     @Override
     public String toString() {
-        return "Connection between vertex: " + vertices[0].getId() + " and vertex: " + vertices[1].getId();
+        return "C: " + vertices[0].getId() + " - " + vertices[1].getId();
     }
 }

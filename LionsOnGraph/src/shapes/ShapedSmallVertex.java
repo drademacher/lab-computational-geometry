@@ -10,7 +10,7 @@ import util.Point;
 
 import static shapes.ShapeConstants.*;
 
-public class ShapedSmallVertex implements ShapedVertex{
+public class ShapedSmallVertex implements ShapedVertex {
     private static Group shapeGroup = new Group();
 
     private Circle shape;
@@ -43,13 +43,13 @@ public class ShapedSmallVertex implements ShapedVertex{
             item0.setOnAction(event2 -> {
                 System.out.println("Add Man");
                 // TODO: something like new Man(vertex.getCoordinates());
-                coreController.setMan(coreController.getSmallVertexByCoordinate(coordinates));
+                coreController.setMan(coordinates);
             });
 
             item1.setOnAction(event2 -> {
                 System.out.println("Add Lion");
                 // TODO: something like new Lion(vertex.getCoordinates());
-                coreController.setLion(coreController.getSmallVertexByCoordinate(coordinates));
+                coreController.setLion(coordinates);
             });
 
             contextMenu.getItems().addAll(item0, item1, new SeparatorMenuItem(), closeItem);

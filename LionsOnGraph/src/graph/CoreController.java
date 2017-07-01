@@ -4,9 +4,8 @@ import entities.Lion;
 import entities.Man;
 import shapes.ShapeController;
 import strategy.Strategy;
-import strategy.StrategyAggroGreedy;
-import strategy.StrategyRandom;
-import strategy.StrategyRunAwayGreedy;
+import strategy.LionStrategies.StrategyAggroGreedy;
+import strategy.ManStrategies.StrategyRunAwayGreedy;
 import util.Point;
 
 import java.io.BufferedReader;
@@ -14,7 +13,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
 
-public class CoreController implements Api {
+public class CoreController {
     private boolean editMode = true;
 
     private ArrayList<Lion> lions = new ArrayList<>();
@@ -24,7 +23,7 @@ public class CoreController implements Api {
     private ShapeController shapeController;
 
     public CoreController() {
-        this.graph = new GraphController(this);
+        this.graph = new GraphController();
         this.shapeController = new ShapeController(this);
     }
 
@@ -34,7 +33,6 @@ public class CoreController implements Api {
      *
      * ****************************/
 
-    @Override
     public BigVertex createVertex(Point coordinate) {
         if (coordinate == null) {
             return null;
@@ -45,9 +43,12 @@ public class CoreController implements Api {
         return vertex;//TODO
     }
 
-    @Override
-    public BigVertex relocateVertex(BigVertex vertex, Point newCoordinate) {
-        if (vertex == null || newCoordinate == null) {
+    public BigVertex relocateVertex(Point vertexCoordinates, Point newCoordinate) {
+        if (vertexCoordinates == null || newCoordinate == null) {
+            return null;
+        }
+        BigVertex vertex = getBigVertexByCoordinate(vertexCoordinates);
+        if (vertex == null) {
             return null;
         }
 
@@ -57,8 +58,11 @@ public class CoreController implements Api {
         return vertex;//TODO
     }
 
-    @Override
-    public BigVertex deleteVertex(BigVertex vertex) {
+    public BigVertex deleteVertex(Point vertexCoordinates) {
+        if (vertexCoordinates == null) {
+            return null;
+        }
+        BigVertex vertex = getBigVertexByCoordinate(vertexCoordinates);
         if (vertex == null) {
             return null;
         }
@@ -71,19 +75,21 @@ public class CoreController implements Api {
         return vertex; //TODO
     }
 
-    public Edge createEdge(BigVertex vertex1, BigVertex vertex2) {
+    public Edge createEdge(Point vertex1Coordinates, Point vertex2Coordinates) {
+        return createEdge(vertex1Coordinates, vertex2Coordinates, 4);
+    }
+
+    public Edge createEdge(Point vertex1Coordinates, Point vertex2Coordinates, int weight) {
+        if (vertex1Coordinates == null || vertex2Coordinates == null || weight < 0) {
+            return null;
+        }
+        BigVertex vertex1 = getBigVertexByCoordinate(vertex1Coordinates);
+        BigVertex vertex2 = getBigVertexByCoordinate(vertex2Coordinates);
         if (vertex1 == null || vertex2 == null) {
             return null;
         }
 
-        return createEdge(vertex1, vertex2, 4);
-    }
 
-    @Override
-    public Edge createEdge(BigVertex vertex1, BigVertex vertex2, int weight) {
-        if (vertex1 == null || vertex2 == null || weight < 0) {
-            return null;
-        }
         Edge edge = this.graph.createEdge(vertex1, vertex2, weight);
 
         this.shapeController.createEdge(edge);
@@ -91,11 +97,16 @@ public class CoreController implements Api {
         return edge;//TODO
     }
 
-    @Override
-    public Edge removeEdge(BigVertex vertex1, BigVertex vertex2) {
+    public Edge removeEdge(Point vertex1Coordinates, Point vertex2Coordinates) {
+        if (vertex1Coordinates == null || vertex2Coordinates == null) {
+            return null;
+        }
+        BigVertex vertex1 = getBigVertexByCoordinate(vertex1Coordinates);
+        BigVertex vertex2 = getBigVertexByCoordinate(vertex2Coordinates);
         if (vertex1 == null || vertex2 == null) {
             return null;
         }
+
         //TODO Entity?
         Edge edge = this.graph.removeEdge(vertex1, vertex2);
 
@@ -104,15 +115,24 @@ public class CoreController implements Api {
         return edge;//TODO
     }
 
-    @Override
-    public Edge changeEdgeWeight(BigVertex vertex1, BigVertex vertex2, int weight) {
+    public Edge changeEdgeWeight(Point vertex1Coordinates, Point vertex2Coordinates, int weight) {
 
-        if (vertex1 == null || vertex2 == null || weight < 0) {
+        if (vertex1Coordinates == null || vertex2Coordinates == null || weight < 1) {
             return null;
         }
-        Edge edge = this.graph.changeEdgeWeight(vertex1, vertex2, weight);
+        BigVertex vertex1 = getBigVertexByCoordinate(vertex1Coordinates);
+        BigVertex vertex2 = getBigVertexByCoordinate(vertex2Coordinates);
+        if (vertex1 == null || vertex2 == null) {
+            return null;
+        }
 
-        this.shapeController.changeEdgeWeight(edge);
+        Edge edge = getEdgeByVertices(vertex1, vertex2);
+
+        this.shapeController.removeEdge(edge);
+
+        this.graph.changeEdgeWeight(vertex1, vertex2, weight);
+
+        this.shapeController.createEdge(edge);
         this.shapeController.updateAllLionRanges(lions);
         return edge;
     }
@@ -135,6 +155,10 @@ public class CoreController implements Api {
 
 
     public void debugGraph() {
+
+        System.out.println("##############");
+        System.out.println("men: " + men);
+        System.out.println("lions: " + lions);
         graph.debugGraph();
     }
 
@@ -164,23 +188,30 @@ public class CoreController implements Api {
      *
      * ****************************/
 
-    public boolean setMan(Vertex vertex) {
-        return setMan(vertex, new StrategyRandom());
-    }
-
-    public boolean setMan(Vertex vertex, Strategy strategy) {
-        if(vertex == null || strategy == null){
+    public boolean setMan(Point vertexCoorinate) {
+        if (vertexCoorinate == null) {
             return false;
         }
-        Man man = new Man(vertex, strategy, this);
+        Vertex vertex = getVertexByCoordinate(vertexCoorinate);
+        if (vertex == null) {
+            return false;
+        }
+
+        Man man = new Man(vertex, this);
+        man.setStrategy(new StrategyRunAwayGreedy(this, man));
         shapeController.createMan(man);
         return men.add(man);
     }
 
-    public boolean isManOnVertex(Vertex vertex) {
-        if(vertex == null){
+    public boolean isManOnVertex(Point vertexCoorinate) {
+        if (vertexCoorinate == null) {
             return false;
         }
+        Vertex vertex = getVertexByCoordinate(vertexCoorinate);
+        if (vertex == null) {
+            return false;
+        }
+
         for (Man man : men) {
             if (man.getCurrentPosition().equals(vertex)) {
                 return true;
@@ -189,23 +220,30 @@ public class CoreController implements Api {
         return false;
     }
 
-    public boolean setLion(Vertex vertex) {
-        return setLion(vertex, new StrategyRandom());
-    }
-
-    public boolean setLion(Vertex vertex, Strategy strategy) {
-        if(vertex == null || strategy == null){
+    public boolean setLion(Point vertexCoorinate) {
+        if (vertexCoorinate == null) {
             return false;
         }
-        Lion lion = new Lion(vertex, strategy, this);
+        Vertex vertex = getVertexByCoordinate(vertexCoorinate);
+        if (vertex == null) {
+            return false;
+        }
+
+        Lion lion = new Lion(vertex, this);
+        lion.setStrategy(new StrategyAggroGreedy(this, lion));
         shapeController.createLion(lion);
         return lions.add(lion);
     }
 
-    public boolean isLionOnVertex(Vertex vertex) {
-        if(vertex == null){
+    public boolean isLionOnVertex(Point vertexCoorinate) {
+        if (vertexCoorinate == null) {
             return false;
         }
+        Vertex vertex = getVertexByCoordinate(vertexCoorinate);
+        if (vertex == null) {
+            return false;
+        }
+
         for (Lion lion : lions) {
             if (lion.getCurrentPosition().equals(vertex)) {
                 return true;
@@ -214,34 +252,79 @@ public class CoreController implements Api {
         return false;
     }
 
-    public boolean removeMan(Man man) {
-        if(man == null){
+    public boolean isDangerOnVertex(Point vertexCoorinate) {
+        if (vertexCoorinate == null) {
             return false;
         }
+        Vertex vertex = getVertexByCoordinate(vertexCoorinate);
+        if (vertex == null) {
+            return false;
+        }
+
+        for (Lion lion : lions) {
+            if (lion.getCurrentPosition().equals(vertex)) {
+                return true;
+            }
+            for (Vertex dangerVertex : lion.getRangeVertices()) {
+                if (dangerVertex.equals(vertex)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+
+    public boolean removeMan(Point manCoordinate) {
+        if (manCoordinate == null) {
+            return false;
+        }
+        Man man = getManByCoordinate(manCoordinate);
+        if (man == null) {
+            return false;
+        }
+
         shapeController.removeMan(man);
         return men.remove(man);
     }
 
-    public boolean removeLion(Lion lion) {
-        if(lion == null){
+    public boolean removeLion(Point lionCoordinate) {
+        if (lionCoordinate == null) {
             return false;
         }
+        Lion lion = getLionByCoordinate(lionCoordinate);
+        if (lion == null) {
+            return false;
+        }
+
         shapeController.removeLion(lion);
         return lions.remove(lion);
     }
 
-    public void relocateMan(Man man, Vertex vertex) {
-        if(man == null || vertex == null){
+    public void relocateMan(Point manCoordinate, Point vertexCoordinate) {
+        if (manCoordinate == null || vertexCoordinate == null) {
             return;
         }
+        Man man = getManByCoordinate(manCoordinate);
+        Vertex vertex = getVertexByCoordinate(vertexCoordinate);
+        if (man == null || vertex == null) {
+            return;
+        }
+
         man.setPosition(vertex);
         shapeController.relocateMan(man);
     }
 
-    public void relocateLion(Lion lion, Vertex vertex) {
-        if(lion == null || vertex == null){
+    public void relocateLion(Point lionCoordinate, Point vertexCoordinate) {
+        if (lionCoordinate == null || vertexCoordinate == null) {
             return;
         }
+        Lion lion = getLionByCoordinate(lionCoordinate);
+        Vertex vertex = getVertexByCoordinate(vertexCoordinate);
+        if (lion == null || vertex == null) {
+            return;
+        }
+
         lion.setPosition(vertex);
         shapeController.relocateLion(lion);
     }
@@ -254,22 +337,32 @@ public class CoreController implements Api {
         return lions;
     }
 
-    public void setManStrategy(Man man, Strategy strategy) {
-        if(man == null || strategy == null){
+    public void setManStrategy(Point manCoordinate, Strategy strategy) {
+        if (manCoordinate == null || strategy == null) {
             return;
         }
+        Man man = getManByCoordinate(manCoordinate);
+        if (man == null) {
+            return;
+        }
+
         man.setStrategy(strategy);
     }
 
-    public void setLionStrategy(Lion lion, Strategy strategy) {
-        if(lion == null || strategy == null){
+    public void setLionStrategy(Point lionCoordinate, Strategy strategy) {
+        if (lionCoordinate == null || strategy == null) {
             return;
         }
+        Lion lion = getLionByCoordinate(lionCoordinate);
+        if (lion == null) {
+            return;
+        }
+
         lion.setStrategy(strategy);
     }
 
     public void setAllManStrategy(Strategy strategy) {
-        if(strategy == null){
+        if (strategy == null) {
             return;
         }
         for (Man man : men) {
@@ -278,7 +371,7 @@ public class CoreController implements Api {
     }
 
     public void setAllLionStrategy(Strategy strategy) {
-        if(strategy == null){
+        if (strategy == null) {
             return;
         }
         for (Lion lion : lions) {
@@ -287,7 +380,7 @@ public class CoreController implements Api {
     }
 
     public Man getManByCoordinate(Point coordinates) {
-        if(coordinates == null){
+        if (coordinates == null) {
             return null;
         }
         for (Man man : men) {
@@ -299,7 +392,7 @@ public class CoreController implements Api {
     }
 
     public Lion getLionByCoordinate(Point coordinates) {
-        if(coordinates == null){
+        if (coordinates == null) {
             return null;
         }
         for (Lion lion : lions) {
@@ -310,20 +403,55 @@ public class CoreController implements Api {
         return null;
     }
 
-    public void setLionRange(Lion lion, int range){
-        if(lion == null || range < 0){
+    public void incrementLionRange(Point lionCoordinate) {
+        if (lionCoordinate == null) {
             return;
         }
+        Lion lion = getLionByCoordinate(lionCoordinate);
+        if (lion == null) {
+            return;
+        }
+
+        setLionRange(lionCoordinate, lion.getRange() + 1);
+    }
+
+    public void decrementLionRange(Point lionCoordinate) {
+        if (lionCoordinate == null) {
+            return;
+        }
+        Lion lion = getLionByCoordinate(lionCoordinate);
+        if (lion == null) {
+            return;
+        }
+
+        setLionRange(lionCoordinate, lion.getRange() - 1);
+    }
+
+    public void setLionRange(Point lionCoordinate, int range) {
+        if (lionCoordinate == null || range < 0) {
+            return;
+        }
+        Lion lion = getLionByCoordinate(lionCoordinate);
+        if (lion == null) {
+            return;
+        }
+
         lion.setRange(range);
         shapeController.updateLionRange(lion);
     }
 
+    public void setManDistance(Point manCoordinate, int distance, boolean keepExactDistance) {
+        if (manCoordinate == null || distance < 1) {
+            return;
+        }
+        Man man = getManByCoordinate(manCoordinate);
+        if (man == null) {
+            return;
+        }
 
-
-
-
-
-
+        man.setDistance(distance);
+        man.setKeepDistanceExact(keepExactDistance);
+    }
 
 
 
@@ -353,12 +481,12 @@ public class CoreController implements Api {
      * ****************************/
 
     public void setEmptyGraph() {
-        this.graph = new GraphController(this);
+        this.graph = new GraphController();
     }
 
 
     public void setDefaultGraph1() {
-        this.graph = new GraphController(this);
+        this.graph = new GraphController();
 
         this.createVertex(new Point(50, 20));
         this.createVertex(new Point(190, 20));
@@ -383,133 +511,69 @@ public class CoreController implements Api {
         this.createVertex(new Point(100, 140));
         this.createVertex(new Point(90, 100));
 
-        this.createEdge(this.getBigVertexByCoordinate(new Point(50, 20)), this.getBigVertexByCoordinate(new Point(190, 20)));
-        this.createEdge(this.getBigVertexByCoordinate(new Point(190, 20)), this.getBigVertexByCoordinate(new Point(220, 140)));
-        this.createEdge(this.getBigVertexByCoordinate(new Point(220, 140)), this.getBigVertexByCoordinate(new Point(120, 220)));
-        this.createEdge(this.getBigVertexByCoordinate(new Point(120, 220)), this.getBigVertexByCoordinate(new Point(20, 140)));
-        this.createEdge(this.getBigVertexByCoordinate(new Point(20, 140)), this.getBigVertexByCoordinate(new Point(50, 20)));
+        this.createEdge(new Point(50, 20), new Point(190, 20));
+        this.createEdge(new Point(190, 20), new Point(220, 140));
+        this.createEdge(new Point(220, 140), new Point(120, 220));
+        this.createEdge(new Point(120, 220), new Point(20, 140));
+        this.createEdge(new Point(20, 140), new Point(50, 20));
 
-        this.createEdge(this.getBigVertexByCoordinate(new Point(50, 20)), this.getBigVertexByCoordinate(new Point(80, 50)));
-        this.createEdge(this.getBigVertexByCoordinate(new Point(190, 20)), this.getBigVertexByCoordinate(new Point(160, 50)));
-        this.createEdge(this.getBigVertexByCoordinate(new Point(220, 140)), this.getBigVertexByCoordinate(new Point(190, 130)));
-        this.createEdge(this.getBigVertexByCoordinate(new Point(120, 220)), this.getBigVertexByCoordinate(new Point(120, 180)));
-        this.createEdge(this.getBigVertexByCoordinate(new Point(20, 140)), this.getBigVertexByCoordinate(new Point(50, 130)));
+        this.createEdge(new Point(50, 20), new Point(80, 50));
+        this.createEdge(new Point(190, 20), new Point(160, 5));
+        this.createEdge(new Point(220, 140), new Point(190, 130));
+        this.createEdge(new Point(120, 220), new Point(120, 180));
+        this.createEdge(new Point(20, 140), new Point(50, 130));
 
-        this.createEdge(this.getBigVertexByCoordinate(new Point(120, 40)), this.getBigVertexByCoordinate(new Point(160, 50)));
-        this.createEdge(this.getBigVertexByCoordinate(new Point(160, 50)), this.getBigVertexByCoordinate(new Point(190, 90)));
-        this.createEdge(this.getBigVertexByCoordinate(new Point(190, 90)), this.getBigVertexByCoordinate(new Point(190, 130)));
-        this.createEdge(this.getBigVertexByCoordinate(new Point(190, 130)), this.getBigVertexByCoordinate(new Point(160, 170)));
-        this.createEdge(this.getBigVertexByCoordinate(new Point(160, 170)), this.getBigVertexByCoordinate(new Point(120, 180)));
-        this.createEdge(this.getBigVertexByCoordinate(new Point(120, 180)), this.getBigVertexByCoordinate(new Point(80, 170)));
-        this.createEdge(this.getBigVertexByCoordinate(new Point(80, 170)), this.getBigVertexByCoordinate(new Point(50, 130)));
-        this.createEdge(this.getBigVertexByCoordinate(new Point(50, 130)), this.getBigVertexByCoordinate(new Point(50, 90)));
-        this.createEdge(this.getBigVertexByCoordinate(new Point(50, 90)), this.getBigVertexByCoordinate(new Point(80, 50)));
-        this.createEdge(this.getBigVertexByCoordinate(new Point(80, 50)), this.getBigVertexByCoordinate(new Point(120, 40)));
+        this.createEdge(new Point(120, 40), new Point(160, 50));
+        this.createEdge(new Point(160, 50), new Point(190, 90));
+        this.createEdge(new Point(190, 90), new Point(190, 130));
+        this.createEdge(new Point(190, 130), new Point(160, 170));
+        this.createEdge(new Point(160, 170), new Point(120, 180));
+        this.createEdge(new Point(120, 180), new Point(80, 170));
+        this.createEdge(new Point(80, 170), new Point(50, 130));
+        this.createEdge(new Point(50, 130), new Point(50, 90));
+        this.createEdge(new Point(50, 90), new Point(80, 50));
+        this.createEdge(new Point(80, 50), new Point(120, 40));
 
-        this.createEdge(this.getBigVertexByCoordinate(new Point(120, 40)), this.getBigVertexByCoordinate(new Point(120, 70)));
-        this.createEdge(this.getBigVertexByCoordinate(new Point(190, 90)), this.getBigVertexByCoordinate(new Point(150, 100)));
-        this.createEdge(this.getBigVertexByCoordinate(new Point(160, 170)), this.getBigVertexByCoordinate(new Point(140, 140)));
-        this.createEdge(this.getBigVertexByCoordinate(new Point(80, 170)), this.getBigVertexByCoordinate(new Point(100, 140)));
-        this.createEdge(this.getBigVertexByCoordinate(new Point(50, 90)), this.getBigVertexByCoordinate(new Point(90, 100)));
+        this.createEdge(new Point(120, 40), new Point(120, 70));
+        this.createEdge(new Point(190, 90), new Point(150, 100));
+        this.createEdge(new Point(160, 170), new Point(140, 140));
+        this.createEdge(new Point(80, 170), new Point(100, 140));
+        this.createEdge(new Point(50, 90), new Point(90, 100));
 
-        this.createEdge(this.getBigVertexByCoordinate(new Point(120, 70)), this.getBigVertexByCoordinate(new Point(150, 100)));
-        this.createEdge(this.getBigVertexByCoordinate(new Point(150, 100)), this.getBigVertexByCoordinate(new Point(140, 140)));
-        this.createEdge(this.getBigVertexByCoordinate(new Point(140, 140)), this.getBigVertexByCoordinate(new Point(100, 140)));
-        this.createEdge(this.getBigVertexByCoordinate(new Point(100, 140)), this.getBigVertexByCoordinate(new Point(90, 100)));
-        this.createEdge(this.getBigVertexByCoordinate(new Point(90, 100)), this.getBigVertexByCoordinate(new Point(120, 70)));
-        this.setLion(this.getBigVertexByCoordinate(new Point(50, 90)), new StrategyAggroGreedy());
+        this.createEdge(new Point(120, 70), new Point(150, 100));
+        this.createEdge(new Point(150, 100), new Point(140, 140));
+        this.createEdge(new Point(140, 140), new Point(100, 140));
+        this.createEdge(new Point(100, 140), new Point(90, 100));
+        this.createEdge(new Point(90, 100), new Point(120, 70));
+
+        this.setMan(new Point(50, 20));
+        this.setLion(new Point(190, 20));
+        this.setLion(new Point(100, 140));
+        this.setLion(new Point(50, 90));
 
     }
 
-
     public void setDefaultGraph2() {
-        this.graph = new GraphController(this);
-
-        this.createVertex(new Point(50, 20));
-        this.createVertex(new Point(190, 20));
-        this.createVertex(new Point(220, 140));
-        this.createVertex(new Point(120, 220));
-        this.createVertex(new Point(20, 140));
-
-        this.createVertex(new Point(120, 40));
-        this.createVertex(new Point(160, 50));
-        this.createVertex(new Point(190, 90));
-        this.createVertex(new Point(190, 130));
-        this.createVertex(new Point(160, 170));
-        this.createVertex(new Point(120, 180));
-        this.createVertex(new Point(80, 170));
-        this.createVertex(new Point(50, 130));
-        this.createVertex(new Point(50, 90));
-        this.createVertex(new Point(80, 50));
-
-        this.createVertex(new Point(120, 70));
-        this.createVertex(new Point(150, 100));
-        this.createVertex(new Point(140, 140));
-        this.createVertex(new Point(100, 140));
-        this.createVertex(new Point(90, 100));
-
-        this.createEdge(this.getBigVertexByCoordinate(new Point(50, 20)), this.getBigVertexByCoordinate(new Point(190, 20)));
-        this.createEdge(this.getBigVertexByCoordinate(new Point(190, 20)), this.getBigVertexByCoordinate(new Point(220, 140)));
-        this.createEdge(this.getBigVertexByCoordinate(new Point(220, 140)), this.getBigVertexByCoordinate(new Point(120, 220)));
-        this.createEdge(this.getBigVertexByCoordinate(new Point(120, 220)), this.getBigVertexByCoordinate(new Point(20, 140)));
-        this.createEdge(this.getBigVertexByCoordinate(new Point(20, 140)), this.getBigVertexByCoordinate(new Point(50, 20)));
-
-        this.createEdge(this.getBigVertexByCoordinate(new Point(50, 20)), this.getBigVertexByCoordinate(new Point(80, 50)));
-        this.createEdge(this.getBigVertexByCoordinate(new Point(190, 20)), this.getBigVertexByCoordinate(new Point(160, 50)));
-        this.createEdge(this.getBigVertexByCoordinate(new Point(220, 140)), this.getBigVertexByCoordinate(new Point(190, 130)));
-        this.createEdge(this.getBigVertexByCoordinate(new Point(120, 220)), this.getBigVertexByCoordinate(new Point(120, 180)));
-        this.createEdge(this.getBigVertexByCoordinate(new Point(20, 140)), this.getBigVertexByCoordinate(new Point(50, 130)));
-
-        this.createEdge(this.getBigVertexByCoordinate(new Point(120, 40)), this.getBigVertexByCoordinate(new Point(160, 50)));
-        this.createEdge(this.getBigVertexByCoordinate(new Point(160, 50)), this.getBigVertexByCoordinate(new Point(190, 90)));
-        this.createEdge(this.getBigVertexByCoordinate(new Point(190, 90)), this.getBigVertexByCoordinate(new Point(190, 130)));
-        this.createEdge(this.getBigVertexByCoordinate(new Point(190, 130)), this.getBigVertexByCoordinate(new Point(160, 170)));
-        this.createEdge(this.getBigVertexByCoordinate(new Point(160, 170)), this.getBigVertexByCoordinate(new Point(120, 180)));
-        this.createEdge(this.getBigVertexByCoordinate(new Point(120, 180)), this.getBigVertexByCoordinate(new Point(80, 170)));
-        this.createEdge(this.getBigVertexByCoordinate(new Point(80, 170)), this.getBigVertexByCoordinate(new Point(50, 130)));
-        this.createEdge(this.getBigVertexByCoordinate(new Point(50, 130)), this.getBigVertexByCoordinate(new Point(50, 90)));
-        this.createEdge(this.getBigVertexByCoordinate(new Point(50, 90)), this.getBigVertexByCoordinate(new Point(80, 50)));
-        this.createEdge(this.getBigVertexByCoordinate(new Point(80, 50)), this.getBigVertexByCoordinate(new Point(120, 40)));
-
-        this.createEdge(this.getBigVertexByCoordinate(new Point(120, 40)), this.getBigVertexByCoordinate(new Point(120, 70)));
-        this.createEdge(this.getBigVertexByCoordinate(new Point(190, 90)), this.getBigVertexByCoordinate(new Point(150, 100)));
-        this.createEdge(this.getBigVertexByCoordinate(new Point(160, 170)), this.getBigVertexByCoordinate(new Point(140, 140)));
-        this.createEdge(this.getBigVertexByCoordinate(new Point(80, 170)), this.getBigVertexByCoordinate(new Point(100, 140)));
-        this.createEdge(this.getBigVertexByCoordinate(new Point(50, 90)), this.getBigVertexByCoordinate(new Point(90, 100)));
-
-        this.createEdge(this.getBigVertexByCoordinate(new Point(120, 70)), this.getBigVertexByCoordinate(new Point(150, 100)));
-        this.createEdge(this.getBigVertexByCoordinate(new Point(150, 100)), this.getBigVertexByCoordinate(new Point(140, 140)));
-        this.createEdge(this.getBigVertexByCoordinate(new Point(140, 140)), this.getBigVertexByCoordinate(new Point(100, 140)));
-        this.createEdge(this.getBigVertexByCoordinate(new Point(100, 140)), this.getBigVertexByCoordinate(new Point(90, 100)));
-        this.createEdge(this.getBigVertexByCoordinate(new Point(90, 100)), this.getBigVertexByCoordinate(new Point(120, 70)));
-
-        this.setMan(this.getBigVertexByCoordinate(new Point(50, 20)), new StrategyRunAwayGreedy());
-        this.setLion(this.getBigVertexByCoordinate(new Point(190, 20)), new StrategyAggroGreedy());
-        this.setLion(this.getBigVertexByCoordinate(new Point(100, 140)), new StrategyAggroGreedy());
-        this.setLion(this.getBigVertexByCoordinate(new Point(50, 90)), new StrategyAggroGreedy());
+        setDefaultGraph1();
     }
 
     public void setDefaultGraph3() {
-        this.graph = new GraphController(this);
+        this.graph = new GraphController();
 
         // this.createVertex(new Point(5, 5));
         this.createVertex(new Point(40, 20));
         this.createVertex(new Point(0, 0));
-
         this.createVertex(new Point(10, 30));
 
-        this.createEdge(this.getBigVertexByCoordinate(new Point(40, 20)), this.getBigVertexByCoordinate(new Point(0, 0)));
-        this.createEdge(this.getBigVertexByCoordinate(new Point(10, 30)), this.getBigVertexByCoordinate(new Point(0, 0)));
+        this.createEdge(new Point(40, 20), new Point(0, 0));
+        this.createEdge(new Point(10, 30), new Point(0, 0));
+        this.createEdge(new Point(10, 30), new Point(40, 20));
 
-        this.setLion(this.getBigVertexByCoordinate(new Point(40, 20)), new StrategyRandom());
-        Lion lion = this.getLions().get(0);
-        lion.setRange(3);
+        this.setLion(new Point(40, 20));
+        setLionRange(new Point(40, 20), 1);
 
-        debugGraph();
+        this.setMan(new Point(0, 0));
 
-        this.removeEdge(this.getBigVertexByCoordinate(new Point(40, 20)), this.getBigVertexByCoordinate(new Point(0, 0)));
-
-        debugGraph();
 
     }
 
@@ -518,33 +582,6 @@ public class CoreController implements Api {
     }
 
     public void setDefaultGraph5() {
-
-
-        this.graph = new GraphController(this);
-
-        this.createVertex(new Point(10, 10));
-        this.createVertex(new Point(80, 40));
-
-        this.createEdge(this.getBigVertexByCoordinate(new Point(50, 20)), this.getBigVertexByCoordinate(new Point(190, 20)), 4);
-
-        this.createVertex(new Point(20, 100));
-
-//        this.relocateVertex(this.getBigVertexByCoordinate(new Point(50, 20)), new Point(0, -100));
-
-
-
-        this.createEdge(this.getBigVertexByCoordinate(new Point(50, 20)), this.getBigVertexByCoordinate(new Point(220, 140)), 2);
-
-
-        this.setLion(this.getBigVertexByCoordinate(new Point(50, 20)), new StrategyRandom());
-        Lion lion = this.getLions().get(0);
-        lion.setRange(3);
-
-
-
-        System.out.println("#############################");
-        this.debugGraph();
-
 
         this.setDefaultGraph1();
     }
@@ -585,6 +622,12 @@ public class CoreController implements Api {
     }
 
     public void simulateStep() {
+
+        if (lionsHaveWon()) {
+            System.out.println("#############\n#############\n##  E N D\n#############\n#############");
+            return;
+        }
+
         for (Man man : this.getMen()) {
             man.goToNextPosition();
             shapeController.relocateMan(man);
@@ -593,12 +636,26 @@ public class CoreController implements Api {
             lion.goToNextPosition();
             shapeController.relocateLion(lion);
         }
-//        this.state = new State(this.getMen(), this.getLions());
-//        return this.state;
+
+        if (lionsHaveWon()) {
+            System.out.println("#############\n#############\n##  E N D\n#############\n#############");
+        }
     }
 
+    private boolean lionsHaveWon() {
+        for (Man man : getMen()) {
+            for (Lion lion : getLions()) {
+                if (man.getCurrentPosition().equals(lion.getCurrentPosition())) {
+                    return true;
+                }
+                for (Vertex rangeVertex : lion.getRangeVertices()) {
+                    if (man.getCurrentPosition().equals(rangeVertex)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
 
-//    public State getState() {
-//        return state;
-//    }
 }

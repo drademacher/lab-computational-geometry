@@ -12,14 +12,14 @@ public abstract class Entity {
     protected Strategy strategy;
     protected CoreController coreController;
 
-    public Entity(Vertex startPosition, Strategy strategy, CoreController coreController) {
+    public Entity(Vertex startPosition, CoreController coreController) {
         this.position = startPosition;
         this.strategy = strategy;
         this.coreController = coreController;
     }
 
     public Vertex getNextPosition() {
-        return strategy.getNextPosition(coreController, this);
+        return strategy.getNextPosition();
     }
 
     public Vertex goToNextPosition() {

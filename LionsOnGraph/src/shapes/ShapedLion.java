@@ -1,11 +1,9 @@
 package shapes;
 
+import entities.Lion;
 import graph.CoreController;
 import javafx.scene.Group;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.SeparatorMenuItem;
+import javafx.scene.control.*;
 import javafx.scene.shape.Circle;
 import strategy.Strategy;
 import strategy.StrategyAggroGreedy;
@@ -13,6 +11,8 @@ import strategy.StrategyDoNothing;
 import strategy.StrategyRandom;
 import util.Point;
 import visualization.ZoomScrollPane;
+
+import java.util.Optional;
 
 import static shapes.ShapeConstants.COLOR_LION;
 import static shapes.ShapeConstants.ENTITY_RADIUS;
@@ -54,6 +54,48 @@ public class ShapedLion  implements ShapedEntity{
             strategyMenu.getItems().addAll(item2, item3, item4);
 
 
+            Menu edgeMenu = new Menu("Lion Range");
+
+            MenuItem iteme1 = new MenuItem("Increment");
+            MenuItem iteme2 = new MenuItem("Decrement");
+            MenuItem iteme3 = new MenuItem("Set");
+
+
+
+
+            iteme1.setOnAction(event2 -> {
+                Lion lion = coreController.getLionByCoordinate(coordinates);
+                coreController.setLionRange(lion, lion.getRange() + 1);
+            });
+
+            iteme2.setOnAction(event2 -> {
+                Lion lion = coreController.getLionByCoordinate(coordinates);
+                coreController.setLionRange(lion, lion.getRange() - 1);
+            });
+
+            iteme3.setOnAction(event2 -> {
+                Lion lion = coreController.getLionByCoordinate(coordinates);
+
+                TextInputDialog dialog = new TextInputDialog("" + lion.getRange());
+                dialog.setTitle("Set Lion Range");
+                dialog.setHeaderText("Enter the new range of the lion.");
+
+                Optional<String> result = dialog.showAndWait();
+
+                if (result.isPresent()) {
+                    int newWeight = Integer.parseInt(result.get());
+                    coreController.setLionRange(lion, newWeight);
+                }
+            });
+
+            edgeMenu.getItems().addAll(iteme1, iteme2, iteme3);
+
+
+
+
+
+
+
             item0.setOnAction(event2 -> {
                 coreController.removeLion(coreController.getLionByCoordinate(coordinates));
             });
@@ -84,7 +126,7 @@ public class ShapedLion  implements ShapedEntity{
                 coreController.setLionStrategy(coreController.getLionByCoordinate(coordinates), strategy);
             });
 
-            contextMenu.getItems().addAll(item0, item1, strategyMenu, new SeparatorMenuItem(), closeItem);
+            contextMenu.getItems().addAll(item0, item1, strategyMenu, edgeMenu, new SeparatorMenuItem(), closeItem);
             contextMenu.show(shape, event1.getScreenX(), event1.getScreenY());
         });
     }

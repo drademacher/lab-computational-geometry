@@ -69,7 +69,7 @@ public class ShapedEdge {
                 dialog.setHeaderText("Enter the new weight of the edge.");
 
                 Optional<String> result = dialog.showAndWait();
-                
+
                 if (result.isPresent()) {
                     int newWeight = Integer.parseInt(result.get());
                     coreController.changeEdgeWeight(coreController.getBigVertexByCoordinate(from), coreController.getBigVertexByCoordinate(to), newWeight);

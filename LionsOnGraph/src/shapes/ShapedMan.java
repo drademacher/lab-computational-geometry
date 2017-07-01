@@ -12,6 +12,7 @@ import strategy.*;
 import strategy.ManStrategies.StrategyDoNothing;
 import strategy.ManStrategies.StrategyRandom;
 import strategy.ManStrategies.StrategyRunAwayGreedy;
+import util.ContextMenuHolder;
 import util.Point;
 import util.ZoomScrollPane;
 

@@ -1,10 +1,10 @@
 package shapes;
 
 import graph.CoreController;
-import graph.Edge;
 import javafx.scene.Group;
 import javafx.scene.control.*;
 import javafx.scene.shape.Line;
+import util.ContextMenuHolder;
 import util.Point;
 
 import java.util.Optional;

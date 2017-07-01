@@ -9,6 +9,7 @@ import strategy.LionStrategies.StrategyDoNothing;
 import strategy.LionStrategies.StrategyRandom;
 import strategy.Strategy;
 import strategy.LionStrategies.StrategyAggroGreedy;
+import util.ContextMenuHolder;
 import util.Point;
 import util.ZoomScrollPane;
 

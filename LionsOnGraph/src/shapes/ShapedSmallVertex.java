@@ -6,6 +6,7 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.shape.Circle;
+import util.ContextMenuHolder;
 import util.Point;
 
 import static shapes.ShapeConstants.*;

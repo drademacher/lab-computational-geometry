@@ -26,7 +26,7 @@ public class Point {
         return x;
     }
 
-    public void setX(int x) {
+    public void setX(double x) {
         this.x = x;
     }
 
@@ -40,7 +40,7 @@ public class Point {
         return y;
     }
 
-    public void setY(int y) {
+    public void setY(double y) {
         this.y = y;
     }
 
@@ -59,7 +59,7 @@ public class Point {
      * @return A new Vector instance representing the product of the input factor and this vector.
      */
     public Point mul(double factor) {
-        return new Point((int) (x * factor + 0.5), (int) (y * factor + 0.5));
+        return new Point(x * factor, y * factor);
     }
 
 

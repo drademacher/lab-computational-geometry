@@ -1,24 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import visualization.ZoomScrollPane?>
+
 
 <BorderPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visualization.VisController">
     <center>
         <ZoomScrollPane fx:id="zoomScrollPane">
-            <opaqueInsets>
-                <Insets />
-            </opaqueInsets>
-            <BorderPane.margin>
-                <Insets />
-            </BorderPane.margin>
         </ZoomScrollPane>
     </center>
     <bottom>
@@ -29,24 +22,23 @@
                 <Button fx:id="stepAnimationButton" alignment="CENTER" disable="true" mnemonicParsing="false" text="Single Step" />
                 <Button fx:id="animationToggleButton" alignment="CENTER" mnemonicParsing="false" text="Play Mode" />
                 <Button fx:id="initButton" alignment="CENTER" mnemonicParsing="false" text="Init" visible="false" />
-            <MenuButton fx:id="setGraphButton" mnemonicParsing="false" text="Set Graph">
-               <items>
-                        <MenuItem fx:id="emptyMapMenuItem" mnemonicParsing="false" text="Empty Graph" />
-                        <Menu mnemonicParsing="false" text="New">
-                            <items>
-                                <MenuItem fx:id="graph1MenuItem" mnemonicParsing="false" text="Paper Graph, 2 Lions fail" />
-                                <MenuItem fx:id="graph2MenuItem" mnemonicParsing="false" text="Paper Graph, 3 Lions succeed" />
-                                <MenuItem fx:id="graph3MenuItem" mnemonicParsing="false" text="Small Graph" />
-                                <MenuItem fx:id="graph4MenuItem" mnemonicParsing="false" text="Graph 4" visible="false" />
-                                <MenuItem fx:id="graph5MenuItem" mnemonicParsing="false" text="Graph 5" visible="false" />
-                                <MenuItem fx:id="randomGraphMenuItem" mnemonicParsing="false" text="Random Map" visible="false" />
-                            </items>
-                        </Menu>
-                        <MenuItem fx:id="openMapMenuItem" mnemonicParsing="false" text="Open" />
-                        <MenuItem fx:id="saveMapMenuItem" mnemonicParsing="false" text="Save" />
-               </items>
-            </MenuButton>
-
+                <MenuButton fx:id="setGraphButton" mnemonicParsing="false" text="Set Graph">
+                   <items>
+                            <MenuItem fx:id="emptyMapMenuItem" mnemonicParsing="false" text="Empty Graph" />
+                            <Menu mnemonicParsing="false" text="New">
+                                <items>
+                                    <MenuItem fx:id="graph1MenuItem" mnemonicParsing="false" text="Paper Graph, 2 Lions fail" />
+                                    <MenuItem fx:id="graph2MenuItem" mnemonicParsing="false" text="Paper Graph, 3 Lions succeed" />
+                                    <MenuItem fx:id="graph3MenuItem" mnemonicParsing="false" text="Small Graph" />
+                                    <MenuItem fx:id="graph4MenuItem" mnemonicParsing="false" text="Graph 4" visible="false" />
+                                    <MenuItem fx:id="graph5MenuItem" mnemonicParsing="false" text="Graph 5" visible="false" />
+                                    <MenuItem fx:id="randomGraphMenuItem" mnemonicParsing="false" text="Random Map" visible="false" />
+                                </items>
+                            </Menu>
+                            <MenuItem fx:id="openMapMenuItem" mnemonicParsing="false" text="Open" />
+                            <MenuItem fx:id="saveMapMenuItem" mnemonicParsing="false" text="Save" />
+                   </items>
+                </MenuButton>
             </buttons>
         </ButtonBar>
     </bottom>

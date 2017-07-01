@@ -17,8 +17,9 @@ import util.Point;
 
 
 /***
- * Based on Source Code:
+ * Ideas from
  * https://stackoverflow.com/questions/16680295/javafx-correct-scaling
+ * With custom extensions.
  */
 public class ZoomScrollPane extends ScrollPane {
     private final StackPane mainPane = new StackPane();
@@ -32,7 +33,6 @@ public class ZoomScrollPane extends ScrollPane {
 
         ZoomScrollPane.this.setBackground(new Background(new BackgroundFill(null, null, null)));
 
-
         mainPane.getChildren().add(mainGroup);
 
         final Group scrollContent = new Group(mainPane);
@@ -45,27 +45,6 @@ public class ZoomScrollPane extends ScrollPane {
         this.setPrefViewportWidth(256);
         this.setPrefViewportHeight(256);
 
-
-//        mainPane.setOnMouseClicked(event1 -> {
-//            Point2D localPoint = mainGroup.sceneToLocal(new Point2D(event1.getX(), event1.getY()));
-//            Point2D offset = new Point2D(mainPane.sceneToLocal(0, 0).getX() / mainGroup.getScaleX(),
-//                    mainPane.sceneToLocal(0, 0).getY() / mainGroup.getScaleX());
-//
-//            Point2D x = localPoint.subtract(offset);
-////            Point2D x = in.subtract(addingConst);
-////            Point2D y = mainGroup.sceneToLocal(in.add(addingConst));
-//
-//
-//
-//            System.out.println("diff " + new Point((int) (x.getX() + .5), (int) (x.getY() + .5)));
-//
-//        });
-
-        mainGroup.setOnMouseClicked(x -> {
-            System.out.println("ground " + new Point((int) (x.getX() + .5), (int) (x.getY() + .5)));
-        });
-
-
         mainPane.setOnScroll(event -> {
             ZoomScrollPane scroller = ZoomScrollPane.this;
 
@@ -75,7 +54,7 @@ public class ZoomScrollPane extends ScrollPane {
                 return;
             }
 
-            double scaleFactor = (event.getDeltaY() < 0) ? SCALE_DELTA
+            double scaleFactor = (event.getDeltaY() > 0) ? SCALE_DELTA
                     : 1 / SCALE_DELTA;
 
             // amount of scrolling in each direction in scrollContent coordinate
@@ -159,15 +138,8 @@ public class ZoomScrollPane extends ScrollPane {
 
 
     public Point getLocalCoordinates(double x, double y) {
-//        double scale = mainGroup.getScaleX();
-
         Point2D res = mainGroup.sceneToLocal(new Point2D(x, y));
-        Point2D offset = new Point2D((mainPane.sceneToLocal(0, 0).getX()) / mainGroup.getScaleX(),
-                mainPane.sceneToLocal(0, 0).getY() / mainGroup.getScaleY());
-
-//        Point2D res = localPoint; // .subtract(offset);
-
-        return new Point((int) (res.getX() + .5), (int) (res.getY() + .5));
+        return new Point(res.getX(), res.getY());
     }
 
 

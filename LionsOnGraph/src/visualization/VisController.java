@@ -40,7 +40,6 @@ public class VisController implements Initializable {
     @FXML
     private MenuButton setGraphButton;
 
-
     private BooleanProperty editMode, activePlaying;
     private AnimationTimer animationTimer;
     private int passedTicks = 0;
@@ -114,11 +113,6 @@ public class VisController implements Initializable {
     }
 
     private void initContextMenu() {
-        zoomScrollPane.setOnMouseClicked(event1 -> {
-            Point p = zoomScrollPane.getLocalCoordinates(event1.getX(), event1.getY());
-            System.out.println(p);
-        });
-
 
         zoomScrollPane.setOnContextMenuRequested(event1 -> {
             if (!this.coreController.isEditMode())

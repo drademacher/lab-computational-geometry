@@ -13,7 +13,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
 
-public class CoreController implements Api {
+public class CoreController {
     private boolean editMode = true;
 
     private ArrayList<Lion> lions = new ArrayList<>();
@@ -33,7 +33,6 @@ public class CoreController implements Api {
      *
      * ****************************/
 
-    @Override
     public BigVertex createVertex(Point coordinate) {
         if (coordinate == null) {
             return null;
@@ -44,7 +43,6 @@ public class CoreController implements Api {
         return vertex;//TODO
     }
 
-    @Override
     public BigVertex relocateVertex(Point vertexCoordinates, Point newCoordinate) {
         if (vertexCoordinates == null || newCoordinate == null) {
             return null;
@@ -60,7 +58,6 @@ public class CoreController implements Api {
         return vertex;//TODO
     }
 
-    @Override
     public BigVertex deleteVertex(Point vertexCoordinates) {
         if (vertexCoordinates == null) {
             return null;
@@ -82,7 +79,6 @@ public class CoreController implements Api {
         return createEdge(vertex1Coordinates, vertex2Coordinates, 4);
     }
 
-    @Override
     public Edge createEdge(Point vertex1Coordinates, Point vertex2Coordinates, int weight) {
         if (vertex1Coordinates == null || vertex2Coordinates == null || weight < 0) {
             return null;
@@ -101,7 +97,6 @@ public class CoreController implements Api {
         return edge;//TODO
     }
 
-    @Override
     public Edge removeEdge(Point vertex1Coordinates, Point vertex2Coordinates) {
         if (vertex1Coordinates == null || vertex2Coordinates == null) {
             return null;
@@ -120,7 +115,6 @@ public class CoreController implements Api {
         return edge;//TODO
     }
 
-    @Override
     public Edge changeEdgeWeight(Point vertex1Coordinates, Point vertex2Coordinates, int weight) {
 
         if (vertex1Coordinates == null || vertex2Coordinates == null || weight < 0) {
@@ -253,6 +247,29 @@ public class CoreController implements Api {
         }
         return false;
     }
+
+    public boolean isDangerOnVertex(Point vertexCoorinate) {
+        if (vertexCoorinate == null) {
+            return false;
+        }
+        Vertex vertex = getVertexByCoordinate(vertexCoorinate);
+        if (vertex == null) {
+            return false;
+        }
+
+        for (Lion lion : lions) {
+            if (lion.getCurrentPosition().equals(vertex)) {
+                return true;
+            }
+            for (Vertex dangerVertex : lion.getRangeVertices()) {
+                if (dangerVertex.equals(vertex)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
 
     public boolean removeMan(Point manCoordinate) {
         if (manCoordinate == null) {
@@ -542,20 +559,17 @@ public class CoreController implements Api {
         // this.createVertex(new Point(5, 5));
         this.createVertex(new Point(40, 20));
         this.createVertex(new Point(0, 0));
-
         this.createVertex(new Point(10, 30));
 
         this.createEdge(new Point(40, 20), new Point(0, 0));
         this.createEdge(new Point(10, 30), new Point(0, 0));
+        this.createEdge(new Point(10, 30), new Point(40, 20));
 
         this.setLion(new Point(40, 20));
         setLionRange(new Point(40, 20), 1);
 
-        debugGraph();
+        this.setMan(new Point(0, 0));
 
-        this.removeEdge(new Point(40, 20), new Point(0, 0));
-
-        debugGraph();
 
     }
 
@@ -564,30 +578,6 @@ public class CoreController implements Api {
     }
 
     public void setDefaultGraph5() {
-
-        this.graph = new GraphController();
-
-        this.createVertex(new Point(10, 10));
-        this.createVertex(new Point(80, 40));
-
-        this.createEdge((new Point(50, 20)), (new Point(190, 20)), 4);
-
-        this.createVertex(new Point(20, 100));
-
-//        this.relocateVertex((new Point(50, 20), new Point(0, -100));
-
-
-        this.createEdge((new Point(50, 20)), (new Point(220, 140)), 2);
-
-
-        this.setLion((new Point(50, 20)));
-        Lion lion = this.getLions().get(0);
-        lion.setRange(3);
-
-
-        System.out.println("#############################");
-        this.debugGraph();
-
 
         this.setDefaultGraph1();
     }
@@ -628,6 +618,12 @@ public class CoreController implements Api {
     }
 
     public void simulateStep() {
+
+        if (lionsHaveWon()) {
+            System.out.println("#############\n#############\n##  E N D\n#############\n#############");
+            return;
+        }
+
         for (Man man : this.getMen()) {
             man.goToNextPosition();
             shapeController.relocateMan(man);
@@ -636,12 +632,26 @@ public class CoreController implements Api {
             lion.goToNextPosition();
             shapeController.relocateLion(lion);
         }
-//        this.state = new State(this.getMen(), this.getLions());
-//        return this.state;
+
+        if (lionsHaveWon()) {
+            System.out.println("#############\n#############\n##  E N D\n#############\n#############");
+        }
     }
 
+    private boolean lionsHaveWon() {
+        for (Man man : getMen()) {
+            for (Lion lion : getLions()) {
+                if (man.getCurrentPosition().equals(lion.getCurrentPosition())) {
+                    return true;
+                }
+                for (Vertex rangeVertex : lion.getRangeVertices()) {
+                    if (man.getCurrentPosition().equals(rangeVertex)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
 
-//    public State getState() {
-//        return state;
-//    }
 }

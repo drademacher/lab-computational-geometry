@@ -78,7 +78,7 @@ public class GraphHelper {
             current = queue.poll();
 
             // check break condition
-            if (coreController.isLionOnVertex(current.getCoordinates())) {
+            if (coreController.isDangerOnVertex(current.getCoordinates())) {
                 return map.get(current);
             }
 

@@ -1,18 +1,18 @@
 package shapes;
 
+import entities.Lion;
 import graph.CoreController;
 import javafx.scene.Group;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.SeparatorMenuItem;
+import javafx.scene.control.*;
 import javafx.scene.shape.Circle;
+import strategy.LionStrategies.StrategyDoNothing;
+import strategy.LionStrategies.StrategyRandom;
 import strategy.Strategy;
-import strategy.StrategyAggroGreedy;
-import strategy.StrategyDoNothing;
-import strategy.StrategyRandom;
+import strategy.LionStrategies.StrategyAggroGreedy;
 import util.Point;
 import visualization.ZoomScrollPane;
+
+import java.util.Optional;
 
 import static shapes.ShapeConstants.COLOR_LION;
 import static shapes.ShapeConstants.ENTITY_RADIUS;
@@ -20,7 +20,7 @@ import static shapes.ShapeConstants.ENTITY_RADIUS;
 /**
  * Created by Jens on 25.06.2017.
  */
-public class ShapedLion  implements ShapedEntity{
+public class ShapedLion implements ShapedEntity {
     private static ZoomScrollPane mainPane;
     private static Group shapeGroup = new Group();
 
@@ -54,8 +54,43 @@ public class ShapedLion  implements ShapedEntity{
             strategyMenu.getItems().addAll(item2, item3, item4);
 
 
+            Menu edgeMenu = new Menu("Lion Range");
+
+            MenuItem iteme1 = new MenuItem("Increment");
+            MenuItem iteme2 = new MenuItem("Decrement");
+            MenuItem iteme3 = new MenuItem("Set");
+
+
+            iteme1.setOnAction(event2 -> {
+                Lion lion = coreController.getLionByCoordinate(coordinates);
+                coreController.incrementLionRange(coordinates);
+            });
+
+            iteme2.setOnAction(event2 -> {
+                Lion lion = coreController.getLionByCoordinate(coordinates);
+                coreController.decrementLionRange(coordinates);
+            });
+
+            iteme3.setOnAction(event2 -> {
+                Lion lion = coreController.getLionByCoordinate(coordinates);
+
+                TextInputDialog dialog = new TextInputDialog("" + lion.getRange());
+                dialog.setTitle("Set Lion Range");
+                dialog.setHeaderText("Enter the new range of the lion.");
+
+                Optional<String> result = dialog.showAndWait();
+
+                if (result.isPresent()) {
+                    int newWeight = Integer.parseInt(result.get());
+                    coreController.setLionRange(coordinates, newWeight);
+                }
+            });
+
+            edgeMenu.getItems().addAll(iteme1, iteme2, iteme3);
+
+
             item0.setOnAction(event2 -> {
-                coreController.removeLion(coreController.getLionByCoordinate(coordinates));
+                coreController.removeLion(coordinates);
             });
 
             item1.setOnAction(event2 -> {
@@ -64,27 +99,30 @@ public class ShapedLion  implements ShapedEntity{
                     mainPane.setOnMouseClicked(null);
 
 //                    System.out.println(mainPane.getLocalCoordinates(event3.getX(), event3.getY()));
-                    coreController.relocateLion(coreController.getLionByCoordinate(coordinates), coreController.getVertexByCoordinate(mainPane.getLocalCoordinates(event3.getX(), event3.getY())));
+                    coreController.relocateLion(coordinates, mainPane.getLocalCoordinates(event3.getX(), event3.getY()));
 
                 });
             });
 
             item2.setOnAction(event2 -> {
-                Strategy strategy = new StrategyDoNothing();
-                coreController.setLionStrategy(coreController.getLionByCoordinate(coordinates), strategy);
+                Lion lion = coreController.getLionByCoordinate(coordinates);
+                Strategy strategy = new StrategyDoNothing(coreController, lion);
+                coreController.setLionStrategy(coordinates, strategy);
             });
 
             item3.setOnAction(event2 -> {
-                Strategy strategy = new StrategyAggroGreedy();
-                coreController.setLionStrategy(coreController.getLionByCoordinate(coordinates), strategy);
+                Lion lion = coreController.getLionByCoordinate(coordinates);
+                Strategy strategy = new StrategyAggroGreedy(coreController, lion);
+                coreController.setLionStrategy(coordinates, strategy);
             });
 
             item4.setOnAction(event2 -> {
-                Strategy strategy = new StrategyRandom();
-                coreController.setLionStrategy(coreController.getLionByCoordinate(coordinates), strategy);
+                Lion lion = coreController.getLionByCoordinate(coordinates);
+                Strategy strategy = new StrategyRandom(coreController, lion);
+                coreController.setLionStrategy(coordinates, strategy);
             });
 
-            contextMenu.getItems().addAll(item0, item1, strategyMenu, new SeparatorMenuItem(), closeItem);
+            contextMenu.getItems().addAll(item0, item1, strategyMenu, edgeMenu, new SeparatorMenuItem(), closeItem);
             contextMenu.show(shape, event1.getScreenX(), event1.getScreenY());
         });
     }

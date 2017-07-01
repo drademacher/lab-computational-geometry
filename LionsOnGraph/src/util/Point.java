@@ -84,7 +84,7 @@ public class Point {
     public int hashCode() {
         double result = x;
         result = 31 * result + y;
-        return (int)result;
+        return (int) result;
     }
 
     @Override

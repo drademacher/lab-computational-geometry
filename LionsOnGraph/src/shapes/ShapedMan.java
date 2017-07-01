@@ -1,5 +1,6 @@
 package shapes;
 
+import entities.Man;
 import graph.CoreController;
 import javafx.scene.Group;
 import javafx.scene.control.ContextMenu;
@@ -8,6 +9,9 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.shape.Circle;
 import strategy.*;
+import strategy.ManStrategies.StrategyDoNothing;
+import strategy.ManStrategies.StrategyRandom;
+import strategy.ManStrategies.StrategyRunAwayGreedy;
 import util.Point;
 import visualization.ZoomScrollPane;
 
@@ -17,7 +21,7 @@ import static shapes.ShapeConstants.ENTITY_RADIUS;
 /**
  * Created by Jens on 25.06.2017.
  */
-public class ShapedMan implements ShapedEntity{
+public class ShapedMan implements ShapedEntity {
     private static ZoomScrollPane mainPane;
     private static Group shapeGroup = new Group();
 
@@ -52,22 +56,25 @@ public class ShapedMan implements ShapedEntity{
 
 
             item2.setOnAction(event2 -> {
-                Strategy strategy = new StrategyDoNothing();
-                coreController.setManStrategy(coreController.getManByCoordinate(coordinates), strategy);
+                Man man = coreController.getManByCoordinate(coordinates);
+                Strategy strategy = new StrategyDoNothing(coreController, man);
+                coreController.setManStrategy(coordinates, strategy);
             });
 
             item3.setOnAction(event2 -> {
-                Strategy strategy = new StrategyRunAwayGreedy();
-                coreController.setManStrategy(coreController.getManByCoordinate(coordinates), strategy);
+                Man man = coreController.getManByCoordinate(coordinates);
+                Strategy strategy = new StrategyRunAwayGreedy(coreController, man);
+                coreController.setManStrategy(coordinates, strategy);
             });
 
             item4.setOnAction(event2 -> {
-                Strategy strategy = new StrategyRandom();
-                coreController.setManStrategy(coreController.getManByCoordinate(coordinates), strategy);
+                Man man = coreController.getManByCoordinate(coordinates);
+                Strategy strategy = new StrategyRandom(coreController, man);
+                coreController.setManStrategy(coordinates, strategy);
             });
 
             item0.setOnAction(event2 -> {
-                coreController.removeMan(coreController.getManByCoordinate(coordinates));
+                coreController.removeMan(coordinates);
             });
 
             item1.setOnAction(event2 -> {
@@ -77,7 +84,7 @@ public class ShapedMan implements ShapedEntity{
 
 //                    System.out.println(mainPane.getLocalCoordinates(event3.getX(), event3.getY()));
                     System.out.println("SHAPE... call relocate");
-                    coreController.relocateMan(coreController.getManByCoordinate(coordinates), coreController.getVertexByCoordinate(mainPane.getLocalCoordinates(event3.getX(), event3.getY())));
+                    coreController.relocateMan(coordinates, mainPane.getLocalCoordinates(event3.getX(), event3.getY()));
 
                 });
             });

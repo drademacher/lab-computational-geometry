@@ -27,6 +27,16 @@ public class Edge {
         return edgeVertices;
     }
 
+    public void registerEdgeVertex(SmallVertex edgeVertex){
+        this.edgeVertices.add(edgeVertex);
+        weight++;
+    }
+
+    public void unregisterEdgeVertex(SmallVertex edgeVertex){
+        this.edgeVertices.remove(edgeVertex);
+        weight--;
+    }
+
     public int getEdgeWeight() {
         return weight;
     }
@@ -59,6 +69,6 @@ public class Edge {
 
     @Override
     public String toString() {
-        return "Edge between vertex: " + vertices[0].getId() + " and vertex: " + vertices[1].getId();
+        return "E: " + vertices[0].getId() + " - " + vertices[1].getId();
     }
 }

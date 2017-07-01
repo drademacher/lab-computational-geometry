@@ -7,10 +7,9 @@ import java.util.ArrayList;
 import static shapes.ShapeConstants.BIG_VERTEX_RADIUS;
 import static shapes.ShapeConstants.SMALL_VERTEX_RADIUS;
 
-class GraphController implements Api {
+class GraphController {
 
     private static int idCounter = -1;
-    private CoreController coreController;
 
     //vertices
     private ArrayList<BigVertex> bigVertices = new ArrayList<>();
@@ -18,8 +17,7 @@ class GraphController implements Api {
     private ArrayList<Edge> NEWedges = new ArrayList<>();
 
 
-    public GraphController(CoreController coreController) {
-        this.coreController = coreController;
+    public GraphController() {
     }
 
     private static int getIdCounter() {
@@ -27,7 +25,7 @@ class GraphController implements Api {
         return idCounter;
     }
 
-    @Override
+
     public BigVertex relocateVertex(BigVertex vertex, Point newCoordinate) {
 
         //check duplicate
@@ -36,6 +34,16 @@ class GraphController implements Api {
         }
 
         vertex.setCoordinates(newCoordinate);
+
+        return updateEdgeVerticesPosition(vertex);
+
+    }
+
+    public BigVertex updateEdgeVerticesPosition(BigVertex vertex){
+        if (vertex == null) {
+            return null;
+        }
+
 
         //update position of SmallVertices
         for (Edge edge : vertex.getEdges()) {
@@ -66,7 +74,6 @@ class GraphController implements Api {
         return vertex;
     }
 
-    @Override
     public BigVertex createVertex(Point coordinate) {
 
         //check duplicate and margin to other bigVertices
@@ -79,7 +86,6 @@ class GraphController implements Api {
         return vertex;
     }
 
-    @Override
     public BigVertex deleteVertex(BigVertex vertex) {
         bigVertices.remove(vertex);
 
@@ -91,7 +97,6 @@ class GraphController implements Api {
         return vertex;
     }
 
-    @Override
     public Edge createEdge(BigVertex vertex1, BigVertex vertex2, int weight) {
 
         //check duplicate
@@ -143,28 +148,84 @@ class GraphController implements Api {
         return edge;
     }
 
-    @Override
-    public Edge changeEdgeWeight(BigVertex vertex1, BigVertex vertex2, int weight) {
+    public void changeEdgeWeight(BigVertex vertex1, BigVertex vertex2, int weight) {
 
-        for (int i = NEWedges.size() - 1; i >= 0; i--) {
-            Edge edge = NEWedges.get(i);
+        for (Edge edge : NEWedges) {
 
             if (edge.contains(vertex1) && edge.contains(vertex2)) {
-
                 //got the edge
-                if (edge.getEdgeWeight() > weight) {
-                    //TODO
-                } else if (edge.getEdgeWeight() > weight) {
-                    //TODO
-                } else {
-                    //do nothing, old weight == new weight
+
+                // deleting
+                while(edge.getEdgeWeight() > weight) {
+
+                    SmallVertex smallVertex = edge.getEdgeVertices().get(0);
+
+                    if (smallVertex.getConnections().size() > 2) {
+                        throw new Error("Unexpected: smallVertex has more then 2 connections");
+                    }
+
+                    Vertex vertexLeft = smallVertex.getConnections().get(0).getNeighbor(smallVertex);
+                    Vertex vertexRight = smallVertex.getConnections().get(1).getNeighbor(smallVertex);
+
+                    for (int j = vertexLeft.getConnections().size() - 1; j >= 0; j--) {
+                        Connection connection = vertexLeft.getConnections().get(j);
+                        if (connection.contains(smallVertex)) {
+                            vertexLeft.unregisterConnection(connection);
+                        }
+                    }
+                    for (int j = vertexRight.getConnections().size() - 1; j >= 0; j--) {
+                        Connection connection = vertexRight.getConnections().get(j);
+                        if (connection.contains(smallVertex)) {
+                            vertexRight.unregisterConnection(connection);
+                        }
+                    }
+
+                    Connection newConnextion = new Connection(vertexLeft, vertexRight);
+                    vertexLeft.registerConnection(newConnextion);
+                    vertexRight.registerConnection(newConnextion);
+
+                    edge.unregisterEdgeVertex(smallVertex);
+                    smallVertices.remove(smallVertex);
+
+                    //creating
+                }
+                while(edge.getEdgeWeight() < weight) {
+                    for (int j = edge.getEdgeVertices().size() - 1; j >= 0; j--) {
+                        SmallVertex smallVertex = edge.getEdgeVertices().get(j);
+
+                        for (int i = smallVertex.getConnections().size() - 1; i >= 0; i--) {
+                            Connection connection = smallVertex.getConnections().get(i);
+
+                            if (connection.contains(vertex2)) {
+
+                                smallVertex.unregisterConnection(connection);
+                                vertex2.unregisterConnection(connection);
+
+
+                                SmallVertex newSmallVertex = new SmallVertex(getIdCounter(), new Point(0, 0));
+
+
+                                Connection newConnextion1 = new Connection(smallVertex, newSmallVertex);
+                                smallVertex.registerConnection(newConnextion1);
+                                newSmallVertex.registerConnection(newConnextion1);
+
+                                Connection newConnextion2 = new Connection(vertex2, newSmallVertex);
+                                vertex2.registerConnection(newConnextion2);
+                                newSmallVertex.registerConnection(newConnextion2);
+
+                                edge.registerEdgeVertex(newSmallVertex);
+                                smallVertices.add(newSmallVertex);
+
+                            }
+
+                        }
+                    }
                 }
             }
         }
-        return null;
+        updateEdgeVerticesPosition(vertex1);
     }
 
-    @Override
     public Edge removeEdge(BigVertex vertex1, BigVertex vertex2) {
 
 
@@ -320,7 +381,6 @@ class GraphController implements Api {
         double factor = (index + 1) * (vectorLength / weight) / vectorLength;
         Point addingVector = vector.mul(factor);
         Point result = vertex1.getCoordinates().add(addingVector);
-        System.out.println(result);
         return result;
     }
 

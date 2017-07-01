@@ -1,12 +1,13 @@
 package shapes;
 
 import graph.CoreController;
+import graph.Edge;
 import javafx.scene.Group;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.*;
 import javafx.scene.shape.Line;
 import util.Point;
+
+import java.util.Optional;
 
 import static shapes.ShapeConstants.COLOR_EDGE;
 
@@ -37,19 +38,46 @@ public class ShapedEdge {
 
             final ContextMenu contextMenu = ContextMenuHolder.getFreshContextMenu();
             MenuItem item0 = new MenuItem("Remove Edge");
-            MenuItem item1 = new MenuItem("Change Edge Weight //TODO");
+            Menu edgeMenu = new Menu("Edge Weight");
+
+            MenuItem item1 = new MenuItem("Increment");
+            MenuItem item2 = new MenuItem("Decrement");
+            MenuItem item3 = new MenuItem("Set");
+
             MenuItem closeItem = new MenuItem("Close");
 
 
             item0.setOnAction(event2 -> {
-                coreController.removeEdge(coreController.getBigVertexByCoordinate(from), coreController.getBigVertexByCoordinate(to));
+                coreController.removeEdge(from, to);
             });
 
             item1.setOnAction(event2 -> {
-                //TODO
+                int weight = coreController.getEdgeByVertices(coreController.getBigVertexByCoordinate(from), coreController.getBigVertexByCoordinate(to)).getEdgeWeight();
+                coreController.changeEdgeWeight(from, to, weight + 1);
             });
 
-            contextMenu.getItems().addAll(item0, item1, closeItem);
+            item2.setOnAction(event2 -> {
+                int weight = coreController.getEdgeByVertices(coreController.getBigVertexByCoordinate(from), coreController.getBigVertexByCoordinate(to)).getEdgeWeight();
+                coreController.changeEdgeWeight(from, to, weight - 1);
+            });
+
+            item3.setOnAction(event2 -> {
+                int weight = coreController.getEdgeByVertices(coreController.getBigVertexByCoordinate(from), coreController.getBigVertexByCoordinate(to)).getEdgeWeight();
+
+                TextInputDialog dialog = new TextInputDialog("" + weight);
+                dialog.setTitle("Set Edge Weight");
+                dialog.setHeaderText("Enter the new weight of the edge.");
+
+                Optional<String> result = dialog.showAndWait();
+
+                if (result.isPresent()) {
+                    int newWeight = Integer.parseInt(result.get());
+                    coreController.changeEdgeWeight(from, to, newWeight);
+                }
+            });
+
+            edgeMenu.getItems().addAll(item1, item2, item3);
+            contextMenu.getItems().addAll(item0, edgeMenu, new SeparatorMenuItem(), closeItem);
             contextMenu.show(shape, event1.getScreenX(), event1.getScreenY());
         });
     }

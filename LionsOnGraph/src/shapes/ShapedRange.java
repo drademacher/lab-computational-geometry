@@ -13,7 +13,7 @@ import static shapes.ShapeConstants.*;
 /**
  * Created by Jens on 29.06.2017.
  */
-public class ShapedRange implements ShapedVertex{
+public class ShapedRange implements ShapedVertex {
     private static Group shapeGroup = new Group();
 
     private Circle shape;
@@ -23,7 +23,7 @@ public class ShapedRange implements ShapedVertex{
     public ShapedRange(CoreController coreController, Point startCoordinates) {
 
         this.coreController = coreController;
-        this.coordinates  = startCoordinates;
+        this.coordinates = startCoordinates;
 
         shape = new Circle(coordinates.getX(), coordinates.getY(), RANGE_RADIUS, COLOR_RANGE);
         shapeGroup.getChildren().add(shape);

@@ -157,6 +157,10 @@ public class CoreController implements Api {
 
 
     public void debugGraph() {
+
+        System.out.println("##############");
+        System.out.println("men: "+men);
+        System.out.println("lions: "+lions);
         graph.debugGraph();
     }
 
@@ -190,7 +194,7 @@ public class CoreController implements Api {
         if (vertexCoorinate == null) {
             return false;
         }
-        Vertex vertex = getBigVertexByCoordinate(vertexCoorinate);
+        Vertex vertex = getVertexByCoordinate(vertexCoorinate);
         if (vertex == null) {
             return false;
         }
@@ -205,7 +209,7 @@ public class CoreController implements Api {
         if (vertexCoorinate == null) {
             return false;
         }
-        Vertex vertex = getBigVertexByCoordinate(vertexCoorinate);
+        Vertex vertex = getVertexByCoordinate(vertexCoorinate);
         if (vertex == null) {
             return false;
         }
@@ -222,7 +226,7 @@ public class CoreController implements Api {
         if (vertexCoorinate == null) {
             return false;
         }
-        Vertex vertex = getBigVertexByCoordinate(vertexCoorinate);
+        Vertex vertex = getVertexByCoordinate(vertexCoorinate);
         if (vertex == null) {
             return false;
         }
@@ -237,7 +241,7 @@ public class CoreController implements Api {
         if (vertexCoorinate == null) {
             return false;
         }
-        Vertex vertex = getBigVertexByCoordinate(vertexCoorinate);
+        Vertex vertex = getVertexByCoordinate(vertexCoorinate);
         if (vertex == null) {
             return false;
         }
@@ -552,8 +556,7 @@ public class CoreController implements Api {
         this.createEdge(new Point(10, 30), new Point(0, 0));
 
         this.setLion(new Point(40, 20));
-        Lion lion = this.getLions().get(0);
-        lion.setRange(3);
+        setLionRange(new Point(40, 20), 1);
 
         debugGraph();
 

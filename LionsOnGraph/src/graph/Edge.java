@@ -59,6 +59,6 @@ public class Edge {
 
     @Override
     public String toString() {
-        return "Edge between vertex: " + vertices[0].getId() + " and vertex: " + vertices[1].getId();
+        return "E: " + vertices[0].getId() + " - " + vertices[1].getId();
     }
 }

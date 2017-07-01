@@ -320,6 +320,7 @@ class GraphController implements Api {
         double factor = (index + 1) * (vectorLength / weight) / vectorLength;
         Point addingVector = vector.mul(factor);
         Point result = vertex1.getCoordinates().add(addingVector);
+        System.out.println(result);
         return result;
     }
 

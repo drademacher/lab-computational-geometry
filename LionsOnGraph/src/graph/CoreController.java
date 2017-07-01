@@ -26,7 +26,6 @@ public class CoreController implements Api {
     public CoreController() {
         this.graph = new GraphController(this);
         this.shapeController = new ShapeController(this);
-
     }
 
     /* ****************************

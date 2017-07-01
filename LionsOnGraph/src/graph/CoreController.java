@@ -117,7 +117,7 @@ public class CoreController {
 
     public Edge changeEdgeWeight(Point vertex1Coordinates, Point vertex2Coordinates, int weight) {
 
-        if (vertex1Coordinates == null || vertex2Coordinates == null || weight < 0) {
+        if (vertex1Coordinates == null || vertex2Coordinates == null || weight < 1) {
             return null;
         }
         BigVertex vertex1 = getBigVertexByCoordinate(vertex1Coordinates);

@@ -97,9 +97,6 @@ public class ShapeController {
         }
     }
 
-    public void changeEdgeWeight(Edge edge) {
-        //TODO
-    }
 
     /* ****************************
      *

@@ -27,6 +27,16 @@ public class Edge {
         return edgeVertices;
     }
 
+    public void registerEdgeVertex(SmallVertex edgeVertex){
+        this.edgeVertices.add(edgeVertex);
+        weight++;
+    }
+
+    public void unregisterEdgeVertex(SmallVertex edgeVertex){
+        this.edgeVertices.remove(edgeVertex);
+        weight--;
+    }
+
     public int getEdgeWeight() {
         return weight;
     }

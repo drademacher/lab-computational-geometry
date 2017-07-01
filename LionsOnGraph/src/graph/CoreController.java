@@ -126,9 +126,13 @@ public class CoreController {
             return null;
         }
 
-        Edge edge = this.graph.changeEdgeWeight(vertex1, vertex2, weight);
+        Edge edge = getEdgeByVertices(vertex1, vertex2);
 
-        this.shapeController.changeEdgeWeight(edge);
+        this.shapeController.removeEdge(edge);
+
+        this.graph.changeEdgeWeight(vertex1, vertex2, weight);
+
+        this.shapeController.createEdge(edge);
         this.shapeController.updateAllLionRanges(lions);
         return edge;
     }

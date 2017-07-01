@@ -3,10 +3,12 @@ package strategy;
 import entities.Entity;
 import graph.*;
 
-public class StrategyRunAwayGreedy implements Strategy {
+import java.util.ArrayList;
+
+public class StrategyRunAwayGreedy extends StrategyMan {
 
     @Override
-    public Vertex getNextPosition(CoreController coreController, Entity e) {
+    public Vertex getNextPosition() {
         GraphHelper helper = GraphHelper.createGraphHelper(coreController);
 
         Vertex currentPosition = e.getCurrentPosition();
@@ -29,5 +31,11 @@ public class StrategyRunAwayGreedy implements Strategy {
             return currentPosition;
         }
 
+    }
+
+    @Override
+    public ArrayList<Vertex> calculatePossibleSteps() {
+        //TODO 
+        return null;
     }
 }

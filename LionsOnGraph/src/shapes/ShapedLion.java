@@ -26,10 +26,12 @@ public class ShapedLion  implements ShapedEntity{
 
     private Circle shape;
     private CoreController coreController;
+    private Point coordinates;
 
-    public ShapedLion(CoreController coreController, Point coordinates) {
+    public ShapedLion(CoreController coreController, Point startCcoordinates) {
 
         this.coreController = coreController;
+        this.coordinates = startCcoordinates;
 
         shape = new Circle(coordinates.getX(), coordinates.getY(), ENTITY_RADIUS, COLOR_LION);
         shapeGroup.getChildren().add(shape);
@@ -96,7 +98,6 @@ public class ShapedLion  implements ShapedEntity{
     }
 
     public void relocate(Point coordinates) {
-        // TODO: jens, start und ziel angeben, dann kann man das auch schön machen
 
 //        Path path = new Path();
 //        path.getElements().add(new MoveTo(shape.getCenterX(), shape.getCenterY()));
@@ -106,6 +107,7 @@ public class ShapedLion  implements ShapedEntity{
 //        pathTransition.setPath(path);
 //        pathTransition.setNode(shape);
 
+        this.coordinates = coordinates;
         shape.relocate(coordinates.getX() - ENTITY_RADIUS, coordinates.getY() - ENTITY_RADIUS);
 //        pathTransition.play();
     }

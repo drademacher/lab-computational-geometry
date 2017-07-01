@@ -20,9 +20,9 @@ public class ShapedBigVertex implements ShapedVertex{
     private Point coordinates;
 
 
-    public ShapedBigVertex(CoreController coreController, Point coordinates) {
+    public ShapedBigVertex(CoreController coreController, Point startCoordinates) {
         this.coreController = coreController;
-        this.coordinates = coordinates;
+        this.coordinates = startCoordinates;
 
 
         shape = new Circle(coordinates.getX(), coordinates.getY(), BIG_VERTEX_RADIUS);
@@ -110,6 +110,7 @@ public class ShapedBigVertex implements ShapedVertex{
     }
 
     public void relocate(Point coordinates) {
+        this.coordinates = coordinates;
         shape.relocate(coordinates.getX() - BIG_VERTEX_RADIUS, coordinates.getY() - BIG_VERTEX_RADIUS);
     }
 

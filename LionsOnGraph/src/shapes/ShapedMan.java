@@ -23,10 +23,12 @@ public class ShapedMan implements ShapedEntity{
 
     private Circle shape;
     private CoreController coreController;
+    private Point coordinates;
 
-    public ShapedMan(CoreController coreController, Point coordinates) {
+    public ShapedMan(CoreController coreController, Point startCoordinates) {
 
         this.coreController = coreController;
+        this.coordinates = startCoordinates;
 
         shape = new Circle(coordinates.getX(), coordinates.getY(), ENTITY_RADIUS, COLOR_MAN);
         shapeGroup.getChildren().add(shape);
@@ -74,6 +76,7 @@ public class ShapedMan implements ShapedEntity{
                     mainPane.setOnMouseClicked(null);
 
 //                    System.out.println(mainPane.getLocalCoordinates(event3.getX(), event3.getY()));
+                    System.out.println("SHAPE... call relocate");
                     coreController.relocateMan(coreController.getManByCoordinate(coordinates), coreController.getVertexByCoordinate(mainPane.getLocalCoordinates(event3.getX(), event3.getY())));
 
                 });
@@ -94,6 +97,7 @@ public class ShapedMan implements ShapedEntity{
 
     @Override
     public void relocate(Point coordinates) {
+        this.coordinates = coordinates;
         shape.relocate(coordinates.getX() - ENTITY_RADIUS, coordinates.getY() - ENTITY_RADIUS);
     }
 

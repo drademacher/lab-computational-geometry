@@ -140,19 +140,15 @@ public class ShapeController {
     }
 
     public void updateLionRange(Lion lion) {
-        System.out.println("UPDATE LION RANGE");
         ArrayList<ShapedRange> rangeVertices = mapLionRange.get(lion);
         if(rangeVertices == null){
-            System.out.println("== null...");
             rangeVertices = new ArrayList<ShapedRange>();
         }
-        System.out.println(lion.getRangeVertices().size());
+
         while(lion.getRangeVertices().size() > rangeVertices.size()){
-            System.out.println("adding...");
             rangeVertices.add(new ShapedRange(coreController, new Point(0,0)));
         }
         while(lion.getRangeVertices().size() < rangeVertices.size()){
-            System.out.println("deleting...");
             rangeVertices.get(0).delete();
             rangeVertices.remove(0);
         }

@@ -15,10 +15,12 @@ public class ShapedSmallVertex implements ShapedVertex{
 
     private Circle shape;
     private CoreController coreController;
+    private Point coordinates;
 
-    public ShapedSmallVertex(CoreController coreController, Point coordinates) {
+    public ShapedSmallVertex(CoreController coreController, Point startCoordinates) {
 
         this.coreController = coreController;
+        this.coordinates = startCoordinates;
 
         shape = new Circle(coordinates.getX(), coordinates.getY(), SMALL_VERTEX_RADIUS);
         shape.setStrokeWidth(SMALL_VERTEX_RADIUS / 5);
@@ -60,6 +62,7 @@ public class ShapedSmallVertex implements ShapedVertex{
     }
 
     public void relocate(Point coordinates) {
+        this.coordinates = coordinates;
         shape.relocate(coordinates.getX() - SMALL_VERTEX_RADIUS, coordinates.getY() - SMALL_VERTEX_RADIUS);
     }
 

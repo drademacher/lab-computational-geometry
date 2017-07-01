@@ -13,10 +13,14 @@ public class ShapedEdge {
 
     private CoreController coreController;
     private Line shape;
+    private Point from;
+    private Point to;
 
-    public ShapedEdge(CoreController coreController, Point from, Point to) {
+    public ShapedEdge(CoreController coreController, Point startFrom, Point startTo) {
 
         this.coreController = coreController;
+        this.from = startFrom;
+        this.to = startTo;
 
         shape = new Line(from.getX(), from.getY(), to.getX(), to.getY());
         shape.setStroke(COLOR_EDGE);
@@ -28,6 +32,8 @@ public class ShapedEdge {
     }
 
     public void relocate(Point from, Point to) {
+        this.from = from;
+        this.to = to;
         shape.setStartX(from.getX());
         shape.setStartY(from.getY());
         shape.setEndX(to.getX());

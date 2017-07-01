@@ -18,10 +18,12 @@ public class ShapedRange implements ShapedVertex{
 
     private Circle shape;
     private CoreController coreController;
+    private Point coordinates;
 
-    public ShapedRange(CoreController coreController, Point coordinates) {
+    public ShapedRange(CoreController coreController, Point startCoordinates) {
 
         this.coreController = coreController;
+        this.coordinates  = startCoordinates;
 
         shape = new Circle(coordinates.getX(), coordinates.getY(), ENTITY_RADIUS*2/3, COLOR_RANGE);
         shapeGroup.getChildren().add(shape);
@@ -33,6 +35,7 @@ public class ShapedRange implements ShapedVertex{
     }
 
     public void relocate(Point coordinates) {
+        this.coordinates = coordinates;
         shape.relocate(coordinates.getX() - ENTITY_RADIUS, coordinates.getY() - ENTITY_RADIUS);
     }
 

@@ -319,6 +319,14 @@ public class CoreController implements Api {
         shapeController.updateLionRange(lion);
     }
 
+    public void setManDistance(Man man, int distance, boolean keepExactDistance){
+        if(man == null || distance < 1){
+            return;
+        }
+        man.setDistance(distance);
+        man.setKeepDistanceExact(keepExactDistance);
+    }
+
 
 
 

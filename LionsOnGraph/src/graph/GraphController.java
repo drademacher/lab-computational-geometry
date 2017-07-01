@@ -154,7 +154,7 @@ class GraphController implements Api {
                 //got the edge
                 if (edge.getEdgeWeight() > weight) {
                     //TODO
-                } else if (edge.getEdgeWeight() > weight) {
+                } else if (edge.getEdgeWeight() < weight) {
                     //TODO
                 } else {
                     //do nothing, old weight == new weight

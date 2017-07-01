@@ -2,6 +2,9 @@ package shapes;
 
 import graph.CoreController;
 import javafx.scene.Group;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.shape.Line;
 import util.Point;
 
@@ -25,6 +28,32 @@ public class ShapedEdge {
         shape = new Line(from.getX(), from.getY(), to.getX(), to.getY());
         shape.setStroke(COLOR_EDGE);
         shapeGroup.getChildren().add(shape);
+
+        shape.setOnContextMenuRequested(event1 -> {
+            event1.consume();
+
+            if (!this.coreController.isEditMode())
+                return;
+
+            final ContextMenu contextMenu = ContextMenuHolder.getFreshContextMenu();
+            MenuItem item0 = new MenuItem("Remove Edge");
+            MenuItem item1 = new MenuItem("Change Edge Weight //TODO");
+            MenuItem closeItem = new MenuItem("Close");
+
+
+
+
+            item0.setOnAction(event2 -> {
+                coreController.removeEdge(coreController.getBigVertexByCoordinate(from), coreController.getBigVertexByCoordinate(to));
+            });
+
+            item1.setOnAction(event2 -> {
+                //TODO
+            });
+
+            contextMenu.getItems().addAll(item0, item1, closeItem);
+            contextMenu.show(shape, event1.getScreenX(), event1.getScreenY());
+        });
     }
 
     public static void setShapeGroup(Group shapeGroup) {

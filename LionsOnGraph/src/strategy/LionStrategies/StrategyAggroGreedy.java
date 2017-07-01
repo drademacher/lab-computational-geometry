@@ -1,34 +1,34 @@
-package strategy;
+package strategy.LionStrategies;
 
-import entities.Entity;
+import entities.Lion;
 import graph.*;
+import strategy.StrategyLion;
 
-public class StrategyAggroGreedy implements Strategy {
+import java.util.ArrayList;
+
+public class StrategyAggroGreedy extends StrategyLion {
+
+    public StrategyAggroGreedy(CoreController coreController, Lion lion) {
+        super(coreController, lion);
+    }
+
     @Override
-    public Vertex getNextPosition(CoreController coreController, Entity e) {
-
-        GraphHelper helper = GraphHelper.createGraphHelper(coreController);
-
-        Vertex currentPosition = e.getCurrentPosition();
-
+    protected ArrayList<Vertex> calculatePossibleSteps() {
+        Vertex currentPosition = lion.getCurrentPosition();
         int steps = Integer.MAX_VALUE;
-        Vertex bestNextPosition = null;
+        ArrayList<Vertex> result = new ArrayList<>();
         for (Connection connection : currentPosition.getConnections()) {
             Vertex possibleVertex = connection.getNeighbor(currentPosition);
 
             int calculatedSteps = helper.BFSToMen(currentPosition, possibleVertex);
             if (calculatedSteps < steps) {
                 steps = calculatedSteps;
-                bestNextPosition = possibleVertex;
+                result.add(0, possibleVertex);
+            } else {
+                result.add(possibleVertex);
             }
         }
-
-        if (bestNextPosition != null) {
-            return bestNextPosition;
-        } else {
-            return currentPosition;
-        }
-
+        return result;
     }
 
 }

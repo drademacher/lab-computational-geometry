@@ -4,9 +4,8 @@ import entities.Lion;
 import entities.Man;
 import shapes.ShapeController;
 import strategy.Strategy;
-import strategy.StrategyAggroGreedy;
-import strategy.StrategyRandom;
-import strategy.StrategyRunAwayGreedy;
+import strategy.LionStrategies.StrategyAggroGreedy;
+import strategy.ManStrategies.StrategyRunAwayGreedy;
 import util.Point;
 
 import java.io.BufferedReader;
@@ -24,9 +23,8 @@ public class CoreController implements Api {
     private ShapeController shapeController;
 
     public CoreController() {
-        this.graph = new GraphController(this);
+        this.graph = new GraphController();
         this.shapeController = new ShapeController(this);
-
     }
 
     /* ****************************
@@ -166,14 +164,11 @@ public class CoreController implements Api {
      * ****************************/
 
     public boolean setMan(Vertex vertex) {
-        return setMan(vertex, new StrategyRandom());
-    }
-
-    public boolean setMan(Vertex vertex, Strategy strategy) {
-        if(vertex == null || strategy == null){
+        if(vertex == null){
             return false;
         }
-        Man man = new Man(vertex, strategy, this);
+        Man man = new Man(vertex, this);
+        man.setStrategy(new StrategyRunAwayGreedy(this, man));
         shapeController.createMan(man);
         return men.add(man);
     }
@@ -190,15 +185,12 @@ public class CoreController implements Api {
         return false;
     }
 
-    public boolean setLion(Vertex vertex) {
-        return setLion(vertex, new StrategyRandom());
-    }
-
-    public boolean setLion(Vertex vertex, Strategy strategy) {
-        if(vertex == null || strategy == null){
+    public boolean setLion(Vertex vertex){
+        if(vertex == null){
             return false;
         }
-        Lion lion = new Lion(vertex, strategy, this);
+        Lion lion = new Lion(vertex, this);
+        lion.setStrategy(new StrategyAggroGreedy(this, lion));
         shapeController.createLion(lion);
         return lions.add(lion);
     }
@@ -362,12 +354,12 @@ public class CoreController implements Api {
      * ****************************/
 
     public void setEmptyGraph() {
-        this.graph = new GraphController(this);
+        this.graph = new GraphController();
     }
 
 
     public void setDefaultGraph1() {
-        this.graph = new GraphController(this);
+        this.graph = new GraphController();
 
         this.createVertex(new Point(50, 20));
         this.createVertex(new Point(190, 20));
@@ -426,13 +418,13 @@ public class CoreController implements Api {
         this.createEdge(this.getBigVertexByCoordinate(new Point(140, 140)), this.getBigVertexByCoordinate(new Point(100, 140)));
         this.createEdge(this.getBigVertexByCoordinate(new Point(100, 140)), this.getBigVertexByCoordinate(new Point(90, 100)));
         this.createEdge(this.getBigVertexByCoordinate(new Point(90, 100)), this.getBigVertexByCoordinate(new Point(120, 70)));
-        this.setLion(this.getBigVertexByCoordinate(new Point(50, 90)), new StrategyAggroGreedy());
+        this.setLion(this.getBigVertexByCoordinate(new Point(50, 90)));
 
     }
 
 
     public void setDefaultGraph2() {
-        this.graph = new GraphController(this);
+        this.graph = new GraphController();
 
         this.createVertex(new Point(50, 20));
         this.createVertex(new Point(190, 20));
@@ -492,14 +484,14 @@ public class CoreController implements Api {
         this.createEdge(this.getBigVertexByCoordinate(new Point(100, 140)), this.getBigVertexByCoordinate(new Point(90, 100)));
         this.createEdge(this.getBigVertexByCoordinate(new Point(90, 100)), this.getBigVertexByCoordinate(new Point(120, 70)));
 
-        this.setMan(this.getBigVertexByCoordinate(new Point(50, 20)), new StrategyRunAwayGreedy());
-        this.setLion(this.getBigVertexByCoordinate(new Point(190, 20)), new StrategyAggroGreedy());
-        this.setLion(this.getBigVertexByCoordinate(new Point(100, 140)), new StrategyAggroGreedy());
-        this.setLion(this.getBigVertexByCoordinate(new Point(50, 90)), new StrategyAggroGreedy());
+        this.setMan(this.getBigVertexByCoordinate(new Point(50, 20)));
+        this.setLion(this.getBigVertexByCoordinate(new Point(190, 20)));
+        this.setLion(this.getBigVertexByCoordinate(new Point(100, 140)));
+        this.setLion(this.getBigVertexByCoordinate(new Point(50, 90)));
     }
 
     public void setDefaultGraph3() {
-        this.graph = new GraphController(this);
+        this.graph = new GraphController();
 
         // this.createVertex(new Point(5, 5));
         this.createVertex(new Point(40, 20));
@@ -510,7 +502,7 @@ public class CoreController implements Api {
         this.createEdge(this.getBigVertexByCoordinate(new Point(40, 20)), this.getBigVertexByCoordinate(new Point(0, 0)));
         this.createEdge(this.getBigVertexByCoordinate(new Point(10, 30)), this.getBigVertexByCoordinate(new Point(0, 0)));
 
-        this.setLion(this.getBigVertexByCoordinate(new Point(40, 20)), new StrategyRandom());
+        this.setLion(this.getBigVertexByCoordinate(new Point(40, 20)));
         Lion lion = this.getLions().get(0);
         lion.setRange(3);
 
@@ -528,8 +520,7 @@ public class CoreController implements Api {
 
     public void setDefaultGraph5() {
 
-
-        this.graph = new GraphController(this);
+        this.graph = new GraphController();
 
         this.createVertex(new Point(10, 10));
         this.createVertex(new Point(80, 40));
@@ -545,7 +536,7 @@ public class CoreController implements Api {
         this.createEdge(this.getBigVertexByCoordinate(new Point(50, 20)), this.getBigVertexByCoordinate(new Point(220, 140)), 2);
 
 
-        this.setLion(this.getBigVertexByCoordinate(new Point(50, 20)), new StrategyRandom());
+        this.setLion(this.getBigVertexByCoordinate(new Point(50, 20)));
         Lion lion = this.getLions().get(0);
         lion.setRange(3);
 

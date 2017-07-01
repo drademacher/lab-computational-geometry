@@ -10,7 +10,6 @@ import static shapes.ShapeConstants.SMALL_VERTEX_RADIUS;
 class GraphController implements Api {
 
     private static int idCounter = -1;
-    private CoreController coreController;
 
     //vertices
     private ArrayList<BigVertex> bigVertices = new ArrayList<>();
@@ -18,8 +17,7 @@ class GraphController implements Api {
     private ArrayList<Edge> NEWedges = new ArrayList<>();
 
 
-    public GraphController(CoreController coreController) {
-        this.coreController = coreController;
+    public GraphController() {
     }
 
     private static int getIdCounter() {
@@ -150,8 +148,9 @@ class GraphController implements Api {
             Edge edge = NEWedges.get(i);
 
             if (edge.contains(vertex1) && edge.contains(vertex2)) {
-
                 //got the edge
+
+                //
                 if (edge.getEdgeWeight() > weight) {
                     //TODO
                 } else if (edge.getEdgeWeight() < weight) {

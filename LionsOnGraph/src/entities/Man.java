@@ -3,16 +3,17 @@ package entities;
 import graph.CoreController;
 import graph.Vertex;
 import strategy.Strategy;
+import strategy.StrategyMan;
 
 public class Man extends Entity {
     // TODO: implement Man class
 
     private boolean keepDistanceExact = false;
-    private int distance = Integer.MAX_VALUE;
+    private int distance = 0;
 
 
-    public Man(Vertex startPosition, Strategy strategy, CoreController coreController) {
-        super(startPosition, strategy, coreController);
+    public Man(Vertex startPosition, CoreController coreController) {
+        super(startPosition, coreController);
     }
 
     public Lion getNearestLion() {
@@ -29,7 +30,8 @@ public class Man extends Entity {
     }
 
     public void removeDistance(){
-        this.distance = Integer.MAX_VALUE;
+        this.distance = 0;
+        this.keepDistanceExact = false;
     }
 
     public void setKeepDistanceExact(boolean keepDistanceExact) {

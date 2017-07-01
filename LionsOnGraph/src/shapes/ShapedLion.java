@@ -1,5 +1,6 @@
 package shapes;
 
+import entities.Lion;
 import graph.CoreController;
 import javafx.scene.Group;
 import javafx.scene.control.ContextMenu;
@@ -7,10 +8,10 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.shape.Circle;
+import strategy.LionStrategies.StrategyDoNothing;
+import strategy.LionStrategies.StrategyRandom;
 import strategy.Strategy;
-import strategy.StrategyAggroGreedy;
-import strategy.StrategyDoNothing;
-import strategy.StrategyRandom;
+import strategy.LionStrategies.StrategyAggroGreedy;
 import util.Point;
 import visualization.ZoomScrollPane;
 
@@ -70,18 +71,21 @@ public class ShapedLion  implements ShapedEntity{
             });
 
             item2.setOnAction(event2 -> {
-                Strategy strategy = new StrategyDoNothing();
-                coreController.setLionStrategy(coreController.getLionByCoordinate(coordinates), strategy);
+                Lion lion = coreController.getLionByCoordinate(coordinates);
+                Strategy strategy = new StrategyDoNothing(coreController, lion);
+                coreController.setLionStrategy(lion, strategy);
             });
 
             item3.setOnAction(event2 -> {
-                Strategy strategy = new StrategyAggroGreedy();
-                coreController.setLionStrategy(coreController.getLionByCoordinate(coordinates), strategy);
+                Lion lion = coreController.getLionByCoordinate(coordinates);
+                Strategy strategy = new StrategyAggroGreedy(coreController, lion);
+                coreController.setLionStrategy(lion, strategy);
             });
 
             item4.setOnAction(event2 -> {
-                Strategy strategy = new StrategyRandom();
-                coreController.setLionStrategy(coreController.getLionByCoordinate(coordinates), strategy);
+                Lion lion = coreController.getLionByCoordinate(coordinates);
+                Strategy strategy = new StrategyRandom(coreController, lion);
+                coreController.setLionStrategy(lion, strategy);
             });
 
             contextMenu.getItems().addAll(item0, item1, strategyMenu, new SeparatorMenuItem(), closeItem);

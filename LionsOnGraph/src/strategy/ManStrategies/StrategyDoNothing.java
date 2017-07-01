@@ -1,9 +1,9 @@
-package strategy;
+package strategy.ManStrategies;
 
-import entities.Entity;
 import entities.Man;
 import graph.CoreController;
 import graph.Vertex;
+import strategy.StrategyMan;
 
 import java.util.ArrayList;
 
@@ -14,12 +14,9 @@ public class StrategyDoNothing extends StrategyMan {
     }
 
     @Override
-    public Vertex getNextPosition(CoreController coreController, Entity e) {
-        return e.getCurrentPosition();
-    }
-
-    @Override
     public ArrayList<Vertex> calculatePossibleSteps() {
-        return man.getCurrentPosition();
+        ArrayList<Vertex> result = new ArrayList<>();
+        result.add(man.getCurrentPosition());
+        return result;
     }
 }

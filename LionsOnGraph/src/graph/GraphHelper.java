@@ -136,4 +136,40 @@ public class GraphHelper {
 
         return result;
     }
+
+    public int getDistanceBetween(Vertex vertex1, Vertex vertex2) {
+
+        Map<Vertex, Integer> map = new HashMap<>();
+        Set<Vertex> set = new HashSet<>();
+        Queue<Vertex> queue = new LinkedList<>();
+        Vertex current;
+
+        map.put(vertex1, 0);
+
+        set.add(vertex1);
+        queue.add(vertex1);
+
+        while (!queue.isEmpty()) {
+            current = queue.poll();
+
+            // check break condition
+            if (current.equals(vertex2)) {
+                return map.get(current);
+            }
+
+            for (Connection connection : current.getConnections()) {
+                Vertex nextVertex = connection.getNeighbor(current);
+
+                if (!set.contains(nextVertex)) {
+                    map.put(nextVertex, map.get(current) + 1);
+                    set.add(nextVertex);
+
+                    queue.add(nextVertex);
+                }
+            }
+        }
+
+        return Integer.MAX_VALUE;
+    }
+
 }

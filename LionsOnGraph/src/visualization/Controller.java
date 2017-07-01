@@ -6,10 +6,7 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
-import javafx.scene.control.Button;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
@@ -19,6 +16,7 @@ import util.ContextMenuHolder;
 import util.ZoomScrollPane;
 
 import java.io.File;
+import java.util.Optional;
 
 
 public class Controller {
@@ -36,7 +34,7 @@ public class Controller {
     private Button stepAnimationButton = new Button("Single Step");
 
 
-    private MenuButton setGraphButton;
+    private MenuButton setGraphButton, setParamterButton = new MenuButton("Set Parameter");
 
 
     private BooleanProperty editMode, activePlaying;
@@ -95,7 +93,7 @@ public class Controller {
                 activePlaying.set(false);
 
                 modeToggleButton.setText("Play Mode");
-                buttonBar.getChildren().addAll(modeToggleButton, setGraphButton);
+                buttonBar.getChildren().addAll(modeToggleButton, setGraphButton, setParamterButton);
             }
         });
 
@@ -117,8 +115,7 @@ public class Controller {
 
         setGraphButton.getItems().addAll(emptyMapMenuItem, graph1MenuItem, graph2MenuItem, graph3MenuItem, openMapMenuItem, saveMapMenuItem);
 
-        buttonBar.getChildren().addAll(modeToggleButton, setGraphButton);
-
+        buttonBar.getChildren().addAll(modeToggleButton, setGraphButton, setParamterButton);
 
         emptyMapMenuItem.setOnAction(event -> {
             clearGraphShapes();
@@ -171,6 +168,41 @@ public class Controller {
                 this.coreController.saveGraphToFile(selectedFile);
             }
         });
+
+        MenuItem setManMinDistance = new MenuItem("Man Minimum Distance");
+        MenuItem setManFixDistance = new MenuItem("Man Fixed Distance");
+        setParamterButton.getItems().addAll(setManMinDistance, setManFixDistance);
+
+        setManMinDistance.setOnAction(event -> {
+            // TODO: replace 0 by getManMinimumDistance
+            int currentValue = 0;
+
+            TextInputDialog dialog = new TextInputDialog("" + currentValue);
+            dialog.setTitle("Set Minimum Distance");
+            dialog.setHeaderText("Enter the minimum distance men must be afar from each other.");
+
+            Optional<String> result = dialog.showAndWait();
+
+            if (result.isPresent()) {
+                try {
+                    int inputValue = Integer.parseInt(result.get());
+                    // TODO: update coreController here
+                    System.out.println("new value " + inputValue);
+                } catch (Exception ignore) {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Error");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Input was not a number.");
+                    alert.showAndWait();
+                }
+            }
+        });
+
+
+        setManFixDistance.setOnAction(event -> {
+            // TODO: analog zu setManMinDistance - aber auch hier fehlt die API
+        });
+
     }
 
 

@@ -160,4 +160,10 @@ public class ShapeController {
 
         mapLionRange.put(lion, rangeVertices);
     }
+
+    public void updateAllLionRanges(ArrayList<Lion> lions){
+        for(Lion lion : lions){
+            updateLionRange(lion);
+        }
+    }
 }

@@ -67,6 +67,7 @@ public class CoreController implements Api {
         this.shapeController.deleteVertex(vertex);
         //TODO Entity?
         vertex = this.graph.deleteVertex(vertex);
+        this.shapeController.updateAllLionRanges(lions);
 
         return vertex; //TODO
     }
@@ -87,6 +88,7 @@ public class CoreController implements Api {
         Edge edge = this.graph.createEdge(vertex1, vertex2, weight);
 
         this.shapeController.createEdge(edge);
+        this.shapeController.updateAllLionRanges(lions);
         return edge;//TODO
     }
 
@@ -99,6 +101,7 @@ public class CoreController implements Api {
         Edge edge = this.graph.removeEdge(vertex1, vertex2);
 
         this.shapeController.removeEdge(edge);
+        this.shapeController.updateAllLionRanges(lions);
         return edge;//TODO
     }
 
@@ -111,6 +114,7 @@ public class CoreController implements Api {
         Edge edge = this.graph.changeEdgeWeight(vertex1, vertex2, weight);
 
         this.shapeController.changeEdgeWeight(edge);
+        this.shapeController.updateAllLionRanges(lions);
         return edge;
     }
 

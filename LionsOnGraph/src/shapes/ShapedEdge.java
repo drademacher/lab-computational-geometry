@@ -41,8 +41,6 @@ public class ShapedEdge {
             MenuItem closeItem = new MenuItem("Close");
 
 
-
-
             item0.setOnAction(event2 -> {
                 coreController.removeEdge(coreController.getBigVertexByCoordinate(from), coreController.getBigVertexByCoordinate(to));
             });

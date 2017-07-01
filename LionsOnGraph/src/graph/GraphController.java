@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import static shapes.ShapeConstants.BIG_VERTEX_RADIUS;
 import static shapes.ShapeConstants.SMALL_VERTEX_RADIUS;
 
-class GraphController implements Api {
+class GraphController {
 
     private static int idCounter = -1;
 
@@ -25,7 +25,6 @@ class GraphController implements Api {
         return idCounter;
     }
 
-    @Override
     public BigVertex relocateVertex(BigVertex vertex, Point newCoordinate) {
 
         //check duplicate
@@ -64,7 +63,6 @@ class GraphController implements Api {
         return vertex;
     }
 
-    @Override
     public BigVertex createVertex(Point coordinate) {
 
         //check duplicate and margin to other bigVertices
@@ -77,7 +75,6 @@ class GraphController implements Api {
         return vertex;
     }
 
-    @Override
     public BigVertex deleteVertex(BigVertex vertex) {
         bigVertices.remove(vertex);
 
@@ -89,7 +86,6 @@ class GraphController implements Api {
         return vertex;
     }
 
-    @Override
     public Edge createEdge(BigVertex vertex1, BigVertex vertex2, int weight) {
 
         //check duplicate
@@ -141,7 +137,6 @@ class GraphController implements Api {
         return edge;
     }
 
-    @Override
     public Edge changeEdgeWeight(BigVertex vertex1, BigVertex vertex2, int weight) {
 
         for (int i = NEWedges.size() - 1; i >= 0; i--) {
@@ -163,7 +158,6 @@ class GraphController implements Api {
         return null;
     }
 
-    @Override
     public Edge removeEdge(BigVertex vertex1, BigVertex vertex2) {
 
 

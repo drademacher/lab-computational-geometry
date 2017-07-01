@@ -48,17 +48,17 @@ public class ShapedEdge {
 
 
             item0.setOnAction(event2 -> {
-                coreController.removeEdge(coreController.getBigVertexByCoordinate(from), coreController.getBigVertexByCoordinate(to));
+                coreController.removeEdge(from, to);
             });
 
             item1.setOnAction(event2 -> {
                 int weight = coreController.getEdgeByVertices(coreController.getBigVertexByCoordinate(from), coreController.getBigVertexByCoordinate(to)).getEdgeWeight();
-                coreController.changeEdgeWeight(coreController.getBigVertexByCoordinate(from), coreController.getBigVertexByCoordinate(to), weight + 1);
+                coreController.changeEdgeWeight(from, to, weight + 1);
             });
 
             item2.setOnAction(event2 -> {
                 int weight = coreController.getEdgeByVertices(coreController.getBigVertexByCoordinate(from), coreController.getBigVertexByCoordinate(to)).getEdgeWeight();
-                coreController.changeEdgeWeight(coreController.getBigVertexByCoordinate(from), coreController.getBigVertexByCoordinate(to), weight - 1);
+                coreController.changeEdgeWeight(from, to, weight - 1);
             });
 
             item3.setOnAction(event2 -> {
@@ -72,7 +72,7 @@ public class ShapedEdge {
 
                 if (result.isPresent()) {
                     int newWeight = Integer.parseInt(result.get());
-                    coreController.changeEdgeWeight(coreController.getBigVertexByCoordinate(from), coreController.getBigVertexByCoordinate(to), newWeight);
+                    coreController.changeEdgeWeight(from, to, newWeight);
                 }
             });
 

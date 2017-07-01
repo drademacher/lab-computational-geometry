@@ -65,12 +65,12 @@ public class ShapedLion  implements ShapedEntity{
 
             iteme1.setOnAction(event2 -> {
                 Lion lion = coreController.getLionByCoordinate(coordinates);
-                coreController.setLionRange(lion, lion.getRange() + 1);
+                coreController.incrementLionRange(coordinates);
             });
 
             iteme2.setOnAction(event2 -> {
                 Lion lion = coreController.getLionByCoordinate(coordinates);
-                coreController.setLionRange(lion, lion.getRange() - 1);
+                coreController.decrementLionRange(coordinates);
             });
 
             iteme3.setOnAction(event2 -> {
@@ -84,7 +84,7 @@ public class ShapedLion  implements ShapedEntity{
 
                 if (result.isPresent()) {
                     int newWeight = Integer.parseInt(result.get());
-                    coreController.setLionRange(lion, newWeight);
+                    coreController.setLionRange(coordinates, newWeight);
                 }
             });
 
@@ -97,7 +97,7 @@ public class ShapedLion  implements ShapedEntity{
 
 
             item0.setOnAction(event2 -> {
-                coreController.removeLion(coreController.getLionByCoordinate(coordinates));
+                coreController.removeLion(coordinates);
             });
 
             item1.setOnAction(event2 -> {
@@ -106,7 +106,7 @@ public class ShapedLion  implements ShapedEntity{
                     mainPane.setOnMouseClicked(null);
 
 //                    System.out.println(mainPane.getLocalCoordinates(event3.getX(), event3.getY()));
-                    coreController.relocateLion(coreController.getLionByCoordinate(coordinates), coreController.getVertexByCoordinate(mainPane.getLocalCoordinates(event3.getX(), event3.getY())));
+                    coreController.relocateLion(coordinates, mainPane.getLocalCoordinates(event3.getX(), event3.getY()));
 
                 });
             });
@@ -114,19 +114,19 @@ public class ShapedLion  implements ShapedEntity{
             item2.setOnAction(event2 -> {
                 Lion lion = coreController.getLionByCoordinate(coordinates);
                 Strategy strategy = new StrategyDoNothing(coreController, lion);
-                coreController.setLionStrategy(lion, strategy);
+                coreController.setLionStrategy(coordinates, strategy);
             });
 
             item3.setOnAction(event2 -> {
                 Lion lion = coreController.getLionByCoordinate(coordinates);
                 Strategy strategy = new StrategyAggroGreedy(coreController, lion);
-                coreController.setLionStrategy(lion, strategy);
+                coreController.setLionStrategy(coordinates, strategy);
             });
 
             item4.setOnAction(event2 -> {
                 Lion lion = coreController.getLionByCoordinate(coordinates);
                 Strategy strategy = new StrategyRandom(coreController, lion);
-                coreController.setLionStrategy(lion, strategy);
+                coreController.setLionStrategy(coordinates, strategy);
             });
 
             contextMenu.getItems().addAll(item0, item1, strategyMenu, edgeMenu, new SeparatorMenuItem(), closeItem);

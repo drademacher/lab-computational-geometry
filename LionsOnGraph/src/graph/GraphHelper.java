@@ -39,7 +39,7 @@ public class GraphHelper {
             current = queue.poll();
 
             // check break condition
-            if (coreController.isManOnVertex(current)) {
+            if (coreController.isManOnVertex(current.getCoordinates())) {
                 return map.get(current);
             }
 
@@ -50,7 +50,7 @@ public class GraphHelper {
                     map.put(nextVertex, map.get(current) + 1);
                     set.add(nextVertex);
 
-                    if (!coreController.isLionOnVertex(nextVertex)) {
+                    if (!coreController.isLionOnVertex(nextVertex.getCoordinates())) {
                         queue.add(nextVertex);
                     }
                 }
@@ -78,7 +78,7 @@ public class GraphHelper {
             current = queue.poll();
 
             // check break condition
-            if (coreController.isLionOnVertex(current)) {
+            if (coreController.isLionOnVertex(current.getCoordinates())) {
                 return map.get(current);
             }
 
@@ -89,7 +89,7 @@ public class GraphHelper {
                     map.put(nextVertex, map.get(current) + 1);
                     set.add(nextVertex);
 
-                    if (!coreController.isManOnVertex(nextVertex)) {
+                    if (!coreController.isManOnVertex(nextVertex.getCoordinates())) {
                         queue.add(nextVertex);
                     }
                 }

@@ -52,7 +52,7 @@ public class ShapedBigVertex implements ShapedVertex{
 
                     mainPane.setOnMouseClicked(null);
 
-                    coreController.createEdge(coreController.getBigVertexByCoordinate(coordinates), coreController.getBigVertexByCoordinate(mainPane.getLocalCoordinates(event3.getX(), event3.getY())));
+                    coreController.createEdge(coordinates, mainPane.getLocalCoordinates(event3.getX(), event3.getY()));
 
                 });
             });
@@ -62,7 +62,7 @@ public class ShapedBigVertex implements ShapedVertex{
 
                     mainPane.setOnMouseClicked(null);
 
-                    coreController.removeEdge(coreController.getBigVertexByCoordinate(coordinates), coreController.getBigVertexByCoordinate(mainPane.getLocalCoordinates(event3.getX(), event3.getY())));
+                    coreController.removeEdge(coordinates, mainPane.getLocalCoordinates(event3.getX(), event3.getY()));
 
                 });
             });
@@ -73,26 +73,26 @@ public class ShapedBigVertex implements ShapedVertex{
                     mainPane.setOnMouseClicked(null);
 
 //                    System.out.println(mainPane.getLocalCoordinates(event3.getX(), event3.getY()));
-                    coreController.relocateVertex(coreController.getBigVertexByCoordinate(coordinates), mainPane.getLocalCoordinates(event3.getX(), event3.getY()));
+                    coreController.relocateVertex(coordinates, mainPane.getLocalCoordinates(event3.getX(), event3.getY()));
 
                 });
             });
 
             item5.setOnAction(event2 -> {
-                coreController.deleteVertex(coreController.getBigVertexByCoordinate(coordinates));
+                coreController.deleteVertex(coordinates);
 //                shapeGroup.getChildren().remove(shape);
             });
 
             item3.setOnAction(event2 -> {
                 System.out.println("Add Man");
                 // TODO: something like new Man(vertex.getCoordinates());
-                coreController.setMan(coreController.getBigVertexByCoordinate(coordinates));
+                coreController.setMan(coordinates);
             });
 
             item4.setOnAction(event2 -> {
                 System.out.println("Add Lion");
                 // TODO: something like new Lion(vertex.getCoordinates());
-                coreController.setLion(coreController.getBigVertexByCoordinate(coordinates));
+                coreController.setLion(coordinates);
             });
 
             contextMenu.getItems().addAll(item2, item5, new SeparatorMenuItem(), item0, item1, new SeparatorMenuItem(), item3, item4, new SeparatorMenuItem(), closeItem);

@@ -58,23 +58,23 @@ public class ShapedMan implements ShapedEntity{
             item2.setOnAction(event2 -> {
                 Man man = coreController.getManByCoordinate(coordinates);
                 Strategy strategy = new StrategyDoNothing(coreController, man);
-                coreController.setManStrategy(man, strategy);
+                coreController.setManStrategy(coordinates, strategy);
             });
 
             item3.setOnAction(event2 -> {
                 Man man = coreController.getManByCoordinate(coordinates);
                 Strategy strategy = new StrategyRunAwayGreedy(coreController, man);
-                coreController.setManStrategy(man, strategy);
+                coreController.setManStrategy(coordinates, strategy);
             });
 
             item4.setOnAction(event2 -> {
                 Man man = coreController.getManByCoordinate(coordinates);
                 Strategy strategy = new StrategyRandom(coreController, man);
-                coreController.setManStrategy(man, strategy);
+                coreController.setManStrategy(coordinates, strategy);
             });
 
             item0.setOnAction(event2 -> {
-                coreController.removeMan(coreController.getManByCoordinate(coordinates));
+                coreController.removeMan(coordinates);
             });
 
             item1.setOnAction(event2 -> {
@@ -84,7 +84,7 @@ public class ShapedMan implements ShapedEntity{
 
 //                    System.out.println(mainPane.getLocalCoordinates(event3.getX(), event3.getY()));
                     System.out.println("SHAPE... call relocate");
-                    coreController.relocateMan(coreController.getManByCoordinate(coordinates), coreController.getVertexByCoordinate(mainPane.getLocalCoordinates(event3.getX(), event3.getY())));
+                    coreController.relocateMan(coordinates, mainPane.getLocalCoordinates(event3.getX(), event3.getY()));
 
                 });
             });

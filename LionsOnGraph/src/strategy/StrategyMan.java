@@ -26,21 +26,28 @@ public abstract class StrategyMan implements Strategy {
     @Override
     public Vertex getNextPosition() {
 
-        GraphHelper graphHelper = GraphHelper.createGraphHelper(coreController);
+//        GraphHelper graphHelper = GraphHelper.createGraphHelper(coreController);
+//
+//        for (Vertex vertex : calculatePossibleSteps()) {
+//            if (man.keepDistanceExact()) {
+//                if (man.getDistance() == graphHelper.getDistanceBetween(vertex, man.getCurrentPosition())) {
+//                    return vertex;
+//                }
+//            } else {
+//                if (man.getDistance() < graphHelper.getDistanceBetween(vertex, man.getCurrentPosition())) {
+//                    return vertex;
+//                }
+//            }
+//        }
 
-        for (Vertex vertex : calculatePossibleSteps()) {
-            if (man.keepDistanceExact()) {
-                if (man.getDistance() == graphHelper.getDistanceBetween(vertex, man.getCurrentPosition())) {
-                    return vertex;
-                }
-            } else {
-                if (man.getDistance() < graphHelper.getDistanceBetween(vertex, man.getCurrentPosition())) {
-                    return vertex;
-                }
-            }
+        ArrayList<Vertex> result = calculatePossibleSteps();
+        if(result.size() > 0){
+            System.out.println("return "+result.get(0));
+            return result.get(0);
         }
 
         //fallback
+        System.out.println("fallback");
         return man.getCurrentPosition();
     }
 

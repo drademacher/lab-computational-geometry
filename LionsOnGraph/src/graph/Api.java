@@ -7,15 +7,15 @@ import util.Point;
  */
 public interface Api {
 
-    BigVertex relocateVertex(BigVertex vertex, Point newCoordinate);
+    BigVertex relocateVertex(Point vertexCoordinates, Point newCoordinates);
 
-    BigVertex createVertex(Point coordinate);
+    BigVertex createVertex(Point coordinates);
 
-    BigVertex deleteVertex(BigVertex vertex);
+    BigVertex deleteVertex(Point vertexCoordinates);
 
-    Edge createEdge(BigVertex vertex1, BigVertex vertex2, int weight);
+    Edge createEdge(Point vertex1Coordinates, Point vertex2Coordinates, int weight);
 
-    Edge removeEdge(BigVertex vertex1, BigVertex vertex2);
+    Edge removeEdge(Point vertex1Coordinates, Point vertex2Coordinates);
 
-    Edge changeEdgeWeight(BigVertex vertex1, BigVertex vertex2, int weight);
+    Edge changeEdgeWeight(Point vertex1Coordinates, Point vertex2Coordinates, int weight);
 }

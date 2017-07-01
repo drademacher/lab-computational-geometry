@@ -166,12 +166,18 @@ public class CoreController implements Api {
     }
 
     public boolean setMan(Vertex vertex, Strategy strategy) {
+        if(vertex == null || strategy == null){
+            return false;
+        }
         Man man = new Man(vertex, strategy, this);
         shapeController.createMan(man);
         return men.add(man);
     }
 
     public boolean isManOnVertex(Vertex vertex) {
+        if(vertex == null){
+            return false;
+        }
         for (Man man : men) {
             if (man.getCurrentPosition().equals(vertex)) {
                 return true;
@@ -185,12 +191,18 @@ public class CoreController implements Api {
     }
 
     public boolean setLion(Vertex vertex, Strategy strategy) {
+        if(vertex == null || strategy == null){
+            return false;
+        }
         Lion lion = new Lion(vertex, strategy, this);
         shapeController.createLion(lion);
         return lions.add(lion);
     }
 
     public boolean isLionOnVertex(Vertex vertex) {
+        if(vertex == null){
+            return false;
+        }
         for (Lion lion : lions) {
             if (lion.getCurrentPosition().equals(vertex)) {
                 return true;
@@ -200,21 +212,33 @@ public class CoreController implements Api {
     }
 
     public boolean removeMan(Man man) {
+        if(man == null){
+            return false;
+        }
         shapeController.removeMan(man);
         return men.remove(man);
     }
 
     public boolean removeLion(Lion lion) {
+        if(lion == null){
+            return false;
+        }
         shapeController.removeLion(lion);
         return lions.remove(lion);
     }
 
     public void relocateMan(Man man, Vertex vertex) {
+        if(man == null || vertex == null){
+            return;
+        }
         man.setPosition(vertex);
         shapeController.relocateMan(man);
     }
 
     public void relocateLion(Lion lion, Vertex vertex) {
+        if(lion == null || vertex == null){
+            return;
+        }
         lion.setPosition(vertex);
         shapeController.relocateLion(lion);
     }
@@ -228,26 +252,41 @@ public class CoreController implements Api {
     }
 
     public void setManStrategy(Man man, Strategy strategy) {
+        if(man == null || strategy == null){
+            return;
+        }
         man.setStrategy(strategy);
     }
 
     public void setLionStrategy(Lion lion, Strategy strategy) {
+        if(lion == null || strategy == null){
+            return;
+        }
         lion.setStrategy(strategy);
     }
 
     public void setAllManStrategy(Strategy strategy) {
+        if(strategy == null){
+            return;
+        }
         for (Man man : men) {
             man.setStrategy(strategy);
         }
     }
 
     public void setAllLionStrategy(Strategy strategy) {
+        if(strategy == null){
+            return;
+        }
         for (Lion lion : lions) {
             lion.setStrategy(strategy);
         }
     }
 
     public Man getManByCoordinate(Point coordinates) {
+        if(coordinates == null){
+            return null;
+        }
         for (Man man : men) {
             if (man.getCoordinates().equals(coordinates)) {
                 return man;
@@ -257,6 +296,9 @@ public class CoreController implements Api {
     }
 
     public Lion getLionByCoordinate(Point coordinates) {
+        if(coordinates == null){
+            return null;
+        }
         for (Lion lion : lions) {
             if (lion.getCoordinates().equals(coordinates)) {
                 return lion;
@@ -266,7 +308,7 @@ public class CoreController implements Api {
     }
 
     public void setLionRange(Lion lion, int range){
-        if(range < 0){
+        if(lion == null || range < 0){
             return;
         }
         lion.setRange(range);

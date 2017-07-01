@@ -7,7 +7,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.shape.Circle;
 import util.Point;
-import visualization.ZoomScrollPane;
+import util.ZoomScrollPane;
 
 import static shapes.ShapeConstants.*;
 

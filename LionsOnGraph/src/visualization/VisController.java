@@ -14,7 +14,7 @@ import javafx.scene.control.MenuItem;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import shapes.*;
-import util.Point;
+import util.ZoomScrollPane;
 
 import java.io.File;
 import java.net.URL;

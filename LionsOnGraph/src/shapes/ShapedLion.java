@@ -10,7 +10,7 @@ import strategy.StrategyAggroGreedy;
 import strategy.StrategyDoNothing;
 import strategy.StrategyRandom;
 import util.Point;
-import visualization.ZoomScrollPane;
+import util.ZoomScrollPane;
 
 import java.util.Optional;
 

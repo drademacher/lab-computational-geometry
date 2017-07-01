@@ -9,7 +9,7 @@ import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.shape.Circle;
 import strategy.*;
 import util.Point;
-import visualization.ZoomScrollPane;
+import util.ZoomScrollPane;
 
 import static shapes.ShapeConstants.COLOR_MAN;
 import static shapes.ShapeConstants.ENTITY_RADIUS;

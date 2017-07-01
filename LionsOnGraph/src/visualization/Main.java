@@ -33,8 +33,8 @@ public class Main extends Application {
         setScene(new Scene(fxmlLoader.load(getClass().getResource("main.fxml").openStream())));
         primaryStage.setTitle("Lab Computational Geometry");
         primaryStage.setScene(getScene());
-        primaryStage.setWidth(VisConstants.WINDOW_WIDTH);
-        primaryStage.setHeight(VisConstants.WINDOW_HEIGHT);
+        primaryStage.setWidth(1200);
+        primaryStage.setHeight(800);
         primaryStage.setResizable(true);
         primaryStage.show();
 

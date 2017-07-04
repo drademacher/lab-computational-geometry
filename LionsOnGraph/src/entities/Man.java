@@ -8,8 +8,8 @@ import strategy.StrategyMan;
 public class Man extends Entity {
     // TODO: implement Man class
 
-    private boolean keepDistanceExact = false;
-    private int distance = 0;
+    private static boolean keepDistanceExact = false;
+    private static int distance = 0;
 
 
     public Man(Vertex startPosition, CoreController coreController) {
@@ -21,24 +21,24 @@ public class Man extends Entity {
         return null;
     }
 
-    public void setDistance(int distance) {
-        this.distance = distance;
+    public static void setDistance(int distance) {
+        Man.distance = distance;
     }
 
-    public int getDistance() {
+    public static int getDistance() {
         return distance;
     }
 
-    public void removeDistance() {
-        this.distance = 0;
-        this.keepDistanceExact = false;
+    public static void removeDistance() {
+        Man.distance = 0;
+        Man.keepDistanceExact = false;
     }
 
-    public void setKeepDistanceExact(boolean keepDistanceExact) {
-        this.keepDistanceExact = keepDistanceExact;
+    public static void setKeepDistanceExact(boolean keepDistanceExact) {
+        Man.keepDistanceExact = keepDistanceExact;
     }
 
-    public boolean keepDistanceExact() {
+    public static boolean keepDistanceExact() {
         return keepDistanceExact;
     }
 

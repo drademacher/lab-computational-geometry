@@ -14,7 +14,7 @@ class GraphController {
     //vertices
     private ArrayList<BigVertex> bigVertices = new ArrayList<>();
     private ArrayList<SmallVertex> smallVertices = new ArrayList<>();
-    private ArrayList<Edge> NEWedges = new ArrayList<>();
+    private ArrayList<Edge> edges = new ArrayList<>();
 
 
     public GraphController() {
@@ -137,7 +137,7 @@ class GraphController {
         Edge edge = new Edge(vertex1, vertex2, edgeVertices, weight);
         vertex1.registerEdge(edge);
         vertex2.registerEdge(edge);
-        NEWedges.add(edge);
+        edges.add(edge);
 
 
         if (weight <= 1) {
@@ -150,7 +150,7 @@ class GraphController {
 
     public void changeEdgeWeight(BigVertex vertex1, BigVertex vertex2, int weight) {
 
-        for (Edge edge : NEWedges) {
+        for (Edge edge : edges) {
 
             if (edge.contains(vertex1) && edge.contains(vertex2)) {
                 //got the edge
@@ -187,8 +187,9 @@ class GraphController {
                     edge.unregisterEdgeVertex(smallVertex);
                     smallVertices.remove(smallVertex);
 
-                    //creating
+
                 }
+                //creating
                 while(edge.getEdgeWeight() < weight) {
                     for (int j = edge.getEdgeVertices().size() - 1; j >= 0; j--) {
                         SmallVertex smallVertex = edge.getEdgeVertices().get(j);
@@ -220,6 +221,21 @@ class GraphController {
 
                         }
                     }
+                    if(edge.getEdgeVertices().size() == 0){
+                        SmallVertex newSmallVertex = new SmallVertex(getIdCounter(), new Point(0, 0));
+
+
+                        Connection newConnextion1 = new Connection(vertex1, newSmallVertex);
+                        vertex1.registerConnection(newConnextion1);
+                        newSmallVertex.registerConnection(newConnextion1);
+
+                        Connection newConnextion2 = new Connection(vertex2, newSmallVertex);
+                        vertex2.registerConnection(newConnextion2);
+                        newSmallVertex.registerConnection(newConnextion2);
+
+                        edge.registerEdgeVertex(newSmallVertex);
+                        smallVertices.add(newSmallVertex);
+                    }
                 }
             }
         }
@@ -229,8 +245,8 @@ class GraphController {
     public Edge removeEdge(BigVertex vertex1, BigVertex vertex2) {
 
 
-        for (int i = NEWedges.size() - 1; i >= 0; i--) {
-            Edge edge = NEWedges.get(i);
+        for (int i = edges.size() - 1; i >= 0; i--) {
+            Edge edge = edges.get(i);
 
             if (edge.contains(vertex1) && edge.contains(vertex2)) {
                 return removeEdge(edge);
@@ -250,7 +266,7 @@ class GraphController {
             this.smallVertices.remove(smallVertex);
         }
 
-        this.NEWedges.remove(edge);
+        this.edges.remove(edge);
 
         for (SmallVertex smallVertex : edge.getEdgeVertices()) {
 
@@ -335,7 +351,7 @@ class GraphController {
 
     public Edge getEdgeByVertices(BigVertex vertex1, BigVertex vertex2) {
 
-        for (Edge edge : NEWedges) {
+        for (Edge edge : edges) {
             if (edge.contains(vertex1) && edge.contains(vertex2)) {
                 return edge;
             }
@@ -356,7 +372,7 @@ class GraphController {
      *********************************** */
 
     public ArrayList<Edge> getEdges() {
-        return NEWedges;
+        return edges;
     }
 
     private boolean verticesAreAdjacent(Vertex vertex1, Vertex vertex2) {
@@ -392,7 +408,7 @@ class GraphController {
 
         str += "bigVertices: " + this.bigVertices + "\n";
         str += "smallVertices: " + this.smallVertices + "\n";
-        str += "edges: " + this.NEWedges + "\n";
+        str += "edges: " + this.edges + "\n";
 
         for (BigVertex vertex : bigVertices) {
             str += "\n" + vertex.getId() + " Coord: " + vertex.getCoordinates() + " (";

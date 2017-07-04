@@ -174,8 +174,7 @@ public class Controller {
         setParamterButton.getItems().addAll(setManMinDistance, setManFixDistance);
 
         setManMinDistance.setOnAction(event -> {
-            // TODO: replace 0 by getManMinimumDistance
-            int currentValue = 0;
+            int currentValue = this.coreController.getManDistance();
 
             TextInputDialog dialog = new TextInputDialog("" + currentValue);
             dialog.setTitle("Set Minimum Distance");
@@ -186,8 +185,8 @@ public class Controller {
             if (result.isPresent()) {
                 try {
                     int inputValue = Integer.parseInt(result.get());
-                    // TODO: update coreController here
                     System.out.println("new value " + inputValue);
+                    this.coreController.setManDistance(inputValue, false);
                 } catch (Exception ignore) {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Error");
@@ -200,7 +199,27 @@ public class Controller {
 
 
         setManFixDistance.setOnAction(event -> {
-            // TODO: analog zu setManMinDistance - aber auch hier fehlt die API
+            int currentValue = this.coreController.getManDistance();
+
+            TextInputDialog dialog = new TextInputDialog("" + currentValue);
+            dialog.setTitle("Set Minimum Distance");
+            dialog.setHeaderText("Enter the minimum distance men must be afar from each other.");
+
+            Optional<String> result = dialog.showAndWait();
+
+            if (result.isPresent()) {
+                try {
+                    int inputValue = Integer.parseInt(result.get());
+                    System.out.println("new value " + inputValue);
+                    this.coreController.setManDistance(inputValue, true);
+                } catch (Exception ignore) {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Error");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Input was not a number.");
+                    alert.showAndWait();
+                }
+            }
         });
 
     }

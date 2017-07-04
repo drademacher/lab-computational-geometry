@@ -444,16 +444,16 @@ public class CoreController {
         if (distance < 1) {
             return;
         }
-        for(Man man : men){
-            man.setDistance(distance);
-            man.setKeepDistanceExact(keepExactDistance);
-        }
+        Man.setDistance(distance);
+        Man.setKeepDistanceExact(keepExactDistance);
+    }
+
+    public int getManDistance(){
+        return Man.getDistance();
     }
 
     public void removeManDistance() {
-        for(Man man : men){
-            man.removeDistance();
-        }
+        Man.removeDistance();
     }
 
 

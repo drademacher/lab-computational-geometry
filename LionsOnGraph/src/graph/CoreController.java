@@ -614,11 +614,15 @@ public class CoreController {
 
     public void setEmptyGraph() {
         this.graph = new GraphController();
+        this.shapeController = new ShapeController(this);
+        this.men = new ArrayList<>();
+        this. lions = new ArrayList<>();
     }
 
 
     public void setDefaultGraph1() {
-        this.graph = new GraphController();
+        setEmptyGraph();
+
 
         this.createVertex(new Point(50, 20));
         this.createVertex(new Point(190, 20));
@@ -686,11 +690,12 @@ public class CoreController {
     }
 
     public void setDefaultGraph2() {
+        setEmptyGraph();
         setDefaultGraph1();
     }
 
     public void setDefaultGraph3() {
-        this.graph = new GraphController();
+        setEmptyGraph();
 
         // this.createVertex(new Point(5, 5));
         this.createVertex(new Point(40, 20));
@@ -710,22 +715,26 @@ public class CoreController {
     }
 
     public void setDefaultGraph4() {
+        setEmptyGraph();
         this.setDefaultGraph1();
     }
 
     public void setDefaultGraph5() {
+        setEmptyGraph();
 
         this.setDefaultGraph1();
     }
 
 
     public void setRandomGraph() {
+        setEmptyGraph();
         // TODO: implement random graph algorithm
         this.setDefaultGraph1();
     }
 
 
     public void setGraphFromFile(File file) throws Exception {
+        setEmptyGraph();
         try {
             BufferedReader br = new BufferedReader(new FileReader(file));
             br.readLine();  //Skip type

@@ -440,18 +440,22 @@ public class CoreController {
         shapeController.updateLionRange(lion);
     }
 
-    public void setManDistance(Point manCoordinate, int distance, boolean keepExactDistance) {
-        if (manCoordinate == null || distance < 1) {
+    public void setManDistance(int distance, boolean keepExactDistance) {
+        if (distance < 1) {
             return;
         }
-        Man man = getManByCoordinate(manCoordinate);
-        if (man == null) {
-            return;
+        for(Man man : men){
+            man.setDistance(distance);
+            man.setKeepDistanceExact(keepExactDistance);
         }
-
-        man.setDistance(distance);
-        man.setKeepDistanceExact(keepExactDistance);
     }
+
+    public void removeManDistance() {
+        for(Man man : men){
+            man.removeDistance();
+        }
+    }
+
 
 
 

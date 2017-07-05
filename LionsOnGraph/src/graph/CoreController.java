@@ -762,11 +762,10 @@ public class CoreController {
         // TODO: implement file saving
     }
 
-    public void simulateStep() {
+    public boolean simulateStep() {
 
         if (lionsHaveWon()) {
-            System.out.println("#############\n#############\n##  E N D\n#############\n#############");
-            return;
+            return true;
         }
 
         for (Man man : this.getMen()) {
@@ -778,9 +777,7 @@ public class CoreController {
             shapeController.relocateLion(lion);
         }
 
-        if (lionsHaveWon()) {
-            System.out.println("#############\n#############\n##  E N D\n#############\n#############");
-        }
+        return lionsHaveWon();
     }
 
     private boolean lionsHaveWon() {

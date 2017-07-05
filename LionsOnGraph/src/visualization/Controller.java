@@ -36,6 +36,8 @@ public class Controller {
 
     private MenuButton setGraphButton, setParamterButton = new MenuButton("Set Parameter");
 
+    private Alert gameOverAlert;
+
 
     private BooleanProperty editMode, activePlaying;
     private AnimationTimer animationTimer;
@@ -71,6 +73,7 @@ public class Controller {
         initAnimationTimer();
         initContextMenu();
         initZoomScrollPane();
+        initGameOverAlert();
     }
 
     /**
@@ -236,7 +239,10 @@ public class Controller {
 
         stepAnimationButton.setOnMouseClicked(event -> {
             activePlaying.set(false);
-            this.coreController.simulateStep();
+            boolean gameOver = coreController.simulateStep();
+            if (gameOver) {
+                gameOverAlert.show();
+            }
         });
         playAnimationButton.setOnMouseClicked(event -> activePlaying.set(true));
         stopAnimationButton.setOnMouseClicked(event -> activePlaying.set(false));
@@ -290,7 +296,11 @@ public class Controller {
                     tickAccount += 1;
                     if (tickAccount >= TICKS_PER_STEP) {
                         tickAccount -= TICKS_PER_STEP;
-                        coreController.simulateStep();
+                        boolean gameOver = coreController.simulateStep();
+                        if (gameOver) {
+                            gameOverAlert.show();
+                            activePlaying.set(false);
+                        }
                     }
                 }
             }
@@ -327,5 +337,12 @@ public class Controller {
         edgeShapes.getChildren().clear();
         entityShapes.getChildren().clear();
         lionRangeShapes.getChildren().clear();
+    }
+
+    private void initGameOverAlert() {
+        gameOverAlert = new Alert(Alert.AlertType.INFORMATION);
+        gameOverAlert.setTitle("Game Over");
+        gameOverAlert.setHeaderText("The lions have won the game.");
+        gameOverAlert.setContentText("You can start a new game by playing a new man into the graph.");
     }
 }

@@ -1,6 +1,5 @@
-package lions_on_graph;
+package lions_in_plane;
 
-import lions_on_graph.core.CoreController;
 import javafx.animation.AnimationTimer;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -11,6 +10,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import lions_on_graph.core.CoreController;
 import lions_on_graph.visualization.*;
 import util.ContextMenuHolder;
 import util.ZoomScrollPane;

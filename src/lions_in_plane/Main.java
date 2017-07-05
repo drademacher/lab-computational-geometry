@@ -1,4 +1,4 @@
-package lions_on_graph;
+package lions_in_plane;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -31,7 +31,7 @@ public class Main extends Application {
         root.setMaxWidth(Region.USE_PREF_SIZE);
         root.setMaxHeight(Region.USE_PREF_SIZE);
         primaryStage.setScene(scene);
-        primaryStage.setTitle("Lions On Graph");
+        primaryStage.setTitle("Lions In Plane");
         primaryStage.setWidth(1600);
         primaryStage.setHeight(900);
         primaryStage.setResizable(true);

@@ -3,16 +3,17 @@ package lions_on_graph.core;
 import lions_on_graph.core.entities.Lion;
 import lions_on_graph.core.entities.Man;
 import lions_on_graph.core.graph.*;
+import lions_on_graph.core.strategies.LionStrategies.StrategyAggroGreedy;
+import lions_on_graph.core.strategies.ManStrategies.StrategyRunAwayGreedy;
 import lions_on_graph.core.strategies.StrategyLion;
 import lions_on_graph.core.strategies.StrategyMan;
 import lions_on_graph.visualization.ShapeController;
-import lions_on_graph.core.strategies.LionStrategies.StrategyAggroGreedy;
-import lions_on_graph.core.strategies.ManStrategies.StrategyRunAwayGreedy;
 import util.Point;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 public class CoreController {
@@ -503,23 +504,41 @@ public class CoreController {
         lion.setStrategy(strategy);
     }
 
-//    public void setAllManStrategy(StrategyMan strategy) {
-//        if (strategy == null) {
-//            return;
-//        }
-//        for (Man man : men) {
-//            man.setStrategy(strategy);
-//        }
-//    }
-//
-//    public void setAllLionStrategy(StrategyLion strategy) {
-//        if (strategy == null) {
-//            return;
-//        }
-//        for (Lion lion : lions) {
-//            lion.setStrategy(strategy);
-//        }
-//    }
+
+    public void setAllManStrategy(StrategyMan strategy) {
+        if (strategy == null) {
+            return;
+        }
+        for (Man man : men) {
+            // TODO: Reflection is cancer, sollte man irgendwann refactorn
+            Class<? extends StrategyMan> classToLoad = strategy.getClass();
+            Class[] cArg = new Class[1];
+            cArg[0] = this.getClass();
+            try {
+                StrategyMan newStrategy = classToLoad.getDeclaredConstructor(cArg).newInstance(this);
+                man.setStrategy(newStrategy);
+            } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void setAllLionStrategy(StrategyLion strategy) {
+        if (strategy == null) {
+            return;
+        }
+        for (Lion lion : lions) {
+            Class<? extends StrategyLion> classToLoad = strategy.getClass();
+            Class[] cArg = new Class[1];
+            cArg[0] = this.getClass();
+            try {
+                StrategyLion newStrategy = classToLoad.getDeclaredConstructor(cArg).newInstance(this);
+                lion.setStrategy(newStrategy);
+            } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     public ArrayList<Man> getMenByCoordinate(Point coordinates) {
         ArrayList<Man> menOnVertex = new ArrayList<>();

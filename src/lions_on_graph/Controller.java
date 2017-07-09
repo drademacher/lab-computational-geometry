@@ -1,6 +1,5 @@
 package lions_on_graph;
 
-import lions_on_graph.core.CoreController;
 import javafx.animation.AnimationTimer;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -11,6 +10,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import lions_on_graph.core.CoreController;
+import lions_on_graph.core.strategies.LionStrategies.StrategyAggroGreedy;
+import lions_on_graph.core.strategies.LionStrategies.StrategyManually;
+import lions_on_graph.core.strategies.LionStrategies.StrategyRandom;
+import lions_on_graph.core.strategies.ManStrategies.StrategyRunAwayGreedy;
 import lions_on_graph.visualization.*;
 import util.ContextMenuHolder;
 import util.ZoomScrollPane;
@@ -172,9 +176,58 @@ public class Controller {
             }
         });
 
-        MenuItem setManMinDistance = new MenuItem("Man Minimum Distance");
-        MenuItem setManFixDistance = new MenuItem("Man Fixed Distance");
-        setParamterButton.getItems().addAll(setManMinDistance, setManFixDistance);
+        MenuItem setEdgeWeight = new MenuItem("Set Edge Weight");
+        MenuItem setManMinDistance = new MenuItem("Set Man Minimum Distance");
+        MenuItem setManFixDistance = new MenuItem("Set Man Fixed Distance");
+        MenuItem setLionRange = new MenuItem("Set Lion Range");
+
+        Menu manMenu = new Menu("Set Man Strategy");
+        MenuItem setManStrategyWait = new MenuItem("Wait");
+        setManStrategyWait.setOnAction(event -> { /* TODO: MISSING STRATEGY */ });
+        MenuItem setManStrategyGreedy = new MenuItem("Greedy");
+        setManStrategyGreedy.setOnAction(event -> coreController.setAllManStrategy(new StrategyRunAwayGreedy(coreController)));
+        MenuItem setManStrategyRandom = new MenuItem("Random");
+        setManStrategyRandom.setOnAction(event -> coreController.setAllManStrategy(new lions_on_graph.core.strategies.ManStrategies.StrategyRandom(coreController)));
+        MenuItem setManStrategyManual = new MenuItem("Manual");
+        setManStrategyManual.setOnAction(event -> coreController.setAllManStrategy(new lions_on_graph.core.strategies.ManStrategies.StrategyManually(coreController)));
+        manMenu.getItems().addAll(setManStrategyWait, setManStrategyRandom, setManStrategyGreedy, setManStrategyManual);
+
+        Menu lionMenu = new Menu("Set Lion Strategy");
+        MenuItem setLionsStrategyWait = new MenuItem("Wait");
+        setLionsStrategyWait.setOnAction(event -> { /* TODO: MISSING STRATEGY */ });
+        MenuItem setLionsStrategyGreedy = new MenuItem("Greedy");
+        setLionsStrategyGreedy.setOnAction(event -> coreController.setAllLionStrategy(new StrategyAggroGreedy(coreController)));
+        MenuItem setLionsStrategyRandom = new MenuItem("Random");
+        setLionsStrategyRandom.setOnAction(event -> coreController.setAllLionStrategy(new StrategyRandom(coreController)));
+        MenuItem setLionsStrategyManual = new MenuItem("Manual");
+        setLionsStrategyManual.setOnAction(event -> coreController.setAllLionStrategy(new StrategyManually(coreController)));
+        lionMenu.getItems().addAll(setLionsStrategyWait, setLionsStrategyRandom, setLionsStrategyGreedy, setLionsStrategyManual);
+
+
+        setParamterButton.getItems().addAll(setEdgeWeight, new SeparatorMenuItem(), manMenu, lionMenu, new SeparatorMenuItem(), setManMinDistance, setManFixDistance, setLionRange);
+
+        setEdgeWeight.setOnAction(event -> {
+            int currentValue = 4;
+
+            TextInputDialog dialog = new TextInputDialog("" + currentValue);
+            dialog.setTitle("Set Edge Weight");
+            dialog.setHeaderText("Enter the weight for all edges.");
+
+            Optional<String> result = dialog.showAndWait();
+
+            if (result.isPresent()) {
+                try {
+                    int inputValue = Integer.parseInt(result.get());
+                    this.coreController.setAllEdgeWeight(inputValue);
+                } catch (Exception ignore) {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Error");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Input was not a number.");
+                    alert.showAndWait();
+                }
+            }
+        });
 
         setManMinDistance.setOnAction(event -> {
             int currentValue = this.coreController.getManDistance();
@@ -188,7 +241,6 @@ public class Controller {
             if (result.isPresent()) {
                 try {
                     int inputValue = Integer.parseInt(result.get());
-                    System.out.println("new value " + inputValue);
                     this.coreController.setManDistance(inputValue, false);
                 } catch (Exception ignore) {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -213,7 +265,6 @@ public class Controller {
             if (result.isPresent()) {
                 try {
                     int inputValue = Integer.parseInt(result.get());
-                    System.out.println("new value " + inputValue);
                     this.coreController.setManDistance(inputValue, true);
                 } catch (Exception ignore) {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -224,6 +275,31 @@ public class Controller {
                 }
             }
         });
+
+        setLionRange.setOnAction(event -> {
+            int currentValue = 0;
+
+            TextInputDialog dialog = new TextInputDialog("" + currentValue);
+            dialog.setTitle("Set Lion Range");
+            dialog.setHeaderText("Enter the range in which a lion can catch a man.");
+            dialog.setContentText("0 means that the lions has to be on the same vertex. > 0 means that the lions can jump and catch a man slightly farther away.");
+
+            Optional<String> result = dialog.showAndWait();
+
+            if (result.isPresent()) {
+                try {
+                    int inputValue = Integer.parseInt(result.get());
+                    this.coreController.setAllLionRange(inputValue);
+                } catch (Exception ignore) {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Error");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Input was not a number.");
+                    alert.showAndWait();
+                }
+            }
+        });
+
 
     }
 

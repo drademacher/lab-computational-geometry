@@ -3,11 +3,9 @@ package lions_on_graph.core;
 import lions_on_graph.core.entities.Lion;
 import lions_on_graph.core.entities.Man;
 import lions_on_graph.core.graph.*;
-import lions_on_graph.core.strategies.LionStrategies.StrategyDoNothing;
 import lions_on_graph.core.strategies.StrategyLion;
 import lions_on_graph.core.strategies.StrategyMan;
 import lions_on_graph.visualization.ShapeController;
-import lions_on_graph.core.strategies.Strategy;
 import lions_on_graph.core.strategies.LionStrategies.StrategyAggroGreedy;
 import lions_on_graph.core.strategies.ManStrategies.StrategyRunAwayGreedy;
 import util.Point;
@@ -251,6 +249,21 @@ public class CoreController {
         return men.add(man);
     }
 
+    public void setNextManStep(Point manCoordinates, Point nextStepCoordinates){
+        if (manCoordinates == null || nextStepCoordinates == null) {
+            return;
+        }
+        Vertex vertex = getVertexByCoordinate(nextStepCoordinates);
+        if (vertex == null) {
+            return;
+        }
+        Man man = getManByCoordinate(manCoordinates);
+        if(man == null){
+            return;
+        }
+        man.setNextPosition(vertex);
+    }
+
     public boolean isManOnVertex(Point vertexCoorinate) {
         if (vertexCoorinate == null) {
             return false;
@@ -296,6 +309,21 @@ public class CoreController {
         lion.setStrategy(new StrategyAggroGreedy(this));
         shapeController.createLion(lion);
         return lions.add(lion);
+    }
+
+    public void setNextLionStep(Point lionCoordinates, Point nextStepCoordinates){
+        if (lionCoordinates == null || nextStepCoordinates == null) {
+            return;
+        }
+        Vertex vertex = getVertexByCoordinate(nextStepCoordinates);
+        if (vertex == null) {
+            return;
+        }
+        Lion lion = getLionByCoordinate(lionCoordinates);
+        if(lion == null){
+            return;
+        }
+        lion.setNextPosition(vertex);
     }
 
     public boolean isLionOnVertex(Point vertexCoorinate) {
@@ -401,7 +429,7 @@ public class CoreController {
             return;
         }
 
-        man.setPosition(vertex);
+        man.setCurrentPosition(vertex);
         shapeController.relocateMan(man);
     }
 
@@ -421,7 +449,7 @@ public class CoreController {
             return;
         }
 
-        lion.setPosition(vertex);
+        lion.setCurrentPosition(vertex);
         shapeController.relocateLion(lion);
     }
 
@@ -701,7 +729,6 @@ public class CoreController {
         this.setLion(new Point(190, 20));
         this.setLion(new Point(100, 140));
         this.setLion(new Point(50, 90));
-
     }
 
     public void setDefaultGraph2() {

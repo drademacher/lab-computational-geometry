@@ -20,8 +20,9 @@ public class Lion extends Entity {
     }
 
     @Override
-    public Vertex getNextPosition() {
-        return strategy.getNextPosition();
+    protected Vertex calculateNextPosition() {
+        this.nextPosition = strategy.getNextPosition();
+        return this.nextPosition;
     }
 
     public Lion(Vertex startPosition, int range, CoreController coreController) {

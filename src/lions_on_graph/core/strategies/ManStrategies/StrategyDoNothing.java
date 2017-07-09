@@ -9,8 +9,8 @@ import java.util.ArrayList;
 
 public class StrategyDoNothing extends StrategyMan {
 
-    public StrategyDoNothing(CoreController coreController, Man man) {
-        super(coreController, man);
+    public StrategyDoNothing(CoreController coreController) {
+        super(coreController);
     }
 
     @Override

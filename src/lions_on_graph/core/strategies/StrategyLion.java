@@ -11,16 +11,15 @@ import java.util.ArrayList;
  * Created by Jens on 01.07.2017.
  */
 
-public abstract class StrategyLion implements Strategy {
+public abstract class StrategyLion implements Strategy, Cloneable{
 
 
     protected CoreController coreController;
     protected Lion lion;
     protected GraphHelper helper;
 
-    public StrategyLion(CoreController coreController, Lion lion) {
+    public StrategyLion(CoreController coreController) {
         this.coreController = coreController;
-        this.lion = lion;
         this.helper = GraphHelper.createGraphHelper(coreController);
     }
 
@@ -38,4 +37,9 @@ public abstract class StrategyLion implements Strategy {
     }
 
     protected abstract ArrayList<Vertex> calculatePossibleSteps();
+
+    public void setLion(Lion lion) {
+        this.lion = lion;
+    }
+
 }

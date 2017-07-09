@@ -16,9 +16,8 @@ public abstract class StrategyMan implements Strategy {
     protected Man man;
     protected GraphHelper helper;
 
-    public StrategyMan(CoreController coreController, Man man) {
+    public StrategyMan(CoreController coreController) {
         this.coreController = coreController;
-        this.man = man;
         this.helper = GraphHelper.createGraphHelper(coreController);
     }
 
@@ -51,4 +50,8 @@ public abstract class StrategyMan implements Strategy {
     }
 
     protected abstract ArrayList<Vertex> calculatePossibleSteps();
+
+    public void setMan(Man man) {
+        this.man = man;
+    }
 }

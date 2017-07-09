@@ -3,6 +3,8 @@ package lions_on_graph.core;
 import lions_on_graph.core.entities.Lion;
 import lions_on_graph.core.entities.Man;
 import lions_on_graph.core.graph.*;
+import lions_on_graph.core.strategies.LionStrategies.StrategyDoNothing;
+import lions_on_graph.core.strategies.StrategyLion;
 import lions_on_graph.core.strategies.StrategyMan;
 import lions_on_graph.visualization.ShapeController;
 import lions_on_graph.core.strategies.Strategy;
@@ -244,7 +246,7 @@ public class CoreController {
         }
 
         Man man = new Man(vertex, this);
-        man.setStrategy(new StrategyRunAwayGreedy(this, man));
+        man.setStrategy(new StrategyRunAwayGreedy(this));
         shapeController.createMan(man);
         return men.add(man);
     }
@@ -291,7 +293,7 @@ public class CoreController {
         }
 
         Lion lion = new Lion(vertex, this);
-        lion.setStrategy(new StrategyAggroGreedy(this, lion));
+        lion.setStrategy(new StrategyAggroGreedy(this));
         shapeController.createLion(lion);
         return lions.add(lion);
     }
@@ -437,7 +439,7 @@ public class CoreController {
         return lions;
     }
 
-    public void setManStrategy(Point manCoordinate, Strategy strategy) {
+    public void setManStrategy(Point manCoordinate, StrategyMan strategy) {
         if (manCoordinate == null || strategy == null) {
             return;
         }
@@ -449,7 +451,7 @@ public class CoreController {
         man.setStrategy(strategy);
     }
 
-    public void setLionStrategy(Point lionCoordinate, Strategy strategy) {
+    public void setLionStrategy(Point lionCoordinate, StrategyLion strategy) {
         if (lionCoordinate == null || strategy == null) {
             return;
         }
@@ -461,24 +463,16 @@ public class CoreController {
         lion.setStrategy(strategy);
     }
 
-//    public void setAllManStrategy(Class<? extends StrategyMan> myStrategy) {
-////        if (strategy == null) {
-////            return;
-////        }
-////        for (Man man : men) {
-////            StrategyName strategy = new stra
-////            man.setStrategy(strategy);
-////        }
-//        try {
-//            StrategyMan str  = myStrategy.newInstance();
-//        } catch (InstantiationException e) {
-//            e.printStackTrace();
-//        } catch (IllegalAccessException e) {
-//            e.printStackTrace();
+//    public void setAllManStrategy(StrategyMan strategy) {
+//        if (strategy == null) {
+//            return;
+//        }
+//        for (Man man : men) {
+//            man.setStrategy(strategy);
 //        }
 //    }
 //
-//    public void setAllLionStrategy(Strategy strategy) {
+//    public void setAllLionStrategy(StrategyLion strategy) {
 //        if (strategy == null) {
 //            return;
 //        }
@@ -815,6 +809,22 @@ public class CoreController {
             }
         }
         return false;
+    }
+
+    public void removeDeadMan(){
+        for (int i = getMen().size() - 1; i >= 0; i--) {
+            Man man = getMen().get(i);
+            for (Lion lion : getLions()) {
+                if (man.getCurrentPosition().equals(lion.getCurrentPosition())) {
+                    men.remove(i);
+                }
+                for (Vertex rangeVertex : lion.getRangeVertices()) {
+                    if (man.getCurrentPosition().equals(rangeVertex)) {
+                        men.remove(i);
+                    }
+                }
+            }
+        }
     }
 
 }

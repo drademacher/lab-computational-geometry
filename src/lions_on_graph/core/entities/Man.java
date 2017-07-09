@@ -2,16 +2,23 @@ package lions_on_graph.core.entities;
 
 import lions_on_graph.core.CoreController;
 import lions_on_graph.core.graph.Vertex;
+import lions_on_graph.core.strategies.StrategyMan;
 
 public class Man extends Entity {
     // TODO: implement Man class
 
     private static boolean keepDistanceExact = false;
     private static int distance = 0;
+    private StrategyMan strategy;
 
 
     public Man(Vertex startPosition, CoreController coreController) {
         super(startPosition, coreController);
+    }
+
+    @Override
+    public Vertex getNextPosition() {
+        return strategy.getNextPosition();
     }
 
     public Lion getNearestLion() {
@@ -43,5 +50,14 @@ public class Man extends Entity {
     @Override
     public String toString() {
         return "Man @ " + position;
+    }
+
+    public void setStrategy(StrategyMan strategy) {
+        strategy.setMan(this);
+        this.strategy = strategy;
+    }
+
+    public StrategyMan getStrategy() {
+        return strategy;
     }
 }

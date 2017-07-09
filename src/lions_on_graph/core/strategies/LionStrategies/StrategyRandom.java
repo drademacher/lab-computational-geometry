@@ -15,8 +15,8 @@ import java.util.ArrayList;
 public class StrategyRandom extends StrategyLion {
 
 
-    public StrategyRandom(CoreController coreController, Lion lion) {
-        super(coreController, lion);
+    public StrategyRandom(CoreController coreController) {
+        super(coreController);
     }
 
     @Override

@@ -10,8 +10,8 @@ import java.util.ArrayList;
 
 public class StrategyRunAwayGreedy extends StrategyMan {
 
-    public StrategyRunAwayGreedy(CoreController coreController, Man man) {
-        super(coreController, man);
+    public StrategyRunAwayGreedy(CoreController coreController) {
+        super(coreController);
     }
 
     @Override

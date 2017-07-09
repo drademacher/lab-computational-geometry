@@ -13,8 +13,8 @@ import java.util.ArrayList;
  */
 public class StrategyDoNothing extends StrategyLion {
 
-    public StrategyDoNothing(CoreController coreController, Lion lion) {
-        super(coreController, lion);
+    public StrategyDoNothing(CoreController coreController) {
+        super(coreController);
     }
 
     @Override

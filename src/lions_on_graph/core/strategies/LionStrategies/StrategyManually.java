@@ -11,9 +11,9 @@ import java.util.ArrayList;
 /**
  * Created by Jens on 01.07.2017.
  */
-public class StrategyDoNothing extends StrategyLion {
+public class StrategyManually extends StrategyLion {
 
-    public StrategyDoNothing(CoreController coreController) {
+    public StrategyManually(CoreController coreController) {
         super(coreController);
     }
 

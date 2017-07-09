@@ -7,9 +7,9 @@ import lions_on_graph.core.strategies.StrategyMan;
 
 import java.util.ArrayList;
 
-public class StrategyDoNothing extends StrategyMan {
+public class StrategyManually extends StrategyMan {
 
-    public StrategyDoNothing(CoreController coreController) {
+    public StrategyManually(CoreController coreController) {
         super(coreController);
     }
 

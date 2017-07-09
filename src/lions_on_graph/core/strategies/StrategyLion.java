@@ -2,6 +2,7 @@ package lions_on_graph.core.strategies;
 
 import lions_on_graph.core.entities.Lion;
 import lions_on_graph.core.CoreController;
+import lions_on_graph.core.graph.Connection;
 import lions_on_graph.core.graph.GraphHelper;
 import lions_on_graph.core.graph.Vertex;
 
@@ -11,16 +12,15 @@ import java.util.ArrayList;
  * Created by Jens on 01.07.2017.
  */
 
-public abstract class StrategyLion implements Strategy {
+public abstract class StrategyLion implements Strategy, Cloneable{
 
 
     protected CoreController coreController;
     protected Lion lion;
     protected GraphHelper helper;
 
-    public StrategyLion(CoreController coreController, Lion lion) {
+    public StrategyLion(CoreController coreController) {
         this.coreController = coreController;
-        this.lion = lion;
         this.helper = GraphHelper.createGraphHelper(coreController);
     }
 
@@ -37,5 +37,19 @@ public abstract class StrategyLion implements Strategy {
         return lion.getCurrentPosition();
     }
 
+    public boolean vertexIsValidStep(Vertex vertex) {
+        for(Connection neighborConnection : lion.getCurrentPosition().getConnections())
+        if(neighborConnection.getNeighbor(lion.getCurrentPosition()).equals(vertex)){
+            return true;
+        }
+
+        return false;//TODO
+    }
+
     protected abstract ArrayList<Vertex> calculatePossibleSteps();
+
+    public void setLion(Lion lion) {
+        this.lion = lion;
+    }
+
 }

@@ -10,8 +10,8 @@ import java.util.ArrayList;
 
 public class StrategyAggroGreedy extends StrategyLion {
 
-    public StrategyAggroGreedy(CoreController coreController, Lion lion) {
-        super(coreController, lion);
+    public StrategyAggroGreedy(CoreController coreController) {
+        super(coreController);
     }
 
     @Override

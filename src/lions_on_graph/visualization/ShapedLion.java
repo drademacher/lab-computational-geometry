@@ -5,10 +5,10 @@ import lions_on_graph.core.CoreController;
 import javafx.scene.Group;
 import javafx.scene.control.*;
 import javafx.scene.shape.Circle;
-import lions_on_graph.core.strategies.LionStrategies.StrategyDoNothing;
+import lions_on_graph.core.strategies.LionStrategies.StrategyManually;
 import lions_on_graph.core.strategies.LionStrategies.StrategyRandom;
-import lions_on_graph.core.strategies.Strategy;
 import lions_on_graph.core.strategies.LionStrategies.StrategyAggroGreedy;
+import lions_on_graph.core.strategies.StrategyLion;
 import util.ContextMenuHolder;
 import util.Point;
 import util.ZoomScrollPane;
@@ -106,20 +106,17 @@ public class ShapedLion implements ShapedEntity {
             });
 
             item2.setOnAction(event2 -> {
-                Lion lion = coreController.getLionByCoordinate(coordinates);
-                Strategy strategy = new StrategyDoNothing(coreController, lion);
+                StrategyLion strategy = new StrategyManually(coreController);
                 coreController.setLionStrategy(coordinates, strategy);
             });
 
             item3.setOnAction(event2 -> {
-                Lion lion = coreController.getLionByCoordinate(coordinates);
-                Strategy strategy = new StrategyAggroGreedy(coreController, lion);
+                StrategyLion strategy = new StrategyAggroGreedy(coreController);
                 coreController.setLionStrategy(coordinates, strategy);
             });
 
             item4.setOnAction(event2 -> {
-                Lion lion = coreController.getLionByCoordinate(coordinates);
-                Strategy strategy = new StrategyRandom(coreController, lion);
+                StrategyLion strategy = new StrategyRandom(coreController);
                 coreController.setLionStrategy(coordinates, strategy);
             });
 

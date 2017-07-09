@@ -10,6 +10,7 @@ import lions_on_graph.core.graph.SmallVertex;
 import lions_on_graph.core.graph.Vertex;
 import util.Point;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,10 +24,46 @@ public class ShapeController {
     private Map<Entity, ShapedEntity> mapEntities = new HashMap<>();
     private Map<Edge, ShapedEdge> mapEdges = new HashMap<>();
     private Map<Lion, ArrayList<ShapedRange>> mapLionRange = new HashMap<>();
+    private Map<Entity, ShapedVertex> mapStepPreviews = new HashMap<>();
     private CoreController coreController;
 
     public ShapeController(CoreController coreController) {
         this.coreController = coreController;
+    }
+
+    public void removeAllShapes() {
+        for (Map.Entry<Vertex, ShapedVertex> entry : mapVertices.entrySet()) {
+            entry.getValue().delete();
+        }
+        mapVertices.clear();
+
+        for (Map.Entry<Entity, ShapedEntity> entry : mapEntities.entrySet()) {
+            entry.getValue().delete();
+        }
+        mapEntities.clear();
+
+        for (Map.Entry<Edge, ShapedEdge> entry : mapEdges.entrySet()) {
+            entry.getValue().delete();
+        }
+        mapEdges.clear();
+
+        for (Map.Entry<Lion, ArrayList<ShapedRange>> entry : mapLionRange.entrySet()) {
+            ArrayList<ShapedRange> shapeList = entry.getValue();
+            if(shapeList == null){
+                shapeList = new ArrayList<>();
+            }
+            for (ShapedRange shape : shapeList) {
+                shape.delete();
+            }
+        }
+        mapLionRange.clear();
+
+        for (Map.Entry<Entity, ShapedVertex> entry : mapStepPreviews.entrySet()) {
+            entry.getValue().delete();
+        }
+        mapStepPreviews.clear();
+
+
     }
 
     /* ****************************
@@ -166,5 +203,24 @@ public class ShapeController {
         for (Lion lion : lions) {
             updateLionRange(lion);
         }
+    }
+
+    public void updateStepPreviews() {
+        for (Map.Entry<Entity, ShapedVertex> entry : mapStepPreviews.entrySet()) {
+            Entity entity = entry.getKey();
+            ShapedVertex shapedPreview = entry.getValue();
+
+            shapedPreview.delete();
+        }
+        mapStepPreviews.clear();//TODO dont flush and create new
+
+        for (Man man : this.coreController.getMen()) {
+            mapStepPreviews.put(man, new ShapeStepPreview(coreController, man.getNextPosition().getCoordinates()));
+        }
+
+        for (Lion lion : this.coreController.getLions()) {
+            mapStepPreviews.put(lion, new ShapeStepPreview(coreController, lion.getNextPosition().getCoordinates()));
+        }
+
     }
 }

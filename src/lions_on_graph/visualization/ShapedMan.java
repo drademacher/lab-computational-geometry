@@ -6,12 +6,11 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.shape.Circle;
-import lions_on_graph.core.entities.Man;
 import lions_on_graph.core.CoreController;
-import lions_on_graph.core.strategies.ManStrategies.StrategyDoNothing;
+import lions_on_graph.core.strategies.ManStrategies.StrategyManually;
 import lions_on_graph.core.strategies.ManStrategies.StrategyRandom;
 import lions_on_graph.core.strategies.ManStrategies.StrategyRunAwayGreedy;
-import lions_on_graph.core.strategies.Strategy;
+import lions_on_graph.core.strategies.StrategyMan;
 import util.ContextMenuHolder;
 import util.Point;
 import util.ZoomScrollPane;
@@ -54,20 +53,17 @@ public class ShapedMan implements ShapedEntity {
 
 
             item2.setOnAction(event2 -> {
-                Man man = coreController.getManByCoordinate(coordinates);
-                Strategy strategy = new StrategyDoNothing(coreController, man);
+                StrategyMan strategy = new StrategyManually(coreController);
                 coreController.setManStrategy(coordinates, strategy);
             });
 
             item3.setOnAction(event2 -> {
-                Man man = coreController.getManByCoordinate(coordinates);
-                Strategy strategy = new StrategyRunAwayGreedy(coreController, man);
+                StrategyMan strategy = new StrategyRunAwayGreedy(coreController);
                 coreController.setManStrategy(coordinates, strategy);
             });
 
             item4.setOnAction(event2 -> {
-                Man man = coreController.getManByCoordinate(coordinates);
-                Strategy strategy = new StrategyRandom(coreController, man);
+                StrategyMan strategy = new StrategyRandom(coreController);
                 coreController.setManStrategy(coordinates, strategy);
             });
 

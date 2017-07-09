@@ -10,6 +10,7 @@ public abstract class Entity {
     protected Vertex position;
     protected CoreController coreController;
     protected Vertex nextPosition;
+    protected boolean manuellModus = false;
 
     public Entity(Vertex startPosition, CoreController coreController) {
         this.position = startPosition;
@@ -21,6 +22,7 @@ public abstract class Entity {
     public Vertex goToNextPosition() {
         position = getNextPosition();
         nextPosition = null;
+        manuellModus = false;
         return position;
     }
 
@@ -35,7 +37,7 @@ public abstract class Entity {
     }
 
     public Vertex getNextPosition() {
-        if (nextPosition == null) {
+        if (manuellModus == false) {
             nextPosition = calculateNextPosition();
         }
         return nextPosition;

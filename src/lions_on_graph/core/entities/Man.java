@@ -26,6 +26,7 @@ public class Man extends Entity {
     public void setNextPosition(Vertex nextPosition) {
         if(strategy.vertexIsValidStep(nextPosition)){
             this.nextPosition = nextPosition;
+            this.manuellModus = true;
         }
     }
 

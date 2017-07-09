@@ -22,6 +22,14 @@ public class Man extends Entity {
         return this.nextPosition;
     }
 
+    @Override
+    public void setNextPosition(Vertex nextPosition) {
+        if(strategy.vertexIsValidStep(nextPosition)){
+            this.nextPosition = nextPosition;
+        }
+    }
+
+
     public Lion getNearestLion() {
         // TODO: could be useful for a lot of strategies
         return null;

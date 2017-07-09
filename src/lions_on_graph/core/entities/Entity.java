@@ -28,9 +28,7 @@ public abstract class Entity {
         this.position = vertex;
     }
 
-    public void setNextPosition(Vertex nextposition) {
-        this.nextPosition = nextposition;
-    }
+    public abstract void setNextPosition(Vertex nextposition);
 
     public Vertex getCurrentPosition() {
         return position;

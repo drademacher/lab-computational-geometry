@@ -25,6 +25,13 @@ public class Lion extends Entity {
         return this.nextPosition;
     }
 
+    @Override
+    public void setNextPosition(Vertex nextPosition) {
+        if(strategy.vertexIsValidStep(nextPosition)){
+            this.nextPosition = nextPosition;
+        }
+    }
+
     public Lion(Vertex startPosition, int range, CoreController coreController) {
         super(startPosition, coreController);
         this.range = range;

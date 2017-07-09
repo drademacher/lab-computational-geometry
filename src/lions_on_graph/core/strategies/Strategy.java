@@ -6,4 +6,6 @@ public interface Strategy {
 
     Vertex getNextPosition();
 
+    boolean vertexIsValidStep(Vertex vertex);
+
 }

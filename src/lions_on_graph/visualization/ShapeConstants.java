@@ -15,6 +15,7 @@ public class ShapeConstants {
     public static final Color COLOR_MAN = (Color) Paint.valueOf("#0922e5");
     public static final Color COLOR_LION = (Color) Paint.valueOf("#e51408");
     public static final Color COLOR_RANGE = (Color) Paint.valueOf("#F28983");
+    public static final Color PREVIEW = (Color) Paint.valueOf("#FFFF00");
 
 
     public static final double BIG_VERTEX_RADIUS = 3;

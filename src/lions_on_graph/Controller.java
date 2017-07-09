@@ -27,7 +27,7 @@ public class Controller {
 
     private Button modeToggleButton = new Button("Edit Mode");
 
-    private Group vertexShapes = new Group(), edgeShapes = new Group(), entityShapes = new Group(), lionRangeShapes = new Group();
+    private Group vertexShapes = new Group(), edgeShapes = new Group(), entityShapes = new Group(), lionRangeShapes = new Group(), stepPreViewShapes = new Group();
 
     private Button playAnimationButton = new Button("Play");
     private Button stopAnimationButton = new Button("Stop");
@@ -314,7 +314,7 @@ public class Controller {
         this.coreController.setEmptyGraph();
 
         zoomScrollPane.getNodesHolder().clear();
-        zoomScrollPane.getNodesHolder().addAll(edgeShapes, vertexShapes, lionRangeShapes, entityShapes);
+        zoomScrollPane.getNodesHolder().addAll(edgeShapes, vertexShapes, lionRangeShapes, entityShapes, stepPreViewShapes);
 
         ShapedBigVertex.setMainPane(zoomScrollPane);
         ShapedBigVertex.setShapeGroup(vertexShapes);
@@ -325,6 +325,7 @@ public class Controller {
         ShapedLion.setMainPane(zoomScrollPane);
         ShapedLion.setShapeGroup(entityShapes);
         ShapedRange.setShapeGroup(entityShapes);
+        ShapeStepPreview.setShapeGroup(stepPreViewShapes);
     }
 
 

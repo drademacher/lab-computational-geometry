@@ -23,7 +23,7 @@ import java.io.File;
 import java.util.Optional;
 
 
-public class Controller {
+class Controller {
 
 
     private ZoomScrollPane zoomScrollPane;
@@ -31,14 +31,14 @@ public class Controller {
 
     private Button modeToggleButton = new Button("Edit Mode");
 
-    private Group vertexShapes = new Group(), edgeShapes = new Group(), entityShapes = new Group(), lionRangeShapes = new Group(), stepPreViewShapes = new Group();
+    private Group vertexShapes = new Group(), edgeShapes = new Group(), entityShapes = new Group(), lionRangeShapes = new Group(), stepPreviewShapes = new Group();
 
     private Button playAnimationButton = new Button("Play");
     private Button stopAnimationButton = new Button("Stop");
     private Button stepAnimationButton = new Button("Single Step");
 
 
-    private MenuButton setGraphButton, setParamterButton = new MenuButton("Set Parameter");
+    private MenuButton setGraphButton, setParameterButton = new MenuButton("Set Parameter"), setViewMenu = new MenuButton("View");
 
     private Alert gameOverAlert;
 
@@ -56,7 +56,7 @@ public class Controller {
     private Stage stage;
 
 
-    public Controller(Stage stage, BorderPane root) {
+    Controller(Stage stage, BorderPane root) {
         this.stage = stage;
 
         zoomScrollPane = new ZoomScrollPane();
@@ -100,7 +100,7 @@ public class Controller {
                 activePlaying.set(false);
 
                 modeToggleButton.setText("Play Mode");
-                buttonBar.getChildren().addAll(modeToggleButton, setGraphButton, setParamterButton);
+                buttonBar.getChildren().addAll(modeToggleButton, setGraphButton, setParameterButton, setViewMenu);
             }
         });
 
@@ -122,7 +122,7 @@ public class Controller {
 
         setGraphButton.getItems().addAll(emptyMapMenuItem, graph1MenuItem, graph2MenuItem, graph3MenuItem, openMapMenuItem, saveMapMenuItem);
 
-        buttonBar.getChildren().addAll(modeToggleButton, setGraphButton, setParamterButton);
+        buttonBar.getChildren().addAll(modeToggleButton, setGraphButton, setParameterButton, setViewMenu);
 
         emptyMapMenuItem.setOnAction(event -> {
             clearGraphShapes();
@@ -204,7 +204,7 @@ public class Controller {
         lionMenu.getItems().addAll(setLionsStrategyWait, setLionsStrategyRandom, setLionsStrategyGreedy, setLionsStrategyManual);
 
 
-        setParamterButton.getItems().addAll(setEdgeWeight, new SeparatorMenuItem(), manMenu, lionMenu, new SeparatorMenuItem(), setManMinDistance, setManFixDistance, setLionRange);
+        setParameterButton.getItems().addAll(setEdgeWeight, new SeparatorMenuItem(), manMenu, lionMenu, new SeparatorMenuItem(), setManMinDistance, setManFixDistance, setLionRange);
 
         setEdgeWeight.setOnAction(event -> {
             int currentValue = 4;
@@ -301,6 +301,19 @@ public class Controller {
         });
 
 
+        CheckMenuItem viewEntities = new CheckMenuItem("View Entities");
+        entityShapes.visibleProperty().bind(viewEntities.selectedProperty());
+        viewEntities.setSelected(true);
+
+        CheckMenuItem viewLionRanges = new CheckMenuItem("View Lion Ranges");
+        lionRangeShapes.visibleProperty().bind(viewLionRanges.selectedProperty());
+        viewLionRanges.setSelected(true);
+
+        CheckMenuItem viewPreviews = new CheckMenuItem("View Preview");
+        stepPreviewShapes.visibleProperty().bind(viewPreviews.selectedProperty());
+        viewPreviews.setSelected(true);
+
+        setViewMenu.getItems().addAll(viewEntities, viewLionRanges, viewPreviews);
     }
 
 
@@ -344,9 +357,7 @@ public class Controller {
 
             ContextMenu contextMenu = ContextMenuHolder.getFreshContextMenu();
             MenuItem item1 = new MenuItem("Add Node");
-            item1.setOnAction(event2 -> {
-                coreController.createVertex(zoomScrollPane.getLocalCoordinates(event1.getX(), event1.getY()));
-            });
+            item1.setOnAction(event2 -> coreController.createVertex(zoomScrollPane.getLocalCoordinates(event1.getX(), event1.getY())));
             MenuItem item2 = new MenuItem("Close");
 
             contextMenu.getItems().addAll(item1, item2);
@@ -390,7 +401,7 @@ public class Controller {
         this.coreController.setEmptyGraph();
 
         zoomScrollPane.getNodesHolder().clear();
-        zoomScrollPane.getNodesHolder().addAll(edgeShapes, vertexShapes, lionRangeShapes, entityShapes, stepPreViewShapes);
+        zoomScrollPane.getNodesHolder().addAll(edgeShapes, vertexShapes, stepPreviewShapes, lionRangeShapes, entityShapes);
 
         ShapedBigVertex.setMainPane(zoomScrollPane);
         ShapedBigVertex.setShapeGroup(vertexShapes);
@@ -400,8 +411,8 @@ public class Controller {
         ShapedMan.setShapeGroup(entityShapes);
         ShapedLion.setMainPane(zoomScrollPane);
         ShapedLion.setShapeGroup(entityShapes);
-        ShapedRange.setShapeGroup(entityShapes);
-        ShapeStepPreview.setShapeGroup(stepPreViewShapes);
+        ShapedRange.setShapeGroup(lionRangeShapes);
+        ShapeStepPreview.setShapeGroup(stepPreviewShapes);
     }
 
 

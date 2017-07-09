@@ -3,6 +3,7 @@ package lions_on_graph.core;
 import lions_on_graph.core.entities.Lion;
 import lions_on_graph.core.entities.Man;
 import lions_on_graph.core.graph.*;
+import lions_on_graph.core.strategies.StrategyMan;
 import lions_on_graph.visualization.ShapeController;
 import lions_on_graph.core.strategies.Strategy;
 import lions_on_graph.core.strategies.LionStrategies.StrategyAggroGreedy;
@@ -213,6 +214,10 @@ public class CoreController {
 
     public ArrayList<Edge> getEdges() {
         return this.graph.getEdges();
+    }
+
+    public void setAllEdgeWeight(int weight){
+        this.graph.setDefaultEdgeWeight(weight);
     }
 
     /* ****************************
@@ -456,23 +461,31 @@ public class CoreController {
         lion.setStrategy(strategy);
     }
 
-    public void setAllManStrategy(Strategy strategy) {
-        if (strategy == null) {
-            return;
-        }
-        for (Man man : men) {
-            man.setStrategy(strategy);
-        }
-    }
-
-    public void setAllLionStrategy(Strategy strategy) {
-        if (strategy == null) {
-            return;
-        }
-        for (Lion lion : lions) {
-            lion.setStrategy(strategy);
-        }
-    }
+//    public void setAllManStrategy(Class<? extends StrategyMan> myStrategy) {
+////        if (strategy == null) {
+////            return;
+////        }
+////        for (Man man : men) {
+////            StrategyName strategy = new stra
+////            man.setStrategy(strategy);
+////        }
+//        try {
+//            StrategyMan str  = myStrategy.newInstance();
+//        } catch (InstantiationException e) {
+//            e.printStackTrace();
+//        } catch (IllegalAccessException e) {
+//            e.printStackTrace();
+//        }
+//    }
+//
+//    public void setAllLionStrategy(Strategy strategy) {
+//        if (strategy == null) {
+//            return;
+//        }
+//        for (Lion lion : lions) {
+//            lion.setStrategy(strategy);
+//        }
+//    }
 
     public ArrayList<Man> getMenByCoordinate(Point coordinates) {
         ArrayList<Man> menOnVertex = new ArrayList<>();
@@ -567,6 +580,13 @@ public class CoreController {
 
         lion.setRange(range);
         shapeController.updateLionRange(lion);
+    }
+
+    public void setAllLionRange(int range){
+        Lion.setDefaultRange(range);
+        for(Lion lion : lions){
+            setLionRange(lion.getCoordinates(), range);
+        }
     }
 
     public void setManDistance(int distance, boolean keepExactDistance) {

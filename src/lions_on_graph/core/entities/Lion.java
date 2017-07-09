@@ -8,9 +8,8 @@ import lions_on_graph.core.graph.GraphHelper;
 import java.util.ArrayList;
 
 public class Lion extends Entity {
-    // TODO: implement Lion class
-
-    private int range = 0;
+    private static int defaultRange = 0;
+    private int range = Lion.defaultRange;
 
 
     public Lion(Vertex startPosition, CoreController coreController) {
@@ -20,6 +19,10 @@ public class Lion extends Entity {
     public Lion(Vertex startPosition, int range, CoreController coreController) {
         super(startPosition, coreController);
         this.range = range;
+    }
+
+    public static void setDefaultRange(int defaultRange) {
+        Lion.defaultRange = defaultRange;
     }
 
     @Override

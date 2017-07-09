@@ -10,6 +10,7 @@ import static lions_on_graph.visualization.ShapeConstants.SMALL_VERTEX_RADIUS;
 public class GraphController {
 
     private static int idCounter = -1;
+    private static int defaultEdgeWeight = 4;
 
     //vertices
     private ArrayList<BigVertex> bigVertices = new ArrayList<>();
@@ -97,6 +98,10 @@ public class GraphController {
         return vertex;
     }
 
+    public Edge createEdge(BigVertex vertex1, BigVertex vertex2){
+        return createEdge(vertex1, vertex2, GraphController.defaultEdgeWeight);
+    }
+
     public Edge createEdge(BigVertex vertex1, BigVertex vertex2, int weight) {
 
         //check duplicate
@@ -146,6 +151,16 @@ public class GraphController {
             vertex2.registerConnection(connection);
         }
         return edge;
+    }
+
+    private void changeAllEdgeWeightsToDefault(){
+        for(Edge edge : edges){
+            changeEdgeWeight(edge.getVertices()[0], edge.getVertices()[1]);
+        }
+    }
+
+    public void changeEdgeWeight(BigVertex vertex1, BigVertex vertex2){
+        changeEdgeWeight(vertex1, vertex2, GraphController.defaultEdgeWeight);
     }
 
     public void changeEdgeWeight(BigVertex vertex1, BigVertex vertex2, int weight) {
@@ -365,6 +380,18 @@ public class GraphController {
 
     public ArrayList<SmallVertex> getSmallVertices() {
         return smallVertices;
+    }
+
+    public int getDefaultEdgeWeight() {
+        return GraphController.defaultEdgeWeight;
+    }
+
+    public void setDefaultEdgeWeight(int defaultEdgeWeight) {
+        if(defaultEdgeWeight < 0){
+            return;
+        }
+        GraphController.defaultEdgeWeight = defaultEdgeWeight;
+        changeAllEdgeWeightsToDefault();
     }
 
     /* ***********************************

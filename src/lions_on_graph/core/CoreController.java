@@ -216,7 +216,7 @@ public class CoreController {
         return this.graph.getEdges();
     }
 
-    public void setAllEdgeWeight(int weight){
+    public void setAllEdgeWeight(int weight) {
         this.graph.setDefaultEdgeWeight(weight);
     }
 
@@ -251,7 +251,7 @@ public class CoreController {
         return bool;
     }
 
-    public void setNextManStep(Point manCoordinates, Point nextStepCoordinates){
+    public void setNextManStep(Point manCoordinates, Point nextStepCoordinates) {
         if (manCoordinates == null || nextStepCoordinates == null) {
             return;
         }
@@ -260,7 +260,7 @@ public class CoreController {
             return;
         }
         Man man = getManByCoordinate(manCoordinates);
-        if(man == null){
+        if (man == null) {
             return;
         }
         man.setNextPosition(vertex);
@@ -316,7 +316,7 @@ public class CoreController {
         return bool;
     }
 
-    public void setNextLionStep(Point lionCoordinates, Point nextStepCoordinates){
+    public void setNextLionStep(Point lionCoordinates, Point nextStepCoordinates) {
         if (lionCoordinates == null || nextStepCoordinates == null) {
             return;
         }
@@ -325,7 +325,7 @@ public class CoreController {
             return;
         }
         Lion lion = getLionByCoordinate(lionCoordinates);
-        if(lion == null){
+        if (lion == null) {
             return;
         }
         lion.setNextPosition(vertex);
@@ -397,7 +397,7 @@ public class CoreController {
         }
 
         shapeController.removeMan(man);
-        boolean bool =  men.remove(man);
+        boolean bool = men.remove(man);
         this.shapeController.updateStepPreviews();
         return bool;
     }
@@ -418,7 +418,7 @@ public class CoreController {
         }
 
         shapeController.removeLion(lion);
-        boolean bool =  lions.remove(lion);
+        boolean bool = lions.remove(lion);
         this.shapeController.updateStepPreviews();
         return bool;
     }
@@ -616,9 +616,9 @@ public class CoreController {
         shapeController.updateLionRange(lion);
     }
 
-    public void setAllLionRange(int range){
+    public void setAllLionRange(int range) {
         Lion.setDefaultRange(range);
-        for(Lion lion : lions){
+        for (Lion lion : lions) {
             setLionRange(lion.getCoordinates(), range);
         }
     }
@@ -672,7 +672,7 @@ public class CoreController {
         this.shapeController.removeAllShapes();
         this.shapeController = new ShapeController(this);
         this.men = new ArrayList<>();
-        this. lions = new ArrayList<>();
+        this.lions = new ArrayList<>();
     }
 
 
@@ -852,7 +852,7 @@ public class CoreController {
         return false;
     }
 
-    public void removeDeadMan(){
+    public void removeDeadMan() {
         for (int i = getMen().size() - 1; i >= 0; i--) {
             Man man = getMen().get(i);
             for (Lion lion : getLions()) {

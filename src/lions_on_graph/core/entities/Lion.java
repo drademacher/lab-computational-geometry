@@ -27,7 +27,7 @@ public class Lion extends Entity {
 
     @Override
     public void setNextPosition(Vertex nextPosition) {
-        if(strategy.vertexIsValidStep(nextPosition)){
+        if (strategy.vertexIsValidStep(nextPosition)) {
             this.nextPosition = nextPosition;
             this.manuellModus = true;
         }

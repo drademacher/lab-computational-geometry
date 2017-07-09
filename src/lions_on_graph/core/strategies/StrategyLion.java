@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * Created by Jens on 01.07.2017.
  */
 
-public abstract class StrategyLion implements Strategy, Cloneable{
+public abstract class StrategyLion implements Strategy, Cloneable {
 
 
     protected CoreController coreController;
@@ -38,10 +38,10 @@ public abstract class StrategyLion implements Strategy, Cloneable{
     }
 
     public boolean vertexIsValidStep(Vertex vertex) {
-        for(Connection neighborConnection : lion.getCurrentPosition().getConnections())
-        if(neighborConnection.getNeighbor(lion.getCurrentPosition()).equals(vertex)){
-            return true;
-        }
+        for (Connection neighborConnection : lion.getCurrentPosition().getConnections())
+            if (neighborConnection.getNeighbor(lion.getCurrentPosition()).equals(vertex)) {
+                return true;
+            }
 
         return false;//TODO
     }

@@ -40,7 +40,7 @@ public class GraphController {
 
     }
 
-    public BigVertex updateEdgeVerticesPosition(BigVertex vertex){
+    public BigVertex updateEdgeVerticesPosition(BigVertex vertex) {
         if (vertex == null) {
             return null;
         }
@@ -98,7 +98,7 @@ public class GraphController {
         return vertex;
     }
 
-    public Edge createEdge(BigVertex vertex1, BigVertex vertex2){
+    public Edge createEdge(BigVertex vertex1, BigVertex vertex2) {
         return createEdge(vertex1, vertex2, GraphController.defaultEdgeWeight);
     }
 
@@ -153,13 +153,13 @@ public class GraphController {
         return edge;
     }
 
-    private void changeAllEdgeWeightsToDefault(){
-        for(Edge edge : edges){
+    private void changeAllEdgeWeightsToDefault() {
+        for (Edge edge : edges) {
             changeEdgeWeight(edge.getVertices()[0], edge.getVertices()[1]);
         }
     }
 
-    public void changeEdgeWeight(BigVertex vertex1, BigVertex vertex2){
+    public void changeEdgeWeight(BigVertex vertex1, BigVertex vertex2) {
         changeEdgeWeight(vertex1, vertex2, GraphController.defaultEdgeWeight);
     }
 
@@ -171,7 +171,7 @@ public class GraphController {
                 //got the edge
 
                 // deleting
-                while(edge.getEdgeWeight() > weight) {
+                while (edge.getEdgeWeight() > weight) {
 
                     SmallVertex smallVertex = edge.getEdgeVertices().get(0);
 
@@ -205,7 +205,7 @@ public class GraphController {
 
                 }
                 //creating
-                while(edge.getEdgeWeight() < weight) {
+                while (edge.getEdgeWeight() < weight) {
                     for (int j = edge.getEdgeVertices().size() - 1; j >= 0; j--) {
                         SmallVertex smallVertex = edge.getEdgeVertices().get(j);
 
@@ -236,7 +236,7 @@ public class GraphController {
 
                         }
                     }
-                    if(edge.getEdgeVertices().size() == 0){
+                    if (edge.getEdgeVertices().size() == 0) {
                         SmallVertex newSmallVertex = new SmallVertex(getIdCounter(), new Point(0, 0));
 
 
@@ -387,7 +387,7 @@ public class GraphController {
     }
 
     public void setDefaultEdgeWeight(int defaultEdgeWeight) {
-        if(defaultEdgeWeight < 0){
+        if (defaultEdgeWeight < 0) {
             return;
         }
         GraphController.defaultEdgeWeight = defaultEdgeWeight;

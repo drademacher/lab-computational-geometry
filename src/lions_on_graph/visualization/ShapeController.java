@@ -4,20 +4,13 @@ import lions_on_graph.core.CoreController;
 import lions_on_graph.core.entities.Entity;
 import lions_on_graph.core.entities.Lion;
 import lions_on_graph.core.entities.Man;
-import lions_on_graph.core.graph.BigVertex;
-import lions_on_graph.core.graph.Edge;
-import lions_on_graph.core.graph.SmallVertex;
-import lions_on_graph.core.graph.Vertex;
+import lions_on_graph.core.graph.*;
 import util.Point;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by Jens on 28.06.2017.
- */
 public class ShapeController {
 
     private Map<Vertex, ShapedVertex> mapVertices = new HashMap<>();
@@ -180,7 +173,7 @@ public class ShapeController {
     public void updateLionRange(Lion lion) {
         ArrayList<ShapedRange> rangeVertices = mapLionRange.get(lion);
         if (rangeVertices == null) {
-            rangeVertices = new ArrayList<ShapedRange>();
+            rangeVertices = new ArrayList<>();
         }
 
         while (lion.getRangeVertices().size() > rangeVertices.size()) {
@@ -205,7 +198,8 @@ public class ShapeController {
         }
     }
 
-    public void updateStepPreviews() {
+    public void updateStepPreviewsAndChoicePoints() {
+        // step previews
         for (Map.Entry<Entity, ShapedVertex> entry : mapStepPreviews.entrySet()) {
             Entity entity = entry.getKey();
             ShapedVertex shapedPreview = entry.getValue();
@@ -222,5 +216,24 @@ public class ShapeController {
             mapStepPreviews.put(lion, new ShapeStepPreview(coreController, lion.getNextPosition().getCoordinates()));
         }
 
+        // choice points
+        // TODO: jens, meinst du die API ist irgendwie schön designt ist?
+
+
+        ShapedChoicePoint.clear();
+        for (Man man : coreController.getMenWithManualInput()) {
+            for (Connection con : man.getCurrentPosition().getConnections()) {
+                Vertex choicePoint = con.getNeighbor(man.getCurrentPosition());
+                new ShapedChoicePoint(coreController, man, choicePoint.getCoordinates());
+            }
+        }
+
+        for (Lion lion : coreController.getLionsWithManualInput()) {
+            for (Connection con : lion.getCurrentPosition().getConnections()) {
+                Vertex choicePoint = con.getNeighbor(lion.getCurrentPosition());
+                new ShapedChoicePoint(coreController, lion, choicePoint.getCoordinates());
+            }
+        }
     }
+
 }

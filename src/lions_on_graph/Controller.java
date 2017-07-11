@@ -14,6 +14,7 @@ import lions_on_graph.core.CoreController;
 import lions_on_graph.core.strategies.LionStrategies.StrategyAggroGreedy;
 import lions_on_graph.core.strategies.LionStrategies.StrategyManually;
 import lions_on_graph.core.strategies.LionStrategies.StrategyRandom;
+import lions_on_graph.core.strategies.ManStrategies.StrategyDoNothing;
 import lions_on_graph.core.strategies.ManStrategies.StrategyRunAwayGreedy;
 import lions_on_graph.visualization.*;
 import util.ContextMenuHolder;
@@ -31,7 +32,7 @@ class Controller {
 
     private Button modeToggleButton = new Button("Edit Mode");
 
-    private Group vertexShapes = new Group(), edgeShapes = new Group(), entityShapes = new Group(), lionRangeShapes = new Group(), stepPreviewShapes = new Group();
+    private Group vertexShapes = new Group(), edgeShapes = new Group(), entityShapes = new Group(), lionRangeShapes = new Group(), stepPreviewShapes = new Group(), choisePointShapes = new Group();
 
     private Button playAnimationButton = new Button("Play");
     private Button stopAnimationButton = new Button("Stop");
@@ -183,7 +184,7 @@ class Controller {
 
         Menu manMenu = new Menu("Set Man Strategy");
         MenuItem setManStrategyWait = new MenuItem("Wait");
-        setManStrategyWait.setOnAction(event -> { /* TODO: MISSING STRATEGY */ });
+        setManStrategyWait.setOnAction(event -> coreController.setAllManStrategy(new StrategyDoNothing(coreController)));
         MenuItem setManStrategyGreedy = new MenuItem("Greedy");
         setManStrategyGreedy.setOnAction(event -> coreController.setAllManStrategy(new StrategyRunAwayGreedy(coreController)));
         MenuItem setManStrategyRandom = new MenuItem("Random");
@@ -194,7 +195,7 @@ class Controller {
 
         Menu lionMenu = new Menu("Set Lion Strategy");
         MenuItem setLionsStrategyWait = new MenuItem("Wait");
-        setLionsStrategyWait.setOnAction(event -> { /* TODO: MISSING STRATEGY */ });
+        setLionsStrategyWait.setOnAction(event -> coreController.setAllLionStrategy(new lions_on_graph.core.strategies.LionStrategies.StrategyDoNothing(coreController)));
         MenuItem setLionsStrategyGreedy = new MenuItem("Greedy");
         setLionsStrategyGreedy.setOnAction(event -> coreController.setAllLionStrategy(new StrategyAggroGreedy(coreController)));
         MenuItem setLionsStrategyRandom = new MenuItem("Random");
@@ -401,7 +402,7 @@ class Controller {
         this.coreController.setEmptyGraph();
 
         zoomScrollPane.getNodesHolder().clear();
-        zoomScrollPane.getNodesHolder().addAll(edgeShapes, vertexShapes, stepPreviewShapes, lionRangeShapes, entityShapes);
+        zoomScrollPane.getNodesHolder().addAll(edgeShapes, vertexShapes, stepPreviewShapes, lionRangeShapes, choisePointShapes, entityShapes);
 
         ShapedBigVertex.setMainPane(zoomScrollPane);
         ShapedBigVertex.setShapeGroup(vertexShapes);
@@ -413,6 +414,7 @@ class Controller {
         ShapedLion.setShapeGroup(entityShapes);
         ShapedRange.setShapeGroup(lionRangeShapes);
         ShapeStepPreview.setShapeGroup(stepPreviewShapes);
+        ShapedChoicePoint.setShapeGroup(choisePointShapes);
     }
 
 

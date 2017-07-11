@@ -42,7 +42,7 @@ public class ShapeController {
 
         for (Map.Entry<Lion, ArrayList<ShapedRange>> entry : mapLionRange.entrySet()) {
             ArrayList<ShapedRange> shapeList = entry.getValue();
-            if(shapeList == null){
+            if (shapeList == null) {
                 shapeList = new ArrayList<>();
             }
             for (ShapedRange shape : shapeList) {

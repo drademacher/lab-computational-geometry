@@ -1,9 +1,9 @@
 package lions_on_graph.visualization;
 
-import lions_on_graph.core.CoreController;
 import javafx.scene.Group;
 import javafx.scene.control.*;
 import javafx.scene.shape.Line;
+import lions_on_graph.core.CoreController;
 import util.ContextMenuHolder;
 import util.Point;
 

@@ -2,8 +2,8 @@ package lions_on_graph.core.entities;
 
 
 import lions_on_graph.core.CoreController;
-import lions_on_graph.core.graph.Vertex;
 import lions_on_graph.core.graph.GraphHelper;
+import lions_on_graph.core.graph.Vertex;
 import lions_on_graph.core.strategies.LionStrategies.StrategyManually;
 import lions_on_graph.core.strategies.StrategyLion;
 
@@ -19,6 +19,15 @@ public class Lion extends Entity {
         this(startPosition, 0, coreController);
     }
 
+    public Lion(Vertex startPosition, int range, CoreController coreController) {
+        super(startPosition, coreController);
+        this.range = range;
+    }
+
+    public static void setDefaultRange(int defaultRange) {
+        Lion.defaultRange = defaultRange;
+    }
+
     @Override
     protected Vertex calculateNextPosition() {
         this.nextPosition = strategy.getNextPosition();
@@ -31,15 +40,6 @@ public class Lion extends Entity {
             this.nextPosition = nextPosition;
             this.didManualStep = true;
         }
-    }
-
-    public Lion(Vertex startPosition, int range, CoreController coreController) {
-        super(startPosition, coreController);
-        this.range = range;
-    }
-
-    public static void setDefaultRange(int defaultRange) {
-        Lion.defaultRange = defaultRange;
     }
 
     @Override

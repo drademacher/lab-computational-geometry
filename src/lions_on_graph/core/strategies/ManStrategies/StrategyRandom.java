@@ -1,10 +1,9 @@
 package lions_on_graph.core.strategies.ManStrategies;
 
-import lions_on_graph.core.entities.Man;
 import lions_on_graph.core.CoreController;
+import lions_on_graph.core.graph.Connection;
 import lions_on_graph.core.graph.Vertex;
 import lions_on_graph.core.strategies.StrategyMan;
-import lions_on_graph.core.graph.Connection;
 import util.Random;
 
 import java.util.ArrayList;

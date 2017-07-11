@@ -1,11 +1,11 @@
 package lions_on_graph.visualization;
 
-import lions_on_graph.core.CoreController;
 import javafx.scene.Group;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.shape.Circle;
+import lions_on_graph.core.CoreController;
 import util.ContextMenuHolder;
 import util.Point;
 import util.ZoomScrollPane;

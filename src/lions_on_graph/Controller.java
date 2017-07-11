@@ -27,31 +27,22 @@ import java.util.Optional;
 class Controller {
 
 
+    final private int TICKS_PER_STEP = 20;
     private ZoomScrollPane zoomScrollPane;
     private HBox buttonBar;
-
     private Button modeToggleButton = new Button("Edit Mode");
-
     private Group vertexShapes = new Group(), edgeShapes = new Group(), entityShapes = new Group(), lionRangeShapes = new Group(), stepPreviewShapes = new Group(), choisePointShapes = new Group();
-
     private Button playAnimationButton = new Button("Play");
     private Button stopAnimationButton = new Button("Stop");
     private Button stepAnimationButton = new Button("Single Step");
-
-
     private MenuButton setGraphButton, setParameterButton = new MenuButton("Set Parameter"), setViewMenu = new MenuButton("View");
-
     private Alert gameOverAlert;
-
-
     private BooleanProperty editMode, activePlaying;
     private AnimationTimer animationTimer;
     private int passedTicks = 0;
     private double lastNanoTime = System.nanoTime();
     private double time = 0;
     private int tickAccount = 0;
-    final private int TICKS_PER_STEP = 20;
-
     private CoreController coreController = new CoreController();
 
     private Stage stage;

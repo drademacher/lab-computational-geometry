@@ -25,13 +25,13 @@ public class CoreController {
     private GraphController graph;
     private ShapeController shapeController;
 
-    public ShapeController getShapeController() {
-        return shapeController;
-    }
-
     public CoreController() {
         this.graph = new GraphController();
         this.shapeController = new ShapeController(this);
+    }
+
+    public ShapeController getShapeController() {
+        return shapeController;
     }
 
     /* ****************************
@@ -144,11 +144,11 @@ public class CoreController {
         return edge;//TODO
     }
 
-    public Edge changeEdgeWeight(Point vertex1Coordinates, Point vertex2Coordinates){
+    public Edge changeEdgeWeight(Point vertex1Coordinates, Point vertex2Coordinates) {
         return changeEdgeWeight(vertex1Coordinates, vertex2Coordinates, this.graph.getDefaultEdgeWeight());
     }
 
-    public Edge changeEdgeWeight(Point vertex1Coordinates, Point vertex2Coordinates, int weight){
+    public Edge changeEdgeWeight(Point vertex1Coordinates, Point vertex2Coordinates, int weight) {
 
         if (vertex1Coordinates == null || vertex2Coordinates == null || weight < 1) {
             return null;
@@ -227,7 +227,7 @@ public class CoreController {
 
     public void setAllEdgeWeight(int weight) {
         this.graph.setDefaultEdgeWeight(weight);
-        for(Edge edge : this.graph.getEdges()){
+        for (Edge edge : this.graph.getEdges()) {
             changeEdgeWeight(edge.getStartCoordinates(), edge.getEndCoordinates());
         }
     }
@@ -551,20 +551,20 @@ public class CoreController {
         }
     }
 
-    public ArrayList<Man> getMenWithManualInput(){
+    public ArrayList<Man> getMenWithManualInput() {
         ArrayList<Man> result = new ArrayList<>();
-        for(Man man : men){
-            if(man.needManualStepInput()){
+        for (Man man : men) {
+            if (man.needManualStepInput()) {
                 result.add(man);
             }
         }
         return result;
     }
 
-    public ArrayList<Lion> getLionsWithManualInput(){
+    public ArrayList<Lion> getLionsWithManualInput() {
         ArrayList<Lion> result = new ArrayList<>();
-        for(Lion lion : lions){
-            if(lion.needManualStepInput()){
+        for (Lion lion : lions) {
+            if (lion.needManualStepInput()) {
                 result.add(lion);
             }
         }

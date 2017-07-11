@@ -1,7 +1,7 @@
 package lions_on_graph.core.strategies;
 
-import lions_on_graph.core.entities.Man;
 import lions_on_graph.core.CoreController;
+import lions_on_graph.core.entities.Man;
 import lions_on_graph.core.graph.Connection;
 import lions_on_graph.core.graph.GraphHelper;
 import lions_on_graph.core.graph.Vertex;

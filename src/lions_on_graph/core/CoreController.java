@@ -94,7 +94,7 @@ public class CoreController {
     }
 
     public Edge createEdge(Point vertex1Coordinates, Point vertex2Coordinates) {
-        return createEdge(vertex1Coordinates, vertex2Coordinates, 4);
+        return createEdge(vertex1Coordinates, vertex2Coordinates, this.graph.getDefaultEdgeWeight());
     }
 
     public Edge createEdge(Point vertex1Coordinates, Point vertex2Coordinates, int weight) {
@@ -140,7 +140,11 @@ public class CoreController {
         return edge;//TODO
     }
 
-    public Edge changeEdgeWeight(Point vertex1Coordinates, Point vertex2Coordinates, int weight) {
+    public Edge changeEdgeWeight(Point vertex1Coordinates, Point vertex2Coordinates){
+        return changeEdgeWeight(vertex1Coordinates, vertex2Coordinates, this.graph.getDefaultEdgeWeight());
+    }
+
+    public Edge changeEdgeWeight(Point vertex1Coordinates, Point vertex2Coordinates, int weight){
 
         if (vertex1Coordinates == null || vertex2Coordinates == null || weight < 1) {
             return null;
@@ -219,6 +223,9 @@ public class CoreController {
 
     public void setAllEdgeWeight(int weight) {
         this.graph.setDefaultEdgeWeight(weight);
+        for(Edge edge : this.graph.getEdges()){
+            changeEdgeWeight(edge.getStartCoordinates(), edge.getEndCoordinates());
+        }
     }
 
     /* ****************************

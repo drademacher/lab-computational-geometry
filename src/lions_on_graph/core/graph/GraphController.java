@@ -391,7 +391,6 @@ public class GraphController {
             return;
         }
         GraphController.defaultEdgeWeight = defaultEdgeWeight;
-        changeAllEdgeWeightsToDefault();
     }
 
     /* ***********************************

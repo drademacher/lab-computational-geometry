@@ -5,6 +5,7 @@ import lions_on_graph.core.CoreController;
 import javafx.scene.Group;
 import javafx.scene.control.*;
 import javafx.scene.shape.Circle;
+import lions_on_graph.core.strategies.LionStrategies.StrategyDoNothing;
 import lions_on_graph.core.strategies.LionStrategies.StrategyManually;
 import lions_on_graph.core.strategies.LionStrategies.StrategyRandom;
 import lions_on_graph.core.strategies.LionStrategies.StrategyAggroGreedy;
@@ -106,7 +107,7 @@ public class ShapedLion implements ShapedEntity {
             });
 
             item2.setOnAction(event2 -> {
-                StrategyLion strategy = new StrategyManually(coreController);
+                StrategyLion strategy = new StrategyDoNothing(coreController);
                 coreController.setLionStrategy(coordinates, strategy);
             });
 

@@ -7,6 +7,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.shape.Circle;
 import lions_on_graph.core.CoreController;
+import lions_on_graph.core.strategies.ManStrategies.StrategyDoNothing;
 import lions_on_graph.core.strategies.ManStrategies.StrategyManually;
 import lions_on_graph.core.strategies.ManStrategies.StrategyRandom;
 import lions_on_graph.core.strategies.ManStrategies.StrategyRunAwayGreedy;
@@ -53,7 +54,7 @@ public class ShapedMan implements ShapedEntity {
 
 
             waitStrategyButton.setOnAction(event2 -> {
-                StrategyMan strategy = new StrategyManually(coreController);
+                StrategyMan strategy = new StrategyDoNothing(coreController);
                 coreController.setManStrategy(coordinates, strategy);
             });
 

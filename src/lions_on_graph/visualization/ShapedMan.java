@@ -50,7 +50,8 @@ public class ShapedMan implements ShapedEntity {
             MenuItem waitStrategyButton = new MenuItem("Wait");
             MenuItem greedyStrategyButton = new MenuItem("Greedy");
             MenuItem randomStrategyButton = new MenuItem("Random");
-            strategyMenu.getItems().addAll(waitStrategyButton, greedyStrategyButton, randomStrategyButton);
+            MenuItem manualStrategyButton = new MenuItem("Manual");
+            strategyMenu.getItems().addAll(waitStrategyButton, greedyStrategyButton, randomStrategyButton, manualStrategyButton);
 
 
             waitStrategyButton.setOnAction(event2 -> {
@@ -65,6 +66,11 @@ public class ShapedMan implements ShapedEntity {
 
             randomStrategyButton.setOnAction(event2 -> {
                 StrategyMan strategy = new StrategyRandom(coreController);
+                coreController.setManStrategy(coordinates, strategy);
+            });
+
+            manualStrategyButton.setOnAction(event2 -> {
+                StrategyMan strategy = new StrategyManually(coreController);
                 coreController.setManStrategy(coordinates, strategy);
             });
 

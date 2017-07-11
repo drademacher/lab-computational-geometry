@@ -10,7 +10,7 @@ public abstract class Entity {
     protected Vertex position;
     protected CoreController coreController;
     protected Vertex nextPosition;
-    protected boolean manuellModus = false;
+    protected boolean didManualStep = false;
 
     public Entity(Vertex startPosition, CoreController coreController) {
         this.position = startPosition;
@@ -22,7 +22,7 @@ public abstract class Entity {
     public Vertex goToNextPosition() {
         position = getNextPosition();
         nextPosition = null;
-        manuellModus = false;
+        didManualStep = false;
         return position;
     }
 
@@ -37,7 +37,7 @@ public abstract class Entity {
     }
 
     public Vertex getNextPosition() {
-        if (manuellModus == false) {
+        if (didManualStep == false) {
             nextPosition = calculateNextPosition();
         }
         return nextPosition;
@@ -51,4 +51,10 @@ public abstract class Entity {
     public String toString() {
         return "Entity @ " + position;
     }
+
+    public boolean didManualStep(){
+        return didManualStep;
+    }
+
+    public abstract boolean needManualStepInput();
 }

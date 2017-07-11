@@ -547,6 +547,26 @@ public class CoreController {
         }
     }
 
+    public ArrayList<Man> getMenWithManualInput(){
+        ArrayList<Man> result = new ArrayList<>();
+        for(Man man : men){
+            if(man.needManualStepInput()){
+                result.add(man);
+            }
+        }
+        return result;
+    }
+
+    public ArrayList<Lion> getLionsWithManualInput(){
+        ArrayList<Lion> result = new ArrayList<>();
+        for(Lion lion : lions){
+            if(lion.needManualStepInput()){
+                result.add(lion);
+            }
+        }
+        return result;
+    }
+
     public ArrayList<Man> getMenByCoordinate(Point coordinates) {
         ArrayList<Man> menOnVertex = new ArrayList<>();
         if (coordinates == null) {

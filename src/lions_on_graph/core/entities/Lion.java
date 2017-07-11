@@ -4,7 +4,7 @@ package lions_on_graph.core.entities;
 import lions_on_graph.core.CoreController;
 import lions_on_graph.core.graph.Vertex;
 import lions_on_graph.core.graph.GraphHelper;
-import lions_on_graph.core.strategies.Strategy;
+import lions_on_graph.core.strategies.LionStrategies.StrategyManually;
 import lions_on_graph.core.strategies.StrategyLion;
 
 import java.util.ArrayList;
@@ -29,7 +29,7 @@ public class Lion extends Entity {
     public void setNextPosition(Vertex nextPosition) {
         if (strategy.vertexIsValidStep(nextPosition)) {
             this.nextPosition = nextPosition;
-            this.manuellModus = true;
+            this.didManualStep = true;
         }
     }
 
@@ -45,6 +45,11 @@ public class Lion extends Entity {
     @Override
     public String toString() {
         return "Lion @ " + position;
+    }
+
+    @Override
+    public boolean needManualStepInput() {
+        return (strategy.getClass() == StrategyManually.class) && !didManualStep;
     }
 
     public int getRange() {

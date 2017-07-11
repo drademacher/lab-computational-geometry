@@ -2,6 +2,7 @@ package lions_on_graph.core.entities;
 
 import lions_on_graph.core.CoreController;
 import lions_on_graph.core.graph.Vertex;
+import lions_on_graph.core.strategies.ManStrategies.StrategyManually;
 import lions_on_graph.core.strategies.StrategyMan;
 
 public class Man extends Entity {
@@ -26,7 +27,7 @@ public class Man extends Entity {
     public void setNextPosition(Vertex nextPosition) {
         if (strategy.vertexIsValidStep(nextPosition)) {
             this.nextPosition = nextPosition;
-            this.manuellModus = true;
+            this.didManualStep = true;
         }
     }
 
@@ -60,6 +61,11 @@ public class Man extends Entity {
     @Override
     public String toString() {
         return "Man @ " + position;
+    }
+
+    @Override
+    public boolean needManualStepInput() {
+        return (strategy.getClass() == StrategyManually.class) && !didManualStep;
     }
 
     public void setStrategy(StrategyMan strategy) {

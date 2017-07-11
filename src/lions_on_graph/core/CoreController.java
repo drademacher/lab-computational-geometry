@@ -865,10 +865,6 @@ public class CoreController {
 
     public boolean simulateStep() {
 
-        if (lionsHaveWon()) {
-            return true;
-        }
-
         for (Man man : this.getMen()) {
             man.goToNextPosition();
             shapeController.relocateMan(man);
@@ -879,7 +875,11 @@ public class CoreController {
         }
         this.shapeController.updateStepPreviews();
 
-        return lionsHaveWon();
+        if (lionsHaveWon()) {
+            removeDeadMan();
+            return true;
+        }
+        return false;
     }
 
     private boolean lionsHaveWon() {
@@ -898,16 +898,16 @@ public class CoreController {
         return false;
     }
 
-    public void removeDeadMan() {
+    private void removeDeadMan() {
         for (int i = getMen().size() - 1; i >= 0; i--) {
             Man man = getMen().get(i);
             for (Lion lion : getLions()) {
                 if (man.getCurrentPosition().equals(lion.getCurrentPosition())) {
-                    men.remove(i);
+                    removeMan(man.getCoordinates());
                 }
                 for (Vertex rangeVertex : lion.getRangeVertices()) {
                     if (man.getCurrentPosition().equals(rangeVertex)) {
-                        men.remove(i);
+                        removeMan(man.getCoordinates());
                     }
                 }
             }

@@ -16,12 +16,13 @@ public class ShapeConstants {
     public static final Color COLOR_LION = (Color) Paint.valueOf("#e51408");
     public static final Color COLOR_RANGE = (Color) Paint.valueOf("#F28983");
     public static final Color COLOR_PREVIEW = (Color) Paint.valueOf("#FFFF00");
-    public static final Color COLOR_CHOICEPOINT = (Color) Paint.valueOf("#7a7a7a");
+    public static final Color COLOR_CHOICEPOINT = (Color) Paint.valueOf("#7a7a7a99");
 
 
     public static final double BIG_VERTEX_RADIUS = 3;
     public static final double SMALL_VERTEX_RADIUS = 2;
     public static final double ENTITY_RADIUS = 1.5;
+    public static final double CHOICEPOINT_RADIUS = 1.5;
     public static final double RANGE_RADIUS = 1.0;
 
     public static String getHexString(Color color) {

@@ -303,7 +303,7 @@ class Controller {
 
         CheckMenuItem viewPreviews = new CheckMenuItem("View Preview");
         stepPreviewShapes.visibleProperty().bind(viewPreviews.selectedProperty());
-        viewPreviews.setSelected(true);
+        viewPreviews.setSelected(false);
 
         setViewMenu.getItems().addAll(viewEntities, viewLionRanges, viewPreviews);
     }
@@ -375,10 +375,12 @@ class Controller {
                     tickAccount += 1;
                     if (tickAccount >= TICKS_PER_STEP) {
                         tickAccount -= TICKS_PER_STEP;
-                        boolean gameOver = coreController.simulateStep();
-                        if (gameOver) {
-                            gameOverAlert.show();
-                            activePlaying.set(false);
+                        if (coreController.getMenWithManualInput().isEmpty() && coreController.getLionsWithManualInput().isEmpty()) {
+                            boolean gameOver = coreController.simulateStep();
+                            if (gameOver) {
+                                gameOverAlert.show();
+                                activePlaying.set(false);
+                            }
                         }
                     }
                 }
@@ -393,7 +395,7 @@ class Controller {
         this.coreController.setEmptyGraph();
 
         zoomScrollPane.getNodesHolder().clear();
-        zoomScrollPane.getNodesHolder().addAll(edgeShapes, vertexShapes, stepPreviewShapes, lionRangeShapes, choisePointShapes, entityShapes);
+        zoomScrollPane.getNodesHolder().addAll(edgeShapes, vertexShapes, stepPreviewShapes, lionRangeShapes, entityShapes, choisePointShapes);
 
         ShapedBigVertex.setMainPane(zoomScrollPane);
         ShapedBigVertex.setShapeGroup(vertexShapes);

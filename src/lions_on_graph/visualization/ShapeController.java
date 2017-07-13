@@ -11,6 +11,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import static lions_on_graph.visualization.ShapeConstants.COLOR_CHOICEPOINT;
+import static lions_on_graph.visualization.ShapeConstants.COLOR_LION;
+import static lions_on_graph.visualization.ShapeConstants.COLOR_MAN;
+
 public class ShapeController {
 
     private Map<Vertex, ShapedVertex> mapVertices = new HashMap<>();
@@ -222,16 +226,18 @@ public class ShapeController {
 
         ShapedChoicePoint.clear();
         for (Man man : coreController.getMenWithManualInput()) {
+            new ShapedChoicePoint(coreController, man, man.getCoordinates(), COLOR_MAN);
             for (Connection con : man.getCurrentPosition().getConnections()) {
                 Vertex choicePoint = con.getNeighbor(man.getCurrentPosition());
-                new ShapedChoicePoint(coreController, man, choicePoint.getCoordinates());
+                new ShapedChoicePoint(coreController, man, choicePoint.getCoordinates(), COLOR_CHOICEPOINT);
             }
         }
 
         for (Lion lion : coreController.getLionsWithManualInput()) {
+            new ShapedChoicePoint(coreController, lion, lion.getCoordinates(), COLOR_LION);
             for (Connection con : lion.getCurrentPosition().getConnections()) {
                 Vertex choicePoint = con.getNeighbor(lion.getCurrentPosition());
-                new ShapedChoicePoint(coreController, lion, choicePoint.getCoordinates());
+                new ShapedChoicePoint(coreController, lion, choicePoint.getCoordinates(), COLOR_CHOICEPOINT);
             }
         }
     }

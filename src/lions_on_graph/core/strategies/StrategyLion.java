@@ -38,6 +38,9 @@ public abstract class StrategyLion implements Strategy, Cloneable {
     }
 
     public boolean vertexIsValidStep(Vertex vertex) {
+        if (lion.getCurrentPosition().equals(vertex)) {
+            return true;
+        }
         for (Connection neighborConnection : lion.getCurrentPosition().getConnections())
             if (neighborConnection.getNeighbor(lion.getCurrentPosition()).equals(vertex)) {
                 return true;

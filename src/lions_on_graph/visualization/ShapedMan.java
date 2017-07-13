@@ -110,6 +110,8 @@ public class ShapedMan implements ShapedEntity {
 
     @Override
     public void relocate(Point coordinates) {
+        if (this.coordinates == coordinates) return;
+
         Path path = new Path();
         path.getElements().add(new MoveTo(this.coordinates.getX(), this.coordinates.getY()));
         path.getElements().add(new LineTo(coordinates.getX(), coordinates.getY()));

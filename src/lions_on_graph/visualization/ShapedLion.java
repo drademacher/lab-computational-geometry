@@ -1,8 +1,13 @@
 package lions_on_graph.visualization;
 
+import javafx.animation.PathTransition;
 import javafx.scene.Group;
 import javafx.scene.control.*;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.LineTo;
+import javafx.scene.shape.MoveTo;
+import javafx.scene.shape.Path;
+import javafx.util.Duration;
 import lions_on_graph.core.CoreController;
 import lions_on_graph.core.entities.Lion;
 import lions_on_graph.core.strategies.LionStrategies.StrategyAggroGreedy;
@@ -140,20 +145,25 @@ public class ShapedLion implements ShapedEntity {
         ShapedLion.shapeGroup = shapeGroup;
     }
 
+    @Override
     public void relocate(Point coordinates) {
-
-//        Path path = new Path();
-//        path.getElements().add(new MoveTo(shape.getCenterX(), shape.getCenterY()));
-//        path.getElements().add(new LineTo(lion.getCoordinates().getX() - ENTITY_RADIUS, lion.getCoordinates().getY() - ENTITY_RADIUS));
-//        PathTransition pathTransition = new PathTransition();
-//        pathTransition.setDuration(Duration.millis(250));
-//        pathTransition.setPath(path);
-//        pathTransition.setNode(shape);
+        Path path = new Path();
+        path.getElements().add(new MoveTo(this.coordinates.getX(), this.coordinates.getY()));
+        path.getElements().add(new LineTo(coordinates.getX(), coordinates.getY()));
+        PathTransition pathTransition = new PathTransition();
+        pathTransition.setDuration(Duration.millis(250));
+        pathTransition.setPath(path);
+        pathTransition.setNode(shape);
+        pathTransition.play();
 
         this.coordinates = coordinates;
-        shape.relocate(coordinates.getX() - ENTITY_RADIUS, coordinates.getY() - ENTITY_RADIUS);
-//        pathTransition.play();
     }
+
+//    public void relocate(Point coordinates) {
+//        this.coordinates = coordinates;
+//        shape.relocate(coordinates.getX() - ENTITY_RADIUS, coordinates.getY() - ENTITY_RADIUS);
+//    }
+
 
     public void delete() {
         shapeGroup.getChildren().remove(shape);

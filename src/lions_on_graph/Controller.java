@@ -106,7 +106,7 @@ class Controller {
         setGraphButton = new MenuButton("Set Graph");
         MenuItem emptyMapMenuItem = new MenuItem("Empty Graph"),
                 graph1MenuItem = new MenuItem("Paper Graph, 2 Lions fail"),
-                graph2MenuItem = new MenuItem("Paper Graph, 3 Lions succeed"),
+                graph2MenuItem = new MenuItem("Paper Graph, Paper Strategy"),
                 graph3MenuItem = new MenuItem("Test Graph"),
                 openMapMenuItem = new MenuItem("Open"),
                 saveMapMenuItem = new MenuItem("Save");
@@ -199,7 +199,7 @@ class Controller {
         setParameterButton.getItems().addAll(setEdgeWeight, new SeparatorMenuItem(), manMenu, lionMenu, new SeparatorMenuItem(), setManMinDistance, setManFixDistance, setLionRange);
 
         setEdgeWeight.setOnAction(event -> {
-            int currentValue = 4;
+            int currentValue = this.coreController.getDefaultEdgeWeight();
 
             TextInputDialog dialog = new TextInputDialog("" + currentValue);
             dialog.setTitle("Set Edge Weight");
@@ -269,7 +269,7 @@ class Controller {
         });
 
         setLionRange.setOnAction(event -> {
-            int currentValue = 0;
+            int currentValue = this.coreController.getDefaultLionRange();
 
             TextInputDialog dialog = new TextInputDialog("" + currentValue);
             dialog.setTitle("Set Lion Range");

@@ -12,10 +12,7 @@ import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.util.Duration;
 import lions_on_graph.core.CoreController;
-import lions_on_graph.core.strategies.ManStrategies.StrategyDoNothing;
-import lions_on_graph.core.strategies.ManStrategies.StrategyManually;
-import lions_on_graph.core.strategies.ManStrategies.StrategyRandom;
-import lions_on_graph.core.strategies.ManStrategies.StrategyRunAwayGreedy;
+import lions_on_graph.core.strategies.ManStrategies.*;
 import lions_on_graph.core.strategies.StrategyMan;
 import util.ContextMenuHolder;
 import util.Point;
@@ -56,7 +53,8 @@ public class ShapedMan implements ShapedEntity {
             MenuItem greedyStrategyButton = new MenuItem("Greedy");
             MenuItem randomStrategyButton = new MenuItem("Random");
             MenuItem manualStrategyButton = new MenuItem("Manual");
-            strategyMenu.getItems().addAll(waitStrategyButton, greedyStrategyButton, randomStrategyButton, manualStrategyButton);
+            MenuItem paperStrategyButton = new MenuItem("Paper");
+            strategyMenu.getItems().addAll(waitStrategyButton, greedyStrategyButton, randomStrategyButton, manualStrategyButton, paperStrategyButton);
 
 
             waitStrategyButton.setOnAction(event2 -> {
@@ -76,6 +74,11 @@ public class ShapedMan implements ShapedEntity {
 
             manualStrategyButton.setOnAction(event2 -> {
                 StrategyMan strategy = new StrategyManually(coreController);
+                coreController.setManStrategy(coordinates, strategy);
+            });
+
+            paperStrategyButton.setOnAction(event2 -> {
+                StrategyMan strategy = new StrategyPaper(coreController);
                 coreController.setManStrategy(coordinates, strategy);
             });
 

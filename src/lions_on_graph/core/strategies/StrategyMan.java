@@ -25,7 +25,6 @@ public abstract class StrategyMan implements Strategy {
     @Override
     public Vertex getNextPosition() {
 
-
         for (Vertex vertex : calculatePossibleSteps()) {
             if (vertexIsValidStep(vertex)) {
                 return vertex;
@@ -37,11 +36,16 @@ public abstract class StrategyMan implements Strategy {
     }
 
     public boolean vertexIsValidStep(Vertex vertex) {
-        boolean isValidVertex = false;
-        if (man.getCurrentPosition().equals(vertex)) {
-            isValidVertex = true;
+
+        if(this.coreController.isLionOnVertex(vertex.getCoordinates())){
+            return false;
         }
 
+        if (man.getCurrentPosition().equals(vertex)) {
+            return true;
+        }
+
+        boolean isValidVertex = false;
         for (Connection neighborConnection : man.getCurrentPosition().getConnections())
             if (neighborConnection.getNeighbor(man.getCurrentPosition()).equals(vertex)) {
                 isValidVertex = true;

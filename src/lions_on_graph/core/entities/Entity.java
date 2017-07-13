@@ -28,6 +28,7 @@ public abstract class Entity {
 
     public void setCurrentPosition(Vertex vertex) {
         this.position = vertex;
+        this.nextPosition = null;
     }
 
     public abstract void setNextPosition(Vertex nextposition);
@@ -37,7 +38,7 @@ public abstract class Entity {
     }
 
     public Vertex getNextPosition() {
-        if (didManualStep == false) {
+        if (nextPosition == null) {
             nextPosition = calculateNextPosition();
         }
         return nextPosition;

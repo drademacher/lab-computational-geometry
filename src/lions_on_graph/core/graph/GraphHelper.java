@@ -174,4 +174,107 @@ public class GraphHelper {
         return Integer.MAX_VALUE;
     }
 
+    public ArrayList<Vertex> getPathBetween(Vertex vertex1, Vertex vertex2) {
+        ArrayList<Vertex> result = new ArrayList<>();
+
+        Map<Vertex, Vertex> map = new HashMap<>(); //  <vertex, ancestor>
+        Set<Vertex> set = new HashSet<>();
+        Queue<Vertex> queue = new LinkedList<>();
+        Vertex current;
+
+        map.put(vertex1, null);
+
+        set.add(vertex1);
+        queue.add(vertex1);
+
+        while (!queue.isEmpty()) {
+            current = queue.poll();
+
+            // check break condition
+            if (current.equals(vertex2)) {
+                Vertex addToList = current;
+                while (!addToList.equals(vertex1)) {
+                    result.add(0, addToList);
+                    addToList = map.get(addToList);
+                }
+                return result;
+            }
+
+            for (Connection connection : current.getConnections()) {
+                Vertex nextVertex = connection.getNeighbor(current);
+
+                if (!set.contains(nextVertex)) {
+                    map.put(nextVertex, current);
+                    set.add(nextVertex);
+
+                    queue.add(nextVertex);
+                }
+            }
+        }
+
+        return result;
+    }
+
+
+    //paper strategy
+    public ArrayList<Vertex> getNeighborQuarters(Vertex vertex) {
+        return getNeighborQuarters(vertex, null);
+    }
+
+    public ArrayList<Vertex> getNeighborQuarters(Vertex vertex, Vertex directionVertex) {
+        ArrayList<Vertex> result = new ArrayList<>();
+
+        Set<Vertex> set = new HashSet<>();
+        Queue<Vertex> queue = new LinkedList<>();
+        Vertex current = null;
+
+
+        set.add(vertex);
+
+        if (directionVertex != null) {
+            queue.add(directionVertex);
+            set.add(directionVertex);
+        } else {
+            queue.add(vertex);
+        }
+
+
+        while (!queue.isEmpty()) {
+            current = queue.poll();
+
+            // check break condition
+            if (isQuarter(current)) {
+                result.add(current);
+            } else {
+
+                for (Connection connection : current.getConnections()) {
+                    Vertex nextVertex = connection.getNeighbor(current);
+
+                    if (!set.contains(nextVertex)) {
+                        set.add(nextVertex);
+
+                        queue.add(nextVertex);
+                    }
+                }
+            }
+        }
+
+        return result;
+    }
+
+    public boolean isQuarter(Vertex vertex) {
+
+        if (vertex.getClass() != SmallVertex.class) {
+            return false;
+        }
+
+        for (Connection connection : vertex.getConnections()) {
+            if (connection.getNeighbor(vertex).getClass() == BigVertex.class) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 }

@@ -106,7 +106,7 @@ class Controller {
         setGraphButton = new MenuButton("Set Graph");
         MenuItem emptyMapMenuItem = new MenuItem("Empty Graph"),
                 graph1MenuItem = new MenuItem("Paper Graph, 2 Lions fail"),
-                graph2MenuItem = new MenuItem("Paper Graph, 3 Lions succeed"),
+                graph2MenuItem = new MenuItem("Paper Graph, Paper Strategy"),
                 graph3MenuItem = new MenuItem("Test Graph"),
                 openMapMenuItem = new MenuItem("Open"),
                 saveMapMenuItem = new MenuItem("Save");

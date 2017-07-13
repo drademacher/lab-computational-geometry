@@ -175,7 +175,14 @@ public class GraphHelper {
     }
 
     public ArrayList<Vertex> getPathBetween(Vertex vertex1, Vertex vertex2) {
+
         ArrayList<Vertex> result = new ArrayList<>();
+
+        if(vertex1.equals(vertex2)){
+            result.add(vertex2);
+            return result;
+        }
+
 
         Map<Vertex, Vertex> map = new HashMap<>(); //  <vertex, ancestor>
         Set<Vertex> set = new HashSet<>();

@@ -29,15 +29,20 @@ public abstract class StrategyLion implements Strategy, Cloneable {
     public Vertex getNextPosition() {
         //we can implement here more conditions for the returned vertex
 
-        //fallback
-        ArrayList<Vertex> result = calculatePossibleSteps();
-        if (result.size() > 0) {
-            return calculatePossibleSteps().get(0) != null ? calculatePossibleSteps().get(0) : lion.getCurrentPosition();
+         for (Vertex vertex : calculatePossibleSteps()) {
+            if (vertexIsValidStep(vertex)) {
+                return vertex;
+            }
         }
+
+        //fallback
         return lion.getCurrentPosition();
     }
 
     public boolean vertexIsValidStep(Vertex vertex) {
+        if(this.coreController.isLionOnVertex(vertex.getCoordinates())){
+            return false;
+        }
         if (lion.getCurrentPosition().equals(vertex)) {
             return true;
         }

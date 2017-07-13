@@ -25,7 +25,6 @@ public abstract class StrategyMan implements Strategy {
     @Override
     public Vertex getNextPosition() {
 
-
         for (Vertex vertex : calculatePossibleSteps()) {
             if (vertexIsValidStep(vertex)) {
                 return vertex;

@@ -28,17 +28,16 @@ public class StrategyPaper extends StrategyMan {
         ArrayList<Vertex> result = new ArrayList<>();
 
         Vertex currentPosition = man.getCurrentPosition();
-        System.out.println("### current: " + currentPosition);
+//        System.out.println("###################");
+//        System.out.println("current: " + currentPosition);
 
-        if (target != null && !target.equals(currentPosition)) {
-            System.out.println("go to target: " + target);
-        } else {
+        if (target == null || target.equals(currentPosition)) {
 
 
             if (helper.isQuarter(currentPosition)) {
-                System.out.println("on quarter");
+//                System.out.println("on quarter");
 
-                int distance = Integer.MAX_VALUE;
+                int distance = 0;
 
                 // only two connections
                 for (Connection connection : currentPosition.getConnections()) {
@@ -47,31 +46,36 @@ public class StrategyPaper extends StrategyMan {
                     Vertex vertex = connection.getNeighbor(currentPosition);
                     if (vertex.getClass() == SmallVertex.class) {
 
-                        System.out.println("case 1");
-                        if (distance > helper.BFSToLion(currentPosition, vertex)) {
+//                        System.out.println("case 1");
+//                        System.out.println("old distance: "+distance);
+                        if (distance < helper.BFSToLion(currentPosition, vertex)) {
                             distance = helper.BFSToLion(currentPosition, vertex);
+//                            System.out.println("updated distance: "+distance);
 
 
                             target = helper.getNeighborQuarters(currentPosition, vertex).get(0);
+//                            System.out.println("possible target: "+target);
 
                         }
                     }
                     //case 2: big vertex -> two more edges
                     else {
-                        //TODO special case lion on big vertex
+                        if(helper.BFSToLion(currentPosition, vertex )> 2) {
 
-                        System.out.println("case 2");
+//                        System.out.println("case 2");
 
+                            for (Connection nextConection : vertex.getConnections()) {
+                                if (!nextConection.getNeighbor(vertex).equals(currentPosition)) {
+                                    Vertex nextVertex = nextConection.getNeighbor(vertex);
 
-                        for (Connection nextConection : vertex.getConnections()) {
-                            if (!nextConection.getNeighbor(vertex).equals(currentPosition)) {
-                                Vertex nextVertex = nextConection.getNeighbor(vertex);
+//                                System.out.println("old distance: "+distance);
+                                    if (distance < helper.BFSToLion(vertex, nextVertex) + 1) {
+                                        distance = helper.BFSToLion(vertex, nextVertex) + 1;
+//                                    System.out.println("updated distance: "+distance);
 
-                                if (distance > helper.BFSToLion(vertex, nextVertex) + 1) {
-                                    distance = helper.BFSToLion(vertex, nextVertex) + 1;
-
-
-                                    target = nextVertex;
+                                        target = nextVertex;
+//                                    System.out.println("possible target: "+target);
+                                    }
                                 }
                             }
                         }
@@ -80,21 +84,24 @@ public class StrategyPaper extends StrategyMan {
             }
             //go to closest quarter
             else {
-                System.out.println("go to quarter");
+//                System.out.println("go to quarter");
                 ArrayList<Vertex> neighborQuarters;
                 neighborQuarters = helper.getNeighborQuarters(currentPosition);
 
 //            System.out.println("  neighborQuarters: "+neighborQuarters);
 
                 target = currentPosition; // fallback
-                int distance = Integer.MAX_VALUE;
+                int distance = 0;
                 for (Vertex quarter : neighborQuarters) {
-//                System.out.println("  distance to "+quarter+" : _"+helper.getDistanceBetween(currentPosition, quarter));
+
+//                    System.out.println("old distance: "+distance);
                     if (checkInvariant(quarter)) {
-                        if (distance > helper.getDistanceBetween(currentPosition, quarter)) {
+                        if (distance < helper.getDistanceBetween(currentPosition, quarter)) {
                             distance = helper.getDistanceBetween(currentPosition, quarter);
-//                    System.out.println("  new distance: "+distance);
+//                            System.out.println("updated distance: "+distance);
+
                             target = quarter;
+//                            System.out.println("possible target: "+target);
                         }
                     }
                 }
@@ -103,7 +110,7 @@ public class StrategyPaper extends StrategyMan {
         }
 
 
-        System.out.println("finished step... go to target : " + target);
+//        System.out.println("finished step... go to target : " + target);
         result.add(helper.getPathBetween(currentPosition, target).get(0));
         return result;
     }
@@ -122,8 +129,8 @@ public class StrategyPaper extends StrategyMan {
             return true;
         }
 
-        int d_near = 0;
-        int d_far = 0;
+        int d_near = Integer.MAX_VALUE;
+        int d_far = Integer.MAX_VALUE;
 
         for (Lion lion : this.coreController.getLions()) {
             int distance = helper.getDistanceBetween(vertex, lion.getCurrentPosition());
@@ -135,7 +142,7 @@ public class StrategyPaper extends StrategyMan {
             }
         }
 
-        System.out.println("invariant ok? -> "+(d_far >= 7 || d_near >= 3));
+//        System.out.println("invariant ok? -> "+(d_far >= 7 || d_near >= 3));
         return d_far >= 7 || d_near >= 3;
     }
 

@@ -1,7 +1,7 @@
 package lions_on_graph.core.strategies;
 
-import lions_on_graph.core.entities.Lion;
 import lions_on_graph.core.CoreController;
+import lions_on_graph.core.entities.Lion;
 import lions_on_graph.core.graph.Connection;
 import lions_on_graph.core.graph.GraphHelper;
 import lions_on_graph.core.graph.Vertex;
@@ -29,15 +29,23 @@ public abstract class StrategyLion implements Strategy, Cloneable {
     public Vertex getNextPosition() {
         //we can implement here more conditions for the returned vertex
 
-        //fallback
-        ArrayList<Vertex> result = calculatePossibleSteps();
-        if (result.size() > 0) {
-            return calculatePossibleSteps().get(0) != null ? calculatePossibleSteps().get(0) : lion.getCurrentPosition();
+         for (Vertex vertex : calculatePossibleSteps()) {
+            if (vertexIsValidStep(vertex)) {
+                return vertex;
+            }
         }
+
+        //fallback
         return lion.getCurrentPosition();
     }
 
     public boolean vertexIsValidStep(Vertex vertex) {
+        if(this.coreController.isLionOnVertex(vertex.getCoordinates())){
+            return false;
+        }
+        if (lion.getCurrentPosition().equals(vertex)) {
+            return true;
+        }
         for (Connection neighborConnection : lion.getCurrentPosition().getConnections())
             if (neighborConnection.getNeighbor(lion.getCurrentPosition()).equals(vertex)) {
                 return true;

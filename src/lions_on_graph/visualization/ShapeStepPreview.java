@@ -1,18 +1,11 @@
 package lions_on_graph.visualization;
 
 import javafx.scene.Group;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuItem;
 import javafx.scene.shape.Circle;
 import lions_on_graph.core.CoreController;
-import util.ContextMenuHolder;
 import util.Point;
 import util.ZoomScrollPane;
 
-/**
- * Created by Jens on 09.07.2017.
- */
 public class ShapeStepPreview implements ShapedVertex {
     private static ZoomScrollPane mainPane;
     private static Group shapeGroup = new Group();
@@ -21,14 +14,12 @@ public class ShapeStepPreview implements ShapedVertex {
     private CoreController coreController;
     private Point coordinates;
 
-    public ShapeStepPreview(CoreController coreController, Point startCoordinates) {
-
+    ShapeStepPreview(CoreController coreController, Point startCoordinates) {
         this.coreController = coreController;
         this.coordinates = startCoordinates;
 
-        shape = new Circle(coordinates.getX(), coordinates.getY(), ShapeConstants.ENTITY_RADIUS, ShapeConstants.PREVIEW);
+        shape = new Circle(coordinates.getX(), coordinates.getY(), ShapeConstants.ENTITY_RADIUS, ShapeConstants.COLOR_PREVIEW);
         shapeGroup.getChildren().add(shape);
-
     }
 
     public static void setMainPane(ZoomScrollPane mainPane) {

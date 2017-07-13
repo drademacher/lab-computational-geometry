@@ -1,16 +1,18 @@
 package lions_on_graph.visualization;
 
+import javafx.animation.PathTransition;
 import javafx.scene.Group;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.LineTo;
+import javafx.scene.shape.MoveTo;
+import javafx.scene.shape.Path;
+import javafx.util.Duration;
 import lions_on_graph.core.CoreController;
-import lions_on_graph.core.strategies.ManStrategies.StrategyDoNothing;
-import lions_on_graph.core.strategies.ManStrategies.StrategyManually;
-import lions_on_graph.core.strategies.ManStrategies.StrategyRandom;
-import lions_on_graph.core.strategies.ManStrategies.StrategyRunAwayGreedy;
+import lions_on_graph.core.strategies.ManStrategies.*;
 import lions_on_graph.core.strategies.StrategyMan;
 import util.ContextMenuHolder;
 import util.Point;
@@ -51,7 +53,8 @@ public class ShapedMan implements ShapedEntity {
             MenuItem greedyStrategyButton = new MenuItem("Greedy");
             MenuItem randomStrategyButton = new MenuItem("Random");
             MenuItem manualStrategyButton = new MenuItem("Manual");
-            strategyMenu.getItems().addAll(waitStrategyButton, greedyStrategyButton, randomStrategyButton, manualStrategyButton);
+            MenuItem paperStrategyButton = new MenuItem("Paper");
+            strategyMenu.getItems().addAll(waitStrategyButton, greedyStrategyButton, randomStrategyButton, manualStrategyButton, paperStrategyButton);
 
 
             waitStrategyButton.setOnAction(event2 -> {
@@ -71,6 +74,11 @@ public class ShapedMan implements ShapedEntity {
 
             manualStrategyButton.setOnAction(event2 -> {
                 StrategyMan strategy = new StrategyManually(coreController);
+                coreController.setManStrategy(coordinates, strategy);
+            });
+
+            paperStrategyButton.setOnAction(event2 -> {
+                StrategyMan strategy = new StrategyPaper(coreController);
                 coreController.setManStrategy(coordinates, strategy);
             });
 
@@ -105,9 +113,27 @@ public class ShapedMan implements ShapedEntity {
 
     @Override
     public void relocate(Point coordinates) {
+        if (this.coordinates == coordinates) return;
+
+        Path path = new Path();
+        path.getElements().add(new MoveTo(this.coordinates.getX(), this.coordinates.getY()));
+        path.getElements().add(new LineTo(coordinates.getX(), coordinates.getY()));
+        PathTransition pathTransition = new PathTransition();
+        pathTransition.setDuration(Duration.millis(250));
+        pathTransition.setPath(path);
+        pathTransition.setNode(shape);
+        pathTransition.play();
+
         this.coordinates = coordinates;
-        shape.relocate(coordinates.getX() - ShapeConstants.ENTITY_RADIUS, coordinates.getY() - ShapeConstants.ENTITY_RADIUS);
     }
+
+
+//    @Override
+//    public void relocate(Point coordinates) {
+//        this.coordinates = coordinates;
+//        shape.relocate(coordinates.getX() - ShapeConstants.ENTITY_RADIUS, coordinates.getY() - ShapeConstants.ENTITY_RADIUS);
+//    }
+
 
     public void delete() {
         shapeGroup.getChildren().remove(shape);

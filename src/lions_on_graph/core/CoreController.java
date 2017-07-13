@@ -4,6 +4,7 @@ import lions_on_graph.core.entities.Lion;
 import lions_on_graph.core.entities.Man;
 import lions_on_graph.core.graph.*;
 import lions_on_graph.core.strategies.LionStrategies.StrategyAggroGreedy;
+import lions_on_graph.core.strategies.ManStrategies.StrategyPaper;
 import lions_on_graph.core.strategies.ManStrategies.StrategyRunAwayGreedy;
 import lions_on_graph.core.strategies.StrategyLion;
 import lions_on_graph.core.strategies.StrategyMan;
@@ -28,6 +29,10 @@ public class CoreController {
     public CoreController() {
         this.graph = new GraphController();
         this.shapeController = new ShapeController(this);
+    }
+
+    public ShapeController getShapeController() {
+        return shapeController;
     }
 
     /* ****************************
@@ -140,11 +145,11 @@ public class CoreController {
         return edge;//TODO
     }
 
-    public Edge changeEdgeWeight(Point vertex1Coordinates, Point vertex2Coordinates){
+    public Edge changeEdgeWeight(Point vertex1Coordinates, Point vertex2Coordinates) {
         return changeEdgeWeight(vertex1Coordinates, vertex2Coordinates, this.graph.getDefaultEdgeWeight());
     }
 
-    public Edge changeEdgeWeight(Point vertex1Coordinates, Point vertex2Coordinates, int weight){
+    public Edge changeEdgeWeight(Point vertex1Coordinates, Point vertex2Coordinates, int weight) {
 
         if (vertex1Coordinates == null || vertex2Coordinates == null || weight < 1) {
             return null;
@@ -227,7 +232,7 @@ public class CoreController {
 
     public void setAllEdgeWeight(int weight) {
         this.graph.setDefaultEdgeWeight(weight);
-        for(Edge edge : this.graph.getEdges()){
+        for (Edge edge : this.graph.getEdges()) {
             changeEdgeWeight(edge.getStartCoordinates(), edge.getEndCoordinates());
         }
     }
@@ -259,7 +264,7 @@ public class CoreController {
         man.setStrategy(new StrategyRunAwayGreedy(this));
         shapeController.createMan(man);
         boolean bool = men.add(man);
-        this.shapeController.updateStepPreviews();
+        this.shapeController.updateStepPreviewsAndChoicePoints();
         return bool;
     }
 
@@ -276,7 +281,7 @@ public class CoreController {
             return;
         }
         man.setNextPosition(vertex);
-        this.shapeController.updateStepPreviews();
+        this.shapeController.updateStepPreviewsAndChoicePoints();
     }
 
     public boolean isManOnVertex(Point vertexCoorinate) {
@@ -324,7 +329,7 @@ public class CoreController {
         lion.setStrategy(new StrategyAggroGreedy(this));
         shapeController.createLion(lion);
         boolean bool = lions.add(lion);
-        this.shapeController.updateStepPreviews();
+        this.shapeController.updateStepPreviewsAndChoicePoints();
         return bool;
     }
 
@@ -341,7 +346,7 @@ public class CoreController {
             return;
         }
         lion.setNextPosition(vertex);
-        this.shapeController.updateStepPreviews();
+        this.shapeController.updateStepPreviewsAndChoicePoints();
     }
 
     public boolean isLionOnVertex(Point vertexCoorinate) {
@@ -410,7 +415,7 @@ public class CoreController {
 
         shapeController.removeMan(man);
         boolean bool = men.remove(man);
-        this.shapeController.updateStepPreviews();
+        this.shapeController.updateStepPreviewsAndChoicePoints();
         return bool;
     }
 
@@ -431,7 +436,7 @@ public class CoreController {
 
         shapeController.removeLion(lion);
         boolean bool = lions.remove(lion);
-        this.shapeController.updateStepPreviews();
+        this.shapeController.updateStepPreviewsAndChoicePoints();
         return bool;
     }
 
@@ -453,7 +458,7 @@ public class CoreController {
 
         man.setCurrentPosition(vertex);
         shapeController.relocateMan(man);
-        this.shapeController.updateStepPreviews();
+        this.shapeController.updateStepPreviewsAndChoicePoints();
     }
 
     private void relocateAllMen() {
@@ -474,7 +479,7 @@ public class CoreController {
 
         lion.setCurrentPosition(vertex);
         shapeController.relocateLion(lion);
-        this.shapeController.updateStepPreviews();
+        this.shapeController.updateStepPreviewsAndChoicePoints();
     }
 
     private void relocateAllLions() {
@@ -551,20 +556,20 @@ public class CoreController {
         }
     }
 
-    public ArrayList<Man> getMenWithManualInput(){
+    public ArrayList<Man> getMenWithManualInput() {
         ArrayList<Man> result = new ArrayList<>();
-        for(Man man : men){
-            if(man.needManualStepInput()){
+        for (Man man : men) {
+            if (man.needManualStepInput()) {
                 result.add(man);
             }
         }
         return result;
     }
 
-    public ArrayList<Lion> getLionsWithManualInput(){
+    public ArrayList<Lion> getLionsWithManualInput() {
         ArrayList<Lion> result = new ArrayList<>();
-        for(Lion lion : lions){
-            if(lion.needManualStepInput()){
+        for (Lion lion : lions) {
+            if (lion.needManualStepInput()) {
                 result.add(lion);
             }
         }
@@ -766,7 +771,7 @@ public class CoreController {
         this.createEdge(new Point(20, 140), new Point(50, 20));
 
         this.createEdge(new Point(50, 20), new Point(80, 50));
-        this.createEdge(new Point(190, 20), new Point(160, 5));
+        this.createEdge(new Point(190, 20), new Point(160, 50));
         this.createEdge(new Point(220, 140), new Point(190, 130));
         this.createEdge(new Point(120, 220), new Point(120, 180));
         this.createEdge(new Point(20, 140), new Point(50, 130));
@@ -802,7 +807,75 @@ public class CoreController {
 
     public void setDefaultGraph2() {
         setEmptyGraph();
-        setDefaultGraph1();
+
+
+        this.createVertex(new Point(50, 20));
+        this.createVertex(new Point(190, 20));
+        this.createVertex(new Point(220, 140));
+        this.createVertex(new Point(120, 220));
+        this.createVertex(new Point(20, 140));
+
+        this.createVertex(new Point(120, 40));
+        this.createVertex(new Point(160, 50));
+        this.createVertex(new Point(190, 90));
+        this.createVertex(new Point(190, 130));
+        this.createVertex(new Point(160, 170));
+        this.createVertex(new Point(120, 180));
+        this.createVertex(new Point(80, 170));
+        this.createVertex(new Point(50, 130));
+        this.createVertex(new Point(50, 90));
+        this.createVertex(new Point(80, 50));
+
+        this.createVertex(new Point(120, 70));
+        this.createVertex(new Point(150, 100));
+        this.createVertex(new Point(140, 140));
+        this.createVertex(new Point(100, 140));
+        this.createVertex(new Point(90, 100));
+
+        this.createEdge(new Point(50, 20), new Point(190, 20));
+        this.createEdge(new Point(190, 20), new Point(220, 140));
+        this.createEdge(new Point(220, 140), new Point(120, 220));
+        this.createEdge(new Point(120, 220), new Point(20, 140));
+        this.createEdge(new Point(20, 140), new Point(50, 20));
+
+        this.createEdge(new Point(50, 20), new Point(80, 50));
+        this.createEdge(new Point(190, 20), new Point(160, 50));
+        this.createEdge(new Point(220, 140), new Point(190, 130));
+        this.createEdge(new Point(120, 220), new Point(120, 180));
+        this.createEdge(new Point(20, 140), new Point(50, 130));
+
+        this.createEdge(new Point(120, 40), new Point(160, 50));
+        this.createEdge(new Point(160, 50), new Point(190, 90));
+        this.createEdge(new Point(190, 90), new Point(190, 130));
+        this.createEdge(new Point(190, 130), new Point(160, 170));
+        this.createEdge(new Point(160, 170), new Point(120, 180));
+        this.createEdge(new Point(120, 180), new Point(80, 170));
+        this.createEdge(new Point(80, 170), new Point(50, 130));
+        this.createEdge(new Point(50, 130), new Point(50, 90));
+        this.createEdge(new Point(50, 90), new Point(80, 50));
+        this.createEdge(new Point(80, 50), new Point(120, 40));
+
+        this.createEdge(new Point(120, 40), new Point(120, 70));
+        this.createEdge(new Point(190, 90), new Point(150, 100));
+        this.createEdge(new Point(160, 170), new Point(140, 140));
+        this.createEdge(new Point(80, 170), new Point(100, 140));
+        this.createEdge(new Point(50, 90), new Point(90, 100));
+
+        this.createEdge(new Point(120, 70), new Point(150, 100));
+        this.createEdge(new Point(150, 100), new Point(140, 140));
+        this.createEdge(new Point(140, 140), new Point(100, 140));
+        this.createEdge(new Point(100, 140), new Point(90, 100));
+        this.createEdge(new Point(90, 100), new Point(120, 70));
+
+
+
+        this.setMan(this.graph.getSmallVertices().get(0).getCoordinates());
+        this.setLion(this.graph.getSmallVertices().get(3).getCoordinates());
+        this.setLion(this.graph.getSmallVertices().get(17).getCoordinates());
+
+
+        this.setAllManStrategy(new StrategyPaper(this));
+        this.setAllLionStrategy(new StrategyAggroGreedy(this));
     }
 
     public void setDefaultGraph3() {
@@ -884,7 +957,7 @@ public class CoreController {
             lion.goToNextPosition();
             shapeController.relocateLion(lion);
         }
-        this.shapeController.updateStepPreviews();
+        this.shapeController.updateStepPreviewsAndChoicePoints();
 
         if (lionsHaveWon()) {
             removeDeadMan();

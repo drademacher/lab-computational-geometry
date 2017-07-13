@@ -1,11 +1,12 @@
 package lions_on_graph.visualization;
 
-import lions_on_graph.core.CoreController;
 import javafx.scene.Group;
 import javafx.scene.shape.Circle;
+import lions_on_graph.core.CoreController;
 import util.Point;
 
-import static lions_on_graph.visualization.ShapeConstants.*;
+import static lions_on_graph.visualization.ShapeConstants.COLOR_RANGE;
+import static lions_on_graph.visualization.ShapeConstants.RANGE_RADIUS;
 
 /**
  * Created by Jens on 29.06.2017.

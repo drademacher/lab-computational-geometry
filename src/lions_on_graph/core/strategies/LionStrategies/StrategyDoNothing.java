@@ -9,7 +9,7 @@ import java.util.ArrayList;
 /**
  * Created by Jens on 11.07.2017.
  */
-public class StrategyDoNothing extends StrategyLion{
+public class StrategyDoNothing extends StrategyLion {
 
     public StrategyDoNothing(CoreController coreController) {
         super(coreController);

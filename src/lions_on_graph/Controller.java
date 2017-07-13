@@ -14,6 +14,7 @@ import lions_on_graph.core.CoreController;
 import lions_on_graph.core.strategies.LionStrategies.StrategyAggroGreedy;
 import lions_on_graph.core.strategies.LionStrategies.StrategyManually;
 import lions_on_graph.core.strategies.LionStrategies.StrategyRandom;
+import lions_on_graph.core.strategies.ManStrategies.StrategyDoNothing;
 import lions_on_graph.core.strategies.ManStrategies.StrategyRunAwayGreedy;
 import lions_on_graph.visualization.*;
 import util.ContextMenuHolder;
@@ -26,31 +27,22 @@ import java.util.Optional;
 class Controller {
 
 
+    final private int TICKS_PER_STEP = 20;
     private ZoomScrollPane zoomScrollPane;
     private HBox buttonBar;
-
     private Button modeToggleButton = new Button("Edit Mode");
-
-    private Group vertexShapes = new Group(), edgeShapes = new Group(), entityShapes = new Group(), lionRangeShapes = new Group(), stepPreviewShapes = new Group();
-
+    private Group vertexShapes = new Group(), edgeShapes = new Group(), entityShapes = new Group(), lionRangeShapes = new Group(), stepPreviewShapes = new Group(), choisePointShapes = new Group();
     private Button playAnimationButton = new Button("Play");
     private Button stopAnimationButton = new Button("Stop");
     private Button stepAnimationButton = new Button("Single Step");
-
-
     private MenuButton setGraphButton, setParameterButton = new MenuButton("Set Parameter"), setViewMenu = new MenuButton("View");
-
     private Alert gameOverAlert;
-
-
     private BooleanProperty editMode, activePlaying;
     private AnimationTimer animationTimer;
     private int passedTicks = 0;
     private double lastNanoTime = System.nanoTime();
     private double time = 0;
     private int tickAccount = 0;
-    final private int TICKS_PER_STEP = 20;
-
     private CoreController coreController = new CoreController();
 
     private Stage stage;
@@ -114,7 +106,7 @@ class Controller {
         setGraphButton = new MenuButton("Set Graph");
         MenuItem emptyMapMenuItem = new MenuItem("Empty Graph"),
                 graph1MenuItem = new MenuItem("Paper Graph, 2 Lions fail"),
-                graph2MenuItem = new MenuItem("Paper Graph, 3 Lions succeed"),
+                graph2MenuItem = new MenuItem("Paper Graph, Paper Strategy"),
                 graph3MenuItem = new MenuItem("Test Graph"),
                 openMapMenuItem = new MenuItem("Open"),
                 saveMapMenuItem = new MenuItem("Save");
@@ -183,7 +175,7 @@ class Controller {
 
         Menu manMenu = new Menu("Set Man Strategy");
         MenuItem setManStrategyWait = new MenuItem("Wait");
-        setManStrategyWait.setOnAction(event -> { /* TODO: MISSING STRATEGY */ });
+        setManStrategyWait.setOnAction(event -> coreController.setAllManStrategy(new StrategyDoNothing(coreController)));
         MenuItem setManStrategyGreedy = new MenuItem("Greedy");
         setManStrategyGreedy.setOnAction(event -> coreController.setAllManStrategy(new StrategyRunAwayGreedy(coreController)));
         MenuItem setManStrategyRandom = new MenuItem("Random");
@@ -194,7 +186,7 @@ class Controller {
 
         Menu lionMenu = new Menu("Set Lion Strategy");
         MenuItem setLionsStrategyWait = new MenuItem("Wait");
-        setLionsStrategyWait.setOnAction(event -> { /* TODO: MISSING STRATEGY */ });
+        setLionsStrategyWait.setOnAction(event -> coreController.setAllLionStrategy(new lions_on_graph.core.strategies.LionStrategies.StrategyDoNothing(coreController)));
         MenuItem setLionsStrategyGreedy = new MenuItem("Greedy");
         setLionsStrategyGreedy.setOnAction(event -> coreController.setAllLionStrategy(new StrategyAggroGreedy(coreController)));
         MenuItem setLionsStrategyRandom = new MenuItem("Random");
@@ -311,7 +303,7 @@ class Controller {
 
         CheckMenuItem viewPreviews = new CheckMenuItem("View Preview");
         stepPreviewShapes.visibleProperty().bind(viewPreviews.selectedProperty());
-        viewPreviews.setSelected(true);
+        viewPreviews.setSelected(false);
 
         setViewMenu.getItems().addAll(viewEntities, viewLionRanges, viewPreviews);
     }
@@ -383,10 +375,12 @@ class Controller {
                     tickAccount += 1;
                     if (tickAccount >= TICKS_PER_STEP) {
                         tickAccount -= TICKS_PER_STEP;
-                        boolean gameOver = coreController.simulateStep();
-                        if (gameOver) {
-                            gameOverAlert.show();
-                            activePlaying.set(false);
+                        if (coreController.getMenWithManualInput().isEmpty() && coreController.getLionsWithManualInput().isEmpty()) {
+                            boolean gameOver = coreController.simulateStep();
+                            if (gameOver) {
+                                gameOverAlert.show();
+                                activePlaying.set(false);
+                            }
                         }
                     }
                 }
@@ -401,7 +395,7 @@ class Controller {
         this.coreController.setEmptyGraph();
 
         zoomScrollPane.getNodesHolder().clear();
-        zoomScrollPane.getNodesHolder().addAll(edgeShapes, vertexShapes, stepPreviewShapes, lionRangeShapes, entityShapes);
+        zoomScrollPane.getNodesHolder().addAll(edgeShapes, vertexShapes, stepPreviewShapes, lionRangeShapes, entityShapes, choisePointShapes);
 
         ShapedBigVertex.setMainPane(zoomScrollPane);
         ShapedBigVertex.setShapeGroup(vertexShapes);
@@ -413,6 +407,7 @@ class Controller {
         ShapedLion.setShapeGroup(entityShapes);
         ShapedRange.setShapeGroup(lionRangeShapes);
         ShapeStepPreview.setShapeGroup(stepPreviewShapes);
+        ShapedChoicePoint.setShapeGroup(choisePointShapes);
     }
 
 

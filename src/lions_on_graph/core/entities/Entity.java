@@ -28,20 +28,21 @@ public abstract class Entity {
 
     public void setCurrentPosition(Vertex vertex) {
         this.position = vertex;
+        this.nextPosition = null;
     }
-
-    public abstract void setNextPosition(Vertex nextposition);
 
     public Vertex getCurrentPosition() {
         return position;
     }
 
     public Vertex getNextPosition() {
-        if (didManualStep == false) {
+        if (nextPosition == null || !didManualStep) {
             nextPosition = calculateNextPosition();
         }
         return nextPosition;
     }
+
+    public abstract void setNextPosition(Vertex nextposition);
 
     public Point getCoordinates() {
         return position.getCoordinates();
@@ -52,7 +53,7 @@ public abstract class Entity {
         return "Entity @ " + position;
     }
 
-    public boolean didManualStep(){
+    public boolean didManualStep() {
         return didManualStep;
     }
 

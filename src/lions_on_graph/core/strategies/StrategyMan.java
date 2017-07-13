@@ -1,7 +1,7 @@
 package lions_on_graph.core.strategies;
 
-import lions_on_graph.core.entities.Man;
 import lions_on_graph.core.CoreController;
+import lions_on_graph.core.entities.Man;
 import lions_on_graph.core.graph.Connection;
 import lions_on_graph.core.graph.GraphHelper;
 import lions_on_graph.core.graph.Vertex;
@@ -37,13 +37,17 @@ public abstract class StrategyMan implements Strategy {
     }
 
     public boolean vertexIsValidStep(Vertex vertex) {
-        boolean isNeighborVertex = false;
+        boolean isValidVertex = false;
+        if (man.getCurrentPosition().equals(vertex)) {
+            isValidVertex = true;
+        }
+
         for (Connection neighborConnection : man.getCurrentPosition().getConnections())
             if (neighborConnection.getNeighbor(man.getCurrentPosition()).equals(vertex)) {
-                isNeighborVertex = true;
+                isValidVertex = true;
             }
 
-        if (!isNeighborVertex) {
+        if (!isValidVertex) {
             return false;
         }
 

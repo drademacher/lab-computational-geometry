@@ -30,6 +30,10 @@ public class CoreController {
         this.shapeController = new ShapeController(this);
     }
 
+    public ShapeController getShapeController() {
+        return shapeController;
+    }
+
     /* ****************************
      *
      *   GRAPH API
@@ -140,11 +144,11 @@ public class CoreController {
         return edge;//TODO
     }
 
-    public Edge changeEdgeWeight(Point vertex1Coordinates, Point vertex2Coordinates){
+    public Edge changeEdgeWeight(Point vertex1Coordinates, Point vertex2Coordinates) {
         return changeEdgeWeight(vertex1Coordinates, vertex2Coordinates, this.graph.getDefaultEdgeWeight());
     }
 
-    public Edge changeEdgeWeight(Point vertex1Coordinates, Point vertex2Coordinates, int weight){
+    public Edge changeEdgeWeight(Point vertex1Coordinates, Point vertex2Coordinates, int weight) {
 
         if (vertex1Coordinates == null || vertex2Coordinates == null || weight < 1) {
             return null;
@@ -227,7 +231,7 @@ public class CoreController {
 
     public void setAllEdgeWeight(int weight) {
         this.graph.setDefaultEdgeWeight(weight);
-        for(Edge edge : this.graph.getEdges()){
+        for (Edge edge : this.graph.getEdges()) {
             changeEdgeWeight(edge.getStartCoordinates(), edge.getEndCoordinates());
         }
     }
@@ -259,7 +263,7 @@ public class CoreController {
         man.setStrategy(new StrategyRunAwayGreedy(this));
         shapeController.createMan(man);
         boolean bool = men.add(man);
-        this.shapeController.updateStepPreviews();
+        this.shapeController.updateStepPreviewsAndChoicePoints();
         return bool;
     }
 
@@ -276,7 +280,7 @@ public class CoreController {
             return;
         }
         man.setNextPosition(vertex);
-        this.shapeController.updateStepPreviews();
+        this.shapeController.updateStepPreviewsAndChoicePoints();
     }
 
     public boolean isManOnVertex(Point vertexCoorinate) {
@@ -324,7 +328,7 @@ public class CoreController {
         lion.setStrategy(new StrategyAggroGreedy(this));
         shapeController.createLion(lion);
         boolean bool = lions.add(lion);
-        this.shapeController.updateStepPreviews();
+        this.shapeController.updateStepPreviewsAndChoicePoints();
         return bool;
     }
 
@@ -341,7 +345,7 @@ public class CoreController {
             return;
         }
         lion.setNextPosition(vertex);
-        this.shapeController.updateStepPreviews();
+        this.shapeController.updateStepPreviewsAndChoicePoints();
     }
 
     public boolean isLionOnVertex(Point vertexCoorinate) {
@@ -410,7 +414,7 @@ public class CoreController {
 
         shapeController.removeMan(man);
         boolean bool = men.remove(man);
-        this.shapeController.updateStepPreviews();
+        this.shapeController.updateStepPreviewsAndChoicePoints();
         return bool;
     }
 
@@ -431,7 +435,7 @@ public class CoreController {
 
         shapeController.removeLion(lion);
         boolean bool = lions.remove(lion);
-        this.shapeController.updateStepPreviews();
+        this.shapeController.updateStepPreviewsAndChoicePoints();
         return bool;
     }
 
@@ -453,7 +457,7 @@ public class CoreController {
 
         man.setCurrentPosition(vertex);
         shapeController.relocateMan(man);
-        this.shapeController.updateStepPreviews();
+        this.shapeController.updateStepPreviewsAndChoicePoints();
     }
 
     private void relocateAllMen() {
@@ -474,7 +478,7 @@ public class CoreController {
 
         lion.setCurrentPosition(vertex);
         shapeController.relocateLion(lion);
-        this.shapeController.updateStepPreviews();
+        this.shapeController.updateStepPreviewsAndChoicePoints();
     }
 
     private void relocateAllLions() {
@@ -551,20 +555,20 @@ public class CoreController {
         }
     }
 
-    public ArrayList<Man> getMenWithManualInput(){
+    public ArrayList<Man> getMenWithManualInput() {
         ArrayList<Man> result = new ArrayList<>();
-        for(Man man : men){
-            if(man.needManualStepInput()){
+        for (Man man : men) {
+            if (man.needManualStepInput()) {
                 result.add(man);
             }
         }
         return result;
     }
 
-    public ArrayList<Lion> getLionsWithManualInput(){
+    public ArrayList<Lion> getLionsWithManualInput() {
         ArrayList<Lion> result = new ArrayList<>();
-        for(Lion lion : lions){
-            if(lion.needManualStepInput()){
+        for (Lion lion : lions) {
+            if (lion.needManualStepInput()) {
                 result.add(lion);
             }
         }
@@ -891,7 +895,7 @@ public class CoreController {
             lion.goToNextPosition();
             shapeController.relocateLion(lion);
         }
-        this.shapeController.updateStepPreviews();
+        this.shapeController.updateStepPreviewsAndChoicePoints();
 
         if (lionsHaveWon()) {
             removeDeadMan();

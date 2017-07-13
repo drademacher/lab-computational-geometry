@@ -17,32 +17,12 @@ public class Man extends Entity {
         super(startPosition, coreController);
     }
 
-    @Override
-    protected Vertex calculateNextPosition() {
-        this.nextPosition = strategy.getNextPosition();
-        return this.nextPosition;
-    }
-
-    @Override
-    public void setNextPosition(Vertex nextPosition) {
-        if (strategy.vertexIsValidStep(nextPosition)) {
-            this.nextPosition = nextPosition;
-            this.didManualStep = true;
-        }
-    }
-
-
-    public Lion getNearestLion() {
-        // TODO: could be useful for a lot of strategies
-        return null;
+    public static int getDistance() {
+        return distance;
     }
 
     public static void setDistance(int distance) {
         Man.distance = distance;
-    }
-
-    public static int getDistance() {
-        return distance;
     }
 
     public static void removeDistance() {
@@ -59,6 +39,25 @@ public class Man extends Entity {
     }
 
     @Override
+    protected Vertex calculateNextPosition() {
+        this.nextPosition = strategy.getNextPosition();
+        return this.nextPosition;
+    }
+
+    @Override
+    public void setNextPosition(Vertex nextPosition) {
+        if (strategy.vertexIsValidStep(nextPosition)) {
+            this.nextPosition = nextPosition;
+            this.didManualStep = true;
+        }
+    }
+
+    public Lion getNearestLion() {
+        // TODO: could be useful for a lot of strategies
+        return null;
+    }
+
+    @Override
     public String toString() {
         return "Man @ " + position;
     }
@@ -68,12 +67,12 @@ public class Man extends Entity {
         return (strategy.getClass() == StrategyManually.class) && !didManualStep;
     }
 
+    public StrategyMan getStrategy() {
+        return strategy;
+    }
+
     public void setStrategy(StrategyMan strategy) {
         strategy.setMan(this);
         this.strategy = strategy;
-    }
-
-    public StrategyMan getStrategy() {
-        return strategy;
     }
 }

@@ -38,7 +38,7 @@ public abstract class Entity {
     }
 
     public Vertex getNextPosition() {
-        if (nextPosition == null) {
+        if (nextPosition == null || !didManualStep) {
             nextPosition = calculateNextPosition();
         }
         return nextPosition;

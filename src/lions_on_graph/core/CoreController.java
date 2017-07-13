@@ -877,6 +877,13 @@ public class CoreController {
     public boolean simulateStep() {
 
         for (Man man : this.getMen()) {
+            man.getNextPosition();
+        }
+        for (Lion lion : this.getLions()) {
+            lion.getNextPosition();
+        }
+
+        for (Man man : this.getMen()) {
             man.goToNextPosition();
             shapeController.relocateMan(man);
         }

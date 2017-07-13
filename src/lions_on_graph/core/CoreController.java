@@ -221,6 +221,10 @@ public class CoreController {
         return this.graph.getEdges();
     }
 
+    public int getDefaultEdgeWeight(){
+        return this.graph.getDefaultEdgeWeight();
+    }
+
     public void setAllEdgeWeight(int weight) {
         this.graph.setDefaultEdgeWeight(weight);
         for(Edge edge : this.graph.getEdges()){
@@ -662,11 +666,17 @@ public class CoreController {
         shapeController.updateLionRange(lion);
     }
 
+
+
     public void setAllLionRange(int range) {
         Lion.setDefaultRange(range);
         for (Lion lion : lions) {
             setLionRange(lion.getCoordinates(), range);
         }
+    }
+
+    public int getDefaultLionRange(){
+        return Lion.getDefaultLionRange();
     }
 
     public void setManDistance(int distance, boolean keepExactDistance) {
@@ -813,6 +823,7 @@ public class CoreController {
         this.setMan(new Point(0, 0));
 
 
+        debugGraph();
     }
 
     public void setDefaultGraph4() {

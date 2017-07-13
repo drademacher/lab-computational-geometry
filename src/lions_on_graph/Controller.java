@@ -207,7 +207,7 @@ class Controller {
         setParameterButton.getItems().addAll(setEdgeWeight, new SeparatorMenuItem(), manMenu, lionMenu, new SeparatorMenuItem(), setManMinDistance, setManFixDistance, setLionRange);
 
         setEdgeWeight.setOnAction(event -> {
-            int currentValue = 4;
+            int currentValue = this.coreController.getDefaultEdgeWeight();
 
             TextInputDialog dialog = new TextInputDialog("" + currentValue);
             dialog.setTitle("Set Edge Weight");
@@ -277,7 +277,7 @@ class Controller {
         });
 
         setLionRange.setOnAction(event -> {
-            int currentValue = 0;
+            int currentValue = this.coreController.getDefaultLionRange();
 
             TextInputDialog dialog = new TextInputDialog("" + currentValue);
             dialog.setTitle("Set Lion Range");

@@ -42,6 +42,10 @@ public class Lion extends Entity {
         Lion.defaultRange = defaultRange;
     }
 
+    public static int getDefaultLionRange(){
+        return Lion.defaultRange;
+    }
+
     @Override
     public String toString() {
         return "Lion @ " + position;

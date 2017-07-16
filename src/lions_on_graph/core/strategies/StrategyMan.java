@@ -39,7 +39,7 @@ public abstract class StrategyMan implements Strategy {
 
     public boolean vertexIsValidStep(Vertex vertex) {
 
-        if(this.coreController.isDangerOnVertex(vertex.getCoordinates())){
+        if (this.coreController.isDangerOnVertex(vertex.getCoordinates())) {
             return false;
         }
 
@@ -60,12 +60,12 @@ public abstract class StrategyMan implements Strategy {
 
         for (Man otherMan : coreController.getMen()) {
             if (!otherMan.equals(man)) {
-                if (man.keepDistanceExact()) {
-                    if (man.getDistance() != helper.getDistanceBetween(vertex, otherMan.getCurrentPosition())) {
+                if (Man.keepDistanceExact()) {
+                    if (Man.getDistance() != helper.getDistanceBetween(vertex, otherMan.getCurrentPosition())) {
                         isValidVertex = false;
                     }
                 } else {
-                    if (man.getDistance() >= helper.getDistanceBetween(vertex, otherMan.getCurrentPosition())) {
+                    if (Man.getDistance() >= helper.getDistanceBetween(vertex, otherMan.getCurrentPosition())) {
                         isValidVertex = false;
                     }
                 }
@@ -84,7 +84,7 @@ public abstract class StrategyMan implements Strategy {
         this.man = man;
     }
 
-    public String getName(){
+    public String getName() {
         return strategyEnum.name();
     }
 }

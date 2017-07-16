@@ -42,7 +42,7 @@ public class Lion extends Entity {
         }
     }
 
-    public static int getDefaultLionRange(){
+    public static int getDefaultLionRange() {
         return Lion.defaultRange;
     }
 

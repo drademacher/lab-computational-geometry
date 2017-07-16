@@ -1,35 +1,37 @@
-package lions_on_graph.core.strategies.LionStrategies;
+package lions_on_graph.core.strategies.ManStrategies;
 
 import lions_on_graph.core.CoreController;
 import lions_on_graph.core.graph.Connection;
 import lions_on_graph.core.graph.Vertex;
-import lions_on_graph.core.strategies.StrategyLion;
+import lions_on_graph.core.strategies.StrategyMan;
 
 import java.util.ArrayList;
 
-public class StrategyAggroGreedy extends StrategyLion {
+public class ManStrategyRunAwayGreedy extends StrategyMan {
 
-    public StrategyAggroGreedy(CoreController coreController) {
+    public ManStrategyRunAwayGreedy(CoreController coreController) {
         super(coreController);
     }
 
     @Override
-    protected ArrayList<Vertex> calculatePossibleSteps() {
-        Vertex currentPosition = lion.getCurrentPosition();
-        int steps = Integer.MAX_VALUE;
+    public ArrayList<Vertex> calculatePossibleSteps() {
+        Vertex currentPosition = man.getCurrentPosition();
+
+        int steps = 0;
         ArrayList<Vertex> result = new ArrayList<>();
         for (Connection connection : currentPosition.getConnections()) {
             Vertex possibleVertex = connection.getNeighbor(currentPosition);
 
-            int calculatedSteps = helper.BFSToMen(currentPosition, possibleVertex);
-            if (calculatedSteps < steps) {
+            int calculatedSteps = helper.BFSToLion(currentPosition, possibleVertex);
+
+            if (calculatedSteps > steps) {
                 steps = calculatedSteps;
                 result.add(0, possibleVertex);
             } else {
                 result.add(possibleVertex);
             }
         }
+
         return result;
     }
-
 }

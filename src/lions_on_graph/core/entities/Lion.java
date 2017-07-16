@@ -4,7 +4,7 @@ package lions_on_graph.core.entities;
 import lions_on_graph.core.CoreController;
 import lions_on_graph.core.graph.GraphHelper;
 import lions_on_graph.core.graph.Vertex;
-import lions_on_graph.core.strategies.LionStrategies.StrategyManually;
+import lions_on_graph.core.strategies.LionStrategies.LionStrategyManually;
 import lions_on_graph.core.strategies.StrategyLion;
 
 import java.util.ArrayList;
@@ -53,7 +53,7 @@ public class Lion extends Entity {
 
     @Override
     public boolean needManualStepInput() {
-        return (strategy.getClass() == StrategyManually.class) && !didManualStep;
+        return (strategy.getClass() == LionStrategyManually.class) && !didManualStep;
     }
 
     public int getRange() {

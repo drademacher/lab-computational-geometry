@@ -3,9 +3,8 @@ package lions_on_graph.core;
 import lions_on_graph.core.entities.Lion;
 import lions_on_graph.core.entities.Man;
 import lions_on_graph.core.graph.*;
-import lions_on_graph.core.strategies.LionStrategies.StrategyAggroGreedy;
-import lions_on_graph.core.strategies.ManStrategies.StrategyPaper;
-import lions_on_graph.core.strategies.ManStrategies.StrategyRunAwayGreedy;
+import lions_on_graph.core.strategies.LionStrategies.*;
+import lions_on_graph.core.strategies.ManStrategies.*;
 import lions_on_graph.core.strategies.StrategyLion;
 import lions_on_graph.core.strategies.StrategyMan;
 import lions_on_graph.visualization.ShapeController;
@@ -16,6 +15,47 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 public class CoreController {
+
+    public enum ManStrategy {
+        DoNothing, Manually, Paper, Random, RunAwayGreedy;
+
+        public StrategyMan getStratgey(CoreController coreController) {
+            switch (this) {
+                case DoNothing:
+                    return new ManStrategyDoNothing(coreController);
+                case Paper:
+                    return new ManStrategyPaper(coreController);
+                case Random:
+                    return new ManStrategyRandom(coreController);
+                case Manually:
+                    return new ManStrategyManually(coreController);
+                case RunAwayGreedy:
+                    return new ManStrategyRunAwayGreedy(coreController);
+                default:
+                    throw new IllegalArgumentException("invalid input: " + this);
+            }
+        }
+    }
+
+    public enum LionStrategy {
+        DoNothing, Manually, Random, AggroGreedy;
+
+        public StrategyLion getStratgey(CoreController coreController) {
+            switch (this) {
+                case Random:
+                    return new LionStrategyRandom(coreController);
+                case Manually:
+                    return new LionStrategyManually(coreController);
+                case DoNothing:
+                    return new LionStrategyDoNothing(coreController);
+                case AggroGreedy:
+                    return new LionStrategyAggroGreedy(coreController);
+                default:
+                    throw new IllegalArgumentException("invalid input: " + this);
+            }
+        }
+    }
+
     private boolean editMode = true;
 
     private ArrayList<Lion> lions = new ArrayList<>();
@@ -259,7 +299,7 @@ public class CoreController {
         }
 
         Man man = new Man(vertex, this);
-        man.setStrategy(new StrategyRunAwayGreedy(this));
+        man.setStrategy(new ManStrategyRunAwayGreedy(this));
         shapeController.createMan(man);
         boolean bool = men.add(man);
         this.shapeController.updateStepPreviewsAndChoicePoints();
@@ -324,7 +364,7 @@ public class CoreController {
         }
 
         Lion lion = new Lion(vertex, this);
-        lion.setStrategy(new StrategyAggroGreedy(this));
+        lion.setStrategy(new LionStrategyAggroGreedy(this));
         shapeController.createLion(lion);
         boolean bool = lions.add(lion);
         this.shapeController.updateStepPreviewsAndChoicePoints();
@@ -494,7 +534,7 @@ public class CoreController {
         return lions;
     }
 
-    public void setManStrategy(Point manCoordinate, StrategyMan strategy) {
+    public void setManStrategy(Point manCoordinate, ManStrategy strategy) {
         if (manCoordinate == null || strategy == null) {
             return;
         }
@@ -503,10 +543,10 @@ public class CoreController {
             return;
         }
 
-        man.setStrategy(strategy);
+        man.setStrategy(strategy.getStratgey(this));
     }
 
-    public void setLionStrategy(Point lionCoordinate, StrategyLion strategy) {
+    public void setLionStrategy(Point lionCoordinate, LionStrategy strategy) {
         if (lionCoordinate == null || strategy == null) {
             return;
         }
@@ -515,42 +555,25 @@ public class CoreController {
             return;
         }
 
-        lion.setStrategy(strategy);
+        lion.setStrategy(strategy.getStratgey(this));
     }
 
 
-    public void setAllManStrategy(StrategyMan strategy) {
+    public void setAllManStrategy(ManStrategy strategy) {
         if (strategy == null) {
             return;
         }
         for (Man man : men) {
-            // TODO: Reflection is cancer, sollte man irgendwann refactorn
-            Class<? extends StrategyMan> classToLoad = strategy.getClass();
-            Class[] cArg = new Class[1];
-            cArg[0] = this.getClass();
-            try {
-                StrategyMan newStrategy = classToLoad.getDeclaredConstructor(cArg).newInstance(this);
-                man.setStrategy(newStrategy);
-            } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
-                e.printStackTrace();
-            }
+            setManStrategy(man.getCoordinates(), strategy);
         }
     }
 
-    public void setAllLionStrategy(StrategyLion strategy) {
+    public void setAllLionStrategy(LionStrategy strategy) {
         if (strategy == null) {
             return;
         }
         for (Lion lion : lions) {
-            Class<? extends StrategyLion> classToLoad = strategy.getClass();
-            Class[] cArg = new Class[1];
-            cArg[0] = this.getClass();
-            try {
-                StrategyLion newStrategy = classToLoad.getDeclaredConstructor(cArg).newInstance(this);
-                lion.setStrategy(newStrategy);
-            } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
-                e.printStackTrace();
-            }
+            setLionStrategy(lion.getCoordinates(), strategy);
         }
     }
 
@@ -870,8 +893,8 @@ public class CoreController {
         this.setLion(this.graph.getSmallVertices().get(17).getCoordinates());
 
 
-        this.setAllManStrategy(new StrategyPaper(this));
-        this.setAllLionStrategy(new StrategyAggroGreedy(this));
+        this.setAllManStrategy(ManStrategy.Paper);
+        this.setAllLionStrategy(LionStrategy.AggroGreedy);
     }
 
     public void setDefaultGraph3() {

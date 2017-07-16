@@ -15,11 +15,11 @@ import java.util.Queue;
 /**
  * Created by Jens on 11.07.2017.
  */
-public class StrategyPaper extends StrategyMan {
+public class ManStrategyPaper extends StrategyMan {
 
     Vertex target = null;
 
-    public StrategyPaper(CoreController coreController) {
+    public ManStrategyPaper(CoreController coreController) {
         super(coreController);
     }
 

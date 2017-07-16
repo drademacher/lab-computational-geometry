@@ -58,28 +58,23 @@ public class ShapedMan implements ShapedEntity {
 
 
             waitStrategyButton.setOnAction(event2 -> {
-                StrategyMan strategy = new StrategyDoNothing(coreController);
-                coreController.setManStrategy(coordinates, strategy);
+                coreController.setManStrategy(coordinates, CoreController.ManStrategy.DoNothing);
             });
 
             greedyStrategyButton.setOnAction(event2 -> {
-                StrategyMan strategy = new StrategyRunAwayGreedy(coreController);
-                coreController.setManStrategy(coordinates, strategy);
+                coreController.setManStrategy(coordinates, CoreController.ManStrategy.RunAwayGreedy);
             });
 
             randomStrategyButton.setOnAction(event2 -> {
-                StrategyMan strategy = new StrategyRandom(coreController);
-                coreController.setManStrategy(coordinates, strategy);
+                coreController.setManStrategy(coordinates, CoreController.ManStrategy.Random);
             });
 
             manualStrategyButton.setOnAction(event2 -> {
-                StrategyMan strategy = new StrategyManually(coreController);
-                coreController.setManStrategy(coordinates, strategy);
+                coreController.setManStrategy(coordinates, CoreController.ManStrategy.Manually);
             });
 
             paperStrategyButton.setOnAction(event2 -> {
-                StrategyMan strategy = new StrategyPaper(coreController);
-                coreController.setManStrategy(coordinates, strategy);
+                coreController.setManStrategy(coordinates, CoreController.ManStrategy.Paper);
             });
 
             item0.setOnAction(event2 -> {

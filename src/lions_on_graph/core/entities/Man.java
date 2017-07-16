@@ -2,7 +2,7 @@ package lions_on_graph.core.entities;
 
 import lions_on_graph.core.CoreController;
 import lions_on_graph.core.graph.Vertex;
-import lions_on_graph.core.strategies.ManStrategies.StrategyManually;
+import lions_on_graph.core.strategies.ManStrategies.ManStrategyManually;
 import lions_on_graph.core.strategies.StrategyMan;
 
 public class Man extends Entity {
@@ -64,7 +64,7 @@ public class Man extends Entity {
 
     @Override
     public boolean needManualStepInput() {
-        return (strategy.getClass() == StrategyManually.class) && !didManualStep;
+        return (strategy.getClass() == ManStrategyManually.class) && !didManualStep;
     }
 
     public StrategyMan getStrategy() {

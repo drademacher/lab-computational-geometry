@@ -11,9 +11,7 @@ import lions_on_graph.core.strategies.StrategyMan;
 import lions_on_graph.visualization.ShapeController;
 import util.Point;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
@@ -226,7 +224,7 @@ public class CoreController {
         return this.graph.getEdges();
     }
 
-    public int getDefaultEdgeWeight(){
+    public int getDefaultEdgeWeight() {
         return this.graph.getDefaultEdgeWeight();
     }
 
@@ -672,7 +670,6 @@ public class CoreController {
     }
 
 
-
     public void setAllLionRange(int range) {
         Lion.setDefaultRange(range);
         for (Lion lion : lions) {
@@ -680,7 +677,7 @@ public class CoreController {
         }
     }
 
-    public int getDefaultLionRange(){
+    public int getDefaultLionRange() {
         return Lion.getDefaultLionRange();
     }
 
@@ -868,7 +865,6 @@ public class CoreController {
         this.createEdge(new Point(90, 100), new Point(120, 70));
 
 
-
         this.setMan(this.graph.getSmallVertices().get(0).getCoordinates());
         this.setLion(this.graph.getSmallVertices().get(3).getCoordinates());
         this.setLion(this.graph.getSmallVertices().get(17).getCoordinates());
@@ -922,29 +918,97 @@ public class CoreController {
         setEmptyGraph();
         try {
             BufferedReader br = new BufferedReader(new FileReader(file));
-            br.readLine();  //Skip type
-            int yDim = Integer.valueOf(br.readLine().substring(7));  //Read height
-            int xDim = Integer.valueOf(br.readLine().substring(6));  //Read width
-//            this.graph = new Graph(); //init Map without passable fields
-            br.readLine();  //Skip map
+
             String currentLine;
             for (int y = 0; (currentLine = br.readLine()) != null; y++) { //Read in MapRow
-                for (int x = 0; x < currentLine.length(); x++) {
-//                    if (currentLine.charAt(x) == '.' || currentLine.charAt(x) == 'G' || currentLine.charAt(x) == 'S') {
-//                        map.switchPassable(new Vector(x, y));    //Mark passable fields
-//                    }
+//                System.out.println(currentLine);
 
-                    // TODO: do something nice with the file input
+                String[] lineElements = currentLine.split("##");
+
+                switch (lineElements[0]) {
+                    case "S":
+                        Man.setDistance(Integer.parseInt(lineElements[1]));
+                        Man.setKeepDistanceExact(Boolean.parseBoolean(lineElements[2]));
+                        Lion.setDefaultRange(Integer.parseInt((lineElements[3])));
+                        break;
+                    case "V":
+                        this.createVertex(new Point(Double.parseDouble(lineElements[1]), Double.parseDouble(lineElements[2])));
+                        break;
+                    case "E":
+                        this.createEdge(new Point(Double.parseDouble(lineElements[1]), Double.parseDouble(lineElements[2])),
+                                new Point(Double.parseDouble(lineElements[3]), Double.parseDouble(lineElements[4])));
+                        break;
+                    case "M":
+                        this.setMan(new Point(Double.parseDouble(lineElements[1]), Double.parseDouble(lineElements[2])));
+                        break;
+                    case "L":
+                        this.setLion(new Point(Double.parseDouble(lineElements[1]), Double.parseDouble(lineElements[2])));
+                        this.setLionRange(new Point(Double.parseDouble(lineElements[1]), Double.parseDouble(lineElements[2])), Integer.parseInt(lineElements[3]));
+                        break;
+                    default:
+                        throw new IllegalArgumentException("invalid input: " + lineElements[0]);
                 }
             }
         } catch (Exception e) {
             // TODO: search up the right exception type
             throw new Exception("test");
         }
+
+        System.out.println("done.");
+        debugGraph();
     }
 
     public void saveGraphToFile(File file) {
-        // TODO: implement file saving
+        ArrayList<Point> bigVertexCoorindates = new ArrayList<>();
+        for (BigVertex vertex : this.graph.getBigVertices()) {
+            bigVertexCoorindates.add(vertex.getCoordinates());
+        }
+        ArrayList<Point[]> edgesCoordinates = new ArrayList<>();
+        for (Edge edge : this.graph.getEdges()) {
+            edgesCoordinates.add(new Point[]{edge.getStartCoordinates(), edge.getEndCoordinates()});
+        }
+
+
+        BufferedWriter bufferedWriter = null;
+        try {
+
+            bufferedWriter = new BufferedWriter(new FileWriter(file));
+
+            bufferedWriter.write("S##" + Man.getDistance() + "##" + Man.keepDistanceExact() + "##" + Lion.getDefaultLionRange());
+            bufferedWriter.newLine();
+            bufferedWriter.flush();
+
+            for (BigVertex vertex : this.graph.getBigVertices()) {
+                bufferedWriter.write("V##" + vertex.getCoordinates().getX() + "##" + vertex.getCoordinates().getY());
+                bufferedWriter.newLine();
+                bufferedWriter.flush();
+            }
+
+            for (Edge edge : this.graph.getEdges()) {
+                bufferedWriter.write("E##" + edge.getStartCoordinates().getX() + "##" + edge.getStartCoordinates().getY() + "##" + edge.getEndCoordinates().getX() + "##" + edge.getEndCoordinates().getY());
+                bufferedWriter.newLine();
+                bufferedWriter.flush();
+            }
+
+            //TODO strategy
+            for (Man man : men) {
+                bufferedWriter.write("M##" + man.getCoordinates().getX() + "##" + man.getCoordinates().getY());
+                bufferedWriter.newLine();
+                bufferedWriter.flush();
+            }
+
+            //TODO strategy
+            for (Lion lion : lions) {
+                bufferedWriter.write("L##" + lion.getCoordinates().getX() + "##" + lion.getCoordinates().getY() + "##" + lion.getRange());
+                bufferedWriter.newLine();
+                bufferedWriter.flush();
+            }
+
+
+            bufferedWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public boolean simulateStep() {

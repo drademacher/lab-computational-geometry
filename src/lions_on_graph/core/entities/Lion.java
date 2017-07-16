@@ -16,7 +16,7 @@ public class Lion extends Entity {
 
 
     public Lion(Vertex startPosition, CoreController coreController) {
-        this(startPosition, 0, coreController);
+        this(startPosition, defaultRange, coreController);
     }
 
     public Lion(Vertex startPosition, int range, CoreController coreController) {

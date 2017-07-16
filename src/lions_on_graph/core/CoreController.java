@@ -18,7 +18,7 @@ public class CoreController {
     public enum ManStrategy {
         DoNothing, Manually, Paper, Random, RunAwayGreedy;
 
-        public StrategyMan getStratgey(CoreController coreController) {
+        public StrategyMan getStrategy(CoreController coreController) {
             switch (this) {
                 case DoNothing:
                     return new ManStrategyDoNothing(coreController, this);
@@ -39,7 +39,7 @@ public class CoreController {
     public enum LionStrategy {
         DoNothing, Manually, Random, AggroGreedy;
 
-        public StrategyLion getStratgey(CoreController coreController) {
+        public StrategyLion getStrategy(CoreController coreController) {
             switch (this) {
                 case Random:
                     return new LionStrategyRandom(coreController, this);
@@ -542,7 +542,7 @@ public class CoreController {
             return;
         }
 
-        man.setStrategy(strategy.getStratgey(this));
+        man.setStrategy(strategy.getStrategy(this));
     }
 
     public void setLionStrategy(Point lionCoordinate, LionStrategy strategy) {
@@ -554,7 +554,7 @@ public class CoreController {
             return;
         }
 
-        lion.setStrategy(strategy.getStratgey(this));
+        lion.setStrategy(strategy.getStrategy(this));
     }
 
 

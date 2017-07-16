@@ -217,7 +217,7 @@ class Controller {
         });
 
         setManMinDistance.setOnAction(event -> {
-            int currentValue = this.coreController.getManDistance();
+            int currentValue = this.coreController.getMinimumManDistance();
 
             TextInputDialog dialog = new TextInputDialog("" + currentValue);
             dialog.setTitle("Set Minimum Distance");
@@ -228,7 +228,7 @@ class Controller {
             if (result.isPresent()) {
                 try {
                     int inputValue = Integer.parseInt(result.get());
-                    this.coreController.setManDistance(inputValue, false);
+                    this.coreController.setMinimumManDistance(inputValue);
                 } catch (Exception ignore) {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Error");
@@ -241,7 +241,7 @@ class Controller {
 
 
         setManFixDistance.setOnAction(event -> {
-            int currentValue = this.coreController.getManDistance();
+            int currentValue = this.coreController.getExactManDistance();
 
             TextInputDialog dialog = new TextInputDialog("" + currentValue);
             dialog.setTitle("Set Minimum Distance");
@@ -252,7 +252,7 @@ class Controller {
             if (result.isPresent()) {
                 try {
                     int inputValue = Integer.parseInt(result.get());
-                    this.coreController.setManDistance(inputValue, true);
+                    this.coreController.setExactManDistance(inputValue);
                 } catch (Exception ignore) {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Error");

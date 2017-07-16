@@ -703,15 +703,33 @@ public class CoreController {
         return Lion.getDefaultLionRange();
     }
 
-    public void setManDistance(int distance, boolean keepExactDistance) {
-        if (distance < 1) {
+    public void setExactManDistance(int distance) {
+        if (distance < 0) {
             return;
         }
         Man.setDistance(distance);
-        Man.setKeepDistanceExact(keepExactDistance);
+        Man.setKeepDistanceExact(true);
     }
 
-    public int getManDistance() {
+    public void setMinimumManDistance(int distance) {
+        if (distance < 0) {
+            return;
+        }
+        Man.setDistance(distance);
+        Man.setKeepDistanceExact(false);
+    }
+
+    public int getExactManDistance() {
+        if(Man.keepDistanceExact()){
+            return Man.getDistance();
+        }
+        return 0;
+    }
+
+    public int getMinimumManDistance() {
+        if(Man.keepDistanceExact()){
+            return 0;
+        }
         return Man.getDistance();
     }
 

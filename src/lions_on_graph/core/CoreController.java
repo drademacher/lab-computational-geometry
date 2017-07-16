@@ -962,9 +962,11 @@ public class CoreController {
                         break;
                     case "M":
                         this.setMan(new Point(Double.parseDouble(lineElements[1]), Double.parseDouble(lineElements[2])));
+                        this.setManStrategy(new Point(Double.parseDouble(lineElements[1]), Double.parseDouble(lineElements[2])), ManStrategy.valueOf(lineElements[3]));
                         break;
                     case "L":
                         this.setLion(new Point(Double.parseDouble(lineElements[1]), Double.parseDouble(lineElements[2])));
+                        this.setLionStrategy(new Point(Double.parseDouble(lineElements[1]), Double.parseDouble(lineElements[2])), LionStrategy.valueOf(lineElements[4]));
                         this.setLionRange(new Point(Double.parseDouble(lineElements[1]), Double.parseDouble(lineElements[2])), Integer.parseInt(lineElements[3]));
                         break;
                     default:
@@ -1012,17 +1014,14 @@ public class CoreController {
                 bufferedWriter.flush();
             }
 
-            //TODO strategy
             for (Man man : men) {
-                bufferedWriter.write("M##" + man.getCoordinates().getX() + "##" + man.getCoordinates().getY());
+                bufferedWriter.write("M##" + man.getCoordinates().getX() + "##" + man.getCoordinates().getY()+"##"+man.getStrategy().getName());
                 bufferedWriter.newLine();
                 bufferedWriter.flush();
-                System.out.println(man.getStrategy().getName());
             }
 
-            //TODO strategy
             for (Lion lion : lions) {
-                bufferedWriter.write("L##" + lion.getCoordinates().getX() + "##" + lion.getCoordinates().getY() + "##" + lion.getRange());
+                bufferedWriter.write("L##" + lion.getCoordinates().getX() + "##" + lion.getCoordinates().getY() + "##" + lion.getRange()+"##"+lion.getStrategy().getName());
                 bufferedWriter.newLine();
                 bufferedWriter.flush();
             }

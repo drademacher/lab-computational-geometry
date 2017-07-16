@@ -19,8 +19,8 @@ public class ManStrategyPaper extends StrategyMan {
 
     Vertex target = null;
 
-    public ManStrategyPaper(CoreController coreController) {
-        super(coreController);
+    public ManStrategyPaper(CoreController coreController, CoreController.ManStrategy strategyEnum) {
+        super(coreController, strategyEnum);
     }
 
     @Override

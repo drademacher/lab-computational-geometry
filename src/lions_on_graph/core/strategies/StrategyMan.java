@@ -16,10 +16,12 @@ public abstract class StrategyMan implements Strategy {
     protected CoreController coreController;
     protected Man man;
     protected GraphHelper helper;
+    protected CoreController.ManStrategy strategyEnum;
 
-    public StrategyMan(CoreController coreController) {
+    public StrategyMan(CoreController coreController, CoreController.ManStrategy strategyEnum) {
         this.coreController = coreController;
         this.helper = GraphHelper.createGraphHelper(coreController);
+        this.strategyEnum = strategyEnum;
     }
 
     @Override
@@ -80,5 +82,9 @@ public abstract class StrategyMan implements Strategy {
 
     public void setMan(Man man) {
         this.man = man;
+    }
+
+    public String getName(){
+        return strategyEnum.name();
     }
 }

@@ -11,8 +11,8 @@ import java.util.ArrayList;
  */
 public class LionStrategyDoNothing extends StrategyLion {
 
-    public LionStrategyDoNothing(CoreController coreController) {
-        super(coreController);
+    public LionStrategyDoNothing(CoreController coreController, CoreController.LionStrategy strategyEnum) {
+        super(coreController, strategyEnum);
     }
 
     @Override

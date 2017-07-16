@@ -8,8 +8,8 @@ import java.util.ArrayList;
 
 public class ManStrategyManually extends StrategyMan {
 
-    public ManStrategyManually(CoreController coreController) {
-        super(coreController);
+    public ManStrategyManually(CoreController coreController, CoreController.ManStrategy strategyEnum) {
+        super(coreController, strategyEnum);
     }
 
     @Override

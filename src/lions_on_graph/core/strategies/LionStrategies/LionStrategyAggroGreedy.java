@@ -9,8 +9,8 @@ import java.util.ArrayList;
 
 public class LionStrategyAggroGreedy extends StrategyLion {
 
-    public LionStrategyAggroGreedy(CoreController coreController) {
-        super(coreController);
+    public LionStrategyAggroGreedy(CoreController coreController, CoreController.LionStrategy strategyEnum) {
+        super(coreController, strategyEnum);
     }
 
     @Override

@@ -11,7 +11,6 @@ import lions_on_graph.visualization.ShapeController;
 import util.Point;
 
 import java.io.*;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 public class CoreController {
@@ -22,15 +21,15 @@ public class CoreController {
         public StrategyMan getStratgey(CoreController coreController) {
             switch (this) {
                 case DoNothing:
-                    return new ManStrategyDoNothing(coreController);
+                    return new ManStrategyDoNothing(coreController, this);
                 case Paper:
-                    return new ManStrategyPaper(coreController);
+                    return new ManStrategyPaper(coreController, this);
                 case Random:
-                    return new ManStrategyRandom(coreController);
+                    return new ManStrategyRandom(coreController, this);
                 case Manually:
-                    return new ManStrategyManually(coreController);
+                    return new ManStrategyManually(coreController, this);
                 case RunAwayGreedy:
-                    return new ManStrategyRunAwayGreedy(coreController);
+                    return new ManStrategyRunAwayGreedy(coreController, this);
                 default:
                     throw new IllegalArgumentException("invalid input: " + this);
             }
@@ -43,13 +42,13 @@ public class CoreController {
         public StrategyLion getStratgey(CoreController coreController) {
             switch (this) {
                 case Random:
-                    return new LionStrategyRandom(coreController);
+                    return new LionStrategyRandom(coreController, this);
                 case Manually:
-                    return new LionStrategyManually(coreController);
+                    return new LionStrategyManually(coreController, this);
                 case DoNothing:
-                    return new LionStrategyDoNothing(coreController);
+                    return new LionStrategyDoNothing(coreController, this);
                 case AggroGreedy:
-                    return new LionStrategyAggroGreedy(coreController);
+                    return new LionStrategyAggroGreedy(coreController, this);
                 default:
                     throw new IllegalArgumentException("invalid input: " + this);
             }
@@ -299,9 +298,9 @@ public class CoreController {
         }
 
         Man man = new Man(vertex, this);
-        man.setStrategy(new ManStrategyRunAwayGreedy(this));
-        shapeController.createMan(man);
         boolean bool = men.add(man);
+        setManStrategy(man.getCoordinates(), ManStrategy.RunAwayGreedy);
+        shapeController.createMan(man);
         this.shapeController.updateStepPreviewsAndChoicePoints();
         return bool;
     }
@@ -364,9 +363,9 @@ public class CoreController {
         }
 
         Lion lion = new Lion(vertex, this);
-        lion.setStrategy(new LionStrategyAggroGreedy(this));
-        shapeController.createLion(lion);
         boolean bool = lions.add(lion);
+        setLionStrategy(lion.getCoordinates(), LionStrategy.AggroGreedy);
+        shapeController.createLion(lion);
         this.shapeController.updateStepPreviewsAndChoicePoints();
         return bool;
     }
@@ -1018,6 +1017,7 @@ public class CoreController {
                 bufferedWriter.write("M##" + man.getCoordinates().getX() + "##" + man.getCoordinates().getY());
                 bufferedWriter.newLine();
                 bufferedWriter.flush();
+                System.out.println(man.getStrategy().getName());
             }
 
             //TODO strategy

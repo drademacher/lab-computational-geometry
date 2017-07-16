@@ -18,10 +18,12 @@ public abstract class StrategyLion implements Strategy, Cloneable {
     protected CoreController coreController;
     protected Lion lion;
     protected GraphHelper helper;
+    protected CoreController.LionStrategy strategyEnum;
 
-    public StrategyLion(CoreController coreController) {
+    public StrategyLion(CoreController coreController, CoreController.LionStrategy strategyEnum) {
         this.coreController = coreController;
         this.helper = GraphHelper.createGraphHelper(coreController);
+        this.strategyEnum = strategyEnum;
     }
 
 
@@ -58,6 +60,10 @@ public abstract class StrategyLion implements Strategy, Cloneable {
 
     public void setLion(Lion lion) {
         this.lion = lion;
+    }
+
+    public String getName(){
+        return strategyEnum.name();
     }
 
 }

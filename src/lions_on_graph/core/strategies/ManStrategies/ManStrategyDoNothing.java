@@ -11,8 +11,8 @@ import java.util.ArrayList;
  */
 public class ManStrategyDoNothing extends StrategyMan {
 
-    public ManStrategyDoNothing(CoreController coreController) {
-        super(coreController);
+    public ManStrategyDoNothing(CoreController coreController, CoreController.ManStrategy strategyEnum) {
+        super(coreController, strategyEnum);
     }
 
     @Override

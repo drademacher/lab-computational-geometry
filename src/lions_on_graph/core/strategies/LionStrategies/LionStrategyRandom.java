@@ -11,11 +11,11 @@ import java.util.ArrayList;
 /**
  * Created by Jens on 01.07.2017.
  */
-public class StrategyRandom extends StrategyLion {
+public class LionStrategyRandom extends StrategyLion {
 
 
-    public StrategyRandom(CoreController coreController) {
-        super(coreController);
+    public LionStrategyRandom(CoreController coreController, CoreController.LionStrategy strategyEnum) {
+        super(coreController, strategyEnum);
     }
 
     @Override

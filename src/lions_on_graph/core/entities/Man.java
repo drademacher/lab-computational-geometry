@@ -2,11 +2,10 @@ package lions_on_graph.core.entities;
 
 import lions_on_graph.core.CoreController;
 import lions_on_graph.core.graph.Vertex;
-import lions_on_graph.core.strategies.ManStrategies.StrategyManually;
+import lions_on_graph.core.strategies.ManStrategies.ManStrategyManually;
 import lions_on_graph.core.strategies.StrategyMan;
 
 public class Man extends Entity {
-    // TODO: implement Man class
 
     private static boolean keepDistanceExact = false;
     private static int distance = 0;
@@ -52,11 +51,6 @@ public class Man extends Entity {
         }
     }
 
-    public Lion getNearestLion() {
-        // TODO: could be useful for a lot of strategies
-        return null;
-    }
-
     @Override
     public String toString() {
         return "Man @ " + position;
@@ -64,7 +58,7 @@ public class Man extends Entity {
 
     @Override
     public boolean needManualStepInput() {
-        return (strategy.getClass() == StrategyManually.class) && !didManualStep;
+        return (strategy.getClass() == ManStrategyManually.class) && !didManualStep;
     }
 
     public StrategyMan getStrategy() {

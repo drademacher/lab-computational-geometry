@@ -6,13 +6,10 @@ import lions_on_graph.core.strategies.StrategyMan;
 
 import java.util.ArrayList;
 
-/**
- * Created by Jens on 11.07.2017.
- */
-public class StrategyDoNothing extends StrategyMan {
+public class ManStrategyManually extends StrategyMan {
 
-    public StrategyDoNothing(CoreController coreController) {
-        super(coreController);
+    public ManStrategyManually(CoreController coreController, CoreController.ManStrategy strategyEnum) {
+        super(coreController, strategyEnum);
     }
 
     @Override

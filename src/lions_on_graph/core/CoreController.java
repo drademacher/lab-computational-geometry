@@ -3,21 +3,58 @@ package lions_on_graph.core;
 import lions_on_graph.core.entities.Lion;
 import lions_on_graph.core.entities.Man;
 import lions_on_graph.core.graph.*;
-import lions_on_graph.core.strategies.LionStrategies.StrategyAggroGreedy;
-import lions_on_graph.core.strategies.ManStrategies.StrategyPaper;
-import lions_on_graph.core.strategies.ManStrategies.StrategyRunAwayGreedy;
+import lions_on_graph.core.strategies.LionStrategies.*;
+import lions_on_graph.core.strategies.ManStrategies.*;
 import lions_on_graph.core.strategies.StrategyLion;
 import lions_on_graph.core.strategies.StrategyMan;
 import lions_on_graph.visualization.ShapeController;
 import util.Point;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.lang.reflect.InvocationTargetException;
+import java.io.*;
 import java.util.ArrayList;
 
 public class CoreController {
+
+    public enum ManStrategy {
+        DoNothing, Manually, Paper, Random, RunAwayGreedy;
+
+        public StrategyMan getStratgey(CoreController coreController) {
+            switch (this) {
+                case DoNothing:
+                    return new ManStrategyDoNothing(coreController, this);
+                case Paper:
+                    return new ManStrategyPaper(coreController, this);
+                case Random:
+                    return new ManStrategyRandom(coreController, this);
+                case Manually:
+                    return new ManStrategyManually(coreController, this);
+                case RunAwayGreedy:
+                    return new ManStrategyRunAwayGreedy(coreController, this);
+                default:
+                    throw new IllegalArgumentException("invalid input: " + this);
+            }
+        }
+    }
+
+    public enum LionStrategy {
+        DoNothing, Manually, Random, AggroGreedy;
+
+        public StrategyLion getStratgey(CoreController coreController) {
+            switch (this) {
+                case Random:
+                    return new LionStrategyRandom(coreController, this);
+                case Manually:
+                    return new LionStrategyManually(coreController, this);
+                case DoNothing:
+                    return new LionStrategyDoNothing(coreController, this);
+                case AggroGreedy:
+                    return new LionStrategyAggroGreedy(coreController, this);
+                default:
+                    throw new IllegalArgumentException("invalid input: " + this);
+            }
+        }
+    }
+
     private boolean editMode = true;
 
     private ArrayList<Lion> lions = new ArrayList<>();
@@ -226,7 +263,7 @@ public class CoreController {
         return this.graph.getEdges();
     }
 
-    public int getDefaultEdgeWeight(){
+    public int getDefaultEdgeWeight() {
         return this.graph.getDefaultEdgeWeight();
     }
 
@@ -261,9 +298,9 @@ public class CoreController {
         }
 
         Man man = new Man(vertex, this);
-        man.setStrategy(new StrategyRunAwayGreedy(this));
-        shapeController.createMan(man);
         boolean bool = men.add(man);
+        setManStrategy(man.getCoordinates(), ManStrategy.RunAwayGreedy);
+        shapeController.createMan(man);
         this.shapeController.updateStepPreviewsAndChoicePoints();
         return bool;
     }
@@ -326,9 +363,9 @@ public class CoreController {
         }
 
         Lion lion = new Lion(vertex, this);
-        lion.setStrategy(new StrategyAggroGreedy(this));
-        shapeController.createLion(lion);
         boolean bool = lions.add(lion);
+        setLionStrategy(lion.getCoordinates(), LionStrategy.AggroGreedy);
+        shapeController.createLion(lion);
         this.shapeController.updateStepPreviewsAndChoicePoints();
         return bool;
     }
@@ -496,7 +533,7 @@ public class CoreController {
         return lions;
     }
 
-    public void setManStrategy(Point manCoordinate, StrategyMan strategy) {
+    public void setManStrategy(Point manCoordinate, ManStrategy strategy) {
         if (manCoordinate == null || strategy == null) {
             return;
         }
@@ -505,10 +542,10 @@ public class CoreController {
             return;
         }
 
-        man.setStrategy(strategy);
+        man.setStrategy(strategy.getStratgey(this));
     }
 
-    public void setLionStrategy(Point lionCoordinate, StrategyLion strategy) {
+    public void setLionStrategy(Point lionCoordinate, LionStrategy strategy) {
         if (lionCoordinate == null || strategy == null) {
             return;
         }
@@ -517,42 +554,25 @@ public class CoreController {
             return;
         }
 
-        lion.setStrategy(strategy);
+        lion.setStrategy(strategy.getStratgey(this));
     }
 
 
-    public void setAllManStrategy(StrategyMan strategy) {
+    public void setAllManStrategy(ManStrategy strategy) {
         if (strategy == null) {
             return;
         }
         for (Man man : men) {
-            // TODO: Reflection is cancer, sollte man irgendwann refactorn
-            Class<? extends StrategyMan> classToLoad = strategy.getClass();
-            Class[] cArg = new Class[1];
-            cArg[0] = this.getClass();
-            try {
-                StrategyMan newStrategy = classToLoad.getDeclaredConstructor(cArg).newInstance(this);
-                man.setStrategy(newStrategy);
-            } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
-                e.printStackTrace();
-            }
+            setManStrategy(man.getCoordinates(), strategy);
         }
     }
 
-    public void setAllLionStrategy(StrategyLion strategy) {
+    public void setAllLionStrategy(LionStrategy strategy) {
         if (strategy == null) {
             return;
         }
         for (Lion lion : lions) {
-            Class<? extends StrategyLion> classToLoad = strategy.getClass();
-            Class[] cArg = new Class[1];
-            cArg[0] = this.getClass();
-            try {
-                StrategyLion newStrategy = classToLoad.getDeclaredConstructor(cArg).newInstance(this);
-                lion.setStrategy(newStrategy);
-            } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
-                e.printStackTrace();
-            }
+            setLionStrategy(lion.getCoordinates(), strategy);
         }
     }
 
@@ -672,7 +692,6 @@ public class CoreController {
     }
 
 
-
     public void setAllLionRange(int range) {
         Lion.setDefaultRange(range);
         for (Lion lion : lions) {
@@ -680,7 +699,7 @@ public class CoreController {
         }
     }
 
-    public int getDefaultLionRange(){
+    public int getDefaultLionRange() {
         return Lion.getDefaultLionRange();
     }
 
@@ -868,14 +887,13 @@ public class CoreController {
         this.createEdge(new Point(90, 100), new Point(120, 70));
 
 
-
         this.setMan(this.graph.getSmallVertices().get(0).getCoordinates());
         this.setLion(this.graph.getSmallVertices().get(3).getCoordinates());
         this.setLion(this.graph.getSmallVertices().get(17).getCoordinates());
 
 
-        this.setAllManStrategy(new StrategyPaper(this));
-        this.setAllLionStrategy(new StrategyAggroGreedy(this));
+        this.setAllManStrategy(ManStrategy.Paper);
+        this.setAllLionStrategy(LionStrategy.AggroGreedy);
     }
 
     public void setDefaultGraph3() {
@@ -922,29 +940,97 @@ public class CoreController {
         setEmptyGraph();
         try {
             BufferedReader br = new BufferedReader(new FileReader(file));
-            br.readLine();  //Skip type
-            int yDim = Integer.valueOf(br.readLine().substring(7));  //Read height
-            int xDim = Integer.valueOf(br.readLine().substring(6));  //Read width
-//            this.graph = new Graph(); //init Map without passable fields
-            br.readLine();  //Skip map
+
             String currentLine;
             for (int y = 0; (currentLine = br.readLine()) != null; y++) { //Read in MapRow
-                for (int x = 0; x < currentLine.length(); x++) {
-//                    if (currentLine.charAt(x) == '.' || currentLine.charAt(x) == 'G' || currentLine.charAt(x) == 'S') {
-//                        map.switchPassable(new Vector(x, y));    //Mark passable fields
-//                    }
+//                System.out.println(currentLine);
 
-                    // TODO: do something nice with the file input
+                String[] lineElements = currentLine.split("##");
+
+                switch (lineElements[0]) {
+                    case "S":
+                        Man.setDistance(Integer.parseInt(lineElements[1]));
+                        Man.setKeepDistanceExact(Boolean.parseBoolean(lineElements[2]));
+                        Lion.setDefaultRange(Integer.parseInt((lineElements[3])));
+                        break;
+                    case "V":
+                        this.createVertex(new Point(Double.parseDouble(lineElements[1]), Double.parseDouble(lineElements[2])));
+                        break;
+                    case "E":
+                        this.createEdge(new Point(Double.parseDouble(lineElements[1]), Double.parseDouble(lineElements[2])),
+                                new Point(Double.parseDouble(lineElements[3]), Double.parseDouble(lineElements[4])));
+                        break;
+                    case "M":
+                        this.setMan(new Point(Double.parseDouble(lineElements[1]), Double.parseDouble(lineElements[2])));
+                        this.setManStrategy(new Point(Double.parseDouble(lineElements[1]), Double.parseDouble(lineElements[2])), ManStrategy.valueOf(lineElements[3]));
+                        break;
+                    case "L":
+                        this.setLion(new Point(Double.parseDouble(lineElements[1]), Double.parseDouble(lineElements[2])));
+                        this.setLionStrategy(new Point(Double.parseDouble(lineElements[1]), Double.parseDouble(lineElements[2])), LionStrategy.valueOf(lineElements[4]));
+                        this.setLionRange(new Point(Double.parseDouble(lineElements[1]), Double.parseDouble(lineElements[2])), Integer.parseInt(lineElements[3]));
+                        break;
+                    default:
+                        throw new IllegalArgumentException("invalid input: " + lineElements[0]);
                 }
             }
         } catch (Exception e) {
             // TODO: search up the right exception type
             throw new Exception("test");
         }
+
+        System.out.println("done.");
+        debugGraph();
     }
 
     public void saveGraphToFile(File file) {
-        // TODO: implement file saving
+        ArrayList<Point> bigVertexCoorindates = new ArrayList<>();
+        for (BigVertex vertex : this.graph.getBigVertices()) {
+            bigVertexCoorindates.add(vertex.getCoordinates());
+        }
+        ArrayList<Point[]> edgesCoordinates = new ArrayList<>();
+        for (Edge edge : this.graph.getEdges()) {
+            edgesCoordinates.add(new Point[]{edge.getStartCoordinates(), edge.getEndCoordinates()});
+        }
+
+
+        BufferedWriter bufferedWriter = null;
+        try {
+
+            bufferedWriter = new BufferedWriter(new FileWriter(file));
+
+            bufferedWriter.write("S##" + Man.getDistance() + "##" + Man.keepDistanceExact() + "##" + Lion.getDefaultLionRange());
+            bufferedWriter.newLine();
+            bufferedWriter.flush();
+
+            for (BigVertex vertex : this.graph.getBigVertices()) {
+                bufferedWriter.write("V##" + vertex.getCoordinates().getX() + "##" + vertex.getCoordinates().getY());
+                bufferedWriter.newLine();
+                bufferedWriter.flush();
+            }
+
+            for (Edge edge : this.graph.getEdges()) {
+                bufferedWriter.write("E##" + edge.getStartCoordinates().getX() + "##" + edge.getStartCoordinates().getY() + "##" + edge.getEndCoordinates().getX() + "##" + edge.getEndCoordinates().getY());
+                bufferedWriter.newLine();
+                bufferedWriter.flush();
+            }
+
+            for (Man man : men) {
+                bufferedWriter.write("M##" + man.getCoordinates().getX() + "##" + man.getCoordinates().getY()+"##"+man.getStrategy().getName());
+                bufferedWriter.newLine();
+                bufferedWriter.flush();
+            }
+
+            for (Lion lion : lions) {
+                bufferedWriter.write("L##" + lion.getCoordinates().getX() + "##" + lion.getCoordinates().getY() + "##" + lion.getRange()+"##"+lion.getStrategy().getName());
+                bufferedWriter.newLine();
+                bufferedWriter.flush();
+            }
+
+
+            bufferedWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public boolean simulateStep() {

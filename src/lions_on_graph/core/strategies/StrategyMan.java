@@ -16,10 +16,12 @@ public abstract class StrategyMan implements Strategy {
     protected CoreController coreController;
     protected Man man;
     protected GraphHelper helper;
+    protected CoreController.ManStrategy strategyEnum;
 
-    public StrategyMan(CoreController coreController) {
+    public StrategyMan(CoreController coreController, CoreController.ManStrategy strategyEnum) {
         this.coreController = coreController;
         this.helper = GraphHelper.createGraphHelper(coreController);
+        this.strategyEnum = strategyEnum;
     }
 
     @Override
@@ -37,15 +39,15 @@ public abstract class StrategyMan implements Strategy {
 
     public boolean vertexIsValidStep(Vertex vertex) {
 
-        if(this.coreController.isLionOnVertex(vertex.getCoordinates())){
+        if (this.coreController.isDangerOnVertex(vertex.getCoordinates())) {
             return false;
         }
 
+        boolean isValidVertex = false;
         if (man.getCurrentPosition().equals(vertex)) {
-            return true;
+            isValidVertex = true;
         }
 
-        boolean isValidVertex = false;
         for (Connection neighborConnection : man.getCurrentPosition().getConnections())
             if (neighborConnection.getNeighbor(man.getCurrentPosition()).equals(vertex)) {
                 isValidVertex = true;
@@ -58,13 +60,13 @@ public abstract class StrategyMan implements Strategy {
 
         for (Man otherMan : coreController.getMen()) {
             if (!otherMan.equals(man)) {
-                if (man.keepDistanceExact()) {
-                    if (man.getDistance() == helper.getDistanceBetween(vertex, otherMan.getCurrentPosition())) {
-                        return true;
+                if (Man.keepDistanceExact()) {
+                    if (Man.getDistance() != helper.getDistanceBetween(vertex, otherMan.getCurrentPosition())) {
+                        isValidVertex = false;
                     }
                 } else {
-                    if (man.getDistance() < helper.getDistanceBetween(vertex, otherMan.getCurrentPosition())) {
-                        return true;
+                    if (Man.getDistance() >= helper.getDistanceBetween(vertex, otherMan.getCurrentPosition())) {
+                        isValidVertex = false;
                     }
                 }
             }
@@ -73,12 +75,16 @@ public abstract class StrategyMan implements Strategy {
         if (coreController.getMen().size() < 2) {
             return true;
         }
-        return false;
+        return isValidVertex;
     }
 
     protected abstract ArrayList<Vertex> calculatePossibleSteps();
 
     public void setMan(Man man) {
         this.man = man;
+    }
+
+    public String getName() {
+        return strategyEnum.name();
     }
 }

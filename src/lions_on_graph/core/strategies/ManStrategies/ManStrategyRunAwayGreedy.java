@@ -7,10 +7,10 @@ import lions_on_graph.core.strategies.StrategyMan;
 
 import java.util.ArrayList;
 
-public class StrategyRunAwayGreedy extends StrategyMan {
+public class ManStrategyRunAwayGreedy extends StrategyMan {
 
-    public StrategyRunAwayGreedy(CoreController coreController) {
-        super(coreController);
+    public ManStrategyRunAwayGreedy(CoreController coreController, CoreController.ManStrategy strategyEnum) {
+        super(coreController, strategyEnum);
     }
 
     @Override

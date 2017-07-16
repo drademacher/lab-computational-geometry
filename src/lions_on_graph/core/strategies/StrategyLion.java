@@ -18,10 +18,12 @@ public abstract class StrategyLion implements Strategy, Cloneable {
     protected CoreController coreController;
     protected Lion lion;
     protected GraphHelper helper;
+    protected CoreController.LionStrategy strategyEnum;
 
-    public StrategyLion(CoreController coreController) {
+    public StrategyLion(CoreController coreController, CoreController.LionStrategy strategyEnum) {
         this.coreController = coreController;
         this.helper = GraphHelper.createGraphHelper(coreController);
+        this.strategyEnum = strategyEnum;
     }
 
 
@@ -29,7 +31,7 @@ public abstract class StrategyLion implements Strategy, Cloneable {
     public Vertex getNextPosition() {
         //we can implement here more conditions for the returned vertex
 
-         for (Vertex vertex : calculatePossibleSteps()) {
+        for (Vertex vertex : calculatePossibleSteps()) {
             if (vertexIsValidStep(vertex)) {
                 return vertex;
             }
@@ -40,7 +42,7 @@ public abstract class StrategyLion implements Strategy, Cloneable {
     }
 
     public boolean vertexIsValidStep(Vertex vertex) {
-        if(this.coreController.isLionOnVertex(vertex.getCoordinates())){
+        if (this.coreController.isLionOnVertex(vertex.getCoordinates())) {
             return false;
         }
         if (lion.getCurrentPosition().equals(vertex)) {
@@ -58,6 +60,10 @@ public abstract class StrategyLion implements Strategy, Cloneable {
 
     public void setLion(Lion lion) {
         this.lion = lion;
+    }
+
+    public String getName() {
+        return strategyEnum.name();
     }
 
 }

@@ -8,11 +8,11 @@ import util.Random;
 
 import java.util.ArrayList;
 
-public class StrategyRandom extends StrategyMan {
+public class ManStrategyRandom extends StrategyMan {
 
 
-    public StrategyRandom(CoreController coreController) {
-        super(coreController);
+    public ManStrategyRandom(CoreController coreController, CoreController.ManStrategy strategyEnum) {
+        super(coreController, strategyEnum);
     }
 
     @Override

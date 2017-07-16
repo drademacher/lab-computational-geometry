@@ -7,10 +7,10 @@ import lions_on_graph.core.strategies.StrategyLion;
 
 import java.util.ArrayList;
 
-public class StrategyAggroGreedy extends StrategyLion {
+public class LionStrategyAggroGreedy extends StrategyLion {
 
-    public StrategyAggroGreedy(CoreController coreController) {
-        super(coreController);
+    public LionStrategyAggroGreedy(CoreController coreController, CoreController.LionStrategy strategyEnum) {
+        super(coreController, strategyEnum);
     }
 
     @Override

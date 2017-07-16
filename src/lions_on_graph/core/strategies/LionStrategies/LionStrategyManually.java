@@ -10,10 +10,10 @@ import java.util.ArrayList;
 /**
  * Created by Jens on 01.07.2017.
  */
-public class StrategyManually extends StrategyLion {
+public class LionStrategyManually extends StrategyLion {
 
-    public StrategyManually(CoreController coreController) {
-        super(coreController);
+    public LionStrategyManually(CoreController coreController, CoreController.LionStrategy strategyEnum) {
+        super(coreController, strategyEnum);
     }
 
     @Override

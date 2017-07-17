@@ -11,6 +11,7 @@ import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import lions_in_plane.core.CoreController;
+import lions_in_plane.visualization.VisualizedCoreController;
 import util.ContextMenuHolder;
 import util.ZoomScrollPane;
 
@@ -37,7 +38,7 @@ class Controller {
     private double lastNanoTime = System.nanoTime();
     private double time = 0;
     private int tickAccount = 0;
-    private CoreController coreController = new CoreController();
+    private CoreController coreController = new VisualizedCoreController();
 
     private Stage stage;
 

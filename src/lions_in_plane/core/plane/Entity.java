@@ -1,4 +1,4 @@
-package lions_in_plane.core.entities;
+package lions_in_plane.core.plane;
 
 
 import util.Point;

@@ -1,8 +1,6 @@
 package lions_in_plane.core.plane;
 
 
-import lions_in_plane.core.entities.Lion;
-import lions_in_plane.core.entities.Man;
 import util.Point;
 
 import java.util.ArrayList;

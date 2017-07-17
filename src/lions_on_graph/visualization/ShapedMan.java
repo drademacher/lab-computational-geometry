@@ -12,8 +12,6 @@ import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.util.Duration;
 import lions_on_graph.core.CoreController;
-import lions_on_graph.core.strategies.ManStrategies.*;
-import lions_on_graph.core.strategies.StrategyMan;
 import util.ContextMenuHolder;
 import util.Point;
 import util.ZoomScrollPane;

@@ -266,7 +266,6 @@ class Controller {
         });
 
 
-
         CheckMenuItem viewEntities = new CheckMenuItem("View Entities");
         entityShapes.visibleProperty().bind(viewEntities.selectedProperty());
         viewEntities.setSelected(true);

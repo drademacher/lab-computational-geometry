@@ -26,13 +26,13 @@ public abstract class Entity {
         return position;
     }
 
+    public Vertex getCurrentPosition() {
+        return position;
+    }
+
     public void setCurrentPosition(Vertex vertex) {
         this.position = vertex;
         this.nextPosition = null;
-    }
-
-    public Vertex getCurrentPosition() {
-        return position;
     }
 
     public Vertex getNextPosition() {

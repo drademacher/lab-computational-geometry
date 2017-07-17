@@ -3,7 +3,10 @@ package lions_on_graph.core;
 import lions_on_graph.core.entities.Lion;
 import lions_on_graph.core.entities.Man;
 import lions_on_graph.core.graph.*;
-import lions_on_graph.core.strategies.LionStrategies.*;
+import lions_on_graph.core.strategies.LionStrategies.LionStrategyAggroGreedy;
+import lions_on_graph.core.strategies.LionStrategies.LionStrategyDoNothing;
+import lions_on_graph.core.strategies.LionStrategies.LionStrategyManually;
+import lions_on_graph.core.strategies.LionStrategies.LionStrategyRandom;
 import lions_on_graph.core.strategies.ManStrategies.*;
 import lions_on_graph.core.strategies.StrategyLion;
 import lions_on_graph.core.strategies.StrategyMan;
@@ -15,51 +18,9 @@ import java.util.ArrayList;
 
 public class CoreController {
 
-    public enum ManStrategy {
-        DoNothing, Manually, Paper, Random, RunAwayGreedy;
-
-        public StrategyMan getStratgey(CoreController coreController) {
-            switch (this) {
-                case DoNothing:
-                    return new ManStrategyDoNothing(coreController, this);
-                case Paper:
-                    return new ManStrategyPaper(coreController, this);
-                case Random:
-                    return new ManStrategyRandom(coreController, this);
-                case Manually:
-                    return new ManStrategyManually(coreController, this);
-                case RunAwayGreedy:
-                    return new ManStrategyRunAwayGreedy(coreController, this);
-                default:
-                    throw new IllegalArgumentException("invalid input: " + this);
-            }
-        }
-    }
-
-    public enum LionStrategy {
-        DoNothing, Manually, Random, AggroGreedy;
-
-        public StrategyLion getStratgey(CoreController coreController) {
-            switch (this) {
-                case Random:
-                    return new LionStrategyRandom(coreController, this);
-                case Manually:
-                    return new LionStrategyManually(coreController, this);
-                case DoNothing:
-                    return new LionStrategyDoNothing(coreController, this);
-                case AggroGreedy:
-                    return new LionStrategyAggroGreedy(coreController, this);
-                default:
-                    throw new IllegalArgumentException("invalid input: " + this);
-            }
-        }
-    }
-
     private boolean editMode = true;
-
     private ArrayList<Lion> lions = new ArrayList<>();
     private ArrayList<Man> men = new ArrayList<>();
-
     private GraphController graph;
     private ShapeController shapeController;
 
@@ -71,12 +32,6 @@ public class CoreController {
     public ShapeController getShapeController() {
         return shapeController;
     }
-
-    /* ****************************
-     *
-     *   GRAPH API
-     *
-     * ****************************/
 
     public BigVertex createVertex(Point coordinate) {
         if (coordinate == null) {
@@ -102,6 +57,12 @@ public class CoreController {
         this.shapeController.relocateVertex(vertex, newCoordinate);
         return vertex;//TODO
     }
+
+    /* ****************************
+     *
+     *   GRAPH API
+     *
+     * ****************************/
 
     public BigVertex deleteVertex(Point vertexCoordinates) {
         if (vertexCoordinates == null) {
@@ -234,7 +195,6 @@ public class CoreController {
         return this.graph.getEdgeByVertices(vertex1, vertex2);
     }
 
-
     public void debugGraph() {
 
         System.out.println("##############");
@@ -274,12 +234,6 @@ public class CoreController {
         }
     }
 
-    /* ****************************
-     *
-     *   ENTITY API
-     *
-     * ****************************/
-
     private boolean isEntityOnEdge(Edge edge) {
         return isManOnEdge(edge) || isLionOnEdge(edge);
     }
@@ -287,6 +241,12 @@ public class CoreController {
     private boolean isEntityOnVertex(Point vertexCoordinate) {
         return isManOnVertex(vertexCoordinate) || isLionOnVertex(vertexCoordinate);
     }
+
+    /* ****************************
+     *
+     *   ENTITY API
+     *
+     * ****************************/
 
     public boolean setMan(Point vertexCoorinate) {
         if (vertexCoorinate == null) {
@@ -440,7 +400,6 @@ public class CoreController {
         return false;
     }
 
-
     public boolean removeMan(Point manCoordinate) {
         if (manCoordinate == null) {
             return false;
@@ -556,7 +515,6 @@ public class CoreController {
 
         lion.setStrategy(strategy.getStratgey(this));
     }
-
 
     public void setAllManStrategy(ManStrategy strategy) {
         if (strategy == null) {
@@ -691,7 +649,6 @@ public class CoreController {
         shapeController.updateLionRange(lion);
     }
 
-
     public void setAllLionRange(int range) {
         Lion.setDefaultRange(range);
         for (Lion lion : lions) {
@@ -719,17 +676,6 @@ public class CoreController {
         Man.removeDistance();
     }
 
-
-
-
-
-
-    /* ****************************
-     *
-     *   EDIT MODE
-     *
-     * ****************************/
-
     public boolean isEditMode() {
         return editMode;
     }
@@ -741,9 +687,11 @@ public class CoreController {
 
 
 
+
+
     /* ****************************
      *
-     *   GRAPH MANIPULATION
+     *   EDIT MODE
      *
      * ****************************/
 
@@ -754,7 +702,6 @@ public class CoreController {
         this.men = new ArrayList<>();
         this.lions = new ArrayList<>();
     }
-
 
     public void setDefaultGraph1() {
         setEmptyGraph();
@@ -823,6 +770,15 @@ public class CoreController {
         this.setLion(new Point(100, 140));
         this.setLion(new Point(50, 90));
     }
+
+
+
+
+    /* ****************************
+     *
+     *   GRAPH MANIPULATION
+     *
+     * ****************************/
 
     public void setDefaultGraph2() {
         setEmptyGraph();
@@ -928,13 +884,11 @@ public class CoreController {
         this.setDefaultGraph1();
     }
 
-
     public void setRandomGraph() {
         setEmptyGraph();
         // TODO: implement random graph algorithm
         this.setDefaultGraph1();
     }
-
 
     public void setGraphFromFile(File file) throws Exception {
         setEmptyGraph();
@@ -1015,13 +969,13 @@ public class CoreController {
             }
 
             for (Man man : men) {
-                bufferedWriter.write("M##" + man.getCoordinates().getX() + "##" + man.getCoordinates().getY()+"##"+man.getStrategy().getName());
+                bufferedWriter.write("M##" + man.getCoordinates().getX() + "##" + man.getCoordinates().getY() + "##" + man.getStrategy().getName());
                 bufferedWriter.newLine();
                 bufferedWriter.flush();
             }
 
             for (Lion lion : lions) {
-                bufferedWriter.write("L##" + lion.getCoordinates().getX() + "##" + lion.getCoordinates().getY() + "##" + lion.getRange()+"##"+lion.getStrategy().getName());
+                bufferedWriter.write("L##" + lion.getCoordinates().getX() + "##" + lion.getCoordinates().getY() + "##" + lion.getRange() + "##" + lion.getStrategy().getName());
                 bufferedWriter.newLine();
                 bufferedWriter.flush();
             }
@@ -1080,6 +1034,46 @@ public class CoreController {
                         removeMan(man.getCoordinates());
                     }
                 }
+            }
+        }
+    }
+
+    public enum ManStrategy {
+        DoNothing, Manually, Paper, Random, RunAwayGreedy;
+
+        public StrategyMan getStratgey(CoreController coreController) {
+            switch (this) {
+                case DoNothing:
+                    return new ManStrategyDoNothing(coreController, this);
+                case Paper:
+                    return new ManStrategyPaper(coreController, this);
+                case Random:
+                    return new ManStrategyRandom(coreController, this);
+                case Manually:
+                    return new ManStrategyManually(coreController, this);
+                case RunAwayGreedy:
+                    return new ManStrategyRunAwayGreedy(coreController, this);
+                default:
+                    throw new IllegalArgumentException("invalid input: " + this);
+            }
+        }
+    }
+
+    public enum LionStrategy {
+        DoNothing, Manually, Random, AggroGreedy;
+
+        public StrategyLion getStratgey(CoreController coreController) {
+            switch (this) {
+                case Random:
+                    return new LionStrategyRandom(coreController, this);
+                case Manually:
+                    return new LionStrategyManually(coreController, this);
+                case DoNothing:
+                    return new LionStrategyDoNothing(coreController, this);
+                case AggroGreedy:
+                    return new LionStrategyAggroGreedy(coreController, this);
+                default:
+                    throw new IllegalArgumentException("invalid input: " + this);
             }
         }
     }

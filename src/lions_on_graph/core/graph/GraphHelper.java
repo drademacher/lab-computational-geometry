@@ -178,7 +178,7 @@ public class GraphHelper {
 
         ArrayList<Vertex> result = new ArrayList<>();
 
-        if(vertex1.equals(vertex2)){
+        if (vertex1.equals(vertex2)) {
             result.add(vertex2);
             return result;
         }

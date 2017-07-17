@@ -16,12 +16,8 @@ public class CoreController {
 
     private Plane plane = new Plane();
 
-    public void setEditMode(boolean editMode) {
-        this.editMode = editMode;
-    }
-
     public void setEmptyGraph() {
-         plane = new Plane();
+        plane = new Plane();
     }
 
     public void setDefaultGraph1() {
@@ -83,6 +79,10 @@ public class CoreController {
 
     public boolean isEditMode() {
         return editMode;
+    }
+
+    public void setEditMode(boolean editMode) {
+        this.editMode = editMode;
     }
 
     public ArrayList<Point> getMenWithManualInput() {

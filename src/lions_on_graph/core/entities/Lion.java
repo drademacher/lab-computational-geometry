@@ -28,6 +28,10 @@ public class Lion extends Entity {
         Lion.defaultRange = defaultRange;
     }
 
+    public static int getDefaultLionRange() {
+        return Lion.defaultRange;
+    }
+
     @Override
     protected Vertex calculateNextPosition() {
         this.nextPosition = strategy.getNextPosition();
@@ -40,10 +44,6 @@ public class Lion extends Entity {
             this.nextPosition = nextPosition;
             this.didManualStep = true;
         }
-    }
-
-    public static int getDefaultLionRange() {
-        return Lion.defaultRange;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package lions_in_plane.core;
 
+import lions_in_plane.core.plane.Plane;
 import util.Point;
 
 import java.io.File;
@@ -13,24 +14,28 @@ public class CoreController {
     private double defaultLionsSpeed = 1;
     private double defaultLionsRange = 0;
 
+    private Plane plane = new Plane();
 
     public void setEditMode(boolean editMode) {
         this.editMode = editMode;
     }
 
     public void setEmptyGraph() {
-        // TODO: IMPLEMENT THIS
+         plane = new Plane();
     }
 
     public void setDefaultGraph1() {
+        plane = new Plane();
         // TODO: IMPLEMENT THIS
     }
 
     public void setDefaultGraph2() {
+        plane = new Plane();
         // TODO: IMPLEMENT THIS
     }
 
     public void setDefaultGraph3() {
+        plane = new Plane();
         // TODO: IMPLEMENT THIS
     }
 
@@ -91,7 +96,7 @@ public class CoreController {
     }
 
     public void createMan(Point coordinates) {
-        // TODO: IMPLEMENT THIS
+        plane.addMan(coordinates, defaultMenSpeed);
     }
 
     public void createLion(Point coordinates) {
@@ -99,18 +104,18 @@ public class CoreController {
     }
 
     public void removeMan(Point coordinates) {
-        // TODO: IMPLEMENT THIS
+        plane.removeMan(coordinates);
     }
 
     public void removeLion(Point coordinates) {
         // TODO: IMPLEMENT THIS
     }
 
-    public void relocateMan(Point coordinates) {
+    public void relocateMan(Point from, Point to) {
         // TODO: IMPLEMENT THIS
     }
 
-    public void relocateLion(Point coordinates) {
+    public void relocateLion(Point from, Point to) {
         // TODO: IMPLEMENT THIS
     }
 

@@ -11,6 +11,9 @@ import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import lions_in_plane.core.CoreController;
+import lions_in_plane.visualization.Lion;
+import lions_in_plane.visualization.Man;
+import lions_in_plane.visualization.Shape;
 import lions_in_plane.visualization.VisualizedCoreController;
 import util.ContextMenuHolder;
 import util.ZoomScrollPane;
@@ -327,7 +330,7 @@ class Controller {
             addManItem.setOnAction(event2 -> coreController.createMan(zoomScrollPane.getLocalCoordinates(event1.getX(), event1.getY())));
 
             MenuItem addLionItem = new MenuItem("Add Lion");
-            addManItem.setOnAction(event2 -> coreController.createLion(zoomScrollPane.getLocalCoordinates(event1.getX(), event1.getY())));
+            addLionItem.setOnAction(event2 -> coreController.createLion(zoomScrollPane.getLocalCoordinates(event1.getX(), event1.getY())));
 
             MenuItem closeItem = new MenuItem("Close");
 
@@ -373,8 +376,15 @@ class Controller {
     private void initZoomScrollPane() {
         this.coreController.setEmptyGraph();
 
+        Shape.setCoreController(coreController);
+        Shape.setPane(zoomScrollPane);
+
         zoomScrollPane.getNodesHolder().clear();
         zoomScrollPane.getNodesHolder().addAll(lionRangeShapes, entityShapes, convexHullShapes, completePathShapes);
+
+
+        Man.setGroup(entityShapes);
+        Lion.setGroup(entityShapes);
 //
 //        ShapedBigVertex.setMainPane(zoomScrollPane);
 //        ShapedBigVertex.setShapeGroup(vertexShapes);

@@ -3,7 +3,7 @@ package lions_in_plane.core.entities;
 
 import util.Point;
 
-public class Entity {
+public abstract class Entity {
     private Point position;
     private double speed;
 

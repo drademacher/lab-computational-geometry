@@ -1,23 +1,18 @@
 package lions_in_plane.visualization;
 
 
-import javafx.scene.Group;
+import lions_in_plane.core.CoreController;
 import util.ZoomScrollPane;
 
 public abstract class Shape {
-    protected static VisualizedCoreController coreController;
+    protected static CoreController coreController;
     protected static ZoomScrollPane pane;
-    private static Group group = new Group();
 
-    public static void setCoreController(VisualizedCoreController coreController) {
+    public static void setCoreController(CoreController coreController) {
         Shape.coreController = coreController;
     }
 
     public static void setPane(ZoomScrollPane pane) {
         Shape.pane = pane;
-    }
-
-    public static void setGroup(Group group) {
-        Shape.group = group;
     }
 }

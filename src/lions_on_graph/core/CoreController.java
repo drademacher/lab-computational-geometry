@@ -983,9 +983,9 @@ public class CoreController {
     }
 
     public void saveGraphToFile(File file) {
-        ArrayList<Point> bigVertexCoorindates = new ArrayList<>();
+        ArrayList<Point> bigVertexCoordinates = new ArrayList<>();
         for (BigVertex vertex : this.graph.getBigVertices()) {
-            bigVertexCoorindates.add(vertex.getCoordinates());
+            bigVertexCoordinates.add(vertex.getCoordinates());
         }
         ArrayList<Point[]> edgesCoordinates = new ArrayList<>();
         for (Edge edge : this.graph.getEdges()) {

@@ -100,14 +100,14 @@ class Controller {
     private void initEditButtons() {
         setGraphButton = new MenuButton("Set Graph");
         MenuItem emptyMapMenuItem = new MenuItem("Empty Graph"),
-                graph1MenuItem = new MenuItem("Paper Graph, 2 Lions fail"),
+                graph1MenuItem = new MenuItem("Paper Graph, 3 Lions catch man"),
                 graph2MenuItem = new MenuItem("Paper Graph, Paper Strategy"),
                 graph3MenuItem = new MenuItem("Test Graph"),
                 openMapMenuItem = new MenuItem("Open"),
                 saveMapMenuItem = new MenuItem("Save");
 
 
-        setGraphButton.getItems().addAll(emptyMapMenuItem, graph1MenuItem, graph2MenuItem, graph3MenuItem, openMapMenuItem, saveMapMenuItem);
+        setGraphButton.getItems().addAll(emptyMapMenuItem, new SeparatorMenuItem(), graph2MenuItem, graph1MenuItem, graph3MenuItem, new SeparatorMenuItem(), openMapMenuItem, saveMapMenuItem);
 
         buttonBar.getChildren().addAll(modeToggleButton, setGraphButton, setParameterButton, setViewMenu);
 

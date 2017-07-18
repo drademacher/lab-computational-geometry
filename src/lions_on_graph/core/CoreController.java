@@ -15,6 +15,8 @@ import java.util.ArrayList;
 
 public class CoreController {
 
+    public static final String API_VERSION = "v0.1";
+
     public enum ManStrategy {
         DoNothing, Manually, Paper, Random, RunAwayGreedy;
 
@@ -136,7 +138,7 @@ public class CoreController {
     }
 
     public Edge createEdge(Point vertex1Coordinates, Point vertex2Coordinates) {
-        return createEdge(vertex1Coordinates, vertex2Coordinates, this.graph.getDefaultEdgeWeight());
+        return createEdge(vertex1Coordinates, vertex2Coordinates, GraphController.getDefaultEdgeWeight());
     }
 
     public Edge createEdge(Point vertex1Coordinates, Point vertex2Coordinates, int weight) {
@@ -183,7 +185,7 @@ public class CoreController {
     }
 
     public Edge changeEdgeWeight(Point vertex1Coordinates, Point vertex2Coordinates) {
-        return changeEdgeWeight(vertex1Coordinates, vertex2Coordinates, this.graph.getDefaultEdgeWeight());
+        return changeEdgeWeight(vertex1Coordinates, vertex2Coordinates, GraphController.getDefaultEdgeWeight());
     }
 
     public Edge changeEdgeWeight(Point vertex1Coordinates, Point vertex2Coordinates, int weight) {
@@ -264,11 +266,11 @@ public class CoreController {
     }
 
     public int getDefaultEdgeWeight() {
-        return this.graph.getDefaultEdgeWeight();
+        return GraphController.getDefaultEdgeWeight();
     }
 
     public void setAllEdgeWeight(int weight) {
-        this.graph.setDefaultEdgeWeight(weight);
+        GraphController.setDefaultEdgeWeight(weight);
         for (Edge edge : this.graph.getEdges()) {
             changeEdgeWeight(edge.getStartCoordinates(), edge.getEndCoordinates());
         }
@@ -720,14 +722,14 @@ public class CoreController {
     }
 
     public int getExactManDistance() {
-        if(Man.keepDistanceExact()){
+        if (Man.keepDistanceExact()) {
             return Man.getDistance();
         }
         return 0;
     }
 
     public int getMinimumManDistance() {
-        if(Man.keepDistanceExact()){
+        if (Man.keepDistanceExact()) {
             return 0;
         }
         return Man.getDistance();
@@ -960,23 +962,37 @@ public class CoreController {
             BufferedReader br = new BufferedReader(new FileReader(file));
 
             String currentLine;
+
+            //config line
+            currentLine = br.readLine();
+            if (currentLine == null) {
+                throw new Error("wrong file input version: "+CoreController.API_VERSION+" expected");
+            }
+            String[] lineElements = currentLine.split("##");
+            if (!lineElements[2].equals(CoreController.API_VERSION)) {
+                throw new Error("wrong file  input version: "+CoreController.API_VERSION+" expected");
+            }
+
+            // valid version, read file
             for (int y = 0; (currentLine = br.readLine()) != null; y++) { //Read in MapRow
 //                System.out.println(currentLine);
 
-                String[] lineElements = currentLine.split("##");
+                lineElements = currentLine.split("##");
 
                 switch (lineElements[0]) {
                     case "S":
                         Man.setDistance(Integer.parseInt(lineElements[1]));
                         Man.setKeepDistanceExact(Boolean.parseBoolean(lineElements[2]));
                         Lion.setDefaultRange(Integer.parseInt((lineElements[3])));
+                        GraphController.setDefaultEdgeWeight(Integer.parseInt((lineElements[4])));
                         break;
                     case "V":
                         this.createVertex(new Point(Double.parseDouble(lineElements[1]), Double.parseDouble(lineElements[2])));
                         break;
                     case "E":
                         this.createEdge(new Point(Double.parseDouble(lineElements[1]), Double.parseDouble(lineElements[2])),
-                                new Point(Double.parseDouble(lineElements[3]), Double.parseDouble(lineElements[4])));
+                                new Point(Double.parseDouble(lineElements[3]), Double.parseDouble(lineElements[4])),
+                                Integer.parseInt((lineElements[5])));
                         break;
                     case "M":
                         this.setMan(new Point(Double.parseDouble(lineElements[1]), Double.parseDouble(lineElements[2])));
@@ -1016,7 +1032,11 @@ public class CoreController {
 
             bufferedWriter = new BufferedWriter(new FileWriter(file));
 
-            bufferedWriter.write("S##" + Man.getDistance() + "##" + Man.keepDistanceExact() + "##" + Lion.getDefaultLionRange());
+            bufferedWriter.write("C##>>>>>Configuration for LionsOnGraph Applet<<<<<##"+ CoreController.API_VERSION);
+            bufferedWriter.newLine();
+            bufferedWriter.flush();
+
+            bufferedWriter.write("S##" + Man.getDistance() + "##" + Man.keepDistanceExact() + "##" + Lion.getDefaultLionRange() + "##" + GraphController.getDefaultEdgeWeight());
             bufferedWriter.newLine();
             bufferedWriter.flush();
 
@@ -1027,19 +1047,19 @@ public class CoreController {
             }
 
             for (Edge edge : this.graph.getEdges()) {
-                bufferedWriter.write("E##" + edge.getStartCoordinates().getX() + "##" + edge.getStartCoordinates().getY() + "##" + edge.getEndCoordinates().getX() + "##" + edge.getEndCoordinates().getY());
+                bufferedWriter.write("E##" + edge.getStartCoordinates().getX() + "##" + edge.getStartCoordinates().getY() + "##" + edge.getEndCoordinates().getX() + "##" + edge.getEndCoordinates().getY() + "##" + edge.getEdgeWeight());
                 bufferedWriter.newLine();
                 bufferedWriter.flush();
             }
 
             for (Man man : men) {
-                bufferedWriter.write("M##" + man.getCoordinates().getX() + "##" + man.getCoordinates().getY()+"##"+man.getStrategy().getName());
+                bufferedWriter.write("M##" + man.getCoordinates().getX() + "##" + man.getCoordinates().getY() + "##" + man.getStrategy().getName());
                 bufferedWriter.newLine();
                 bufferedWriter.flush();
             }
 
             for (Lion lion : lions) {
-                bufferedWriter.write("L##" + lion.getCoordinates().getX() + "##" + lion.getCoordinates().getY() + "##" + lion.getRange()+"##"+lion.getStrategy().getName());
+                bufferedWriter.write("L##" + lion.getCoordinates().getX() + "##" + lion.getCoordinates().getY() + "##" + lion.getRange() + "##" + lion.getStrategy().getName());
                 bufferedWriter.newLine();
                 bufferedWriter.flush();
             }

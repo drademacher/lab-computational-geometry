@@ -382,11 +382,11 @@ public class GraphController {
         return smallVertices;
     }
 
-    public int getDefaultEdgeWeight() {
+    public static int getDefaultEdgeWeight() {
         return GraphController.defaultEdgeWeight;
     }
 
-    public void setDefaultEdgeWeight(int defaultEdgeWeight) {
+    public static void setDefaultEdgeWeight(int defaultEdgeWeight) {
         if (defaultEdgeWeight < 0) {
             return;
         }

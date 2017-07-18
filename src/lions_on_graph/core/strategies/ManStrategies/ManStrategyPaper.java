@@ -8,9 +8,6 @@ import lions_on_graph.core.graph.Vertex;
 import lions_on_graph.core.strategies.StrategyMan;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.Queue;
 
 /**
  * Created by Jens on 11.07.2017.
@@ -60,7 +57,7 @@ public class ManStrategyPaper extends StrategyMan {
                     }
                     //case 2: big vertex -> two more edges
                     else {
-                        if(helper.BFSToLion(currentPosition, vertex )> 2) {
+                        if (helper.BFSToLion(currentPosition, vertex) > 2) {
 
 //                        System.out.println("case 2");
 
@@ -137,7 +134,7 @@ public class ManStrategyPaper extends StrategyMan {
             if (distance < d_near) {
                 d_far = d_near;
                 d_near = distance;
-            } else if(distance < d_far){
+            } else if (distance < d_far) {
                 d_far = distance;
             }
         }

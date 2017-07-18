@@ -100,14 +100,14 @@ class Controller {
     private void initEditButtons() {
         setGraphButton = new MenuButton("Set Graph");
         MenuItem emptyMapMenuItem = new MenuItem("Empty Graph"),
-                graph1MenuItem = new MenuItem("Paper Graph, 2 Lions fail"),
+                graph1MenuItem = new MenuItem("Paper Graph, 3 Lions catch man"),
                 graph2MenuItem = new MenuItem("Paper Graph, Paper Strategy"),
                 graph3MenuItem = new MenuItem("Test Graph"),
                 openMapMenuItem = new MenuItem("Open"),
                 saveMapMenuItem = new MenuItem("Save");
 
 
-        setGraphButton.getItems().addAll(emptyMapMenuItem, graph1MenuItem, graph2MenuItem, graph3MenuItem, openMapMenuItem, saveMapMenuItem);
+        setGraphButton.getItems().addAll(emptyMapMenuItem, new SeparatorMenuItem(), graph2MenuItem, graph1MenuItem, graph3MenuItem, new SeparatorMenuItem(), openMapMenuItem, saveMapMenuItem);
 
         buttonBar.getChildren().addAll(modeToggleButton, setGraphButton, setParameterButton, setViewMenu);
 
@@ -137,9 +137,9 @@ class Controller {
 
         openMapMenuItem.setOnAction(event -> {
             FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Open Resource File");
+            fileChooser.setTitle("Open Resource Configuration");
             fileChooser.getExtensionFilters().addAll(
-                    new FileChooser.ExtensionFilter("Map Files", "*.map"),
+                    new FileChooser.ExtensionFilter("Config Files", "*.config"),
                     new FileChooser.ExtensionFilter("All Files", "*.*"));
             File selectedFile = fileChooser.showOpenDialog(this.stage);
             if (selectedFile != null) {
@@ -153,9 +153,9 @@ class Controller {
 
         saveMapMenuItem.setOnAction(event -> {
             FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Save Current Map");
+            fileChooser.setTitle("Save Current Configuration");
             fileChooser.getExtensionFilters().addAll(
-                    new FileChooser.ExtensionFilter("Map Files", "*.map"),
+                    new FileChooser.ExtensionFilter("Config Files", "*.config"),
                     new FileChooser.ExtensionFilter("All Files", "*.*"));
             File selectedFile = fileChooser.showSaveDialog(this.stage);
             if (selectedFile != null) {

@@ -11,9 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import static lions_on_graph.visualization.ShapeConstants.COLOR_CHOICEPOINT;
-import static lions_on_graph.visualization.ShapeConstants.COLOR_LION;
-import static lions_on_graph.visualization.ShapeConstants.COLOR_MAN;
+import static lions_on_graph.visualization.ShapeConstants.*;
 
 public class ShapeController {
 

@@ -26,7 +26,6 @@ public class ShapedChoicePoint {
 
         shape.setOnMouseClicked(event -> {
             entity.setNextPosition(coreController.getVertexByCoordinate(choice));
-            System.out.println("check");
             coreController.getShapeController().updateStepPreviewsAndChoicePoints();
         });
     }

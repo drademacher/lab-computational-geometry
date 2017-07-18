@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 public class CoreController {
 
-    public static final String API_VERSION = "v0.1";
+    public static final String API_VERSION = "v0.2";
 
 
     private boolean editMode = true;
@@ -944,8 +944,10 @@ public class CoreController {
                     case "S":
                         Man.setDistance(Integer.parseInt(lineElements[1]));
                         Man.setKeepDistanceExact(Boolean.parseBoolean(lineElements[2]));
-                        Lion.setDefaultRange(Integer.parseInt((lineElements[3])));
-                        GraphController.setDefaultEdgeWeight(Integer.parseInt((lineElements[4])));
+                        Man.setDefaultStrategy(ManStrategy.valueOf(lineElements[3]));
+                        Lion.setDefaultRange(Integer.parseInt((lineElements[4])));
+                        Lion.setDefaultStrategy(LionStrategy.valueOf(lineElements[5]));
+                        GraphController.setDefaultEdgeWeight(Integer.parseInt((lineElements[6])));
                         break;
                     case "V":
                         this.createVertex(new Point(Double.parseDouble(lineElements[1]), Double.parseDouble(lineElements[2])));
@@ -997,7 +999,7 @@ public class CoreController {
             bufferedWriter.newLine();
             bufferedWriter.flush();
 
-            bufferedWriter.write("S##" + Man.getDistance() + "##" + Man.keepDistanceExact() + "##" + Lion.getDefaultLionRange() + "##" + GraphController.getDefaultEdgeWeight());
+            bufferedWriter.write("S##" + Man.getDistance() + "##" + Man.keepDistanceExact() + "##" + Man.getDefaultStrategy().name() + "##" + Lion.getDefaultLionRange() + "##" + Lion.getDefaultStrategy().name() + "##" + GraphController.getDefaultEdgeWeight());
             bufferedWriter.newLine();
             bufferedWriter.flush();
 

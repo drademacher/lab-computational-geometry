@@ -259,7 +259,7 @@ public class CoreController {
 
         Man man = new Man(vertex, this);
         boolean bool = men.add(man);
-        setManStrategy(man.getCoordinates(), ManStrategy.RunAwayGreedy);
+        setManStrategy(man.getCoordinates(), Man.getDefaultStrategy());
         shapeController.createMan(man);
         this.shapeController.updateStepPreviewsAndChoicePoints();
         return bool;
@@ -324,7 +324,7 @@ public class CoreController {
 
         Lion lion = new Lion(vertex, this);
         boolean bool = lions.add(lion);
-        setLionStrategy(lion.getCoordinates(), LionStrategy.AggroGreedy);
+        setLionStrategy(lion.getCoordinates(), Lion.getDefaultStrategy());
         shapeController.createLion(lion);
         this.shapeController.updateStepPreviewsAndChoicePoints();
         return bool;
@@ -520,6 +520,7 @@ public class CoreController {
         if (strategy == null) {
             return;
         }
+        Man.setDefaultStrategy(strategy);
         for (Man man : men) {
             setManStrategy(man.getCoordinates(), strategy);
         }
@@ -529,6 +530,7 @@ public class CoreController {
         if (strategy == null) {
             return;
         }
+        Lion.setDefaultStrategy(strategy);
         for (Lion lion : lions) {
             setLionStrategy(lion.getCoordinates(), strategy);
         }

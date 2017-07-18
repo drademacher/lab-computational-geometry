@@ -42,6 +42,10 @@ public abstract class Entity {
         return nextPosition;
     }
 
+    public Vertex getCalculatedPosition() {
+         return nextPosition;
+    }
+
     public abstract void setNextPosition(Vertex nextposition);
 
     public Point getCoordinates() {

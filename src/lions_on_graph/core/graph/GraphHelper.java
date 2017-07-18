@@ -24,6 +24,9 @@ public class GraphHelper {
     }
 
 
+    public int BFSToMen(Vertex startVertex) {
+        return BFSToMen(startVertex, null);
+    }
     public int BFSToMen(Vertex startVertex, Vertex directionVertex) {
 
         Map<Vertex, Integer> map = new HashMap<>();
@@ -31,11 +34,16 @@ public class GraphHelper {
         Queue<Vertex> queue = new LinkedList<>();
         Vertex current = null;
 
-        map.put(directionVertex, 1);
-
         set.add(startVertex);
-        set.add(directionVertex);
-        queue.add(directionVertex);
+
+        if(directionVertex != null) {
+            map.put(directionVertex, 1);
+            set.add(directionVertex);
+            queue.add(directionVertex);
+        } else{
+            map.put(startVertex, 0);
+            queue.add(startVertex);
+        }
 
         while (!queue.isEmpty()) {
             current = queue.poll();
@@ -141,7 +149,7 @@ public class GraphHelper {
 
     public int getDistanceBetween(Vertex vertex1, Vertex vertex2) {
 
-        if(vertex1 == null || vertex2 == null){
+        if (vertex1 == null || vertex2 == null) {
             throw new IllegalArgumentException();
         }
 
@@ -223,6 +231,40 @@ public class GraphHelper {
             }
         }
 
+        return result;
+    }
+
+    public ArrayList<Vertex> getNeighborBigVertices(Vertex vertex) {
+        ArrayList<Vertex> result = new ArrayList<>();
+
+        Set<Vertex> set = new HashSet<>();
+        Queue<Vertex> queue = new LinkedList<>();
+        Vertex current = null;
+
+
+        set.add(vertex);
+        queue.add(vertex);
+
+
+        while (!queue.isEmpty()) {
+            current = queue.poll();
+
+            // check break condition
+            if (!vertex.equals(current) && coreController.getBigVertexByCoordinate(current.getCoordinates()) != null) {
+                result.add(current);
+            } else {
+
+                for (Connection connection : current.getConnections()) {
+                    Vertex nextVertex = connection.getNeighbor(current);
+
+                    if (!set.contains(nextVertex)) {
+                        set.add(nextVertex);
+
+                        queue.add(nextVertex);
+                    }
+                }
+            }
+        }
         return result;
     }
 

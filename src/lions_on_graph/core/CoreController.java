@@ -3,10 +3,7 @@ package lions_on_graph.core;
 import lions_on_graph.core.entities.Lion;
 import lions_on_graph.core.entities.Man;
 import lions_on_graph.core.graph.*;
-import lions_on_graph.core.strategies.LionStrategies.LionStrategyAggroGreedy;
-import lions_on_graph.core.strategies.LionStrategies.LionStrategyDoNothing;
-import lions_on_graph.core.strategies.LionStrategies.LionStrategyManually;
-import lions_on_graph.core.strategies.LionStrategies.LionStrategyRandom;
+import lions_on_graph.core.strategies.LionStrategies.*;
 import lions_on_graph.core.strategies.ManStrategies.*;
 import lions_on_graph.core.strategies.StrategyLion;
 import lions_on_graph.core.strategies.StrategyMan;
@@ -787,9 +784,15 @@ public class CoreController {
         this.createEdge(new Point(90, 100), new Point(120, 70));
 
         this.setMan(new Point(50, 20));
-        this.setLion(new Point(190, 20));
-        this.setLion(new Point(100, 140));
-        this.setLion(new Point(50, 90));
+        Point lion1 = new Point(190, 20);
+        Point lion2 = new Point(100, 140);
+        Point lion3 = new Point(50, 90);
+        this.setLion(lion1);
+        this.setLionStrategy(lion1, LionStrategy.Clever);
+        this.setLion(lion2);
+        this.setLionStrategy(lion2, LionStrategy.Clever);
+        this.setLion(lion3);
+        this.setLionStrategy(lion3, LionStrategy.Clever);
     }
 
 
@@ -1099,7 +1102,7 @@ public class CoreController {
     }
 
     public enum LionStrategy {
-        DoNothing, Manually, Random, AggroGreedy;
+        DoNothing, Manually, Random, AggroGreedy, Clever;
 
         public StrategyLion getStrategy(CoreController coreController) {
             switch (this) {
@@ -1111,6 +1114,8 @@ public class CoreController {
                     return new LionStrategyDoNothing(coreController, this);
                 case AggroGreedy:
                     return new LionStrategyAggroGreedy(coreController, this);
+                case Clever:
+                    return new LionStrategyClever(coreController, this);
                 default:
                     throw new IllegalArgumentException("invalid input: " + this);
             }

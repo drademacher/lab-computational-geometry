@@ -52,9 +52,10 @@ public class ShapedLion implements ShapedEntity {
             Menu strategyMenu = new Menu("Set Strategy");
             MenuItem waitStrategyButton = new MenuItem("Wait");
             MenuItem greedyStrategyButton = new MenuItem("Greedy");
+            MenuItem cleverStrategyButton = new MenuItem("Clever");
             MenuItem randomStrategyButton = new MenuItem("Random");
             MenuItem manualStrategyButton = new MenuItem("Manual");
-            strategyMenu.getItems().addAll(waitStrategyButton, greedyStrategyButton, randomStrategyButton, manualStrategyButton);
+            strategyMenu.getItems().addAll(waitStrategyButton, greedyStrategyButton, cleverStrategyButton, randomStrategyButton, manualStrategyButton);
 
 
             Menu edgeMenu = new Menu("Lion Range");
@@ -113,6 +114,10 @@ public class ShapedLion implements ShapedEntity {
 
             greedyStrategyButton.setOnAction(event2 -> {
                 coreController.setLionStrategy(coordinates, CoreController.LionStrategy.AggroGreedy);
+            });
+
+            cleverStrategyButton.setOnAction(event2 -> {
+                coreController.setLionStrategy(coordinates, CoreController.LionStrategy.Clever);
             });
 
             randomStrategyButton.setOnAction(event2 -> {

@@ -5,10 +5,12 @@ import lions_on_graph.core.graph.Vertex;
 import lions_on_graph.core.strategies.ManStrategies.ManStrategyManually;
 import lions_on_graph.core.strategies.StrategyMan;
 
+
 public class Man extends Entity {
 
     private static boolean keepDistanceExact = false;
     private static int distance = 0;
+    private static CoreController.ManStrategy defaultStrategy = CoreController.ManStrategy.Paper;
     private StrategyMan strategy;
 
 
@@ -35,6 +37,14 @@ public class Man extends Entity {
 
     public static boolean keepDistanceExact() {
         return keepDistanceExact;
+    }
+
+    public static void setDefaultStrategy(CoreController.ManStrategy defaultStrategy){
+           Man.defaultStrategy = defaultStrategy;
+    }
+
+    public static CoreController.ManStrategy getDefaultStrategy(){
+        return Man.defaultStrategy;
     }
 
     @Override

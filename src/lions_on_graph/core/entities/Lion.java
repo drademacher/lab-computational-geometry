@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 public class Lion extends Entity {
     private static int defaultRange = 0;
+    private static CoreController.LionStrategy defaultStrategy = CoreController.LionStrategy.Clever;
     private int range = Lion.defaultRange;
     private StrategyLion strategy;
 
@@ -30,6 +31,14 @@ public class Lion extends Entity {
 
     public static int getDefaultLionRange() {
         return Lion.defaultRange;
+    }
+
+    public static void setDefaultStrategy(CoreController.LionStrategy defaultStrategy){
+        Lion.defaultStrategy = defaultStrategy;
+    }
+
+    public static CoreController.LionStrategy getDefaultStrategy(){
+        return Lion.defaultStrategy;
     }
 
     @Override

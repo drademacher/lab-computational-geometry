@@ -3,10 +3,7 @@ package lions_on_graph.core;
 import lions_on_graph.core.entities.Lion;
 import lions_on_graph.core.entities.Man;
 import lions_on_graph.core.graph.*;
-import lions_on_graph.core.strategies.LionStrategies.LionStrategyAggroGreedy;
-import lions_on_graph.core.strategies.LionStrategies.LionStrategyDoNothing;
-import lions_on_graph.core.strategies.LionStrategies.LionStrategyManually;
-import lions_on_graph.core.strategies.LionStrategies.LionStrategyRandom;
+import lions_on_graph.core.strategies.LionStrategies.*;
 import lions_on_graph.core.strategies.ManStrategies.*;
 import lions_on_graph.core.strategies.StrategyLion;
 import lions_on_graph.core.strategies.StrategyMan;
@@ -18,7 +15,7 @@ import java.util.ArrayList;
 
 public class CoreController {
 
-    public static final String API_VERSION = "v0.1";
+    public static final String API_VERSION = "v0.2";
 
 
     private boolean editMode = true;
@@ -262,7 +259,7 @@ public class CoreController {
 
         Man man = new Man(vertex, this);
         boolean bool = men.add(man);
-        setManStrategy(man.getCoordinates(), ManStrategy.RunAwayGreedy);
+        setManStrategy(man.getCoordinates(), Man.getDefaultStrategy());
         shapeController.createMan(man);
         this.shapeController.updateStepPreviewsAndChoicePoints();
         return bool;
@@ -327,7 +324,7 @@ public class CoreController {
 
         Lion lion = new Lion(vertex, this);
         boolean bool = lions.add(lion);
-        setLionStrategy(lion.getCoordinates(), LionStrategy.AggroGreedy);
+        setLionStrategy(lion.getCoordinates(), Lion.getDefaultStrategy());
         shapeController.createLion(lion);
         this.shapeController.updateStepPreviewsAndChoicePoints();
         return bool;
@@ -523,6 +520,7 @@ public class CoreController {
         if (strategy == null) {
             return;
         }
+        Man.setDefaultStrategy(strategy);
         for (Man man : men) {
             setManStrategy(man.getCoordinates(), strategy);
         }
@@ -532,6 +530,7 @@ public class CoreController {
         if (strategy == null) {
             return;
         }
+        Lion.setDefaultStrategy(strategy);
         for (Lion lion : lions) {
             setLionStrategy(lion.getCoordinates(), strategy);
         }
@@ -786,10 +785,17 @@ public class CoreController {
         this.createEdge(new Point(100, 140), new Point(90, 100));
         this.createEdge(new Point(90, 100), new Point(120, 70));
 
-        this.setMan(new Point(50, 20));
-        this.setLion(new Point(190, 20));
-        this.setLion(new Point(100, 140));
-        this.setLion(new Point(50, 90));
+        this.setMan(this.graph.getSmallVertices().get(0).getCoordinates());
+        this.setManStrategy(this.graph.getSmallVertices().get(0).getCoordinates(), ManStrategy.Paper);
+        Point lion1 = new Point(190, 20);
+        Point lion2 = new Point(100, 140);
+        Point lion3 = new Point(50, 90);
+        this.setLion(lion1);
+        this.setLionStrategy(lion1, LionStrategy.Clever);
+        this.setLion(lion2);
+        this.setLionStrategy(lion2, LionStrategy.Clever);
+        this.setLion(lion3);
+        this.setLionStrategy(lion3, LionStrategy.Clever);
     }
 
 
@@ -938,8 +944,10 @@ public class CoreController {
                     case "S":
                         Man.setDistance(Integer.parseInt(lineElements[1]));
                         Man.setKeepDistanceExact(Boolean.parseBoolean(lineElements[2]));
-                        Lion.setDefaultRange(Integer.parseInt((lineElements[3])));
-                        GraphController.setDefaultEdgeWeight(Integer.parseInt((lineElements[4])));
+                        Man.setDefaultStrategy(ManStrategy.valueOf(lineElements[3]));
+                        Lion.setDefaultRange(Integer.parseInt((lineElements[4])));
+                        Lion.setDefaultStrategy(LionStrategy.valueOf(lineElements[5]));
+                        GraphController.setDefaultEdgeWeight(Integer.parseInt((lineElements[6])));
                         break;
                     case "V":
                         this.createVertex(new Point(Double.parseDouble(lineElements[1]), Double.parseDouble(lineElements[2])));
@@ -991,7 +999,7 @@ public class CoreController {
             bufferedWriter.newLine();
             bufferedWriter.flush();
 
-            bufferedWriter.write("S##" + Man.getDistance() + "##" + Man.keepDistanceExact() + "##" + Lion.getDefaultLionRange() + "##" + GraphController.getDefaultEdgeWeight());
+            bufferedWriter.write("S##" + Man.getDistance() + "##" + Man.keepDistanceExact() + "##" + Man.getDefaultStrategy().name() + "##" + Lion.getDefaultLionRange() + "##" + Lion.getDefaultStrategy().name() + "##" + GraphController.getDefaultEdgeWeight());
             bufferedWriter.newLine();
             bufferedWriter.flush();
 
@@ -1099,7 +1107,7 @@ public class CoreController {
     }
 
     public enum LionStrategy {
-        DoNothing, Manually, Random, AggroGreedy;
+        DoNothing, Manually, Random, AggroGreedy, Clever;
 
         public StrategyLion getStrategy(CoreController coreController) {
             switch (this) {
@@ -1111,6 +1119,8 @@ public class CoreController {
                     return new LionStrategyDoNothing(coreController, this);
                 case AggroGreedy:
                     return new LionStrategyAggroGreedy(coreController, this);
+                case Clever:
+                    return new LionStrategyClever(coreController, this);
                 default:
                     throw new IllegalArgumentException("invalid input: " + this);
             }

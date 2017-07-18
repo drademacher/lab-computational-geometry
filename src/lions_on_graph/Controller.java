@@ -145,6 +145,7 @@ class Controller {
             if (selectedFile != null) {
                 try {
                     coreController.setGraphFromFile(selectedFile);
+                    this.zoomScrollPane.autoZoom();
                 } catch (Exception ignored) {
 
                 }

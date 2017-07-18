@@ -783,7 +783,8 @@ public class CoreController {
         this.createEdge(new Point(100, 140), new Point(90, 100));
         this.createEdge(new Point(90, 100), new Point(120, 70));
 
-        this.setMan(new Point(50, 20));
+        this.setMan(this.graph.getSmallVertices().get(0).getCoordinates());
+        this.setManStrategy(this.graph.getSmallVertices().get(0).getCoordinates(), ManStrategy.Paper);
         Point lion1 = new Point(190, 20);
         Point lion2 = new Point(100, 140);
         Point lion3 = new Point(50, 90);

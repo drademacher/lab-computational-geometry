@@ -198,6 +198,7 @@ class Controller {
         setGlobalManSpeed.setOnAction(event -> {
             double currentValue = this.coreController.getDefaultMenSpeed();
 
+
             TextInputDialog dialog = new TextInputDialog("" + currentValue);
             dialog.setTitle("Set Man Speed");
             dialog.setHeaderText("-----.");
@@ -206,6 +207,7 @@ class Controller {
 
             if (result.isPresent()) {
                 try {
+
                     double inputValue = Double.parseDouble(result.get());
                     this.coreController.setDefaultMenSpeed(inputValue);
                 } catch (Exception ignore) {
@@ -241,8 +243,10 @@ class Controller {
             }
         });
 
+
         setGlobalLionRange.setOnAction(event -> {
             double currentValue = this.coreController.getDefaultLionsRange();
+
 
             TextInputDialog dialog = new TextInputDialog("" + currentValue);
             dialog.setTitle("Set Lion Range");

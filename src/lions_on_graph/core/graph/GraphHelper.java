@@ -141,6 +141,10 @@ public class GraphHelper {
 
     public int getDistanceBetween(Vertex vertex1, Vertex vertex2) {
 
+        if(vertex1 == null || vertex2 == null){
+            throw new IllegalArgumentException();
+        }
+
         Map<Vertex, Integer> map = new HashMap<>();
         Set<Vertex> set = new HashSet<>();
         Queue<Vertex> queue = new LinkedList<>();

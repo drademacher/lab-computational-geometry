@@ -12,7 +12,6 @@ import util.Point;
 import static lions_in_plane.visualization.Constants.COLOR_LION;
 import static lions_in_plane.visualization.Constants.ENTITY_RADIUS;
 
-
 public class Lion extends Shape {
     private static Group group = new Group();
 
@@ -24,7 +23,6 @@ public class Lion extends Shape {
         this.shape = new Circle(position.getX(), position.getY(), ENTITY_RADIUS, COLOR_LION);
 
         group.getChildren().add(shape);
-
         shape.setOnContextMenuRequested(event1 -> {
             event1.consume();
 
@@ -45,7 +43,9 @@ public class Lion extends Shape {
             strategyMenu.getItems().addAll(waitStrategyButton, greedyStrategyButton, randomStrategyButton, manualStrategyButton, paperStrategyButton);
 
 
-            removeButton.setOnAction(event2 -> coreController.removeMan(position));
+            removeButton.setOnAction(event2 -> {
+                coreController.removeLion(this.position);
+            });
 
             relocateButton.setOnAction(event2 -> {
                 pane.setOnMouseClicked(event3 -> {
@@ -75,5 +75,10 @@ public class Lion extends Shape {
 
     void clear() {
         group.getChildren().remove(shape);
+    }
+
+    public Circle getShape() {
+        // TODO: REMOVE GETTER
+        return shape;
     }
 }

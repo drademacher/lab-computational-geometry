@@ -43,7 +43,7 @@ public class Man extends Shape {
             strategyMenu.getItems().addAll(waitStrategyButton, greedyStrategyButton, randomStrategyButton, manualStrategyButton, paperStrategyButton);
 
 
-            removeButton.setOnAction(event2 -> coreController.removeMan(position));
+            removeButton.setOnAction(event2 -> coreController.removeMan(this.position));
 
             relocateButton.setOnAction(event2 -> {
                 pane.setOnMouseClicked(event3 -> {

@@ -11,10 +11,7 @@ import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import lions_in_plane.core.CoreController;
-import lions_in_plane.visualization.Lion;
-import lions_in_plane.visualization.Man;
-import lions_in_plane.visualization.Shape;
-import lions_in_plane.visualization.VisualizedCoreController;
+import lions_in_plane.visualization.*;
 import util.ContextMenuHolder;
 import util.ZoomScrollPane;
 
@@ -102,14 +99,15 @@ class Controller {
      */
     private void initEditButtons() {
         MenuItem emptyMapMenuItem = new MenuItem("Empty Graph"),
-                graph1MenuItem = new MenuItem("Test Graph 1"),
-                graph2MenuItem = new MenuItem("Test Graph 2"),
-                graph3MenuItem = new MenuItem("Test Graph 3"),
+                graph1MenuItem = new MenuItem("Example 1"),
+                graph2MenuItem = new MenuItem("Example 2"),
+                graph3MenuItem = new MenuItem("Example 3"),
+                randomConfigurationButton = new MenuItem("Random"),
                 openMapMenuItem = new MenuItem("Open"),
                 saveMapMenuItem = new MenuItem("Save");
 
 
-        setGraphButton.getItems().addAll(emptyMapMenuItem, new SeparatorMenuItem(), graph1MenuItem, graph2MenuItem, graph3MenuItem, new SeparatorMenuItem(), openMapMenuItem, saveMapMenuItem);
+        setGraphButton.getItems().addAll(emptyMapMenuItem, new SeparatorMenuItem(), graph1MenuItem, graph2MenuItem, graph3MenuItem, randomConfigurationButton, new SeparatorMenuItem(), openMapMenuItem, saveMapMenuItem);
 
         buttonBar.getChildren().addAll(modeToggleButton, setGraphButton, setParameterButton, setViewMenu);
 
@@ -136,6 +134,11 @@ class Controller {
             this.zoomScrollPane.autoZoom();
         });
 
+        randomConfigurationButton.setOnAction(event -> {
+            clearGraphShapes();
+            this.coreController.setRandomConfiguration();
+            this.zoomScrollPane.autoZoom();
+        });
 
         openMapMenuItem.setOnAction(event -> {
             FileChooser fileChooser = new FileChooser();
@@ -383,11 +386,12 @@ class Controller {
         Shape.setPane(zoomScrollPane);
 
         zoomScrollPane.getNodesHolder().clear();
-        zoomScrollPane.getNodesHolder().addAll(lionRangeShapes, entityShapes, convexHullShapes, completePathShapes);
+        zoomScrollPane.getNodesHolder().addAll(lionRangeShapes, convexHullShapes, completePathShapes, entityShapes);
 
 
         Man.setGroup(entityShapes);
         Lion.setGroup(entityShapes);
+        ConvexHull.setGroup(convexHullShapes);
 //
 //        ShapedBigVertex.setMainPane(zoomScrollPane);
 //        ShapedBigVertex.setShapeGroup(vertexShapes);
@@ -408,6 +412,8 @@ class Controller {
      * This will clear up the ZoomScrollPane.
      */
     private void clearGraphShapes() {
+        entityShapes.getChildren().clear();
+        convexHullShapes.getChildren().clear();
 //        vertexShapes.getChildren().clear();
 //        edgeShapes.getChildren().clear();
 //        entityShapes.getChildren().clear();

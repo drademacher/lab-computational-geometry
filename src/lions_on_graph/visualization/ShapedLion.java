@@ -126,6 +126,7 @@ public class ShapedLion implements ShapedEntity {
 
             manualStrategyButton.setOnAction(event2 -> {
                 coreController.setLionStrategy(coordinates, CoreController.LionStrategy.Manually);
+                coreController.getShapeController().updateStepPreviewsAndChoicePoints();
             });
 
             contextMenu.getItems().addAll(item0, item1, strategyMenu, edgeMenu, new SeparatorMenuItem(), closeItem);

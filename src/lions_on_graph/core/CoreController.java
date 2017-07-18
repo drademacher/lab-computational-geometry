@@ -502,6 +502,7 @@ public class CoreController {
         }
 
         man.setStrategy(strategy.getStrategy(this));
+        shapeController.updateStepPreviewsAndChoicePoints();
     }
 
     public void setLionStrategy(Point lionCoordinate, LionStrategy strategy) {
@@ -514,6 +515,7 @@ public class CoreController {
         }
 
         lion.setStrategy(strategy.getStrategy(this));
+        shapeController.updateStepPreviewsAndChoicePoints();
     }
 
     public void setAllManStrategy(ManStrategy strategy) {
@@ -524,6 +526,7 @@ public class CoreController {
         for (Man man : men) {
             setManStrategy(man.getCoordinates(), strategy);
         }
+        shapeController.updateStepPreviewsAndChoicePoints();
     }
 
     public void setAllLionStrategy(LionStrategy strategy) {
@@ -534,6 +537,7 @@ public class CoreController {
         for (Lion lion : lions) {
             setLionStrategy(lion.getCoordinates(), strategy);
         }
+        shapeController.updateStepPreviewsAndChoicePoints();
     }
 
     public ArrayList<Man> getMenWithManualInput() {

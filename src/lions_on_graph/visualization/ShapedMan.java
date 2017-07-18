@@ -69,6 +69,7 @@ public class ShapedMan implements ShapedEntity {
 
             manualStrategyButton.setOnAction(event2 -> {
                 coreController.setManStrategy(coordinates, CoreController.ManStrategy.Manually);
+                coreController.getShapeController().updateStepPreviewsAndChoicePoints();
             });
 
             paperStrategyButton.setOnAction(event2 -> {

@@ -6,7 +6,7 @@ import javafx.scene.shape.Polygon;
 import util.Point;
 
 
-public class ConvexHull extends Shape{
+public class ConvexHull extends Shape {
     private static Group group = new Group();
 
     private Point[] position;

@@ -1,6 +1,5 @@
 package lions_in_plane.visualization;
 
-import javafx.scene.paint.Color;
 import lions_in_plane.core.CoreController;
 import util.Point;
 
@@ -12,10 +11,12 @@ import java.util.Collections;
 public class VisualizedCoreController extends CoreController {
     private ArrayList<Man> men;
     private ArrayList<Lion> lions;
+    private Point[] hull;
 
     public VisualizedCoreController() {
         this.men = new ArrayList<>();
         this.lions = new ArrayList<>();
+         this.hull = new Point[0];
     }
 
     private Point[] convexHull() {
@@ -27,8 +28,13 @@ public class VisualizedCoreController extends CoreController {
             else return 1;
         });
 
+        if (lions.size() < 3) {
+            return new Point[]{};
+        }
 
-        Point[] ch = new Point[lions.size() + 1];
+
+        // overflow where ch has temporarily more than n+2 points
+        Point[] ch = new Point[lions.size() + 4];
         int index = 0;
 
         // upper part of convex hull
@@ -67,23 +73,20 @@ public class VisualizedCoreController extends CoreController {
         }
 
 
-        int finalIndex = index;
-        Point[] finalCh = ch;
-        lions.forEach(lion -> {
-            for (int j = 0; j < finalIndex; j++) {
-                if (finalCh[j].equals(lion.getPosition())) {
-                    lion.getShape().setFill(Color.BLACK);
-                }
-            }
-        });
-
-        for (int j = 0; j < finalIndex; j++) {
-//            System.out.println(ch[j]);
-        }
+//        int finalIndex = index;
+//        Point[] finalCh = ch;
+//        lions.forEach(lion -> {
+//            for (int j = 0; j < finalIndex; j++) {
+//                if (finalCh[j].equals(lion.getPosition())) {
+//                    lion.getShape().setFill(Color.BLACK);
+//                }
+//            }
+//        });
 //        lions.get(0).getShape().setFill(Color.AQUA);
 
         Point[] result = Arrays.copyOfRange(ch, 0, index - 1);
 //        System.out.println(Arrays.toString(result));
+        hull = result;
         return result;
     }
 
@@ -97,35 +100,48 @@ public class VisualizedCoreController extends CoreController {
         return (int) Math.signum(d);
     }
 
+    private boolean insideHull(Point p) {
+        if (hull.length < 3) {
+            return false;
+        }
+
+        for (int i = 0; i < hull.length; i++) {
+            if (isRightOf(hull[i], hull[i+1], p) < 1) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     @Override
     public void setEmptyGraph() {
         this.men = new ArrayList<>();
         this.lions = new ArrayList<>();
+        this.hull = new Point[0];
     }
 
     @Override
     public void setDefaultGraph1() {
         super.setDefaultGraph1();
-        new ConvexHull(convexHull());
+
     }
 
     @Override
     public void setDefaultGraph2() {
         super.setDefaultGraph2();
-        new ConvexHull(convexHull());
+
     }
 
     @Override
     public void setDefaultGraph3() {
         super.setDefaultGraph3();
-        new ConvexHull(convexHull());
     }
 
     public void setRandomConfiguration() {
         super.setRandomConfiguration();
         lions.forEach(lion -> System.out.print(lion.getPosition() + ", "));
         System.out.println();
-        new ConvexHull(convexHull());
     }
 
 
@@ -148,8 +164,11 @@ public class VisualizedCoreController extends CoreController {
     public void createLion(Point coordinates) {
         super.createLion(coordinates);
         lions.add(new Lion(coordinates));
-//        ConvexHull.clear();
-//        new ConvexHull(convexHull());
+
+        if (!insideHull(coordinates)) {
+            ConvexHull.clear();
+            new ConvexHull(convexHull());
+        }
     }
 
     @Override
@@ -158,8 +177,11 @@ public class VisualizedCoreController extends CoreController {
 
         lions.stream().filter(lion -> lion.getPosition() == coordinates).forEach(Lion::clear);
         lions.removeIf(lion -> lion.getPosition() == coordinates);
-        ConvexHull.clear();
-        new ConvexHull(convexHull());
+
+        if (!insideHull(coordinates)) {
+            ConvexHull.clear();
+            new ConvexHull(convexHull());
+        }
     }
 
     @Override

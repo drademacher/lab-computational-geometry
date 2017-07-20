@@ -67,6 +67,10 @@ public class Point {
         return Math.sqrt(x * x + y * y);
     }
 
+    public double distanceTo(Point other){
+        return Math.sqrt((x - other.getX())*(x - other.getX()) + (y - other.getY()) * (y - other.getY()));
+    }
+
 
     @Override
     public boolean equals(Object o) {

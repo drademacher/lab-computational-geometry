@@ -21,4 +21,12 @@ public class Plane {
     public void removeMan(Point coordinates) {
         men.removeIf(man -> man.getPosition() == coordinates);
     }
+
+    public void addLion(Point pos, double speed, double range) {
+        lions.add(new Lion(pos, speed, range));
+    }
+
+    public void removeLion(Point coordinates) {
+        lions.removeIf(lion -> lion.getPosition() == coordinates);
+    }
 }

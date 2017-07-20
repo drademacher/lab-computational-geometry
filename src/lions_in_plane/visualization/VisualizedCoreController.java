@@ -22,10 +22,10 @@ public class VisualizedCoreController extends CoreController {
 
         // Sort the points from left to right and bottom to top if same x value
         Collections.sort(lions, (o1, o2) -> {
-            if (o1.getPosition().getX() < o2.getPosition().getX() || (o1.getPosition().getX() == o2.getPosition().getX() && o1.getPosition().getY() > o2.getPosition().getY()) ) return -1;
+            if (o1.getPosition().getX() < o2.getPosition().getX() || (o1.getPosition().getX() == o2.getPosition().getX() && o1.getPosition().getY() > o2.getPosition().getY()))
+                return -1;
             else return 1;
         });
-
 
 
         Point[] ch = new Point[lions.size() + 1];
@@ -36,9 +36,9 @@ public class VisualizedCoreController extends CoreController {
             ch[index] = lions.get(l).getPosition();
             index++;
 
-            Point q = ch[index-1];
+            Point q = ch[index - 1];
             for (int j = index - 2; j > 0; j--) {
-                if (isRightOf(ch[j-1], q, ch[j]) == 1) {
+                if (isRightOf(ch[j - 1], q, ch[j]) == 1) {
                     ch[j] = q;
                     index--;
                 } else {
@@ -53,9 +53,9 @@ public class VisualizedCoreController extends CoreController {
             ch[index] = lions.get(l).getPosition();
             index++;
 
-            Point q = ch[index-1];
+            Point q = ch[index - 1];
             for (int j = index - 2; j > 0; j--) {
-                Point p = ch[j-1];
+                Point p = ch[j - 1];
                 Point r = ch[j];
                 if (isRightOf(p, q, r) == 1) {
                     ch[j] = q;
@@ -65,8 +65,6 @@ public class VisualizedCoreController extends CoreController {
                 }
             }
         }
-
-
 
 
         int finalIndex = index;
@@ -84,7 +82,7 @@ public class VisualizedCoreController extends CoreController {
         }
 //        lions.get(0).getShape().setFill(Color.AQUA);
 
-        Point[] result = Arrays.copyOfRange(ch, 0, index-1);
+        Point[] result = Arrays.copyOfRange(ch, 0, index - 1);
 //        System.out.println(Arrays.toString(result));
         return result;
     }
@@ -93,7 +91,7 @@ public class VisualizedCoreController extends CoreController {
      * Is r right of line segment pq
      */
     private int isRightOf(Point p, Point q, Point r) {
-        double d = (r.getX()- p.getX()) * (q.getY()-p.getY())-(r.getY()-p.getY())*(q.getX()-p.getX());
+        double d = (r.getX() - p.getX()) * (q.getY() - p.getY()) - (r.getY() - p.getY()) * (q.getX() - p.getX());
 //        double determinant = p.getX() * q.getY() - p.getX() * r.getY() - p.getY() * q.getX() + p.getY() * r.getX() + q.getX() * r.getY() - q.getY() * r.getX();
 //        System.out.println(Math.signum(d));
         return (int) Math.signum(d);
@@ -149,9 +147,9 @@ public class VisualizedCoreController extends CoreController {
     @Override
     public void createLion(Point coordinates) {
         super.createLion(coordinates);
-
         lions.add(new Lion(coordinates));
-
+        ConvexHull.clear();
+        new ConvexHull(convexHull());
     }
 
     @Override
@@ -160,6 +158,8 @@ public class VisualizedCoreController extends CoreController {
 
         lions.stream().filter(lion -> lion.getPosition() == coordinates).forEach(Lion::clear);
         lions.removeIf(lion -> lion.getPosition() == coordinates);
+        ConvexHull.clear();
+        new ConvexHull(convexHull());
     }
 
     @Override
@@ -174,6 +174,8 @@ public class VisualizedCoreController extends CoreController {
         super.relocateMan(from, to);
 
         lions.stream().filter(e -> e.getPosition() == from).forEach(e -> e.setPosition(to));
+        ConvexHull.clear();
+        new ConvexHull(convexHull());
     }
 
     @Override

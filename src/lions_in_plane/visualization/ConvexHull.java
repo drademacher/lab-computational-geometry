@@ -30,7 +30,7 @@ public class ConvexHull extends Shape{
     }
 
 
-    void clear() {
-        group.getChildren().remove(shape);
+    static void clear() {
+        group.getChildren().clear();
     }
 }

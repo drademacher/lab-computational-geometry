@@ -148,7 +148,7 @@ public class CoreController {
     }
 
     public void createLion(Point coordinates) {
-        // TODO: IMPLEMENT THIS
+        plane.addLion(coordinates, defaultLionsSpeed, defaultLionsRange);
     }
 
     public void removeMan(Point coordinates) {
@@ -156,7 +156,7 @@ public class CoreController {
     }
 
     public void removeLion(Point coordinates) {
-        // TODO: IMPLEMENT THIS
+        plane.removeLion(coordinates);
     }
 
     public void relocateMan(Point from, Point to) {

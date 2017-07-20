@@ -6,36 +6,57 @@ import lions_in_plane.core.plane.Man;
 import util.Point;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Jens on 20.07.2017.
  */
 public class Paper implements Strategy{
 
-    private double radiusLion = 10;
-    private double epsilon = 0.1;
-    private double delta = 1;
-
-    private double radiusMan = delta*(1+epsilon);
+    private double saveRadius;
+    private double radiusMan;
 
     public Paper(){
 
     }
 
     @Override
-    public Point[] getPath(Man man, ArrayList<Lion> lions) {
-        return new Point[0];
+    public ArrayList<Point[]> getPath(Man man, ArrayList<Lion> lions) {
+
+        ArrayList<Point[]> result = new ArrayList<>();
+
+        //TODO how to get goalposition?
+
+        System.out.println("all lions: "+lions);
+
+        for(int i = 0; i < lions.size(); i++){
+
+            List<Lion> subLions = lions.subList(0, Math.min(lions.size(), i));
+            System.out.println("subLions : "+subLions);
+//            result.add( >> new path << );
+        }
+        return result;
     }
 
-    private Point doMove(Point manPosition, Point lionPosition, Point goalPosition){
-        if(manPosition.distanceTo(lionPosition) >= radiusLion + radiusMan){
-            return goInGoalDirection(manPosition, goalPosition);
-        } else if(!manPosition.equals(goalPosition) &&
-                (manPosition.distanceTo(lionPosition) >= radiusLion - delta) &&
-                (goInGoalDirection(manPosition, lionPosition).distanceTo(lionPosition) >= (delta + manPosition.distanceTo(lionPosition)))){
-            return goInGoalDirection(manPosition, goalPosition);
+    /*ASSUME
+    *
+    * delta * 1 + epsilon)  ==  man.getSpeed()
+    * delta                 ==  lion.getSpeed()
+    * saveRadius            == ???   (for now 3* lion.getSpeed())
+    *
+    */
+    private Point doMove(Man man, Lion lion, Point goalPosition){
+        this.radiusMan = man.getSpeed();
+        this.saveRadius = 3* lion.getSpeed();
+
+        if(man.getPosition().distanceTo(lion.getPosition()) >= saveRadius + radiusMan){
+            return goInGoalDirection(man.getPosition(), goalPosition);
+        } else if(!man.getPosition().equals(goalPosition) &&
+                (man.getPosition().distanceTo(lion.getPosition()) >= saveRadius - lion.getSpeed()) &&
+                (goInGoalDirection(man.getPosition(), lion.getPosition()).distanceTo(lion.getPosition()) >= (lion.getSpeed() + man.getPosition().distanceTo(lion.getPosition())))){
+            return goInGoalDirection(man.getPosition(), goalPosition);
         } else{
-            return doAvoidanceMove(manPosition, lionPosition);
+            return doAvoidanceMove(man.getPosition(), lion.getPosition());
         }
     }
 
@@ -52,7 +73,7 @@ public class Paper implements Strategy{
 
     // avoidance move
     private Point doAvoidanceMove(Point manPosition, Point lionPosition){
-        Point [] intersections = getIntersectionPoints(manPosition, radiusMan, lionPosition, radiusLion);
+        Point [] intersections = getIntersectionPoints(manPosition, radiusMan, lionPosition, saveRadius);
         return intersections[0];//TODO need counterclockwise point
     }
 

@@ -1,6 +1,7 @@
 package lions_in_plane.core;
 
 import lions_in_plane.core.plane.Plane;
+import lions_in_plane.core.strategies.StrategyEnum;
 import util.Point;
 import util.Random;
 
@@ -176,6 +177,15 @@ public class CoreController {
     }
 
     public void setLionSpeed(Point coordinates, double speed) {
+        // TODO: IMPLEMENT THIS
+}
+
+    public void setManStrategy(Point coordinates, StrategyEnum strategyEnum){
+        // TODO: IMPLEMENT THIS
+        plane.setManStrategy(coordinates, strategyEnum);
+    }
+
+    public void setLionStrategy(){
         // TODO: IMPLEMENT THIS
     }
 }

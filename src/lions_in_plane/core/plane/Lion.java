@@ -17,4 +17,9 @@ public class Lion extends Entity {
     public void setRange(double range) {
         this.range = range;
     }
+
+    @Override
+    public String toString() {
+        return "lion@"+getPosition();
+    }
 }

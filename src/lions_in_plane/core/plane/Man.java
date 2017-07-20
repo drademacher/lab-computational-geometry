@@ -6,4 +6,9 @@ public class Man extends Entity {
     public Man(Point position, double speed) {
         super(position, speed);
     }
+
+    @Override
+    public String toString() {
+        return "man@"+getPosition();
+    }
 }

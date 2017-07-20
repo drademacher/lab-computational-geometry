@@ -13,7 +13,9 @@ public class Wait implements Strategy{
     }
 
     @Override
-    public Point[] getPath(Man man, ArrayList<Lion> lions) {
-        return new Point[]{man.getPosition()};
+    public ArrayList<Point[]> getPath(Man man, ArrayList<Lion> lions) {
+        ArrayList<Point[]> result = new ArrayList<>();
+        result.add(new Point[]{man.getPosition()});
+        return result;
     }
 }

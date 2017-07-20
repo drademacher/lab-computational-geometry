@@ -1,6 +1,8 @@
 package lions_in_plane.core.plane;
 
 
+import lions_in_plane.core.strategies.Paper;
+import lions_in_plane.core.strategies.StrategyEnum;
 import util.Point;
 
 import java.util.ArrayList;
@@ -16,6 +18,8 @@ public class Plane {
 
     public void addMan(Point pos, double speed) {
         men.add(new Man(pos, speed));
+        setManStrategy(pos, StrategyEnum.Paper);
+        men.get(0).getStrategy().getPath(men.get(0), lions);
     }
 
     public void removeMan(Point coordinates) {
@@ -29,4 +33,32 @@ public class Plane {
     public void removeLion(Point coordinates) {
         lions.removeIf(lion -> lion.getPosition() == coordinates);
     }
+
+    public void setManStrategy(Point coordinates, StrategyEnum strategyEnum){
+        Man man = getManByCoordinate(coordinates);
+        if(man == null){
+            return;
+        }
+        man.setStrategy(strategyEnum.getStrategy());
+    }
+
+    public Man getManByCoordinate(Point coordinates) {
+        // TODO: IMPLEMENT THIS
+        if (coordinates == null) {
+            return null;
+        }
+        for (Man man : men) {
+            if (man.getPosition().equals(coordinates)) {
+                return man;
+            }
+        }
+        return null;
+    }
+
+    public Lion getLionByCoordinate(Point coordinates){
+        // TODO: IMPLEMENT THIS
+        return null;
+    }
+
+
 }

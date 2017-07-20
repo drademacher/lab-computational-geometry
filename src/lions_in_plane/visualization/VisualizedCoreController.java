@@ -148,8 +148,8 @@ public class VisualizedCoreController extends CoreController {
     public void createLion(Point coordinates) {
         super.createLion(coordinates);
         lions.add(new Lion(coordinates));
-        ConvexHull.clear();
-        new ConvexHull(convexHull());
+//        ConvexHull.clear();
+//        new ConvexHull(convexHull());
     }
 
     @Override

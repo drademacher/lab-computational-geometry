@@ -6,7 +6,6 @@ import lions_in_plane.core.plane.Man;
 import util.Point;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Jens on 20.07.2017.
@@ -21,9 +20,13 @@ public class Paper implements Strategy{
     }
 
     @Override
-    public ArrayList<Point[]> getPath(Man man, ArrayList<Lion> lions) {
+    public ArrayList<ArrayList<Point>> getPath(Man man, ArrayList<Lion> lions) {
 
-        ArrayList<Point[]> result = new ArrayList<>();
+        ArrayList<ArrayList<Point>> result = new ArrayList<>();
+
+        if(man == null || lions == null || lions.size() == 0){
+            return result;
+        }
 
         //TODO how to get goalposition?
 
@@ -39,9 +42,9 @@ public class Paper implements Strategy{
         result.add(doMove(man, lions.get(0), null));
         System.out.println("RESULT......all "+result);
         System.out.println("RESULT......first "+result.get(0));
-        System.out.println("RESULT......first.size "+result.get(0).length);
-        for(int i = 0; i < result.get(0).length; i++){
-            System.out.println(result.get(0)[i]);
+        System.out.println("RESULT......first.size "+result.get(0).size());
+        for(int i = 0; i < result.get(0).size(); i++){
+            System.out.println(result.get(0).get(i));
         }
         return result;
     }
@@ -53,22 +56,21 @@ public class Paper implements Strategy{
     * saveRadius            == ???   (for now 3* lion.getSpeed())
     *
     */
-    private Point[] doMove(Man man, Lion lion, Point[] prevPath) {
+    private ArrayList<Point> doMove(Man man, Lion lion, ArrayList<Point> prevPath) {
 
         this.radiusMan = man.getSpeed();
         this.saveRadius = 3* lion.getSpeed();
 
         Point goalPosition = new Point(0, 0);//TODO
 
-        Point[] curPath = new Point[0];
+        ArrayList<Point> curPath = new ArrayList<>();
 
         //init: only 1 lion -> no exiting prevPath
         if(prevPath == null){
-            curPath = new Point[120];
-            curPath[0] = man.getPosition();
+            curPath.add(man.getPosition());
             for(int i= 1; i <120; i++){
                 System.out.println("curPath in calculation: "+curPath);
-                curPath[i] = goAwayFromLion(curPath[i-1], lion.getPosition());
+                curPath.add(goAwayFromLion(curPath.get(i-1), lion.getPosition()));
             }
         }
 

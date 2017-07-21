@@ -1,10 +1,12 @@
 package lions_in_plane.core.strategies;
 
 
+import com.sun.org.apache.bcel.internal.generic.ARRAYLENGTH;
 import lions_in_plane.core.plane.Lion;
 import lions_in_plane.core.plane.Man;
 import util.Point;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -21,6 +23,8 @@ public class Paper implements Strategy{
 
     @Override
     public ArrayList<Point> getPath(Man man, ArrayList<Lion> lions) {
+
+        this.radiusMan = man.getSpeed();
 
        ArrayList<Point> result = new ArrayList<>();
 
@@ -56,8 +60,6 @@ public class Paper implements Strategy{
     *
     */
     private ArrayList<Point> doMove(Man man, Lion lion, ArrayList<Point> prevPath) {
-
-        this.radiusMan = man.getSpeed();
         this.saveRadius = 3* lion.getSpeed();
 
         Point goalPosition = new Point(0, 0);//TODO
@@ -186,6 +188,22 @@ public class Paper implements Strategy{
         intersectionPoints[1] = intersectionPoint2;
 
         return intersectionPoints;
+    }
+
+    private ArrayList<Point> extendPath(ArrayList<Point> path){
+        for(int i = 0; i < 150; i++){
+            Point vector = new Point(path.get(path.size() -1).getX() - path.get(path.size()-2).getX(), path.get(path.size() -1).getY() - path.get(path.size()-2).getY());
+            double vectorLength = vector.length();
+
+            Point unitVector = vector.mul(1/vectorLength);
+            Point stepVector = unitVector.mul(radiusMan);
+
+//        System.out.println("step" + stepVector);
+
+            path.add(path.get(path.size() -1).add(stepVector));
+        }
+        return path;
+
     }
 
 

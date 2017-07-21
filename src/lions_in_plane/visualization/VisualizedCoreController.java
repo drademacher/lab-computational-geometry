@@ -1,5 +1,6 @@
 package lions_in_plane.visualization;
 
+import javafx.scene.paint.Color;
 import lions_in_plane.core.CoreController;
 import util.Point;
 
@@ -150,6 +151,8 @@ public class VisualizedCoreController extends CoreController {
         super.createMan(coordinates);
 
         men.add(new Man(coordinates));
+        // TODO: total debug
+        new PolygonalPath(hull, Color.BLACK);
     }
 
     @Override

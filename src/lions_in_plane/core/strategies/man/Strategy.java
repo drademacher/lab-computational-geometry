@@ -1,4 +1,4 @@
-package lions_in_plane.core.strategies;
+package lions_in_plane.core.strategies.man;
 
 
 import lions_in_plane.core.plane.Lion;
@@ -12,5 +12,5 @@ import java.util.ArrayList;
  */
 public interface Strategy {
 
-    ArrayList<Point> getPath(Man man, ArrayList<Lion> lions);
+    ArrayList<Point> getPath(Man man, ArrayList<Lion> lions, ArrayList<Point> prevPath);
 }

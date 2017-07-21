@@ -1,12 +1,10 @@
-package lions_in_plane.core.strategies;
+package lions_in_plane.core.strategies.man;
 
 
-import com.sun.org.apache.bcel.internal.generic.ARRAYLENGTH;
 import lions_in_plane.core.plane.Lion;
 import lions_in_plane.core.plane.Man;
 import util.Point;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -22,7 +20,7 @@ public class Paper implements Strategy{
     }
 
     @Override
-    public ArrayList<Point> getPath(Man man, ArrayList<Lion> lions) {
+    public ArrayList<Point> getPath(Man man, ArrayList<Lion> lions, ArrayList<Point> prevPath) {
 
         this.radiusMan = man.getSpeed();
 
@@ -62,7 +60,7 @@ public class Paper implements Strategy{
     private ArrayList<Point> doMove(Man man, Lion lion, ArrayList<Point> prevPath) {
         this.saveRadius = 3* lion.getSpeed();
 
-        Point goalPosition = new Point(0, 0);//TODO
+//        Point goalPosition = new Point(0, 0);//TODO
 
         ArrayList<Point> curPath = new ArrayList<>();
         curPath.add(man.getPosition());
@@ -78,7 +76,12 @@ public class Paper implements Strategy{
 
             for(int i= 1; i <120; i++) {
                 Point cuPosition = curPath.get(curPath.size()-1);
-//                Point goalPosition = p
+                int indexGoal = (int)Math.floor(Math.floor((i / lion.getSpeed()) + 1 ) * lion.getSpeed());
+                while(indexGoal > 0.5 * prevPath.size()){
+                    System.out.println(">>>>>>>>>>>>>>extent");
+                    prevPath = extendPath(prevPath);
+                }
+                Point goalPosition = prevPath.get(indexGoal);
 
                 System.out.println("case B boolean:");
                 System.out.println("a) "+!cuPosition.equals(goalPosition));
@@ -102,6 +105,8 @@ public class Paper implements Strategy{
         }
 
         //System.out.println("return curPath.."+curPath);
+
+        //TODO if (last) lion is to close to end of line
         return curPath;
     }
 

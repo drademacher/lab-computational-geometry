@@ -1,10 +1,10 @@
-package lions_in_plane.core.strategies;
+package lions_in_plane.core.strategies.man;
 
 
 /**
  * Created by Jens on 20.07.2017.
  */
-public enum StrategyEnum {
+public enum StrategyEnumMan {
     Wait, Paper;
 
     public Strategy getStrategy() {

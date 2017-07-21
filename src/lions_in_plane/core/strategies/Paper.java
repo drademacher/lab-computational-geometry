@@ -20,9 +20,9 @@ public class Paper implements Strategy{
     }
 
     @Override
-    public ArrayList<ArrayList<Point>> getPath(Man man, ArrayList<Lion> lions) {
+    public ArrayList<Point> getPath(Man man, ArrayList<Lion> lions) {
 
-        ArrayList<ArrayList<Point>> result = new ArrayList<>();
+       ArrayList<Point> result = new ArrayList<>();
 
         if(man == null || lions == null || lions.size() == 0){
             return result;
@@ -30,21 +30,20 @@ public class Paper implements Strategy{
 
         //TODO how to get goalposition?
 
-//        System.out.println("all lions: "+lions);
-//
-//        for(int i = 0; i < lions.size(); i++){
-//
-//            List<Lion> subLions = lions.subList(0, Math.min(lions.size(), i+1));
-//            System.out.println("subLions : "+subLions);
-//            result.add(doMove(man, lions.get(i), null));
-//        }
 
-        result.add(doMove(man, lions.get(0), null));
-        System.out.println("RESULT......all "+result);
-        System.out.println("RESULT......first "+result.get(0));
-        System.out.println("RESULT......first.size "+result.get(0).size());
-        for(int i = 0; i < result.get(0).size(); i++){
-            System.out.println(result.get(0).get(i));
+        for(int i = 0; i < lions.size(); i++){
+
+//            List<Lion> subLions = lions.subList(0, Math.min(lions.size(), i+1));
+            result = doMove(man, lions.get(i), result);
+        }
+
+        //only 1 lion
+//        result = doMove(man, lions.get(0), null);
+
+        //System.out.println("RESULT......all "+result);
+        //System.out.println("RESULT......size "+result.size());
+        for(int i = 0; i < result.size(); i++){
+            //System.out.println(result.get(i));
         }
         return result;
     }
@@ -64,64 +63,85 @@ public class Paper implements Strategy{
         Point goalPosition = new Point(0, 0);//TODO
 
         ArrayList<Point> curPath = new ArrayList<>();
+        curPath.add(man.getPosition());
 
         //init: only 1 lion -> no exiting prevPath
-        if(prevPath == null){
-            curPath.add(man.getPosition());
+        if(prevPath == null || prevPath.size() == 0){
+            System.out.println("CASE D");
             for(int i= 1; i <120; i++){
-                System.out.println("curPath in calculation: "+curPath);
+//                //System.out.println("curPath in calculation: "+curPath);
                 curPath.add(goAwayFromLion(curPath.get(i-1), lion.getPosition()));
+            }
+        } else {
+
+            for(int i= 1; i <120; i++) {
+                Point cuPosition = curPath.get(curPath.size()-1);
+//                Point goalPosition = p
+
+                System.out.println("case B boolean:");
+                System.out.println("a) "+!cuPosition.equals(goalPosition));
+                System.out.println("b) "+ (cuPosition.distanceTo(lion.getPosition()) >= saveRadius - lion.getSpeed()));
+                System.out.println("c) "+ (goInGoalDirection(cuPosition, goalPosition).distanceTo(lion.getPosition()) >= (lion.getSpeed() + cuPosition.distanceTo(lion.getPosition()))));
+
+                if (cuPosition.distanceTo(lion.getPosition()) >= saveRadius + radiusMan) {
+                    System.out.println("CASE A");
+                    curPath.add(goInGoalDirection(cuPosition, goalPosition));
+                    /*TODO parallel, instead of points??*/
+                } else if (!cuPosition.equals(goalPosition) &&
+                        (cuPosition.distanceTo(lion.getPosition()) >= saveRadius - lion.getSpeed()) &&
+                        (goInGoalDirection(cuPosition, goalPosition).distanceTo(lion.getPosition()) >= (lion.getSpeed() + cuPosition.distanceTo(lion.getPosition())))) {
+                    System.out.println("CASE B");
+                    curPath.add(goInGoalDirection(cuPosition, goalPosition));
+                } else {
+                    System.out.println("CASE C");
+                    curPath.add(doAvoidanceMove(cuPosition, lion.getPosition()));
+                }
             }
         }
 
-
-        if(man.getPosition().distanceTo(lion.getPosition()) >= saveRadius + radiusMan){
-//            return goInGoalDirection(man.getPosition(), goalPosition);
-        } else if(!man.getPosition().equals(goalPosition) &&
-                (man.getPosition().distanceTo(lion.getPosition()) >= saveRadius - lion.getSpeed()) &&
-                //TODO parallel, instead of points??
-                (goInGoalDirection(man.getPosition(), lion.getPosition()).distanceTo(lion.getPosition()) >= (lion.getSpeed() + man.getPosition().distanceTo(lion.getPosition())))){
-//            return goInGoalDirection(man.getPosition(), goalPosition);
-        } else{
-//            return doAvoidanceMove(man.getPosition(), lion.getPosition());
-        }
-
-        System.out.println("return curPath.."+curPath);
+        //System.out.println("return curPath.."+curPath);
         return curPath;
     }
 
     private Point goAwayFromLion(Point curPosition, Point lionPosition){
 
-        System.out.println("##go away");
-        System.out.println("cur: "+curPosition);
-        System.out.println("lion: "+lionPosition);
+        //System.out.println("##go away");
+        //System.out.println("cur: "+curPosition);
+        //System.out.println("lion: "+lionPosition);
         Point vector = new Point(lionPosition.getX() - curPosition.getX(), lionPosition.getY() - curPosition.getY());
-        System.out.println("vec: "+vector);
+        //System.out.println("vec: "+vector);
         double vectorLength = vector.length();
 
-        System.out.println("length: "+vectorLength);
+        //System.out.println("length: "+vectorLength);
 
         Point unitVector = vector.mul(1/vectorLength);
 
-        System.out.println("unit: "+unitVector);
+        //System.out.println("unit: "+unitVector);
         Point stepVector = unitVector.mul(-radiusMan);
 
-        System.out.println("stepVec: "+stepVector);
+        //System.out.println("stepVec: "+stepVector);
 
         Point result = curPosition.add(stepVector);
-        System.out.println("result: "+result);
+        //System.out.println("result: "+result);
         return result;
     }
 
     // free move and escape move
     private Point goInGoalDirection(Point curPosition, Point goalPosition){
+//        System.out.println("## go to goal ");
+//        System.out.println("cur: "+curPosition);
+//        System.out.println("goal: "+goalPosition);
         Point vector = new Point(goalPosition.getX() - curPosition.getX(), goalPosition.getY() - curPosition.getY());
         double vectorLength = vector.length();
 
         Point unitVector = vector.mul(1/vectorLength);
         Point stepVector = unitVector.mul(radiusMan);
 
-        return curPosition.add(stepVector);
+//        System.out.println("step" + stepVector);
+
+        Point result = curPosition.add(stepVector);
+//        System.out.println("result: "+result);
+        return result;
     }
 
     // avoidance move
@@ -181,11 +201,11 @@ public class Paper implements Strategy{
 
         double rad = Math.acos(vector1Normalized.getX() * vector2Normalized.getX() + vector1Normalized.getY() * vector2Normalized.getY() );
 
-        System.out.println("rad "+rad);
+        //System.out.println("rad "+rad);
 
         double deg = Math.toDegrees(rad);
 
-        System.out.println("deg "+deg);
+        //System.out.println("deg "+deg);
 
         return deg;
     }

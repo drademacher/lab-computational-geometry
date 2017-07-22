@@ -101,6 +101,7 @@ public class VisualizedCoreController extends CoreController {
 
     private boolean insideHull(Point p) {
         if (hull.length < 3) {
+            System.out.println("hull to small");
             return false;
         }
 
@@ -215,7 +216,7 @@ public class VisualizedCoreController extends CoreController {
         ArrayList<Point> inductionPath;
         Map<Integer, ArrayList<Point>> lionPaths = new HashMap<>();
 
-        for (int k = 0; k < super.getLionsSize() ; k++) {
+        for (int k = 0; k < super.getLionsSize(); k++) {
 
 
             inductionPath = resultPath;
@@ -223,8 +224,11 @@ public class VisualizedCoreController extends CoreController {
             lionPaths.clear();
             System.out.println("clear#########################");
 
-            for (int i = 0; i < 100; i++) {
 
+            int steps = 0;
+//            while ((resultPath.size() == 0 || insideHull(resultPath.get(resultPath.size() - 1))) && steps < 500) {
+            for(int i = 0; i < 200; i++){
+                steps++;
 
                 resultPath = super.calcManPath(k, inductionPath, resultPath);
 
@@ -232,23 +236,29 @@ public class VisualizedCoreController extends CoreController {
 
 
 
-                for (int j = 0; j < k - 1; j++) {
+                for (int j = 0; j <= k; j++) {
                     lionPaths.put(j, super.calcLionPath(j, lionPaths.get(j), resultPath));
-                    System.out.println("LION PATH "+lionPaths.get(j));
+                    System.out.println("LION PATH " + lionPaths.get(j));
+
                     super.setCalcedLionPosition(lionPaths.get(j).get(lionPaths.get(j).size() - 1), j);
 
-
                 }
+
+
+                System.out.println(steps < 500);
+                System.out.println(resultPath.size() == 0);
+                System.out.println(insideHull(resultPath.get(resultPath.size() - 1)));
+                System.out.println((resultPath.size() == 0 || insideHull(resultPath.get(resultPath.size() - 1))) && steps < 500);
             }
         }
 
         PolygonalPath.clear();
         PolygonalPath.clear();
-        lionPaths.forEach((k,v)->{
+
+        lionPaths.forEach((k, v) -> {
             new PolygonalPath(v, Color.RED);
         });
         new PolygonalPath(resultPath, Color.BLUE);
-
         return super.simulateStep();
     }
 }

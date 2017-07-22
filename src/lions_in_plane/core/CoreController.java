@@ -190,7 +190,6 @@ public class CoreController {
         // TODO: IMPLEMENT THIS
     }
 
-
     public ArrayList<Point> calcManPath(int index, ArrayList<Point> inductionPath, ArrayList<Point> resultPath){
         return plane.calcManPath(index, inductionPath, resultPath);
     }

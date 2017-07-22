@@ -152,7 +152,8 @@ public class VisualizedCoreController extends CoreController {
 
         men.add(new Man(coordinates));
         // TODO: total debug
-        new PolygonalPath(hull, Color.BLACK);
+        ArrayList<Point> path = new ArrayList<>(Arrays.asList(hull));
+        new PolygonalPath(path, Color.BLACK);
     }
 
     @Override
@@ -206,5 +207,27 @@ public class VisualizedCoreController extends CoreController {
     @Override
     public void setLionRange(Point coordinates, double range) {
         // TODO: IMPLEMENT THIS
+    }
+
+
+    @Override
+    public boolean simulateStep() {
+        ArrayList<Point> path = super.calcManPath(0);
+
+        PolygonalPath.clear();
+        PolygonalPath.clear();
+
+        System.out.println("draw path... "+path);
+
+        new PolygonalPath(path, Color.BLUE);
+
+        for(int i = 0; i < super.getLionsSize() - 1; i++){
+            ArrayList<Point> myPath = super.calcLionPath(i);
+
+            System.out.println("draw path... "+path);
+
+            new PolygonalPath(myPath, Color.RED);
+        }
+        return super.simulateStep();
     }
 }

@@ -1,7 +1,7 @@
 package lions_in_plane.core;
 
 import lions_in_plane.core.plane.Plane;
-import lions_in_plane.core.strategies.StrategyEnum;
+import lions_in_plane.core.strategies.man.StrategyEnumMan;
 import util.Point;
 import util.Random;
 
@@ -180,12 +180,23 @@ public class CoreController {
         // TODO: IMPLEMENT THIS
 }
 
-    public void setManStrategy(Point coordinates, StrategyEnum strategyEnum){
+    public void setManStrategy(Point coordinates, StrategyEnumMan strategyEnum){
         // TODO: IMPLEMENT THIS
         plane.setManStrategy(coordinates, strategyEnum);
     }
 
     public void setLionStrategy(){
         // TODO: IMPLEMENT THIS
+    }
+
+    public ArrayList<Point> calcManPath(int index){
+        return plane.calcManPath(index);
+    }
+    public ArrayList<Point> calcLionPath(int index){
+        return plane.calcLionPath(index);
+    }
+
+    public int getLionsSize(){
+        return this.plane.getLionsSize();
     }
 }

@@ -5,13 +5,15 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Polyline;
 import util.Point;
 
+import java.util.ArrayList;
+
 public class PolygonalPath extends Shape {
     private static Group group = new Group();
 
-    private Point[] points;
+    private ArrayList<Point> points;
     private Polyline shape;
 
-    PolygonalPath(Point[] points, Color color) {
+    PolygonalPath(ArrayList<Point> points, Color color) {
         this.points = points;
         this.shape = new Polyline();
 

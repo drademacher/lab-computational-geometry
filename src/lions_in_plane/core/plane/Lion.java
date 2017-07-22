@@ -6,6 +6,7 @@ import util.Point;
 public class Lion extends Entity {
     private double range;
     private Strategy strategy;
+    private Point calcedPoint;
 
     Lion(Point position, double speed, double range) {
         super(position, speed);
@@ -31,5 +32,21 @@ public class Lion extends Entity {
 
     public void setStrategy(Strategy strategy) {
         this.strategy = strategy;
+    }
+
+    public Point getCalcedPoint() {
+        System.out.println("?? calced "+calcedPoint);
+        if(calcedPoint == null){
+            System.out.println("?? no calced point "+getPosition());
+            return getPosition();
+        }
+        System.out.println("?? calced point"+calcedPoint);
+        return calcedPoint;
+    }
+
+    public void setCalcedPoint(Point calcedPoint) {
+        System.out.println("!! calced point "+calcedPoint);
+        System.out.println("!! start position "+getPosition());
+        this.calcedPoint = calcedPoint;
     }
 }

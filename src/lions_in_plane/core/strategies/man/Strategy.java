@@ -12,5 +12,5 @@ import java.util.ArrayList;
  */
 public interface Strategy {
 
-    ArrayList<Point> getPath(Man man, ArrayList<Lion> lions, ArrayList<Point> prevPath);
+    ArrayList<Point> getPath(Man man, Lion lion, ArrayList<Point> inductionPath, ArrayList<Point> curPath);
 }

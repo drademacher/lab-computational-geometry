@@ -6,6 +6,7 @@ import util.Point;
 import util.Random;
 
 import java.io.File;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 
@@ -178,7 +179,7 @@ public class CoreController {
 
     public void setLionSpeed(Point coordinates, double speed) {
         // TODO: IMPLEMENT THIS
-}
+    }
 
     public void setManStrategy(Point coordinates, StrategyEnumMan strategyEnum){
         // TODO: IMPLEMENT THIS
@@ -189,14 +190,20 @@ public class CoreController {
         // TODO: IMPLEMENT THIS
     }
 
-    public ArrayList<Point> calcManPath(int index){
-        return plane.calcManPath(index);
+
+    public ArrayList<Point> calcManPath(int index, ArrayList<Point> inductionPath, ArrayList<Point> resultPath){
+        return plane.calcManPath(index, inductionPath, resultPath);
     }
-    public ArrayList<Point> calcLionPath(int index){
-        return plane.calcLionPath(index);
+    public ArrayList<Point> calcLionPath(int index, ArrayList<Point> resultPath, ArrayList<Point> manPath){
+        return plane.calcLionPath(index, resultPath, manPath);
     }
 
     public int getLionsSize(){
         return this.plane.getLionsSize();
+    }
+
+
+    public void setCalcedLionPosition(Point clacedLionPoint, int index){
+        this.plane.setCalcedLionPosition(clacedLionPoint, index);
     }
 }

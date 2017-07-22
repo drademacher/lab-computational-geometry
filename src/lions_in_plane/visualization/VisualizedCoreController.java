@@ -4,9 +4,7 @@ import javafx.scene.paint.Color;
 import lions_in_plane.core.CoreController;
 import util.Point;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
+import java.util.*;
 
 
 public class VisualizedCoreController extends CoreController {
@@ -17,7 +15,7 @@ public class VisualizedCoreController extends CoreController {
     public VisualizedCoreController() {
         this.men = new ArrayList<>();
         this.lions = new ArrayList<>();
-         this.hull = new Point[0];
+        this.hull = new Point[0];
     }
 
     private Point[] convexHull() {
@@ -107,7 +105,7 @@ public class VisualizedCoreController extends CoreController {
         }
 
         for (int i = 0; i < hull.length; i++) {
-            if (isRightOf(hull[i], hull[i+1], p) < 1) {
+            if (isRightOf(hull[i], hull[i + 1], p) < 1) {
                 return false;
             }
         }
@@ -212,22 +210,45 @@ public class VisualizedCoreController extends CoreController {
 
     @Override
     public boolean simulateStep() {
-        ArrayList<Point> path = super.calcManPath(0);
 
-        PolygonalPath.clear();
-        PolygonalPath.clear();
+        ArrayList<Point> resultPath = new ArrayList<>();
+        ArrayList<Point> inductionPath;
+        Map<Integer, ArrayList<Point>> lionPaths = new HashMap<>();
 
-        System.out.println("draw path... "+path);
+        for (int k = 0; k < super.getLionsSize() ; k++) {
 
-        new PolygonalPath(path, Color.BLUE);
 
-        for(int i = 0; i < super.getLionsSize() - 1; i++){
-            ArrayList<Point> myPath = super.calcLionPath(i);
+            inductionPath = resultPath;
+            resultPath = new ArrayList<>();
+            lionPaths.clear();
+            System.out.println("clear#########################");
 
-            System.out.println("draw path... "+path);
+            for (int i = 0; i < 100; i++) {
 
-            new PolygonalPath(myPath, Color.RED);
+
+                resultPath = super.calcManPath(k, inductionPath, resultPath);
+
+                System.out.println("draw path..(result). " + resultPath);
+
+
+
+                for (int j = 0; j < k - 1; j++) {
+                    lionPaths.put(j, super.calcLionPath(j, lionPaths.get(j), resultPath));
+                    System.out.println("LION PATH "+lionPaths.get(j));
+                    super.setCalcedLionPosition(lionPaths.get(j).get(lionPaths.get(j).size() - 1), j);
+
+
+                }
+            }
         }
+
+        PolygonalPath.clear();
+        PolygonalPath.clear();
+        lionPaths.forEach((k,v)->{
+            new PolygonalPath(v, Color.RED);
+        });
+        new PolygonalPath(resultPath, Color.BLUE);
+
         return super.simulateStep();
     }
 }

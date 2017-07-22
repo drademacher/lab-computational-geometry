@@ -13,8 +13,7 @@ public class Wait implements Strategy{
     }
 
     @Override
-    public ArrayList<Point> getPath(Man man, ArrayList<Lion> lions, ArrayList<Point> prevPath) {
-        prevPath.add(man.getPosition());
-        return prevPath;
+    public ArrayList<Point> getPath(Man man, Lion lion, ArrayList<Point> inductionPath, ArrayList<Point> curPath) {
+        return null;
     }
 }

@@ -5,11 +5,16 @@ import lions_in_plane.core.strategies.lion.StrategyEnumLion;
 import lions_in_plane.core.strategies.man.StrategyEnumMan;
 import util.Point;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Plane {
     private ArrayList<Man> men;
     private ArrayList<Lion> lions;
+
+
 
     public Plane() {
         this.men = new ArrayList<>();
@@ -77,25 +82,41 @@ public class Plane {
         return null;
     }
 
-    public ArrayList<Point> calcManPath(int index){
+
+    public ArrayList<Point> calcManPath(int index, ArrayList<Point> inductionPath, ArrayList<Point> resultPath){
         if(men.size()>0) {
-            return men.get(index).getStrategy().getPath(men.get(index), lions, null);
+                resultPath = men.get(0).getStrategy().getPath(men.get(0), lions.get(index), inductionPath, resultPath);
+
         }
-        return new ArrayList<>();
+        return resultPath;
     }
 
-    public ArrayList<Point> calcLionPath(int index){
+    public ArrayList<Point> calcLionPath(int index, ArrayList<Point> resultPath, ArrayList<Point> manPath){
+        ArrayList<Point> result = new ArrayList<>();
+
 //        System.out.println("l  "+lions.get(index));
 //        System.out.println("strategy: "+lions.get(index).getStrategy());
 //        System.out.println("path  "+lions.get(index).getStrategy().getPath(lions.get(index), men, null));
         if(lions.get(index).getStrategy() == null){
-            return new ArrayList<>();
+
+            System.out.println("npo strategy !?!?");
+            result.add(lions.get(index).getCalcedPoint());
         }
-        return lions.get(index).getStrategy().getPath(lions.get(index), men, null);
+        if(men.size()>0) {
+            System.out.println(lions.size());
+            result = lions.get(index).getStrategy().getPath(lions.get(index), men.get(0), manPath, resultPath);
+        }
+        return result;
     }
 
     public int getLionsSize(){
         return lions.size();
+    }
+
+
+    public void setCalcedLionPosition(Point calcedLionPosition, int index){
+        System.out.println("!! calcedPoint"+calcedLionPosition);
+        lions.get(index).setCalcedPoint(calcedLionPosition);
     }
 
 }

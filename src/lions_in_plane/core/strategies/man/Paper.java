@@ -1,6 +1,7 @@
 package lions_in_plane.core.strategies.man;
 
 
+import javafx.scene.shape.Path;
 import lions_in_plane.core.plane.Lion;
 import lions_in_plane.core.plane.Man;
 import util.Point;
@@ -20,33 +21,37 @@ public class Paper implements Strategy{
     }
 
     @Override
-    public ArrayList<Point> getPath(Man man, ArrayList<Lion> lions, ArrayList<Point> prevPath) {
+    public ArrayList<Point> getPath(Man man, Lion lion, ArrayList<Point> inductionPath, ArrayList<Point> curPath) {
 
         this.radiusMan = man.getSpeed();
 
-       ArrayList<Point> result = new ArrayList<>();
+       ArrayList<Point> result;
+       if(curPath != null && curPath.size() > 0){
+           result = curPath;
+       }else{
+           result  = new ArrayList<>();
+           result.add(man.getPosition());
+       }
 
-        if(man == null || lions == null || lions.size() == 0){
+        if(man == null || lion == null){
             return result;
         }
 
         //TODO how to get goalposition?
 
 
-        for(int i = 0; i < lions.size(); i++){
 
 //            List<Lion> subLions = lions.subList(0, Math.min(lions.size(), i+1));
-            result = doMove(man, lions.get(i), result);
-        }
+            result = doMove(man, lion, inductionPath, result);
 
         //only 1 lion
 //        result = doMove(man, lions.get(0), null);
 
         //System.out.println("RESULT......all "+result);
         //System.out.println("RESULT......size "+result.size());
-        for(int i = 0; i < result.size(); i++){
+//        for(int i = 0; i < result.size(); i++){
             //System.out.println(result.get(i));
-        }
+//        }
         return result;
     }
 
@@ -57,51 +62,45 @@ public class Paper implements Strategy{
     * saveRadius            == ???   (for now 3* lion.getSpeed())
     *
     */
-    private ArrayList<Point> doMove(Man man, Lion lion, ArrayList<Point> prevPath) {
+    private ArrayList<Point> doMove(Man man, Lion lion, ArrayList<Point> inductionPath, ArrayList<Point> curPath) {
         this.saveRadius = 3* lion.getSpeed();
 
 //        Point goalPosition = new Point(0, 0);//TODO
 
-        ArrayList<Point> curPath = new ArrayList<>();
-        curPath.add(man.getPosition());
 
         //init: only 1 lion -> no exiting prevPath
-        if(prevPath == null || prevPath.size() == 0){
+        if(inductionPath == null || inductionPath.size() == 0){
             System.out.println("CASE D");
-            for(int i= 1; i <120; i++){
 //                //System.out.println("curPath in calculation: "+curPath);
-                curPath.add(goAwayFromLion(curPath.get(i-1), lion.getPosition()));
-            }
+                curPath.add(goAwayFromLion(curPath.get(curPath.size()-1), lion.getCalcedPoint()));
         } else {
 
-            for(int i= 1; i <120; i++) {
                 Point cuPosition = curPath.get(curPath.size()-1);
-                int indexGoal = (int)Math.floor(Math.floor((i / lion.getSpeed()) + 1 ) * lion.getSpeed());
-                while(indexGoal > 0.5 * prevPath.size()){
+                int indexGoal = (int)Math.floor(Math.floor((curPath.size() / lion.getSpeed()) + 1 ) * lion.getSpeed());
+                while(indexGoal > 0.5 * inductionPath.size()){
                     System.out.println(">>>>>>>>>>>>>>extent");
-                    prevPath = extendPath(prevPath);
+                    inductionPath = extendPath(inductionPath);
                 }
-                Point goalPosition = prevPath.get(indexGoal);
+                Point goalPosition = inductionPath.get(indexGoal);
 
                 System.out.println("case B boolean:");
                 System.out.println("a) "+!cuPosition.equals(goalPosition));
-                System.out.println("b) "+ (cuPosition.distanceTo(lion.getPosition()) >= saveRadius - lion.getSpeed()));
-                System.out.println("c) "+ (goInGoalDirection(cuPosition, goalPosition).distanceTo(lion.getPosition()) >= (lion.getSpeed() + cuPosition.distanceTo(lion.getPosition()))));
+                System.out.println("b) "+ (cuPosition.distanceTo(lion.getCalcedPoint()) >= saveRadius - lion.getSpeed()));
+                System.out.println("c) "+ (goInGoalDirection(cuPosition, goalPosition).distanceTo(lion.getCalcedPoint()) >= (lion.getSpeed() + cuPosition.distanceTo(lion.getCalcedPoint()))));
 
-                if (cuPosition.distanceTo(lion.getPosition()) >= saveRadius + radiusMan) {
+                if (cuPosition.distanceTo(lion.getCalcedPoint()) >= saveRadius + radiusMan) {
                     System.out.println("CASE A");
                     curPath.add(goInGoalDirection(cuPosition, goalPosition));
                     /*TODO parallel, instead of points??*/
                 } else if (!cuPosition.equals(goalPosition) &&
-                        (cuPosition.distanceTo(lion.getPosition()) >= saveRadius - lion.getSpeed()) &&
-                        (goInGoalDirection(cuPosition, goalPosition).distanceTo(lion.getPosition()) >= (lion.getSpeed() + cuPosition.distanceTo(lion.getPosition())))) {
+                        (cuPosition.distanceTo(lion.getCalcedPoint()) >= saveRadius - lion.getSpeed()) &&
+                        (goInGoalDirection(cuPosition, goalPosition).distanceTo(lion.getCalcedPoint()) >= (lion.getSpeed() + cuPosition.distanceTo(lion.getCalcedPoint())))) {
                     System.out.println("CASE B");
                     curPath.add(goInGoalDirection(cuPosition, goalPosition));
                 } else {
                     System.out.println("CASE C");
-                    curPath.add(doAvoidanceMove(cuPosition, lion.getPosition()));
+                    curPath.add(doAvoidanceMove(cuPosition, lion.getCalcedPoint()));
                 }
-            }
         }
 
         //System.out.println("return curPath.."+curPath);

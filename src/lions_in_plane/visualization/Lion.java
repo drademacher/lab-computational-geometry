@@ -64,7 +64,7 @@ public class Lion extends Shape {
         Lion.group = group;
     }
 
-    Point getPosition() {
+    public Point getPosition() {
         return position;
     }
 

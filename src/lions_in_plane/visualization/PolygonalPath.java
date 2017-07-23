@@ -28,9 +28,4 @@ public class PolygonalPath extends Shape {
     public static void setGroup(Group group) {
         PolygonalPath.group = group;
     }
-
-
-    static void clear() {
-        group.getChildren().clear();
-    }
 }

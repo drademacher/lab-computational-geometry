@@ -2,123 +2,30 @@ package lions_in_plane.visualization;
 
 import javafx.scene.paint.Color;
 import lions_in_plane.core.CoreController;
+import util.ConvexHull;
 import util.Point;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class VisualizedCoreController extends CoreController {
     private ArrayList<Man> men;
-    private ArrayList<Lion> lions;
-    private Point[] hull;
+    private List<Lion> lions;
+    private ConvexHull hull;
 
     public VisualizedCoreController() {
         this.men = new ArrayList<>();
         this.lions = new ArrayList<>();
-        this.hull = new Point[0];
+//        this.hull = new Point[0];
     }
 
-    private Point[] convexHull() {
-
-        // Sort the points from left to right and bottom to top if same x value
-        Collections.sort(lions, (o1, o2) -> {
-            if (o1.getPosition().getX() < o2.getPosition().getX() || (o1.getPosition().getX() == o2.getPosition().getX() && o1.getPosition().getY() > o2.getPosition().getY()))
-                return -1;
-            else return 1;
-        });
-
-        if (lions.size() < 3) {
-            return new Point[]{};
-        }
-
-
-        // overflow where ch has temporarily more than n+2 points
-        Point[] ch = new Point[lions.size() + 4];
-        int index = 0;
-
-        // upper part of convex hull
-        for (int l = 0; l < lions.size(); l++) {
-            ch[index] = lions.get(l).getPosition();
-            index++;
-
-            Point q = ch[index - 1];
-            for (int j = index - 2; j > 0; j--) {
-                if (isRightOf(ch[j - 1], q, ch[j]) == 1) {
-                    ch[j] = q;
-                    index--;
-                } else {
-//                    break;
-                }
-            }
-        }
-
-        // lower part of convex hull
-        // point at lions.size() - 1 is already in convex hull (right outermost point!)
-        for (int l = lions.size() - 1; l >= 0; l--) {
-            ch[index] = lions.get(l).getPosition();
-            index++;
-
-            Point q = ch[index - 1];
-            for (int j = index - 2; j > 0; j--) {
-                Point p = ch[j - 1];
-                Point r = ch[j];
-                if (isRightOf(p, q, r) == 1) {
-                    ch[j] = q;
-                    index--;
-                } else {
-//                    break;
-                }
-            }
-        }
-
-
-//        int finalIndex = index;
-//        Point[] finalCh = ch;
-//        lions.forEach(lion -> {
-//            for (int j = 0; j < finalIndex; j++) {
-//                if (finalCh[j].equals(lion.getPosition())) {
-//                    lion.getShape().setFill(Color.BLACK);
-//                }
-//            }
-//        });
-//        lions.get(0).getShape().setFill(Color.AQUA);
-
-        Point[] result = Arrays.copyOfRange(ch, 0, index - 1);
-//        System.out.println(Arrays.toString(result));
-        hull = result;
-        return result;
-    }
-
-    /**
-     * Is r right of line segment pq
-     */
-    private int isRightOf(Point p, Point q, Point r) {
-        double d = (r.getX() - p.getX()) * (q.getY() - p.getY()) - (r.getY() - p.getY()) * (q.getX() - p.getX());
-//        double determinant = p.getX() * q.getY() - p.getX() * r.getY() - p.getY() * q.getX() + p.getY() * r.getX() + q.getX() * r.getY() - q.getY() * r.getX();
-//        System.out.println(Math.signum(d));
-        return (int) Math.signum(d);
-    }
-
-    private boolean insideHull(Point p) {
-        if (hull.length < 3) {
-            System.out.println("hull to small");
-            return false;
-        }
-
-        for (int i = 0; i < hull.length; i++) {
-            if (isRightOf(hull[i], hull[i + 1], p) < 1) {
-                return false;
-            }
-        }
-
-        return true;
-    }
 
     @Override
     public void setEmptyGraph() {
         this.men = new ArrayList<>();
         this.lions = new ArrayList<>();
-        this.hull = new Point[0];
+//        this.hull = new Point[0];
     }
 
     @Override
@@ -150,9 +57,9 @@ public class VisualizedCoreController extends CoreController {
         super.createMan(coordinates);
 
         men.add(new Man(coordinates));
-        // TODO: total debug
-        ArrayList<Point> path = new ArrayList<>(Arrays.asList(hull));
-        new PolygonalPath(path, Color.BLACK);
+//        // TODO: total debug
+//        ArrayList<Point> path = new ArrayList<>(Arrays.asList(hull));
+//        new PolygonalPath(path, Color.BLACK);
     }
 
     @Override
@@ -168,9 +75,10 @@ public class VisualizedCoreController extends CoreController {
         super.createLion(coordinates);
         lions.add(new Lion(coordinates));
 
-        if (!insideHull(coordinates)) {
-            ConvexHull.clear();
-            new ConvexHull(convexHull());
+        if (hull == null || !hull.insideHull(coordinates)) {
+            Polygon.clear();
+            hull = new ConvexHull(lions);
+            new Polygon(hull.getPoints());
         }
     }
 
@@ -181,9 +89,10 @@ public class VisualizedCoreController extends CoreController {
         lions.stream().filter(lion -> lion.getPosition() == coordinates).forEach(Lion::clear);
         lions.removeIf(lion -> lion.getPosition() == coordinates);
 
-        if (!insideHull(coordinates)) {
-            ConvexHull.clear();
-            new ConvexHull(convexHull());
+        if (hull == null || !hull.insideHull(coordinates)) {
+            hull = new ConvexHull(lions);
+            Polygon.clear();
+            new Polygon(hull.getPoints());
         }
     }
 
@@ -199,8 +108,11 @@ public class VisualizedCoreController extends CoreController {
         super.relocateMan(from, to);
 
         lions.stream().filter(e -> e.getPosition() == from).forEach(e -> e.setPosition(to));
-        ConvexHull.clear();
-        new ConvexHull(convexHull());
+
+        hull = new ConvexHull(lions);
+        Polygon.clear();
+        new Polygon(hull.getPoints());
+
     }
 
     @Override
@@ -219,8 +131,6 @@ public class VisualizedCoreController extends CoreController {
     @Override
     public ArrayList<ArrayList<Point>> calcAllPaths() {
         ArrayList<ArrayList<Point>> allPaths = super.calcAllPaths();
-
-        PolygonalPath.clear();
 
         //draw lion paths (position >= 1 in list)
         if (allPaths.size() > 1) {

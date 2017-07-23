@@ -392,7 +392,7 @@ class Controller {
 
         Man.setGroup(entityShapes);
         Lion.setGroup(entityShapes);
-        ConvexHull.setGroup(convexHullShapes);
+        Polygon.setGroup(convexHullShapes);
         PolygonalPath.setGroup(completePathShapes);
 //
 //        ShapedBigVertex.setMainPane(zoomScrollPane);
@@ -416,6 +416,7 @@ class Controller {
     private void clearGraphShapes() {
         entityShapes.getChildren().clear();
         convexHullShapes.getChildren().clear();
+        completePathShapes.getChildren().clear();
 //        vertexShapes.getChildren().clear();
 //        edgeShapes.getChildren().clear();
 //        entityShapes.getChildren().clear();

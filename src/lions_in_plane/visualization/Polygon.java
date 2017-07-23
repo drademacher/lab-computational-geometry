@@ -2,19 +2,18 @@ package lions_in_plane.visualization;
 
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Polygon;
 import util.Point;
 
 
-public class ConvexHull extends Shape {
+public class Polygon extends Shape {
     private static Group group = new Group();
 
     private Point[] position;
-    private Polygon shape;
+    private javafx.scene.shape.Polygon shape;
 
-    ConvexHull(Point[] points) {
+    Polygon(Point[] points) {
         this.position = points;
-        this.shape = new Polygon();
+        this.shape = new javafx.scene.shape.Polygon();
         shape.setStroke(Color.GREEN);
         shape.setFill(Color.TRANSPARENT);
         for (Point p : points) {
@@ -26,7 +25,7 @@ public class ConvexHull extends Shape {
     }
 
     public static void setGroup(Group group) {
-        ConvexHull.group = group;
+        Polygon.group = group;
     }
 
 

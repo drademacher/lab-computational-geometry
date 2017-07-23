@@ -88,6 +88,7 @@ class Controller {
 
                 modeToggleButton.setText("Play Mode");
                 buttonBar.getChildren().addAll(modeToggleButton, setGraphButton, setParameterButton, setViewMenu);
+                completePathShapes.getChildren().clear();
             }
         });
 

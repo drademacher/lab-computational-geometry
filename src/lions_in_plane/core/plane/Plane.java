@@ -15,7 +15,6 @@ public class Plane {
     private ArrayList<Lion> lions;
 
 
-
     public Plane() {
         this.men = new ArrayList<>();
         this.lions = new ArrayList<>();
@@ -24,7 +23,7 @@ public class Plane {
     public void addMan(Point pos, double speed) {
         men.add(new Man(pos, speed));
         setManStrategy(pos, StrategyEnumMan.Paper);
-        System.out.println("man position @ "+pos);
+        System.out.println("man position @ " + pos);
     }
 
     public void removeMan(Point coordinates) {
@@ -40,17 +39,17 @@ public class Plane {
         lions.removeIf(lion -> lion.getPosition() == coordinates);
     }
 
-    public void setManStrategy(Point coordinates, StrategyEnumMan strategyEnum){
+    public void setManStrategy(Point coordinates, StrategyEnumMan strategyEnum) {
         Man man = getManByCoordinate(coordinates);
-        if(man == null){
+        if (man == null) {
             return;
         }
         man.setStrategy(strategyEnum.getStrategy());
     }
 
-    public void setLionStrategy(Point coordinates, StrategyEnumLion strategyEnum){
+    public void setLionStrategy(Point coordinates, StrategyEnumLion strategyEnum) {
         Lion lion = getLionByCoordinate(coordinates);
-        if(lion == null){
+        if (lion == null) {
             System.out.println("no lion, no strategy");
             return;
         }
@@ -69,7 +68,7 @@ public class Plane {
         return null;
     }
 
-    public Lion getLionByCoordinate(Point coordinates){
+    public Lion getLionByCoordinate(Point coordinates) {
         if (coordinates == null) {
             return null;
         }
@@ -81,34 +80,34 @@ public class Plane {
         return null;
     }
 
-    public ArrayList<Point> calcManPath(int index, ArrayList<Point> inductionPath, ArrayList<Point> resultPath){
-        if(men.size()>0) {
-                resultPath = men.get(0).getStrategy().getPath(men.get(0), lions.get(index), inductionPath, resultPath);
+    public ArrayList<Point> calcManPath(int index, ArrayList<Point> inductionPath, ArrayList<Point> resultPath) {
+        if (men.size() > 0) {
+            resultPath = men.get(0).getStrategy().getPath(men.get(0), lions.get(index), inductionPath, resultPath);
 
         }
         return resultPath;
     }
 
-    public ArrayList<Point> calcLionPath(int index, ArrayList<Point> resultPath, ArrayList<Point> manPath){
-        if(lions.get(index).getStrategy() == null){
+    public ArrayList<Point> calcLionPath(int index, ArrayList<Point> resultPath, ArrayList<Point> manPath) {
+        if (lions.get(index).getStrategy() == null) {
             //TODO should not be possible.... but some lions does not have a strategy
-            if(resultPath == null){
+            if (resultPath == null) {
                 resultPath = new ArrayList<>();
             }
             resultPath.add(lions.get(index).getPosition());
             return resultPath;
         }
-        if(men.size()>0) {
+        if (men.size() > 0) {
             resultPath = lions.get(index).getStrategy().getPath(lions.get(index), men.get(0), manPath, resultPath);
         }
         return resultPath;
     }
 
-    public int getLionsSize(){
+    public int getLionsSize() {
         return lions.size();
     }
 
-    public void setCalculatedLionPath(ArrayList<Point> calculatedLionPath, int index){
+    public void setCalculatedLionPath(ArrayList<Point> calculatedLionPath, int index) {
         lions.get(index).setCalculatedPath(calculatedLionPath);
     }
 

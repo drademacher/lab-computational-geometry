@@ -6,9 +6,9 @@ import util.Point;
 
 import java.util.ArrayList;
 
-public class Wait implements Strategy{
+public class Wait implements Strategy {
 
-    public Wait(){
+    public Wait() {
 
     }
 

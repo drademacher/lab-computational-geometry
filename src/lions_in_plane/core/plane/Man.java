@@ -13,7 +13,7 @@ public class Man extends Entity {
 
     @Override
     public String toString() {
-        return "man@"+getPosition();
+        return "man@" + getPosition();
     }
 
     public Strategy getStrategy() {

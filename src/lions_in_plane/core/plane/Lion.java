@@ -22,7 +22,7 @@ public class Lion extends Entity {
 
     @Override
     public String toString() {
-        return "lion@"+getPosition();
+        return "lion@" + getPosition();
     }
 
     public Strategy getStrategy() {

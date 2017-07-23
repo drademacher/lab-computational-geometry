@@ -218,18 +218,18 @@ public class VisualizedCoreController extends CoreController {
 
     @Override
     public ArrayList<ArrayList<Point>> calcAllPaths() {
-        ArrayList<ArrayList<Point>> allPaths =  super.calcAllPaths();
+        ArrayList<ArrayList<Point>> allPaths = super.calcAllPaths();
 
         PolygonalPath.clear();
 
         //draw lion paths (position >= 1 in list)
-        if(allPaths.size() > 1){
-            for(int i = 1; i < allPaths.size(); i++){
+        if (allPaths.size() > 1) {
+            for (int i = 1; i < allPaths.size(); i++) {
                 new PolygonalPath(allPaths.get(i), Color.RED);
             }
         }
         // draw man path (position == = in list)
-        if(allPaths.size() > 0){
+        if (allPaths.size() > 0) {
             new PolygonalPath(allPaths.get(0), Color.BLUE);
         }
 

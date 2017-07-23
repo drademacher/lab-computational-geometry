@@ -76,7 +76,7 @@ public class CoreController {
         // already fixed problems !
 //        Point[] lions = new Point[]{new Point(385.0, 115.0), new Point(170.0, 90.0), new Point(225.0, 455.0), new Point(295.0, 50.0), new Point(415.0, 290.0), new Point(95.0, 220.0), new Point(155.0, 495.0), new Point(225.0, 360.0), new Point(280.0, 355.0), new Point(470.0, 485.0), new Point(295.0, 50.0), new Point(270.0, 80.0), new Point(185.0, 55.0), new Point(20.0, 265.0), new Point(40.0, 445.0), new Point(210.0, 245.0)};
 
-        Point[] lions = new Point[]{new Point(405.0, 165.0), new Point(75.0, 175.0), new Point(275.0, 235.0), new Point(435.0, 290.0), new Point(295.0, 150.0), new Point(20.0, 10.0), new Point(175.0, 255.0), new Point(480.0, 410.0), new Point(20.0, 425.0), new Point(190.0, 65.0), new Point(315.0, 0.0), new Point(235.0, 255.0), new Point(150.0, 260.0), new Point(440.0, 140.0), new Point(70.0, 170.0), new Point(310.0, 415.0), };
+        Point[] lions = new Point[]{new Point(405.0, 165.0), new Point(75.0, 175.0), new Point(275.0, 235.0), new Point(435.0, 290.0), new Point(295.0, 150.0), new Point(20.0, 10.0), new Point(175.0, 255.0), new Point(480.0, 410.0), new Point(20.0, 425.0), new Point(190.0, 65.0), new Point(315.0, 0.0), new Point(235.0, 255.0), new Point(150.0, 260.0), new Point(440.0, 140.0), new Point(70.0, 170.0), new Point(310.0, 415.0),};
 
         for (Point p : lions) {
             createLion(new Point(p.getX(), p.getY()));
@@ -188,17 +188,17 @@ public class CoreController {
         // TODO: IMPLEMENT THIS
     }
 
-    public void setManStrategy(Point coordinates, StrategyEnumMan strategyEnum){
+    public void setManStrategy(Point coordinates, StrategyEnumMan strategyEnum) {
         // TODO: IMPLEMENT THIS
         plane.setManStrategy(coordinates, strategyEnum);
     }
 
-    public void setLionStrategy(){
+    public void setLionStrategy() {
         // TODO: IMPLEMENT THIS
     }
 
 
-    public ArrayList<ArrayList<Point>> calcAllPaths(){
+    public ArrayList<ArrayList<Point>> calcAllPaths() {
 
         ArrayList<Point> resultPath = new ArrayList<>();
         ArrayList<Point> inductionPath;
@@ -214,7 +214,7 @@ public class CoreController {
             //TODO calc the path until the man escaped OR is caught
             //TODO if (last) lion is to close to end of line
 //            while ((resultPath.size() == 0 || insideHull(resultPath.get(resultPath.size() - 1))) && steps < 500) {
-            for(int i = 0; i < 200; i++){
+            for (int i = 0; i < 200; i++) {
                 steps++;
 
                 resultPath = this.plane.calcManPath(k, inductionPath, resultPath);

@@ -16,13 +16,13 @@ public class Greedy implements Strategy {
         Point curPosition;
         Point curMan;
 
-        if (manPath != null &&  manPath.size() > 0) {
+        if (manPath != null && manPath.size() > 0) {
             curMan = manPath.get(manPath.size() - 1);
         } else {
             curMan = man.getPosition();
         }
 
-        if (prevPath != null &&  prevPath.size() > 0) {
+        if (prevPath != null && prevPath.size() > 0) {
             curPosition = prevPath.get(prevPath.size() - 1);
         } else {
             curPosition = lion.getPosition();

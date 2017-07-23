@@ -211,54 +211,28 @@ public class VisualizedCoreController extends CoreController {
 
     @Override
     public boolean simulateStep() {
-
-        ArrayList<Point> resultPath = new ArrayList<>();
-        ArrayList<Point> inductionPath;
-        Map<Integer, ArrayList<Point>> lionPaths = new HashMap<>();
-
-        for (int k = 0; k < super.getLionsSize(); k++) {
+        // TODO: IMPLEMENT THIS
+        return super.simulateStep();
+    }
 
 
-            inductionPath = resultPath;
-            resultPath = new ArrayList<>();
-            lionPaths.clear();
-            System.out.println("clear#########################");
+    @Override
+    public ArrayList<ArrayList<Point>> calcAllPaths() {
+        ArrayList<ArrayList<Point>> allPaths =  super.calcAllPaths();
 
+        PolygonalPath.clear();
 
-            int steps = 0;
-//            while ((resultPath.size() == 0 || insideHull(resultPath.get(resultPath.size() - 1))) && steps < 500) {
-            for(int i = 0; i < 200; i++){
-                steps++;
-
-                resultPath = super.calcManPath(k, inductionPath, resultPath);
-
-                System.out.println("draw path..(result). " + resultPath);
-
-
-
-                for (int j = 0; j <= k; j++) {
-                    lionPaths.put(j, super.calcLionPath(j, lionPaths.get(j), resultPath));
-                    System.out.println("LION PATH " + lionPaths.get(j));
-
-                    super.setCalcedLionPosition(lionPaths.get(j).get(lionPaths.get(j).size() - 1), j);
-
-                }
-
-
-                System.out.println(steps < 500);
-                System.out.println(resultPath.size() == 0);
-                System.out.println(insideHull(resultPath.get(resultPath.size() - 1)));
-                System.out.println((resultPath.size() == 0 || insideHull(resultPath.get(resultPath.size() - 1))) && steps < 500);
+        //draw lion paths (position >= 1 in list)
+        if(allPaths.size() > 1){
+            for(int i = 1; i < allPaths.size(); i++){
+                new PolygonalPath(allPaths.get(i), Color.RED);
             }
         }
+        // draw man path (position == = in list)
+        if(allPaths.size() > 0){
+            new PolygonalPath(allPaths.get(0), Color.BLUE);
+        }
 
-        PolygonalPath.clear();
-        PolygonalPath.clear();
-
-        lionPaths.forEach((k, v) -> {
-            new PolygonalPath(v, Color.RED);
-        });
-        new PolygonalPath(resultPath, Color.BLUE);
-        return super.simulateStep();
+        return allPaths;
     }
 }

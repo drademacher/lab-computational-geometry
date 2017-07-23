@@ -24,6 +24,7 @@ public class Plane {
     public void addMan(Point pos, double speed) {
         men.add(new Man(pos, speed));
         setManStrategy(pos, StrategyEnumMan.Paper);
+        System.out.println("man position @ "+pos);
     }
 
     public void removeMan(Point coordinates) {
@@ -50,13 +51,13 @@ public class Plane {
     public void setLionStrategy(Point coordinates, StrategyEnumLion strategyEnum){
         Lion lion = getLionByCoordinate(coordinates);
         if(lion == null){
+            System.out.println("no lion, no strategy");
             return;
         }
         lion.setStrategy(strategyEnum.getStrategy());
     }
 
     public Man getManByCoordinate(Point coordinates) {
-        // TODO: IMPLEMENT THIS
         if (coordinates == null) {
             return null;
         }
@@ -69,7 +70,6 @@ public class Plane {
     }
 
     public Lion getLionByCoordinate(Point coordinates){
-        // TODO: IMPLEMENT THIS
         if (coordinates == null) {
             return null;
         }
@@ -78,7 +78,6 @@ public class Plane {
                 return lion;
             }
         }
-        System.out.println("getLionCoord  is NULL");
         return null;
     }
 
@@ -91,34 +90,26 @@ public class Plane {
     }
 
     public ArrayList<Point> calcLionPath(int index, ArrayList<Point> resultPath, ArrayList<Point> manPath){
-        ArrayList<Point> result = new ArrayList<>();
-//        System.out.println("l  "+lions.get(index));
-//        System.out.println("strategy: "+lions.get(index).getStrategy());
-//        System.out.println("path  "+lions.get(index).getStrategy().getPath(lions.get(index), men, null));
         if(lions.get(index).getStrategy() == null){
-            System.out.println("npo strategy !?!?");
-            result.add(lions.get(index).getCalcedPoint());
-            return result;
+            //TODO should not be possible.... but some lions does not have a strategy
+            if(resultPath == null){
+                resultPath = new ArrayList<>();
+            }
+            resultPath.add(lions.get(index).getPosition());
+            return resultPath;
         }
         if(men.size()>0) {
-            System.out.println("lions size:"+lions.size());
-            System.out.println("index:"+index);
-            System.out.println("manPath:"+manPath);
-            System.out.println("resultPath:"+resultPath);
-            System.out.println("first man:"+men.get(0));
-            System.out.println("strat: "+lions.get(index).getStrategy());
-            result = lions.get(index).getStrategy().getPath(lions.get(index), men.get(0), manPath, resultPath);
+            resultPath = lions.get(index).getStrategy().getPath(lions.get(index), men.get(0), manPath, resultPath);
         }
-        return result;
+        return resultPath;
     }
 
     public int getLionsSize(){
         return lions.size();
     }
 
-    public void setCalcedLionPosition(Point calcedLionPosition, int index){
-        System.out.println("!! calcedPoint"+calcedLionPosition);
-        lions.get(index).setCalcedPoint(calcedLionPosition);
+    public void setCalculatedLionPath(ArrayList<Point> calculatedLionPath, int index){
+        lions.get(index).setCalculatedPath(calculatedLionPath);
     }
 
 

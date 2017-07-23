@@ -20,7 +20,6 @@ public class Greedy implements Strategy {
             curMan = manPath.get(manPath.size() - 1);
         } else {
             curMan = man.getPosition();
-            System.out.println("RESET");
         }
 
         if (prevPath != null &&  prevPath.size() > 0) {
@@ -29,19 +28,14 @@ public class Greedy implements Strategy {
             curPosition = lion.getPosition();
             prevPath = new ArrayList<>();
         }
-        //        System.out.println("## go to goal ");
-//        System.out.println("cur: "+curPosition);
-//        System.out.println("goal: "+goalPosition);
+
         Point vector = new Point(curMan.getX() - curPosition.getX(), curMan.getY() - curPosition.getY());
         double vectorLength = vector.length();
 
         Point unitVector = vector.mul(1 / vectorLength);
         Point stepVector = unitVector.mul(lion.getSpeed());
 
-//        System.out.println("step" + stepVector);
-
         Point result = curPosition.add(stepVector);
-//        System.out.println("result: "+result);
         prevPath.add(result);
 
         return prevPath;
@@ -57,9 +51,6 @@ public class Greedy implements Strategy {
             return true;
         }
 
-        System.out.println("false");
-        System.out.println(new Point(manCoord.getX() - lionCoord.getX(), manCoord.getY() - lionCoord.getY()).length());
-        System.out.println(lion.getSpeed());
         return false;
     }
 }

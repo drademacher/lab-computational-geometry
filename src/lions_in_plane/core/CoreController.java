@@ -6,8 +6,9 @@ import util.Point;
 import util.Random;
 
 import java.io.File;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class CoreController {
@@ -49,6 +50,8 @@ public class CoreController {
         createLion(new Point(100, 140));
 
 
+        createMan(new Point(161, 113));
+
 
     }
 
@@ -63,6 +66,8 @@ public class CoreController {
         for (Point p : lions) {
             createLion(new Point(p.getX(), p.getY()));
         }
+
+        createMan(new Point(171, 337));
     }
 
     public void setDefaultGraph3() {
@@ -76,6 +81,8 @@ public class CoreController {
         for (Point p : lions) {
             createLion(new Point(p.getX(), p.getY()));
         }
+
+        createMan(new Point(193, 101));
     }
 
     public void setRandomConfiguration() {
@@ -190,19 +197,43 @@ public class CoreController {
         // TODO: IMPLEMENT THIS
     }
 
-    public ArrayList<Point> calcManPath(int index, ArrayList<Point> inductionPath, ArrayList<Point> resultPath){
-        return plane.calcManPath(index, inductionPath, resultPath);
-    }
-    public ArrayList<Point> calcLionPath(int index, ArrayList<Point> resultPath, ArrayList<Point> manPath){
-        return plane.calcLionPath(index, resultPath, manPath);
-    }
 
-    public int getLionsSize(){
-        return this.plane.getLionsSize();
-    }
+    public ArrayList<ArrayList<Point>> calcAllPaths(){
 
+        ArrayList<Point> resultPath = new ArrayList<>();
+        ArrayList<Point> inductionPath;
+        Map<Integer, ArrayList<Point>> lionPaths = new HashMap<>();
 
-    public void setCalcedLionPosition(Point clacedLionPoint, int index){
-        this.plane.setCalcedLionPosition(clacedLionPoint, index);
+        for (int k = 0; k < this.plane.getLionsSize(); k++) {
+
+            inductionPath = resultPath;
+            resultPath = new ArrayList<>();
+            lionPaths.clear();
+
+            int steps = 0;
+            //TODO calc the path until the man escaped OR is caught
+            //TODO if (last) lion is to close to end of line
+//            while ((resultPath.size() == 0 || insideHull(resultPath.get(resultPath.size() - 1))) && steps < 500) {
+            for(int i = 0; i < 200; i++){
+                steps++;
+
+                resultPath = this.plane.calcManPath(k, inductionPath, resultPath);
+
+                for (int j = 0; j <= k; j++) {
+                    lionPaths.put(j, this.plane.calcLionPath(j, lionPaths.get(j), resultPath));
+                    this.plane.setCalculatedLionPath(lionPaths.get(j), j);
+                }
+            }
+        }
+
+        ArrayList<ArrayList<Point>> allPaths = new ArrayList<>();
+        allPaths.add(resultPath);
+
+        lionPaths.forEach((k, v) -> {
+            allPaths.add(v);
+        });
+
+        return allPaths;
+
     }
 }

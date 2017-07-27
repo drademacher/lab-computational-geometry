@@ -58,10 +58,7 @@ public class CoreController {
     public void setDefaultGraph2() {
         setEmptyGraph();
 
-        // already fixed problems !
         Point[] lions = new Point[]{new Point(385.0, 115.0), new Point(170.0, 90.0), new Point(225.0, 455.0), new Point(295.0, 50.0), new Point(415.0, 290.0), new Point(95.0, 220.0), new Point(155.0, 495.0), new Point(225.0, 360.0), new Point(280.0, 355.0), new Point(470.0, 485.0), new Point(295.0, 50.0), new Point(270.0, 80.0), new Point(185.0, 55.0), new Point(20.0, 265.0), new Point(40.0, 445.0), new Point(210.0, 245.0)};
-
-//        Point[] lions = new Point[]{new Point(405.0, 165.0), new Point(75.0, 175.0), new Point(275.0, 235.0), new Point(435.0, 290.0), new Point(295.0, 150.0), new Point(20.0, 10.0), new Point(175.0, 255.0), new Point(480.0, 410.0), new Point(20.0, 425.0), new Point(190.0, 65.0), new Point(315.0, 0.0), new Point(235.0, 255.0), new Point(150.0, 260.0), new Point(440.0, 140.0), new Point(70.0, 170.0), new Point(310.0, 415.0), };
 
         for (Point p : lions) {
             createLion(new Point(p.getX(), p.getY()));
@@ -72,9 +69,6 @@ public class CoreController {
 
     public void setDefaultGraph3() {
         setEmptyGraph();
-
-        // already fixed problems !
-//        Point[] lions = new Point[]{new Point(385.0, 115.0), new Point(170.0, 90.0), new Point(225.0, 455.0), new Point(295.0, 50.0), new Point(415.0, 290.0), new Point(95.0, 220.0), new Point(155.0, 495.0), new Point(225.0, 360.0), new Point(280.0, 355.0), new Point(470.0, 485.0), new Point(295.0, 50.0), new Point(270.0, 80.0), new Point(185.0, 55.0), new Point(20.0, 265.0), new Point(40.0, 445.0), new Point(210.0, 245.0)};
 
         Point[] lions = new Point[]{new Point(405.0, 165.0), new Point(75.0, 175.0), new Point(275.0, 235.0), new Point(435.0, 290.0), new Point(295.0, 150.0), new Point(20.0, 10.0), new Point(175.0, 255.0), new Point(480.0, 410.0), new Point(20.0, 425.0), new Point(190.0, 65.0), new Point(315.0, 0.0), new Point(235.0, 255.0), new Point(150.0, 260.0), new Point(440.0, 140.0), new Point(70.0, 170.0), new Point(310.0, 415.0),};
 
@@ -169,11 +163,11 @@ public class CoreController {
     }
 
     public void relocateMan(Point from, Point to) {
-        // TODO: IMPLEMENT THIS
+        plane.getManByCoordinate(from).setPosition(to);
     }
 
     public void relocateLion(Point from, Point to) {
-        // TODO: IMPLEMENT THIS
+        plane.getLionByCoordinate(from).setPosition(to);
     }
 
     public void setLionRange(Point coordinates, double range) {

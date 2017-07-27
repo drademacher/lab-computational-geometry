@@ -105,7 +105,7 @@ public class VisualizedCoreController extends CoreController {
 
     @Override
     public void relocateLion(Point from, Point to) {
-        super.relocateMan(from, to);
+        super.relocateLion(from, to);
 
         lions.stream().filter(e -> e.getPosition() == from).forEach(e -> e.setPosition(to));
 
@@ -132,12 +132,20 @@ public class VisualizedCoreController extends CoreController {
     public ArrayList<ArrayList<Point>> calcAllPaths() {
         ArrayList<ArrayList<Point>> allPaths = super.calcAllPaths();
 
+        Point[] newHull = new Point[allPaths.size() - 1];
+
         //draw lion paths (position >= 1 in list)
         if (allPaths.size() > 1) {
             for (int i = 1; i < allPaths.size(); i++) {
+                newHull[i - 1] = allPaths.get(i).get(allPaths.get(i).size() - 1);
                 new PolygonalPath(allPaths.get(i), Color.RED);
             }
         }
+
+        hull = new ConvexHull(newHull);
+        Polygon.clear();
+        new Polygon(hull.getPoints());
+
         // draw man path (position == = in list)
         if (allPaths.size() > 0) {
             new PolygonalPath(allPaths.get(0), Color.BLUE);

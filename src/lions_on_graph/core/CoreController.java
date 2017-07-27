@@ -666,6 +666,13 @@ public class CoreController {
         return Lion.getDefaultLionRange();
     }
 
+    public int getExactManDistance() {
+        if (Man.keepDistanceExact()) {
+            return Man.getDistance();
+        }
+        return 0;
+    }
+
     public void setExactManDistance(int distance) {
         if (distance < 0) {
             return;
@@ -674,26 +681,19 @@ public class CoreController {
         Man.setKeepDistanceExact(true);
     }
 
+    public int getMinimumManDistance() {
+        if (Man.keepDistanceExact()) {
+            return 0;
+        }
+        return Man.getDistance();
+    }
+
     public void setMinimumManDistance(int distance) {
         if (distance < 0) {
             return;
         }
         Man.setDistance(distance);
         Man.setKeepDistanceExact(false);
-    }
-
-    public int getExactManDistance() {
-        if (Man.keepDistanceExact()) {
-            return Man.getDistance();
-        }
-        return 0;
-    }
-
-    public int getMinimumManDistance() {
-        if (Man.keepDistanceExact()) {
-            return 0;
-        }
-        return Man.getDistance();
     }
 
     public void removeManDistance() {
@@ -931,11 +931,11 @@ public class CoreController {
             //config line
             currentLine = br.readLine();
             if (currentLine == null) {
-                throw new Error("wrong file input version: "+CoreController.API_VERSION+" expected");
+                throw new Error("wrong file input version: " + CoreController.API_VERSION + " expected");
             }
             String[] lineElements = currentLine.split("##");
             if (!lineElements[2].equals(CoreController.API_VERSION)) {
-                throw new Error("wrong file  input version: "+CoreController.API_VERSION+" expected");
+                throw new Error("wrong file  input version: " + CoreController.API_VERSION + " expected");
             }
 
             // valid version, read file
@@ -999,7 +999,7 @@ public class CoreController {
 
             bufferedWriter = new BufferedWriter(new FileWriter(file));
 
-            bufferedWriter.write("C##>>>>>Configuration for LionsOnGraph Applet<<<<<##"+ CoreController.API_VERSION);
+            bufferedWriter.write("C##>>>>>Configuration for LionsOnGraph Applet<<<<<##" + CoreController.API_VERSION);
             bufferedWriter.newLine();
             bufferedWriter.flush();
 

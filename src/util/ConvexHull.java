@@ -104,14 +104,13 @@ public class ConvexHull {
     }
 
 
-
     public boolean insideHull(Point p) {
         if (hull.length < 3) {
 //            System.out.println("hull to small");
             return false;
         }
 
-        for (int i = 0; i < hull.length-1; i++) {
+        for (int i = 0; i < hull.length - 1; i++) {
             if (isRightOf(hull[i], hull[i + 1], p) < 1) {
                 return false;
             }

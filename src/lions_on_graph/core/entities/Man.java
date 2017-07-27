@@ -39,12 +39,12 @@ public class Man extends Entity {
         return keepDistanceExact;
     }
 
-    public static void setDefaultStrategy(CoreController.ManStrategy defaultStrategy){
-           Man.defaultStrategy = defaultStrategy;
+    public static CoreController.ManStrategy getDefaultStrategy() {
+        return Man.defaultStrategy;
     }
 
-    public static CoreController.ManStrategy getDefaultStrategy(){
-        return Man.defaultStrategy;
+    public static void setDefaultStrategy(CoreController.ManStrategy defaultStrategy) {
+        Man.defaultStrategy = defaultStrategy;
     }
 
     @Override

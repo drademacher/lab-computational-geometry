@@ -80,7 +80,7 @@ public class Plane {
     public ArrayList<Point> calcManPath(int index, ArrayList<Point> inductionPath, ArrayList<Point> resultPath) {
         if (men.size() > 0) {
             resultPath = men.get(0).getStrategy().getPath(men.get(0), lions.get(index), inductionPath, resultPath);
-        }else{
+        } else {
             return new ArrayList<>();
         }
         return resultPath;
@@ -97,8 +97,10 @@ public class Plane {
         }
         if (men.size() > 0) {
             resultPath = lions.get(index).getStrategy().getPath(lions.get(index), men.get(0), manPath, resultPath);
-        }else{
-            resultPath = new ArrayList<Point>(){{add(lions.get(index).getPosition());}};
+        } else {
+            resultPath = new ArrayList<Point>() {{
+                add(lions.get(index).getPosition());
+            }};
         }
         return resultPath;
     }

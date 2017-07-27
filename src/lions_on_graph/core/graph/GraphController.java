@@ -26,6 +26,16 @@ public class GraphController {
         return idCounter;
     }
 
+    public static int getDefaultEdgeWeight() {
+        return GraphController.defaultEdgeWeight;
+    }
+
+    public static void setDefaultEdgeWeight(int defaultEdgeWeight) {
+        if (defaultEdgeWeight < 0) {
+            return;
+        }
+        GraphController.defaultEdgeWeight = defaultEdgeWeight;
+    }
 
     public BigVertex relocateVertex(BigVertex vertex, Point newCoordinate) {
 
@@ -270,7 +280,6 @@ public class GraphController {
         return null;
     }
 
-
     private Edge removeEdge(Edge edge) {
 
         BigVertex vertex1 = edge.getVertices()[0];
@@ -316,7 +325,6 @@ public class GraphController {
 
         return edge;
     }
-
 
     public BigVertex getBigVertexByCoordinate(Point coordinate) {
         return getBigVertexByCoordinate(coordinate, BIG_VERTEX_RADIUS);
@@ -380,17 +388,6 @@ public class GraphController {
 
     public ArrayList<SmallVertex> getSmallVertices() {
         return smallVertices;
-    }
-
-    public static int getDefaultEdgeWeight() {
-        return GraphController.defaultEdgeWeight;
-    }
-
-    public static void setDefaultEdgeWeight(int defaultEdgeWeight) {
-        if (defaultEdgeWeight < 0) {
-            return;
-        }
-        GraphController.defaultEdgeWeight = defaultEdgeWeight;
     }
 
     /* ***********************************

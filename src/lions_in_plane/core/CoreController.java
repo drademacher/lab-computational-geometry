@@ -99,11 +99,11 @@ public class CoreController {
             //config line
             currentLine = br.readLine();
             if (currentLine == null) {
-                throw new Error("wrong file input version: "+CoreController.API_VERSION+" expected");
+                throw new Error("wrong file input version: " + CoreController.API_VERSION + " expected");
             }
             String[] lineElements = currentLine.split("##");
             if (!lineElements[2].equals(CoreController.API_VERSION)) {
-                throw new Error("wrong file  input version: "+CoreController.API_VERSION+" expected");
+                throw new Error("wrong file  input version: " + CoreController.API_VERSION + " expected");
             }
 
             // valid version, read file
@@ -120,7 +120,7 @@ public class CoreController {
 //                        setManStrategy(pos, lineElements[3]);
                         setManSpeed(pos, Double.parseDouble(lineElements[4]));
 
-                        System.out.println("" + new Point(Double.parseDouble(lineElements[1]), Double.parseDouble(lineElements[2]))+ " ## " +  Double.parseDouble(lineElements[4]));
+                        System.out.println("" + new Point(Double.parseDouble(lineElements[1]), Double.parseDouble(lineElements[2])) + " ## " + Double.parseDouble(lineElements[4]));
                         break;
                     case "L":
                         createLion(pos);
@@ -142,21 +142,20 @@ public class CoreController {
         try {
             bufferedWriter = new BufferedWriter(new FileWriter(selectedFile));
 
-            bufferedWriter.write("C##>>>>>Configuration for LionsInPlane Applet<<<<<##"+ API_VERSION);
+            bufferedWriter.write("C##>>>>>Configuration for LionsInPlane Applet<<<<<##" + API_VERSION);
             bufferedWriter.newLine();
             bufferedWriter.flush();
 
 
-
             for (Man man : plane.getMen()) {
-                System.out.println("M##" + man.getPosition().getX() + "##" + man.getPosition().getY() + "##" + man.getStrategy().toString() + "##" + man.getSpeed());
+//                System.out.println("M##" + man.getPosition().getX() + "##" + man.getPosition().getY() + "##" + man.getStrategy().toString() + "##" + man.getSpeed());
                 bufferedWriter.write("M##" + man.getPosition().getX() + "##" + man.getPosition().getY() + "##" + man.getStrategy().toString() + "##" + man.getSpeed());
                 bufferedWriter.newLine();
                 bufferedWriter.flush();
             }
 
             for (Lion lion : plane.getLions()) {
-                bufferedWriter.write("L##" + lion.getPosition().getX() + "##" + lion.getPosition().getY() + "##" + lion.getStrategy().toString() + "##" + lion.getSpeed() + "##" + lion.getRange() );
+                bufferedWriter.write("L##" + lion.getPosition().getX() + "##" + lion.getPosition().getY() + "##" + lion.getStrategy().toString() + "##" + lion.getSpeed() + "##" + lion.getRange());
                 bufferedWriter.newLine();
                 bufferedWriter.flush();
             }

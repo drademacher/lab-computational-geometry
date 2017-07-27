@@ -19,7 +19,7 @@ public class LionStrategyClever extends StrategyLion {
 
     @Override
     protected ArrayList<Vertex> calculatePossibleSteps() {
-        System.out.println("### "+lion);
+        System.out.println("### " + lion);
         Vertex currentPosition = lion.getCurrentPosition();
         int steps = Integer.MAX_VALUE;
         int stepsToBigVertex = Integer.MAX_VALUE;
@@ -28,21 +28,21 @@ public class LionStrategyClever extends StrategyLion {
             int calculatedSteps = helper.BFSToMen(possibleTarget) + helper.getDistanceBetween(currentPosition, possibleTarget);
             if (calculatedSteps < steps) {
                 boolean checkLions = true;
-                for(Lion otherLion : coreController.getLions()){
+                for (Lion otherLion : coreController.getLions()) {
                     //other lion
-                    if(! lion.equals(otherLion)){
-                        if(helper.getDistanceBetween(possibleTarget, otherLion.getCurrentPosition()) <  helper.getDistanceBetween(currentPosition, possibleTarget)){
+                    if (!lion.equals(otherLion)) {
+                        if (helper.getDistanceBetween(possibleTarget, otherLion.getCurrentPosition()) < helper.getDistanceBetween(currentPosition, possibleTarget)) {
                             checkLions = false;
-                        } else if(helper.getDistanceBetween(possibleTarget, otherLion.getCurrentPosition()) ==  helper.getDistanceBetween(currentPosition, possibleTarget)){
+                        } else if (helper.getDistanceBetween(possibleTarget, otherLion.getCurrentPosition()) == helper.getDistanceBetween(currentPosition, possibleTarget)) {
                             Vertex calculatedPosition = otherLion.getCalculatedPosition();
-                            if(calculatedPosition != null && helper.getDistanceBetween(possibleTarget, calculatedPosition) < helper.getDistanceBetween(calculatedPosition, otherLion.getCurrentPosition())){
+                            if (calculatedPosition != null && helper.getDistanceBetween(possibleTarget, calculatedPosition) < helper.getDistanceBetween(calculatedPosition, otherLion.getCurrentPosition())) {
                                 checkLions = false;
                             }
                         }
                     }
 
                 }
-                if(checkLions){
+                if (checkLions) {
                     result.add(0, helper.getPathBetween(currentPosition, possibleTarget).get(0));
                     steps = calculatedSteps;
                     stepsToBigVertex = helper.getDistanceBetween(currentPosition, possibleTarget);
@@ -50,8 +50,8 @@ public class LionStrategyClever extends StrategyLion {
             }
         }
 
-        for(Man man : coreController.getMen()){
-            if(helper.getDistanceBetween(currentPosition, man.getCurrentPosition()) < stepsToBigVertex){
+        for (Man man : coreController.getMen()) {
+            if (helper.getDistanceBetween(currentPosition, man.getCurrentPosition()) < stepsToBigVertex) {
                 result.add(0, helper.getPathBetween(currentPosition, man.getCurrentPosition()).get(0));
             }
         }

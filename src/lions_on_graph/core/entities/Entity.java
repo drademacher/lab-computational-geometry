@@ -42,11 +42,11 @@ public abstract class Entity {
         return nextPosition;
     }
 
-    public Vertex getCalculatedPosition() {
-         return nextPosition;
-    }
-
     public abstract void setNextPosition(Vertex nextposition);
+
+    public Vertex getCalculatedPosition() {
+        return nextPosition;
+    }
 
     public Point getCoordinates() {
         return position.getCoordinates();

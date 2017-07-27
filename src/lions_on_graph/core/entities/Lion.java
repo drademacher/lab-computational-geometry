@@ -33,12 +33,12 @@ public class Lion extends Entity {
         return Lion.defaultRange;
     }
 
-    public static void setDefaultStrategy(CoreController.LionStrategy defaultStrategy){
-        Lion.defaultStrategy = defaultStrategy;
+    public static CoreController.LionStrategy getDefaultStrategy() {
+        return Lion.defaultStrategy;
     }
 
-    public static CoreController.LionStrategy getDefaultStrategy(){
-        return Lion.defaultStrategy;
+    public static void setDefaultStrategy(CoreController.LionStrategy defaultStrategy) {
+        Lion.defaultStrategy = defaultStrategy;
     }
 
     @Override

@@ -27,6 +27,7 @@ public class GraphHelper {
     public int BFSToMen(Vertex startVertex) {
         return BFSToMen(startVertex, null);
     }
+
     public int BFSToMen(Vertex startVertex, Vertex directionVertex) {
 
         Map<Vertex, Integer> map = new HashMap<>();
@@ -36,11 +37,11 @@ public class GraphHelper {
 
         set.add(startVertex);
 
-        if(directionVertex != null) {
+        if (directionVertex != null) {
             map.put(directionVertex, 1);
             set.add(directionVertex);
             queue.add(directionVertex);
-        } else{
+        } else {
             map.put(startVertex, 0);
             queue.add(startVertex);
         }

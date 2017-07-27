@@ -107,7 +107,7 @@ public class CoreController {
             }
 
             // valid version, read file
-            for (int y = 0; (currentLine = br.readLine()) != null; y++) { //Read in MapRow
+            while ((currentLine = br.readLine()) != null) { //Read in MapRow
 //                System.out.println(currentLine);
 
                 lineElements = currentLine.split("##");
@@ -138,9 +138,8 @@ public class CoreController {
     }
 
     public void saveGraphToFile(File selectedFile) {
-        BufferedWriter bufferedWriter = null;
         try {
-            bufferedWriter = new BufferedWriter(new FileWriter(selectedFile));
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(selectedFile));
 
             bufferedWriter.write("C##>>>>>Configuration for LionsInPlane Applet<<<<<##" + API_VERSION);
             bufferedWriter.newLine();

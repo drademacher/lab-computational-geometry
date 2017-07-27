@@ -5,10 +5,7 @@ import lions_in_plane.core.strategies.lion.StrategyEnumLion;
 import lions_in_plane.core.strategies.man.StrategyEnumMan;
 import util.Point;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class Plane {
     private ArrayList<Man> men;
@@ -115,4 +112,11 @@ public class Plane {
     }
 
 
+    public ArrayList<Man> getMen() {
+        return men;
+    }
+
+    public ArrayList<Lion> getLions() {
+        return lions;
+    }
 }

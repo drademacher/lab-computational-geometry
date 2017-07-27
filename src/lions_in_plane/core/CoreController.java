@@ -1,17 +1,20 @@
 package lions_in_plane.core;
 
+import lions_in_plane.core.plane.Lion;
+import lions_in_plane.core.plane.Man;
 import lions_in_plane.core.plane.Plane;
 import lions_in_plane.core.strategies.man.StrategyEnumMan;
 import util.Point;
 import util.Random;
 
-import java.io.File;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 
 public class CoreController {
+    private static final String API_VERSION = "v0.2";
     private boolean editMode = true;
 
     private double defaultMenSpeed = 1.1;
@@ -87,11 +90,81 @@ public class CoreController {
     }
 
     public void setGraphFromFile(File graphFromFile) {
-        // TODO: IMPLEMENT THIS
+        setEmptyGraph();
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(graphFromFile));
+
+            String currentLine;
+
+            //config line
+            currentLine = br.readLine();
+            if (currentLine == null) {
+                throw new Error("wrong file input version: "+CoreController.API_VERSION+" expected");
+            }
+            String[] lineElements = currentLine.split("##");
+            if (!lineElements[2].equals(CoreController.API_VERSION)) {
+                throw new Error("wrong file  input version: "+CoreController.API_VERSION+" expected");
+            }
+
+            // valid version, read file
+            for (int y = 0; (currentLine = br.readLine()) != null; y++) { //Read in MapRow
+//                System.out.println(currentLine);
+
+                lineElements = currentLine.split("##");
+
+                Point pos = new Point(Double.parseDouble(lineElements[1]), Double.parseDouble(lineElements[2]));
+
+                switch (lineElements[0]) {
+                    case "M":
+                        createMan(pos);
+//                        setManStrategy(pos, lineElements[3]);
+                        setManSpeed(pos, Double.parseDouble(lineElements[4]));
+
+                        System.out.println("" + new Point(Double.parseDouble(lineElements[1]), Double.parseDouble(lineElements[2]))+ " ## " +  Double.parseDouble(lineElements[4]));
+                        break;
+                    case "L":
+                        createLion(pos);
+//                        setLionStrategy(pos, lineElements[3]);
+                        setLionSpeed(pos, Double.parseDouble(lineElements[4]));
+                        setLionRange(pos, Double.parseDouble(lineElements[5]));
+                        break;
+                    default:
+                        throw new IllegalArgumentException("invalid input: " + lineElements[0]);
+                }
+            }
+        } catch (Exception e) {
+            e.fillInStackTrace();
+        }
     }
 
     public void saveGraphToFile(File selectedFile) {
-        // TODO: IMPLEMENT THIS
+        BufferedWriter bufferedWriter = null;
+        try {
+            bufferedWriter = new BufferedWriter(new FileWriter(selectedFile));
+
+            bufferedWriter.write("C##>>>>>Configuration for LionsInPlane Applet<<<<<##"+ API_VERSION);
+            bufferedWriter.newLine();
+            bufferedWriter.flush();
+
+
+
+            for (Man man : plane.getMen()) {
+                bufferedWriter.write("M##" + man.getPosition().getX() + "##" + man.getPosition().getY() + "##" + man.getStrategy().toString() + "##" + man.getSpeed());
+                bufferedWriter.newLine();
+                bufferedWriter.flush();
+            }
+
+            for (Lion lion : plane.getLions()) {
+                bufferedWriter.write("L##" + lion.getPosition().getX() + "##" + lion.getPosition().getY() + "##" + lion.getStrategy().toString() + "##" + lion.getSpeed() + "##" + lion.getRange() );
+                bufferedWriter.newLine();
+                bufferedWriter.flush();
+            }
+
+
+            bufferedWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public double getDefaultLionsRange() {

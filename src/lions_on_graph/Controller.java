@@ -144,6 +144,7 @@ class Controller {
             File selectedFile = fileChooser.showOpenDialog(this.stage);
             if (selectedFile != null) {
                 try {
+                    clearGraphShapes();
                     coreController.setGraphFromFile(selectedFile);
                     this.zoomScrollPane.autoZoom();
                 } catch (Exception ignored) {

@@ -143,14 +143,16 @@ class Controller {
 
         openMapMenuItem.setOnAction(event -> {
             FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Open Resource File");
+            fileChooser.setTitle("Open Resource Configuration");
             fileChooser.getExtensionFilters().addAll(
-                    new FileChooser.ExtensionFilter("Map Files", "*.map"),
+                    new FileChooser.ExtensionFilter("Config Files", "*.config"),
                     new FileChooser.ExtensionFilter("All Files", "*.*"));
             File selectedFile = fileChooser.showOpenDialog(this.stage);
             if (selectedFile != null) {
                 try {
+                    clearGraphShapes();
                     coreController.setGraphFromFile(selectedFile);
+                    this.zoomScrollPane.autoZoom();
                 } catch (Exception ignored) {
 
                 }
@@ -159,9 +161,9 @@ class Controller {
 
         saveMapMenuItem.setOnAction(event -> {
             FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Save Current Map");
+            fileChooser.setTitle("Save Current Configuration");
             fileChooser.getExtensionFilters().addAll(
-                    new FileChooser.ExtensionFilter("Map Files", "*.map"),
+                    new FileChooser.ExtensionFilter("Config Files", "*.config"),
                     new FileChooser.ExtensionFilter("All Files", "*.*"));
             File selectedFile = fileChooser.showSaveDialog(this.stage);
             if (selectedFile != null) {

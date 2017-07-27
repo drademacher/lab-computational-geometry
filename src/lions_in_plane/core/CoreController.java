@@ -149,6 +149,7 @@ public class CoreController {
 
 
             for (Man man : plane.getMen()) {
+                System.out.println("M##" + man.getPosition().getX() + "##" + man.getPosition().getY() + "##" + man.getStrategy().toString() + "##" + man.getSpeed());
                 bufferedWriter.write("M##" + man.getPosition().getX() + "##" + man.getPosition().getY() + "##" + man.getStrategy().toString() + "##" + man.getSpeed());
                 bufferedWriter.newLine();
                 bufferedWriter.flush();

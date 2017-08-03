@@ -27,6 +27,7 @@ public class Greedy implements Strategy {
         } else {
             curPosition = lion.getPosition();
             prevPath = new ArrayList<>();
+            prevPath.add(lion.getPosition());
         }
 
         Point vector = new Point(curMan.getX() - curPosition.getX(), curMan.getY() - curPosition.getY());

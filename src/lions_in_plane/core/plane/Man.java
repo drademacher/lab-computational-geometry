@@ -6,9 +6,12 @@ import util.Point;
 public class Man extends Entity {
 
     private Strategy strategy;
+    private double epsilon;
 
     public Man(Point position, double speed) {
         super(position, speed);
+        //TODO speed vs epsilon
+        this.epsilon = speed -1;
     }
 
     @Override
@@ -22,5 +25,9 @@ public class Man extends Entity {
 
     public void setStrategy(Strategy strategy) {
         this.strategy = strategy;
+    }
+
+    public double getEpsilon(){
+        return epsilon;
     }
 }

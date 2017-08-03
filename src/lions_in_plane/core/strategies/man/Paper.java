@@ -21,7 +21,8 @@ public class Paper implements Strategy {
     @Override
     public ArrayList<Point> getPath(Man man, ArrayList<Lion> lions, int index, ArrayList<Point> inductionPath) {
 
-        this.radiusMan = man.getSpeed();
+//        this.radiusMan = man.getSpeed();
+        this.radiusMan = 1 + (man.getEpsilon() * (1 - (Math.pow(2, -(index+1)))));
 
         ArrayList<Point> result;
         ArrayList<Point> curPath = man.getCalculatedPath();
@@ -51,29 +52,29 @@ public class Paper implements Strategy {
 
         //init: only 1 lion -> no exiting prevPath
         if (inductionPath == null || inductionPath.size() == 0) {
-            System.out.println("CASE D");
+            // system.out.println("CASE D");
             curPath.add(goAwayFromLion(curPath.get(curPath.size() - 1), curLionPosition));
         } else {
 
             Point cuPosition = curPath.get(curPath.size() - 1);
             int indexGoal = (int) Math.floor(Math.floor((curPath.size() / lion.getSpeed()) + 1) * lion.getSpeed());
             while (indexGoal > 0.5 * inductionPath.size()) {
-                System.out.println(">>>>>>>>>>>>>>extent");
+                // system.out.println(">>>>>>>>>>>>>>extent");
                 inductionPath = extendPath(inductionPath);
             }
             Point goalPosition = inductionPath.get(indexGoal);
 
             if (cuPosition.distanceTo(curLionPosition) >= saveRadius + radiusMan) {
-                System.out.println("CASE A");
+                // system.out.println("CASE A");
                 curPath.add(goInGoalDirection(cuPosition, goalPosition));
                     /*TODO parallel, instead of points??*/
             } else if (!cuPosition.equals(goalPosition) &&
                     (cuPosition.distanceTo(curLionPosition) >= saveRadius - lion.getSpeed()) &&
                     (goInGoalDirection(cuPosition, goalPosition).distanceTo(curLionPosition) >= (lion.getSpeed() + cuPosition.distanceTo(curLionPosition)))) {
-                System.out.println("CASE B");
+                // system.out.println("CASE B");
                 curPath.add(goInGoalDirection(cuPosition, goalPosition));
             } else {
-                System.out.println("CASE C");
+                // system.out.println("CASE C");
                 curPath.add(doAvoidanceMove(cuPosition, curLionPosition));
             }
         }
@@ -172,11 +173,11 @@ public class Paper implements Strategy {
 
         double rad = Math.acos(vector1Normalized.getX() * vector2Normalized.getX() + vector1Normalized.getY() * vector2Normalized.getY());
 
-        //System.out.println("rad "+rad);
+        // system.out.println("rad "+rad);
 
         double deg = Math.toDegrees(rad);
 
-        //System.out.println("deg "+deg);
+        // system.out.println("deg "+deg);
 
         return deg;
     }

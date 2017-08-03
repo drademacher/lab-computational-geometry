@@ -77,13 +77,18 @@ public class Plane {
         return null;
     }
 
-    public ArrayList<Point> calcManPath(int index, ArrayList<Point> inductionPath, ArrayList<Point> resultPath) {
+    public ArrayList<Point> calcManPath(int index, ArrayList<Point> inductionPath) {
         if (men.size() > 0) {
-            resultPath = men.get(0).getStrategy().getPath(men.get(0), lions.get(index), inductionPath, resultPath);
-        } else {
+            ArrayList<Point> resultPath = men.get(0).getStrategy().getPath(men.get(0), lions, index, inductionPath);
+            men.get(0).setCalculatedPath(resultPath);
+            return resultPath;
+        }else{
             return new ArrayList<>();
         }
-        return resultPath;
+    }
+
+    public void resetManPath(){
+        men.get(0).resetPath();
     }
 
     public ArrayList<Point> calcLionPath(int index, ArrayList<Point> resultPath, ArrayList<Point> manPath) {
@@ -93,10 +98,12 @@ public class Plane {
                 resultPath = new ArrayList<>();
             }
             resultPath.add(lions.get(index).getPosition());
+            lions.get(index).setCalculatedPath(resultPath);
             return resultPath;
         }
         if (men.size() > 0) {
             resultPath = lions.get(index).getStrategy().getPath(lions.get(index), men.get(0), manPath, resultPath);
+            lions.get(index).setCalculatedPath(resultPath);
         } else {
             resultPath = new ArrayList<Point>() {{
                 add(lions.get(index).getPosition());
@@ -109,9 +116,9 @@ public class Plane {
         return lions.size();
     }
 
-    public void setCalculatedLionPath(ArrayList<Point> calculatedLionPath, int index) {
-        lions.get(index).setCalculatedPath(calculatedLionPath);
-    }
+//    public void setCalculatedLionPath(ArrayList<Point> calculatedLionPath, int index) {
+//        lions.get(index).setCalculatedPath(calculatedLionPath);
+//    }
 
 
     public ArrayList<Man> getMen() {

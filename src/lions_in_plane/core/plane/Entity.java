@@ -44,6 +44,10 @@ public abstract class Entity {
         this.calculatedPath = calcedPath;
     }
 
+    public void resetPath() {
+        this.calculatedPath = new ArrayList<>();
+    }
+
     public Point getCalculatedPositionAtTime(int t) {
 
         if (t < 0) t = 0;

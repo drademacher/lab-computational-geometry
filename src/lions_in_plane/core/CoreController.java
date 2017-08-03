@@ -275,6 +275,7 @@ public class CoreController {
             inductionPath = resultPath;
             resultPath = new ArrayList<>();
             lionPaths.clear();
+            this.plane.resetManPath();
 
             int steps = 0;
             //TODO calc the path until the man escaped OR is caught
@@ -283,11 +284,11 @@ public class CoreController {
             for (int i = 0; i < 200; i++) {
                 steps++;
 
-                resultPath = this.plane.calcManPath(k, inductionPath, resultPath);
+                resultPath = this.plane.calcManPath(k, inductionPath);
 
                 for (int j = 0; j <= k; j++) {
                     lionPaths.put(j, this.plane.calcLionPath(j, lionPaths.get(j), resultPath));
-                    this.plane.setCalculatedLionPath(lionPaths.get(j), j);
+//                    this.plane.setCalculatedLionPath(lionPaths.get(j), j);
                 }
             }
         }

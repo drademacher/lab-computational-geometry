@@ -1,6 +1,12 @@
 package lions_in_plane.visualization;
 
+import javafx.animation.AnimationTimer;
+import javafx.animation.PathTransition;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.LineTo;
+import javafx.scene.shape.MoveTo;
+import javafx.scene.shape.Path;
+import javafx.util.Duration;
 import lions_in_plane.core.CoreController;
 import util.ConvexHull;
 import util.Point;
@@ -18,9 +24,22 @@ public class VisualizedCoreController extends CoreController {
     private ArrayList<Lion> allLionPoints;
     private ArrayList<ArrayList<Point>> allPaths;
     private int pathCount;
+    private ArrayList<PathTransition> animations;
 
     public VisualizedCoreController() {
         reset();
+    }
+
+    @Override
+    public void setEditMode(boolean editMode) {
+        super.setEditMode(editMode);
+
+        if (!editMode) {
+            calcAllPaths();
+            for (Lion lion : lions) {
+                lion.getShape().setVisible(false);
+            }
+        }
     }
 
     private void reset() {
@@ -30,6 +49,7 @@ public class VisualizedCoreController extends CoreController {
         this.allLionPoints = new ArrayList<>();
         this.allPaths = new ArrayList<>();
         this.pathCount = 0;
+        this.animations = new ArrayList<>();
 //        this.hull = new Point[0];
     }
 
@@ -99,12 +119,10 @@ public class VisualizedCoreController extends CoreController {
     public void removeLion(Point coordinates) {
         super.removeLion(coordinates);
 
-        lions.stream().filter(lion -> lion.getPosition() == coordinates).forEach(Lion::clear);
-        lions.removeIf(lion -> lion.getPosition() == coordinates);
+        lions.stream().filter(lion -> lion.getPosition().equals(coordinates)).forEach(Lion::clear);
+        lions.removeIf(lion -> lion.getPosition().equals(coordinates));
 
-        if (hull == null || !hull.insideHull(coordinates)) {
-            update();
-        }
+        update();
     }
 
     @Override
@@ -120,7 +138,7 @@ public class VisualizedCoreController extends CoreController {
 
         lions.stream().filter(e -> e.getPosition().equals(from)).forEach(e -> e.setPosition(to));
 
-        // update();
+        update();
 
     }
 
@@ -151,7 +169,7 @@ public class VisualizedCoreController extends CoreController {
         boolean res = super.simulateStep();
 
         if (pathCount >= allPaths.size()) {
-            return res;
+            return false;
         }
 
         if (pathCount == 0) {
@@ -160,8 +178,31 @@ public class VisualizedCoreController extends CoreController {
         }
 
         new PolygonalPath(allPaths.get(pathCount), Color.RED);
+        lions.get(pathCount-1).getShape().setVisible(true);
+
+
+
+        Path path = new Path();
+        path.getElements().add(new MoveTo(allPaths.get(pathCount).get(0).getX(), allPaths.get(pathCount).get(0).getY()));
+        for (int i = 1; i < allPaths.get(pathCount).size(); i++) {
+            path.getElements().add(new LineTo(allPaths.get(pathCount).get(i).getX(), allPaths.get(pathCount).get(i).getY()));
+        }
+        // path.getElements().add(new LineTo(allPaths.get(pathCount).get(0).getX(), allPaths.get(pathCount).get(0).getY()));
+
+        PathTransition pathTransition = new PathTransition();
+        pathTransition.setDuration(Duration.millis(1000));
+        pathTransition.setPath(path);
+        pathTransition.setNode(lions.get(pathCount-1).getShape());
+
+
+        animations.add(pathTransition);
+
         pathCount++;
 
+
+        for (PathTransition ft : animations) {
+            ft.play();
+        }
 
         return res;
     }

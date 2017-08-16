@@ -21,7 +21,7 @@ public class LionsPolygon extends Shape {
             final int j = i;
             polygon.getPoints().addAll(lions[i].xPosProperty().get(), lions[i].yPosProperty().get());
             lions[i].xPosProperty().addListener((observable, oldValue, newValue) -> polygon.getPoints().set(2 * j, newValue.doubleValue()));
-            lions[i].xPosProperty().addListener((observable, oldValue, newValue) -> polygon.getPoints().set(2 * j + 1, newValue.doubleValue()));
+            lions[i].yPosProperty().addListener((observable, oldValue, newValue) -> polygon.getPoints().set(2 * j + 1, newValue.doubleValue()));
         }
 
 

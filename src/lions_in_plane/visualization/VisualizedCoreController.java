@@ -7,12 +7,15 @@ import util.Point;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class VisualizedCoreController extends CoreController {
     private ArrayList<Man> men;
     private List<Lion> lions;
     private ConvexHull hull;
+    private Man manPoint;
+    private ArrayList<Lion> allLionPoints;
     private ArrayList<ArrayList<Point>> allPaths;
     private int pathCount;
 
@@ -23,6 +26,8 @@ public class VisualizedCoreController extends CoreController {
     private void reset() {
         this.men = new ArrayList<>();
         this.lions = new ArrayList<>();
+        this.manPoint = null;
+        this.allLionPoints = new ArrayList<>();
         this.allPaths = new ArrayList<>();
         this.pathCount = 0;
 //        this.hull = new Point[0];
@@ -65,7 +70,8 @@ public class VisualizedCoreController extends CoreController {
     public void createMan(Point coordinates) {
         super.createMan(coordinates);
 
-        men.add(new Man(coordinates));
+        manPoint = new Man(coordinates);
+        men.add(manPoint);
 //        // TODO: total debug
 //        ArrayList<Point> path = new ArrayList<>(Arrays.asList(hull));
 //        new PolygonalPath(path, Color.BLACK);
@@ -85,9 +91,7 @@ public class VisualizedCoreController extends CoreController {
         lions.add(new Lion(coordinates));
 
         if (hull == null || !hull.insideHull(coordinates)) {
-            Polygon.clear();
-            hull = new ConvexHull(lions);
-            new Polygon(hull.getPoints());
+            update();
         }
     }
 
@@ -99,9 +103,7 @@ public class VisualizedCoreController extends CoreController {
         lions.removeIf(lion -> lion.getPosition() == coordinates);
 
         if (hull == null || !hull.insideHull(coordinates)) {
-            hull = new ConvexHull(lions);
-            Polygon.clear();
-            new Polygon(hull.getPoints());
+            update();
         }
     }
 
@@ -116,12 +118,26 @@ public class VisualizedCoreController extends CoreController {
     public void relocateLion(Point from, Point to) {
         super.relocateLion(from, to);
 
-        lions.stream().filter(e -> e.getPosition() == from).forEach(e -> e.setPosition(to));
+        lions.stream().filter(e -> e.getPosition().equals(from)).forEach(e -> e.setPosition(to));
 
+        // update();
+
+    }
+
+    private void update() {
         hull = new ConvexHull(lions);
-        Polygon.clear();
-        new Polygon(hull.getPoints());
-
+        Lion[] lionsInHull = new Lion[hull.getPoints().length];
+        for (int i = 0; i < lionsInHull.length; i++) {
+            for (Lion l : lions) {
+                if (l.getPosition().equals(hull.getPoints()[i])) {
+                    lionsInHull[i] = l;
+                    break;
+                }
+            }
+            // System.out.println(lionsInHull[i]);
+        }
+        LionsPolygon.clear();
+        new LionsPolygon(lionsInHull);
     }
 
     @Override
@@ -165,9 +181,7 @@ public class VisualizedCoreController extends CoreController {
             }
         }
 
-        hull = new ConvexHull(newHull);
-        Polygon.clear();
-        new Polygon(hull.getPoints());
+        // update();
 
         // draw man path (position == = in list)
         if (allPaths.size() > 0) {

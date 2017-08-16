@@ -394,7 +394,7 @@ class Controller {
 
         Man.setGroup(entityShapes);
         Lion.setGroup(entityShapes);
-        Polygon.setGroup(convexHullShapes);
+        LionsPolygon.setGroup(convexHullShapes);
         PolygonalPath.setGroup(completePathShapes);
 //
 //        ShapedBigVertex.setMainPane(zoomScrollPane);

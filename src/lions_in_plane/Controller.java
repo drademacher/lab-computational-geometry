@@ -34,10 +34,6 @@ class Controller {
     private Alert gameOverAlert;
     private BooleanProperty editMode, activePlaying;
     private AnimationTimer animationTimer;
-    private int passedTicks = 0;
-    private double lastNanoTime = System.nanoTime();
-    private double time = 0;
-    private int tickAccount = 0;
     private CoreController coreController = new VisualizedCoreController();
 
     private Stage stage;
@@ -355,12 +351,17 @@ class Controller {
     private void initAnimationTimer() {
         final double FPS = 60.0;
         animationTimer = new AnimationTimer() {
+            private int passedTicks = 0;
+            private double lastNanoTime = System.nanoTime();
+            private double time = 0;
+            private int tickAccount = 0;
+
             @Override
             public void handle(long currentNanoTime) {
                 // calculate time since last update.
-                time += (currentNanoTime - lastNanoTime) / 1000000000.0;
+                time += currentNanoTime - lastNanoTime;
                 lastNanoTime = currentNanoTime;
-                passedTicks = (int) Math.floor(time * FPS);
+                passedTicks = (int) Math.floor(time * FPS  / 1000000000.0);
                 time -= passedTicks / FPS;
                 if (passedTicks >= 1) {
                     tickAccount += 1;

@@ -17,6 +17,8 @@ import java.util.stream.Collectors;
 
 
 public class VisualizedCoreController extends CoreController {
+    final private int TICKS_PER_STEP = 20;
+
     private ArrayList<Man> men;
     private List<Lion> lions;
     private ConvexHull hull;
@@ -25,9 +27,11 @@ public class VisualizedCoreController extends CoreController {
     private ArrayList<ArrayList<Point>> allPaths;
     private int pathCount;
     private ArrayList<PathTransition> animations;
+    private AnimationTimer animationTimer;
 
     public VisualizedCoreController() {
         reset();
+        initAnimationTimer();
     }
 
     @Override
@@ -194,9 +198,8 @@ public class VisualizedCoreController extends CoreController {
         pathTransition.setPath(path);
         pathTransition.setNode(lions.get(pathCount-1).getShape());
 
-
+        animationTimer.start();
         animations.add(pathTransition);
-
         pathCount++;
 
 
@@ -230,5 +233,35 @@ public class VisualizedCoreController extends CoreController {
         }
 
         return allPaths;
+    }
+
+    /**
+     * Initialize the animation timer which is used in the play mode.
+     * It works on a fixed amount of FPS (60 is the standard).
+     */
+    private void initAnimationTimer() {
+        final double FPS = 60.0;
+        animationTimer = new AnimationTimer() {
+            private int passedTicks = 0;
+            private double lastNanoTime = System.nanoTime();
+            private double time = 0;
+            private int tickAccount = 0;
+
+            @Override
+            public void handle(long currentNanoTime) {
+                // calculate time since last update.
+                time += currentNanoTime - lastNanoTime;
+                lastNanoTime = currentNanoTime;
+                passedTicks = (int) Math.floor(time * FPS  / 1000000000.0);
+                time -= passedTicks / FPS;
+                if (passedTicks >= 1) {
+                    tickAccount += 1;
+                    if (tickAccount >= TICKS_PER_STEP) {
+                        tickAccount -= TICKS_PER_STEP;
+                        System.out.println("nice");
+                    }
+                }
+            }
+        };
     }
 }

@@ -361,7 +361,7 @@ class Controller {
                 // calculate time since last update.
                 time += currentNanoTime - lastNanoTime;
                 lastNanoTime = currentNanoTime;
-                passedTicks = (int) Math.floor(time * FPS  / 1000000000.0);
+                passedTicks = (int) Math.floor(time * FPS / 1000000000.0);
                 time -= passedTicks / FPS;
                 if (passedTicks >= 1) {
                     tickAccount += 1;

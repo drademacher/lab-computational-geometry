@@ -182,8 +182,7 @@ public class VisualizedCoreController extends CoreController {
         }
 
         new PolygonalPath(allPaths.get(pathCount), Color.RED);
-        lions.get(pathCount-1).getShape().setVisible(true);
-
+        lions.get(pathCount - 1).getShape().setVisible(true);
 
 
         Path path = new Path();
@@ -196,7 +195,7 @@ public class VisualizedCoreController extends CoreController {
         PathTransition pathTransition = new PathTransition();
         pathTransition.setDuration(Duration.millis(1000));
         pathTransition.setPath(path);
-        pathTransition.setNode(lions.get(pathCount-1).getShape());
+        pathTransition.setNode(lions.get(pathCount - 1).getShape());
 
         animationTimer.start();
         animations.add(pathTransition);
@@ -252,7 +251,7 @@ public class VisualizedCoreController extends CoreController {
                 // calculate time since last update.
                 time += currentNanoTime - lastNanoTime;
                 lastNanoTime = currentNanoTime;
-                passedTicks = (int) Math.floor(time * FPS  / 1000000000.0);
+                passedTicks = (int) Math.floor(time * FPS / 1000000000.0);
                 time -= passedTicks / FPS;
                 if (passedTicks >= 1) {
                     tickAccount += 1;

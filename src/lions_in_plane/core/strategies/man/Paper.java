@@ -54,29 +54,29 @@ public class Paper implements Strategy {
 
         //init: only 1 lion -> no exiting prevPath
         if (inductionPath == null || inductionPath.size() == 0) {
-            System.out.println("CASE D");
+            // System.out.println("CASE D");
             curPath.add(goAwayFromLion(curPath.get(curPath.size() - 1), curLionPosition));
         } else {
 
             Point cuPosition = curPath.get(curPath.size() - 1);
             int indexGoal = (int) Math.floor(Math.floor((curPath.size() / lion.getSpeed()) + 1) * lion.getSpeed());
             while (indexGoal > 0.5 * inductionPath.size()) {
-                System.out.println(">>>>>>>>>>>>>>extent");
+                // System.out.println(">>>>>>>>>>>>>>extent");
                 inductionPath = extendPath(inductionPath);
             }
             Point goalPosition = inductionPath.get(indexGoal);
 
             if (cuPosition.distanceTo(curLionPosition) >= saveRadius + radiusMan) {
-                System.out.println("CASE A");
+                // System.out.println("CASE A");
                 curPath.add(goInGoalDirection(cuPosition, goalPosition));
                     /*TODO parallel, instead of points??*/
             } else if (!cuPosition.equals(goalPosition) &&
                     (cuPosition.distanceTo(curLionPosition) >= saveRadius - lion.getSpeed()) &&
                     (goInGoalDirection(cuPosition, goalPosition).distanceTo(curLionPosition) >= (lion.getSpeed() + cuPosition.distanceTo(curLionPosition)))) {
-                System.out.println("CASE B");
+                // System.out.println("CASE B");
                 curPath.add(goInGoalDirection(cuPosition, goalPosition));
             } else {
-                System.out.println("CASE C");
+                // System.out.println("CASE C");
                 curPath.add(doAvoidanceMove(cuPosition, curLionPosition));
             }
         }

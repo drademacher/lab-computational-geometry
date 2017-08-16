@@ -307,7 +307,6 @@ class Controller {
 
         stepAnimationButton.setOnMouseClicked(event -> {
             activePlaying.set(false);
-            coreController.calcAllPaths();
             boolean gameOver = coreController.simulateStep();
             if (gameOver) {
                 gameOverAlert.show();

@@ -13,42 +13,51 @@ public class VisualizedCoreController extends CoreController {
     private ArrayList<Man> men;
     private List<Lion> lions;
     private ConvexHull hull;
+    private ArrayList<ArrayList<Point>> allPaths;
+    private int pathCount;
 
     public VisualizedCoreController() {
+        reset();
+    }
+
+    private void reset() {
         this.men = new ArrayList<>();
         this.lions = new ArrayList<>();
+        this.allPaths = new ArrayList<>();
+        this.pathCount = 0;
 //        this.hull = new Point[0];
     }
 
 
     @Override
     public void setEmptyGraph() {
-        this.men = new ArrayList<>();
-        this.lions = new ArrayList<>();
-//        this.hull = new Point[0];
+        reset();
     }
 
     @Override
     public void setDefaultGraph1() {
         super.setDefaultGraph1();
-
+        calcAllPaths();
     }
 
     @Override
     public void setDefaultGraph2() {
         super.setDefaultGraph2();
+        calcAllPaths();
 
     }
 
     @Override
     public void setDefaultGraph3() {
         super.setDefaultGraph3();
+        calcAllPaths();
     }
 
     public void setRandomConfiguration() {
         super.setRandomConfiguration();
         lions.forEach(lion -> System.out.print(lion.getPosition() + ", "));
         System.out.println();
+        calcAllPaths();
     }
 
 
@@ -123,14 +132,29 @@ public class VisualizedCoreController extends CoreController {
 
     @Override
     public boolean simulateStep() {
-        // TODO: IMPLEMENT THIS
-        return super.simulateStep();
+        boolean res = super.simulateStep();
+
+        if (pathCount >= allPaths.size()) {
+            return res;
+        }
+
+        if (pathCount == 0) {
+            new PolygonalPath(allPaths.get(pathCount), Color.BLUE);
+            pathCount++;
+        }
+
+        new PolygonalPath(allPaths.get(pathCount), Color.RED);
+        pathCount++;
+
+
+        return res;
     }
 
 
     @Override
-    public ArrayList<ArrayList<Point>> calcAllPaths() {
-        ArrayList<ArrayList<Point>> allPaths = super.calcAllPaths();
+    protected ArrayList<ArrayList<Point>> calcAllPaths() {
+        allPaths = super.calcAllPaths();
+        pathCount = 0;
 
         Point[] newHull = new Point[allPaths.size() - 1];
 
@@ -138,7 +162,6 @@ public class VisualizedCoreController extends CoreController {
         if (allPaths.size() > 1) {
             for (int i = 1; i < allPaths.size(); i++) {
                 newHull[i - 1] = allPaths.get(i).get(allPaths.get(i).size() - 1);
-                new PolygonalPath(allPaths.get(i), Color.RED);
             }
         }
 
@@ -148,7 +171,7 @@ public class VisualizedCoreController extends CoreController {
 
         // draw man path (position == = in list)
         if (allPaths.size() > 0) {
-            new PolygonalPath(allPaths.get(0), Color.BLUE);
+            // new PolygonalPath(allPaths.get(0), Color.BLUE);
         }
 
         return allPaths;

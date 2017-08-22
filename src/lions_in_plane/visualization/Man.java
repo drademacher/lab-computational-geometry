@@ -75,6 +75,10 @@ public class Man extends Shape {
         group.getChildren().remove(shape);
     }
 
+    public Circle getShape() {
+        return shape;
+    }
+
     @Override
     public String toString() {
         return "Man{" +

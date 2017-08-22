@@ -1,9 +1,7 @@
 package lions_in_plane.visualization;
 
 import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.Group;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Menu;
@@ -19,14 +17,15 @@ import static lions_in_plane.visualization.Constants.ENTITY_RADIUS;
 public class Lion extends Shape {
     private static Group group = new Group();
 
-    private DoubleProperty xPos;
-    private DoubleProperty yPos;
+    private DoubleProperty xPos, realXPos;
+    private DoubleProperty yPos, realYPos;
     private Circle shape;
 
     Lion(Point position) {
         this.xPos = new SimpleDoubleProperty(position.getX());
         this.yPos = new SimpleDoubleProperty(position.getY());
         this.shape = new Circle(position.getX(), position.getY(), ENTITY_RADIUS, COLOR_LION);
+        update();
 
         group.getChildren().add(shape);
         shape.setOnContextMenuRequested(event1 -> {
@@ -66,12 +65,20 @@ public class Lion extends Shape {
         });
     }
 
-    public DoubleProperty xPosProperty() {
-        return xPos;
+    private void update() {
+        realXPos = new SimpleDoubleProperty();
+        realXPos.bind(xPos.add(shape.translateXProperty()));
+
+        realYPos = new SimpleDoubleProperty();
+        realYPos.bind(yPos.add(shape.translateYProperty()));
     }
 
-    public DoubleProperty yPosProperty() {
-        return yPos;
+    DoubleProperty xPosProperty() {
+        return realXPos;
+    }
+
+    DoubleProperty yPosProperty() {
+        return realYPos;
     }
 
     public static void setGroup(Group group) {
@@ -85,6 +92,7 @@ public class Lion extends Shape {
     void setPosition(Point position) {
         this.xPos.set(position.getX());
         this.yPos.set(position.getY());
+        update();
 
         shape.relocate(position.getX() - ENTITY_RADIUS, position.getY() - ENTITY_RADIUS);
     }

@@ -1,6 +1,7 @@
 package lions_in_plane.visualization;
 
 import javafx.animation.PathTransition;
+import javafx.animation.Transition;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
@@ -24,7 +25,7 @@ public class VisualizedCoreController extends CoreController {
     private ArrayList<Lion> allLionPoints;
     private ArrayList<ArrayList<Point>> allPaths;
     private int pathCount;
-    private ArrayList<PathTransition> animations;
+    private ArrayList<Transition> animations;
 
     public VisualizedCoreController() {
         reset();
@@ -174,6 +175,21 @@ public class VisualizedCoreController extends CoreController {
 
         if (pathCount == 0) {
             new PolygonalPath(allPaths.get(pathCount), Color.BLUE);
+
+            Path path = new Path();
+            path.getElements().add(new MoveTo(allPaths.get(pathCount).get(0).getX(), allPaths.get(pathCount).get(0).getY()));
+            for (int i = 1; i < allPaths.get(pathCount).size(); i++) {
+                path.getElements().add(new LineTo(allPaths.get(pathCount).get(i).getX(), allPaths.get(pathCount).get(i).getY()));
+            }
+            // path.getElements().add(new LineTo(allPaths.get(pathCount).get(0).getX(), allPaths.get(pathCount).get(0).getY()));
+
+            PathTransition pathTransition = new PathTransition();
+            pathTransition.setDuration(Duration.millis(1000));
+            pathTransition.setPath(path);
+            pathTransition.setNode(manPoint.getShape());
+
+            animations.add(pathTransition);
+
             pathCount++;
         }
 
@@ -194,16 +210,12 @@ public class VisualizedCoreController extends CoreController {
         pathTransition.setNode(lions.get(pathCount - 1).getShape());
 
         animations.add(pathTransition);
-
-//        TickTimer.getInstance().addTicker(() -> {
-//
-//        });
         pathCount++;
 
 
 
 //
-        for (PathTransition ft : animations) {
+        for (Transition ft : animations) {
             ft.play();
         }
 

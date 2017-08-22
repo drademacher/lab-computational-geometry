@@ -26,9 +26,9 @@ public class TickTimer {
             @Override
             public void handle(long currentNanoTime) {
                 // calculate time since last update.
-                time += (currentNanoTime - lastNanoTime) / 1000000000.0;
+                time += currentNanoTime - lastNanoTime;
                 lastNanoTime = currentNanoTime;
-                passedTicks = (int) Math.floor(time * FPS);
+                passedTicks = (int) Math.floor(time * FPS / 1000000000.0);
                 time -= passedTicks / FPS;
                 if (passedTicks >= 1) {
                     for (Ticker ticker : tickers) {

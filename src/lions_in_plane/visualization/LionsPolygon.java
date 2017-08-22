@@ -2,7 +2,6 @@ package lions_in_plane.visualization;
 
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
-import util.Point;
 
 
 public class LionsPolygon extends Shape {
@@ -22,6 +21,7 @@ public class LionsPolygon extends Shape {
             polygon.getPoints().addAll(lions[i].xPosProperty().get(), lions[i].yPosProperty().get());
             lions[i].xPosProperty().addListener((observable, oldValue, newValue) -> polygon.getPoints().set(2 * j, newValue.doubleValue()));
             lions[i].yPosProperty().addListener((observable, oldValue, newValue) -> polygon.getPoints().set(2 * j + 1, newValue.doubleValue()));
+
         }
 
 

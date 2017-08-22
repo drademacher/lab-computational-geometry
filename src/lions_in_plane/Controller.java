@@ -1,6 +1,5 @@
 package lions_in_plane;
 
-import javafx.animation.AnimationTimer;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Insets;
@@ -13,6 +12,7 @@ import javafx.stage.Stage;
 import lions_in_plane.core.CoreController;
 import lions_in_plane.visualization.*;
 import util.ContextMenuHolder;
+import util.TickTimer;
 import util.ZoomScrollPane;
 
 import java.io.File;
@@ -20,9 +20,8 @@ import java.util.Optional;
 
 
 class Controller {
+    private TickTimer.Ticker animation;
 
-
-    final private int TICKS_PER_STEP = 20;
     private ZoomScrollPane zoomScrollPane;
     private HBox buttonBar;
     private Button modeToggleButton = new Button("Edit Mode");
@@ -33,7 +32,7 @@ class Controller {
     private MenuButton setGraphButton = new MenuButton("Set Graph"), setParameterButton = new MenuButton("Set Parameter"), setViewMenu = new MenuButton("View");
     private Alert gameOverAlert;
     private BooleanProperty editMode, activePlaying;
-    private AnimationTimer animationTimer;
+
     private CoreController coreController = new VisualizedCoreController();
 
     private Stage stage;
@@ -313,11 +312,10 @@ class Controller {
 
         activePlaying.addListener((observable, oldValue, newValue) -> {
             if (newValue) {
-                animationTimer.start();
+                TickTimer.getInstance().addTicker(animation);
             } else {
-                animationTimer.stop();
+                TickTimer.getInstance().removeTicker(animation);
             }
-
         });
     }
 
@@ -349,30 +347,20 @@ class Controller {
      * It works on a fixed amount of FPS (60 is the standard).
      */
     private void initAnimationTimer() {
-        final double FPS = 60.0;
-        animationTimer = new AnimationTimer() {
-            private int passedTicks = 0;
-            private double lastNanoTime = System.nanoTime();
-            private double time = 0;
-            private int tickAccount = 0;
+        animation = new TickTimer.Ticker() {
+            int tickAccount = 0;
+            int ticksPerStep = 20;
 
             @Override
-            public void handle(long currentNanoTime) {
-                // calculate time since last update.
-                time += currentNanoTime - lastNanoTime;
-                lastNanoTime = currentNanoTime;
-                passedTicks = (int) Math.floor(time * FPS / 1000000000.0);
-                time -= passedTicks / FPS;
-                if (passedTicks >= 1) {
-                    tickAccount += 1;
-                    if (tickAccount >= TICKS_PER_STEP) {
-                        tickAccount -= TICKS_PER_STEP;
-                        if (coreController.getMenWithManualInput().isEmpty() && coreController.getLionsWithManualInput().isEmpty()) {
-                            boolean gameOver = coreController.simulateStep();
-                            if (gameOver) {
-                                gameOverAlert.show();
-                                activePlaying.set(false);
-                            }
+            public void action() {
+                tickAccount += 1;
+                if (tickAccount >= ticksPerStep) {
+                    tickAccount -= ticksPerStep;
+                    if (coreController.getMenWithManualInput().isEmpty() && coreController.getLionsWithManualInput().isEmpty()) {
+                        boolean gameOver = coreController.simulateStep();
+                        if (gameOver) {
+                            gameOverAlert.show();
+                            activePlaying.set(false);
                         }
                     }
                 }

@@ -6,17 +6,12 @@ import java.util.ArrayList;
 
 public class TickTimer {
     private static TickTimer instance;
-
+    private final double FPS = 60.0;
     private ArrayList<Ticker> tickers;
     private AnimationTimer animationTimer;
-
-
     private int passedTicks = 0;
     private double lastNanoTime = System.nanoTime();
     private double time = 0;
-
-    private final double FPS = 60.0;
-
 
 
     private TickTimer() {
@@ -48,15 +43,15 @@ public class TickTimer {
         return instance;
     }
 
-    public interface Ticker {
-        void action();
-    }
-
     public void addTicker(Ticker ticker) {
         tickers.add(ticker);
     }
 
     public void removeTicker(Ticker ticker) {
         tickers.removeIf(ticker1 -> ticker1.equals(ticker));
+    }
+
+    public interface Ticker {
+        void action();
     }
 }

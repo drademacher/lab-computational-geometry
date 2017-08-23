@@ -38,7 +38,6 @@ public class VisualizedCoreController extends CoreController {
     }
 
     private void reset() {
-        System.out.println("init");
         this.men = new ArrayList<>();
         this.lions = new ArrayList<>();
         this.manPoint = null;
@@ -174,8 +173,6 @@ public class VisualizedCoreController extends CoreController {
                 new PolygonalPath(allPaths.get(0), Color.BLUE);
             }
 
-            System.out.println(pathCount);
-
             new PolygonalPath(allPaths.get(pathCount), Color.RED);
             lions.get(pathCount - 1).getShape().setVisible(true);
 
@@ -219,7 +216,6 @@ public class VisualizedCoreController extends CoreController {
         pathStoneCount++;
 
 
-
 //
 //
 //        Path path = new Path();
@@ -245,7 +241,6 @@ public class VisualizedCoreController extends CoreController {
         }
 
 
-
 //
 //        for (Transition ft : animations) {
 //            ft.play();
@@ -258,7 +253,6 @@ public class VisualizedCoreController extends CoreController {
     @Override
     protected ArrayList<ArrayList<Point>> calcAllPaths() {
         allPaths = super.calcAllPaths();
-        pathCount = 1;
 
         Point[] newHull = new Point[allPaths.size() - 1];
 

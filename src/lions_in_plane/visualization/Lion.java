@@ -65,6 +65,10 @@ public class Lion extends Shape {
         });
     }
 
+    public static void setGroup(Group group) {
+        Lion.group = group;
+    }
+
     private void update() {
         realXPos = new SimpleDoubleProperty();
         realXPos.bind(xPos.add(shape.translateXProperty()));
@@ -79,10 +83,6 @@ public class Lion extends Shape {
 
     DoubleProperty yPosProperty() {
         return realYPos;
-    }
-
-    public static void setGroup(Group group) {
-        Lion.group = group;
     }
 
     public Point getPosition() {

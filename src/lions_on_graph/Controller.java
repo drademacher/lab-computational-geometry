@@ -23,7 +23,6 @@ class Controller {
     private TickTimer.Ticker animation;
 
 
-
     private ZoomScrollPane zoomScrollPane;
     private HBox buttonBar;
     private Button modeToggleButton = new Button("Edit Mode");

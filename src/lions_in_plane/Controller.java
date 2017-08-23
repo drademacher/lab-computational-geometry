@@ -349,7 +349,7 @@ class Controller {
     private void initAnimationTimer() {
         animation = new TickTimer.Ticker() {
             int tickAccount = 0;
-            int ticksPerStep = 20;
+            int ticksPerStep = 1;
 
             @Override
             public void action() {

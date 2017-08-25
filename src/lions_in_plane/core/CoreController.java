@@ -4,6 +4,7 @@ import lions_in_plane.core.plane.Lion;
 import lions_in_plane.core.plane.Man;
 import lions_in_plane.core.plane.Plane;
 import lions_in_plane.core.strategies.man.StrategyEnumMan;
+import util.ConvexHull;
 import util.Point;
 import util.Random;
 
@@ -281,7 +282,15 @@ public class CoreController {
             //TODO calc the path until the man escaped OR is caught
             //TODO if (last) lion is to close to end of line
 //            while ((resultPath.size() == 0 || insideHull(resultPath.get(resultPath.size() - 1))) && steps < 500) {
-            for (int i = 0; i < 200; i++) {
+
+            Point[] lionPoints = new Point[k+1];
+            for (int j = 0; j <= k; j++) {
+                lionPoints[j]=this.plane.getLions().get(j).getCalculatedLastPosition();
+            }
+
+
+//            for (int i = 0; i < 200; i++) {/*/
+            while(resultPath.size() < 20 || new ConvexHull(lionPoints).insideHull(this.plane.getMen().get(0).getPosition())){
                 steps++;
 
                 resultPath = this.plane.calcManPath(k, inductionPath);

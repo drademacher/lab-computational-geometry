@@ -25,15 +25,11 @@ public class ManStrategyPaper extends StrategyMan {
         ArrayList<Vertex> result = new ArrayList<>();
 
         Vertex currentPosition = man.getCurrentPosition();
-//        System.out.println("###################");
-//        System.out.println("current: " + currentPosition);
 
         if (target == null || target.equals(currentPosition)) {
 
 
             if (helper.isQuarter(currentPosition)) {
-//                System.out.println("on quarter");
-
                 int distance = 0;
 
                 // only two connections
@@ -43,7 +39,6 @@ public class ManStrategyPaper extends StrategyMan {
                     Vertex vertex = connection.getNeighbor(currentPosition);
                     if (vertex.getClass() == SmallVertex.class) {
 
-//                        System.out.println("case 1");
 //                        System.out.println("old distance: "+distance);
                         if (distance < helper.BFSToLion(currentPosition, vertex)) {
                             distance = helper.BFSToLion(currentPosition, vertex);
@@ -51,7 +46,6 @@ public class ManStrategyPaper extends StrategyMan {
 
 
                             target = helper.getNeighborQuarters(currentPosition, vertex).get(0);
-//                            System.out.println("possible target: "+target);
 
                         }
                     }
@@ -59,19 +53,15 @@ public class ManStrategyPaper extends StrategyMan {
                     else {
                         if (helper.BFSToLion(currentPosition, vertex) > 2) {
 
-//                        System.out.println("case 2");
-
                             for (Connection nextConection : vertex.getConnections()) {
                                 if (!nextConection.getNeighbor(vertex).equals(currentPosition)) {
                                     Vertex nextVertex = nextConection.getNeighbor(vertex);
 
-//                                System.out.println("old distance: "+distance);
                                     if (distance < helper.BFSToLion(vertex, nextVertex) + 1) {
                                         distance = helper.BFSToLion(vertex, nextVertex) + 1;
 //                                    System.out.println("updated distance: "+distance);
 
                                         target = nextVertex;
-//                                    System.out.println("possible target: "+target);
                                     }
                                 }
                             }

@@ -52,20 +52,20 @@ public class Paper implements Strategy {
 
         //init: only 1 lion -> no exiting prevPath
         if (inductionPath == null || inductionPath.size() == 0) {
-            // system.out.println("CASE D");
+
             curPath.add(goAwayFromLion(curPath.get(curPath.size() - 1), curLionPosition));
         } else {
 
             Point cuPosition = curPath.get(curPath.size() - 1);
             int indexGoal = (int) Math.floor(Math.floor((curPath.size() / lion.getSpeed()) + 1) * lion.getSpeed());
             while (indexGoal > 0.5 * inductionPath.size()) {
-                // system.out.println(">>>>>>>>>>>>>>extent");
+
                 inductionPath = extendPath(inductionPath);
             }
             Point goalPosition = inductionPath.get(indexGoal);
 
             if (cuPosition.distanceTo(curLionPosition) >= saveRadius + radiusMan) {
-                // system.out.println("CASE A");
+
                 curPath.add(goInGoalDirection(cuPosition, goalPosition));
                     /*TODO parallel, instead of points??*/
             } else if (!cuPosition.equals(goalPosition) &&

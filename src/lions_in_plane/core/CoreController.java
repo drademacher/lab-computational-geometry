@@ -120,7 +120,7 @@ public class CoreController {
 //                        setManStrategy(pos, lineElements[3]);
                         setManSpeed(pos, Double.parseDouble(lineElements[4]));
 
-                        System.out.println("" + new Point(Double.parseDouble(lineElements[1]), Double.parseDouble(lineElements[2])) + " ## " + Double.parseDouble(lineElements[4]));
+                        // System.out.println("" + new Point(Double.parseDouble(lineElements[1]), Double.parseDouble(lineElements[2])) + " ## " + Double.parseDouble(lineElements[4]));
                         break;
                     case "L":
                         createLion(pos);
@@ -264,7 +264,7 @@ public class CoreController {
     }
 
 
-    public ArrayList<ArrayList<Point>> calcAllPaths() {
+    protected ArrayList<ArrayList<Point>> calcAllPaths() {
 
         ArrayList<Point> resultPath = new ArrayList<>();
         ArrayList<Point> inductionPath;

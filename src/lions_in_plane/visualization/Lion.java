@@ -1,5 +1,7 @@
 package lions_in_plane.visualization;
 
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.Group;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Menu;
@@ -15,12 +17,15 @@ import static lions_in_plane.visualization.Constants.ENTITY_RADIUS;
 public class Lion extends Shape {
     private static Group group = new Group();
 
-    private Point position;
+    private DoubleProperty xPos, realXPos;
+    private DoubleProperty yPos, realYPos;
     private Circle shape;
 
     Lion(Point position) {
-        this.position = position;
+        this.xPos = new SimpleDoubleProperty(position.getX());
+        this.yPos = new SimpleDoubleProperty(position.getY());
         this.shape = new Circle(position.getX(), position.getY(), ENTITY_RADIUS, COLOR_LION);
+        update();
 
         group.getChildren().add(shape);
         shape.setOnContextMenuRequested(event1 -> {
@@ -44,13 +49,13 @@ public class Lion extends Shape {
 
 
             removeButton.setOnAction(event2 -> {
-                coreController.removeLion(this.position);
+                coreController.removeLion(new Point(xPos.getValue(), yPos.getValue()));
             });
 
             relocateButton.setOnAction(event2 -> {
                 pane.setOnMouseClicked(event3 -> {
                     pane.setOnMouseClicked(null);
-                    coreController.relocateLion(this.position, pane.getLocalCoordinates(event3.getX(), event3.getY()));
+                    coreController.relocateLion(new Point(xPos.getValue(), yPos.getValue()), pane.getLocalCoordinates(event3.getX(), event3.getY()));
 
                 });
             });
@@ -64,12 +69,31 @@ public class Lion extends Shape {
         Lion.group = group;
     }
 
+    private void update() {
+        realXPos = new SimpleDoubleProperty();
+        realXPos.bind(xPos.add(shape.translateXProperty()));
+
+        realYPos = new SimpleDoubleProperty();
+        realYPos.bind(yPos.add(shape.translateYProperty()));
+    }
+
+    DoubleProperty xPosProperty() {
+        return realXPos;
+    }
+
+    DoubleProperty yPosProperty() {
+        return realYPos;
+    }
+
     public Point getPosition() {
-        return position;
+        return new Point(xPos.getValue(), yPos.getValue());
     }
 
     void setPosition(Point position) {
-        this.position = position;
+        this.xPos.set(position.getX());
+        this.yPos.set(position.getY());
+        update();
+
         shape.relocate(position.getX() - ENTITY_RADIUS, position.getY() - ENTITY_RADIUS);
     }
 

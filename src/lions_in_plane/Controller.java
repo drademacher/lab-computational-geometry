@@ -197,11 +197,11 @@ class Controller {
         setParameterButton.getItems().addAll(setGlobalManSpeed, setGlobalLionSpeed, setGlobalLionRange, new SeparatorMenuItem(), manMenu, lionMenu);
 
         setGlobalManSpeed.setOnAction(event -> {
-            double currentValue = this.coreController.getDefaultMenSpeed();
+            double currentValue = this.coreController.getDefaultMenEpsilon();
 
 
             TextInputDialog dialog = new TextInputDialog("" + currentValue);
-            dialog.setTitle("Set Man Speed");
+            dialog.setTitle("Set Man Epsilon");
             dialog.setHeaderText("-----.");
 
             Optional<String> result = dialog.showAndWait();
@@ -210,7 +210,7 @@ class Controller {
                 try {
 
                     double inputValue = Double.parseDouble(result.get());
-                    this.coreController.setDefaultMenSpeed(inputValue);
+                    this.coreController.setDefaultMenEpsilon(inputValue);
                 } catch (Exception ignore) {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Error");
@@ -285,7 +285,7 @@ class Controller {
 
         CheckMenuItem viewCompletePath = new CheckMenuItem("View Complete Movement Path");
         completePathShapes.visibleProperty().bind(viewCompletePath.selectedProperty());
-        viewCompletePath.setSelected(false);
+        viewCompletePath.setSelected(true);
 
         setViewMenu.getItems().addAll(viewEntities, viewLionRanges, viewConvexHull, viewCompletePath);
     }

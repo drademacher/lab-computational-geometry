@@ -8,15 +8,13 @@ import lions_on_graph.core.strategies.ManStrategies.*;
 import lions_on_graph.core.strategies.StrategyLion;
 import lions_on_graph.core.strategies.StrategyMan;
 import lions_on_graph.visualization.ShapeController;
+import util.Constants;
 import util.Point;
 
 import java.io.*;
 import java.util.ArrayList;
 
 public class CoreController {
-
-    public static final String API_VERSION = "v0.2";
-
 
     private boolean editMode = true;
     private ArrayList<Lion> lions = new ArrayList<>();
@@ -931,11 +929,11 @@ public class CoreController {
             //config line
             currentLine = br.readLine();
             if (currentLine == null) {
-                throw new Error("wrong file input version: " + CoreController.API_VERSION + " expected");
+                throw new Error("wrong file input version: " + Constants.API_VERSION + " expected");
             }
             String[] lineElements = currentLine.split("##");
-            if (!lineElements[2].equals(CoreController.API_VERSION)) {
-                throw new Error("wrong file  input version: " + CoreController.API_VERSION + " expected");
+            if (!lineElements[2].equals(Constants.API_VERSION)) {
+                throw new Error("wrong file  input version: " + Constants.API_VERSION + " expected");
             }
 
             // valid version, read file
@@ -999,7 +997,7 @@ public class CoreController {
 
             bufferedWriter = new BufferedWriter(new FileWriter(file));
 
-            bufferedWriter.write("C##>>>>>Configuration for LionsOnGraph Applet<<<<<##" + CoreController.API_VERSION);
+            bufferedWriter.write("C##>>>>>Configuration for LionsOnGraph Applet<<<<<##" + Constants.API_VERSION);
             bufferedWriter.newLine();
             bufferedWriter.flush();
 

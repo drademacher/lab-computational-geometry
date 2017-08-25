@@ -3,8 +3,9 @@ package lions_in_plane.core;
 import lions_in_plane.core.plane.Lion;
 import lions_in_plane.core.plane.Man;
 import lions_in_plane.core.plane.Plane;
+import lions_in_plane.core.strategies.lion.StrategyEnumLion;
 import lions_in_plane.core.strategies.man.StrategyEnumMan;
-import util.ConvexHull;
+import util.Constants;
 import util.Point;
 import util.Random;
 
@@ -15,12 +16,13 @@ import java.util.Map;
 
 
 public class CoreController {
-    private static final String API_VERSION = "v0.2";
+    
     private boolean editMode = true;
 
-    private double defaultMenSpeed = 1.1;
+    private double defaultMenEpsilon = 0.1;
     private double defaultLionsSpeed = 1;
-    private double defaultLionsRange = 0;
+    private double defaultLionsRange = 5;
+    private double maxLionSpeed = defaultLionsSpeed;
 
     private Plane plane = new Plane();
 
@@ -100,11 +102,11 @@ public class CoreController {
             //config line
             currentLine = br.readLine();
             if (currentLine == null) {
-                throw new Error("wrong file input version: " + CoreController.API_VERSION + " expected");
+                throw new Error("wrong file input version: " + Constants.API_VERSION + " expected");
             }
             String[] lineElements = currentLine.split("##");
-            if (!lineElements[2].equals(CoreController.API_VERSION)) {
-                throw new Error("wrong file  input version: " + CoreController.API_VERSION + " expected");
+            if (!lineElements[2].equals(Constants.API_VERSION)) {
+                throw new Error("wrong file  input version: " + Constants.API_VERSION + " expected");
             }
 
             // valid version, read file
@@ -119,7 +121,7 @@ public class CoreController {
                     case "M":
                         createMan(pos);
 //                        setManStrategy(pos, lineElements[3]);
-                        setManSpeed(pos, Double.parseDouble(lineElements[4]));
+                        setManEpsilon(pos, Double.parseDouble(lineElements[4]));
 
                         // System.out.println("" + new Point(Double.parseDouble(lineElements[1]), Double.parseDouble(lineElements[2])) + " ## " + Double.parseDouble(lineElements[4]));
                         break;
@@ -142,7 +144,7 @@ public class CoreController {
         try {
             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(selectedFile));
 
-            bufferedWriter.write("C##>>>>>Configuration for LionsInPlane Applet<<<<<##" + API_VERSION);
+            bufferedWriter.write("C##>>>>>Configuration for LionsInPlane Applet<<<<<##" + Constants.API_VERSION);
             bufferedWriter.newLine();
             bufferedWriter.flush();
 
@@ -168,23 +170,19 @@ public class CoreController {
     }
 
     public double getDefaultLionsRange() {
-        // TODO: IMPLEMENT THIS
         return defaultLionsRange;
     }
 
     public void setDefaultLionsRange(double defaultLionsRange) {
-        // TODO: IMPLEMENT THIS
         this.defaultLionsRange = defaultLionsRange;
     }
 
-    public double getDefaultMenSpeed() {
-        return defaultMenSpeed;
+    public double getDefaultMenEpsilon() {
+        return defaultMenEpsilon;
     }
 
-    public void setDefaultMenSpeed(double defaultMenSpeed) {
-        // TODO: IMPLEMENT THIS
-        // non-negative check e.g.
-        this.defaultMenSpeed = defaultMenSpeed;
+    public void setDefaultMenEpsilon(double defaultMenEpsilon) {
+        this.defaultMenEpsilon = defaultMenEpsilon;
     }
 
     public double getDefaultLionsSpeed() {
@@ -192,8 +190,22 @@ public class CoreController {
     }
 
     public void setDefaultLionsSpeed(double defaultLionsSpeed) {
-        // TODO: IMPLEMENT THIS
         this.defaultLionsSpeed = defaultLionsSpeed;
+    }
+
+    private void calcMaxLionSpeed(){
+        maxLionSpeed = 0;
+        for(Lion lion : plane.getLions()){
+            setMaxLionSpeed(lion.getSpeed());
+        }
+    }
+    private void setMaxLionSpeed(double speed){
+        if(speed > maxLionSpeed){
+            maxLionSpeed = speed;
+            for(Man man : plane.getMen()){
+                man.setSpeed(maxLionSpeed);
+            }
+        }
     }
 
     public boolean simulateStep() {
@@ -220,11 +232,12 @@ public class CoreController {
     }
 
     public void createMan(Point coordinates) {
-        plane.addMan(coordinates, defaultMenSpeed);
+        plane.addMan(coordinates, maxLionSpeed, defaultMenEpsilon);
     }
 
     public void createLion(Point coordinates) {
         plane.addLion(coordinates, defaultLionsSpeed, defaultLionsRange);
+        setMaxLionSpeed(defaultLionsSpeed);
     }
 
     public void removeMan(Point coordinates) {
@@ -233,6 +246,7 @@ public class CoreController {
 
     public void removeLion(Point coordinates) {
         plane.removeLion(coordinates);
+        calcMaxLionSpeed();
     }
 
     public void relocateMan(Point from, Point to) {
@@ -244,24 +258,24 @@ public class CoreController {
     }
 
     public void setLionRange(Point coordinates, double range) {
-        // TODO: IMPLEMENT THIS
+        plane.getLionByCoordinate(coordinates).setRange(range);
     }
 
-    public void setManSpeed(Point coordinates, double speed) {
-        // TODO: IMPLEMENT THIS
+    public void setManEpsilon(Point coordinates, double epsilon) {
+        plane.getManByCoordinate(coordinates).setEpsilon(epsilon);
     }
 
     public void setLionSpeed(Point coordinates, double speed) {
-        // TODO: IMPLEMENT THIS
+        plane.getLionByCoordinate(coordinates).setSpeed(speed);
+        setMaxLionSpeed(speed);
     }
 
     public void setManStrategy(Point coordinates, StrategyEnumMan strategyEnum) {
-        // TODO: IMPLEMENT THIS
         plane.setManStrategy(coordinates, strategyEnum);
     }
 
-    public void setLionStrategy() {
-        // TODO: IMPLEMENT THIS
+    public void setLionStrategy(Point coordinates, StrategyEnumLion strategyEnum) {
+        plane.setLionStrategy(coordinates, strategyEnum);
     }
 
 
@@ -289,8 +303,8 @@ public class CoreController {
             }
 
 
-//            for (int i = 0; i < 200; i++) {/*/
-            while(resultPath.size() < 20 || new ConvexHull(lionPoints).insideHull(this.plane.getMen().get(0).getPosition())){
+            for (int i = 0; i < 200; i++) {
+//            while(resultPath.size() < 20 || new ConvexHull(lionPoints).insideHull(this.plane.getMen().get(0).getPosition())){
                 steps++;
 
                 resultPath = this.plane.calcManPath(k, inductionPath);

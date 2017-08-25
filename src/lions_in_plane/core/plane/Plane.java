@@ -17,8 +17,8 @@ public class Plane {
         this.lions = new ArrayList<>();
     }
 
-    public void addMan(Point pos, double speed) {
-        men.add(new Man(pos, speed));
+    public void addMan(Point pos, double speed, double epsilon) {
+        men.add(new Man(pos, speed, epsilon));
         setManStrategy(pos, StrategyEnumMan.Paper);
         System.out.println("man position @ " + pos);
     }

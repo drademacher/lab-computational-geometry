@@ -42,11 +42,11 @@ public class Paper implements Strategy {
     *
     * delta * (1 + epsilon) ==  man.getSpeed()
     * delta                 ==  lion.getSpeed()
-    * saveRadius            == ???   (for now 3* lion.getSpeed())
+    * saveRadius            == ???   (lion.getRange()*2)
     *
     */
     private ArrayList<Point> doMove(Man man, Lion lion, ArrayList<Point> inductionPath, ArrayList<Point> curPath) {
-        this.saveRadius = 3 * lion.getSpeed();//TODO
+        this.saveRadius = lion.getRange()*2;
 
         Point curLionPosition = lion.getCalculatedPositionAtTime(curPath.size() - 2);
 

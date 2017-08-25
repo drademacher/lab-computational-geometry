@@ -1,5 +1,6 @@
 package lions_in_plane.core;
 
+import lions_in_plane.core.plane.AllPaths;
 import lions_in_plane.core.plane.Lion;
 import lions_in_plane.core.plane.Man;
 import lions_in_plane.core.plane.Plane;
@@ -10,6 +11,7 @@ import util.Point;
 import util.Random;
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -120,14 +122,14 @@ public class CoreController {
                 switch (lineElements[0]) {
                     case "M":
                         createMan(pos);
-//                        setManStrategy(pos, lineElements[3]);
+                        setManStrategy(pos, StrategyEnumMan.valueOf(lineElements[3]));
                         setManEpsilon(pos, Double.parseDouble(lineElements[4]));
 
                         // System.out.println("" + new Point(Double.parseDouble(lineElements[1]), Double.parseDouble(lineElements[2])) + " ## " + Double.parseDouble(lineElements[4]));
                         break;
                     case "L":
                         createLion(pos);
-//                        setLionStrategy(pos, lineElements[3]);
+                        setLionStrategy(pos, StrategyEnumLion.valueOf(lineElements[3]));
                         setLionSpeed(pos, Double.parseDouble(lineElements[4]));
                         setLionRange(pos, Double.parseDouble(lineElements[5]));
                         break;
@@ -151,12 +153,13 @@ public class CoreController {
 
             for (Man man : plane.getMen()) {
 //                System.out.println("M##" + man.getPosition().getX() + "##" + man.getPosition().getY() + "##" + man.getStrategy().toString() + "##" + man.getSpeed());
-                bufferedWriter.write("M##" + man.getPosition().getX() + "##" + man.getPosition().getY() + "##" + man.getStrategy().toString() + "##" + man.getSpeed());
+                bufferedWriter.write("M##" + man.getPosition().getX() + "##" + man.getPosition().getY() + "##" + man.getStrategy().toString() + "##" + man.getEpsilon());
                 bufferedWriter.newLine();
                 bufferedWriter.flush();
             }
 
             for (Lion lion : plane.getLions()) {
+                System.out.println(lion.getStrategy());
                 bufferedWriter.write("L##" + lion.getPosition().getX() + "##" + lion.getPosition().getY() + "##" + lion.getStrategy().toString() + "##" + lion.getSpeed() + "##" + lion.getRange());
                 bufferedWriter.newLine();
                 bufferedWriter.flush();
@@ -274,12 +277,24 @@ public class CoreController {
         plane.setManStrategy(coordinates, strategyEnum);
     }
 
+    public void setAllManStrategy(StrategyEnumMan strategyEnum){
+        for(Man man : plane.getMen()){
+            plane.setManStrategy(man.getPosition(), strategyEnum);
+        }
+    }
+
     public void setLionStrategy(Point coordinates, StrategyEnumLion strategyEnum) {
         plane.setLionStrategy(coordinates, strategyEnum);
     }
 
+    public void setAllLionStrategy(StrategyEnumLion strategyEnum){
+        for(Lion lion : plane.getLions()){
+            plane.setLionStrategy(lion.getPosition(), strategyEnum);
+        }
+    }
 
-    protected ArrayList<ArrayList<Point>> calcAllPaths(int maxInductionsStep) {
+
+    protected AllPaths calcAllPaths(int maxInductionsStep) {
 
         ArrayList<Point> resultPath = new ArrayList<>();
         ArrayList<Point> inductionPath;
@@ -316,13 +331,11 @@ public class CoreController {
             }
         }
 
-        // defined: man path is the first value
-        ArrayList<ArrayList<Point>> allPaths = new ArrayList<>();
-        allPaths.add(resultPath);
-
+        ArrayList<ArrayList<Point>> lionPathList = new ArrayList<>();
         lionPaths.forEach((k, v) -> {
-            allPaths.add(v);
+            lionPathList.add(v);
         });
+        AllPaths allPaths = new AllPaths(resultPath, lionPathList);
 
         return allPaths;
 

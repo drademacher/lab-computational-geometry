@@ -3,6 +3,7 @@ package lions_in_plane.visualization;
 import javafx.animation.Transition;
 import javafx.scene.paint.Color;
 import lions_in_plane.core.CoreController;
+import lions_in_plane.core.plane.AllPaths;
 import util.ConvexHull;
 import util.Point;
 
@@ -251,9 +252,9 @@ public class VisualizedCoreController extends CoreController {
 
 
     @Override
-    protected ArrayList<ArrayList<Point>> calcAllPaths(int maxInductionsStep) {
-        allPaths = super.calcAllPaths(maxInductionsStep);
-
+    protected AllPaths calcAllPaths(int maxInductionsStep) {
+        //TODO allPathsObject vs allPaths
+        AllPaths allPathsObject = super.calcAllPaths(maxInductionsStep);
 
         Point[] newHull = new Point[allPaths.size() - 1];
 
@@ -271,6 +272,7 @@ public class VisualizedCoreController extends CoreController {
             // new PolygonalPath(allPaths.get(0), Color.BLUE);
         }
 
-        return allPaths;
+        //TODO allPathsObject vs allPaths
+        return allPathsObject;
     }
 }

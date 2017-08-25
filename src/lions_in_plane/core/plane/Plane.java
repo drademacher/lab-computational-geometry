@@ -37,6 +37,7 @@ public class Plane {
     }
 
     public void setManStrategy(Point coordinates, StrategyEnumMan strategyEnum) {
+        System.out.println("set man strategy to "+strategyEnum.toString());
         Man man = getManByCoordinate(coordinates);
         if (man == null) {
             return;
@@ -49,6 +50,9 @@ public class Plane {
         if (lion == null) {
             System.out.println("no lion, no strategy");
             return;
+        }
+        if(strategyEnum == null){
+            System.out.println("no strategy!!");
         }
         lion.setStrategy(strategyEnum.getStrategy());
     }

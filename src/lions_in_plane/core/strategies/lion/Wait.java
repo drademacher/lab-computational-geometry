@@ -1,4 +1,4 @@
-package lions_in_plane.core.strategies.man;
+package lions_in_plane.core.strategies.lion;
 
 import lions_in_plane.core.plane.Lion;
 import lions_in_plane.core.plane.Man;
@@ -7,16 +7,11 @@ import util.Point;
 import java.util.ArrayList;
 
 public class Wait implements Strategy {
-
-    public Wait() {
-
-    }
-
     @Override
-    public ArrayList<Point> getPath(Man man, ArrayList<Lion> lions, int index, ArrayList<Point> inductionPath) {
+    public ArrayList<Point> getPath(Lion lion, Man man, ArrayList<Point> manPath, ArrayList<Point> prevPath) {
         ArrayList<Point> path = new ArrayList<>();
         for(int i = 0; i < 200; i++){
-            path.add(man.getPosition());
+            path.add(lion.getPosition());
         }
         return path;
     }

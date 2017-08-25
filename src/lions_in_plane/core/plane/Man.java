@@ -37,6 +37,10 @@ public class Man extends Entity {
         return epsilon;
     }
 
+    public double getBaseSpeed(){
+        return baseSpeed;
+    }
+
     @Override
     public void setSpeed(double baseSpeed) {
         super.setSpeed(baseSpeed + epsilon);

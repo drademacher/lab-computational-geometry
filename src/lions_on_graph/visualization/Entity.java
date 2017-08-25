@@ -5,7 +5,7 @@ import util.Point;
 /**
  * Created by Jens on 29.06.2017.
  */
-public interface ShapedEntity {
+public interface Entity {
 
     void relocate(Point coordinates);
 

@@ -6,7 +6,7 @@ import lions_on_graph.core.CoreController;
 import util.Point;
 import util.ZoomScrollPane;
 
-public class ShapeStepPreview implements ShapedVertex {
+public class StepPreview implements Vertex {
     private static ZoomScrollPane mainPane;
     private static Group shapeGroup = new Group();
 
@@ -14,26 +14,26 @@ public class ShapeStepPreview implements ShapedVertex {
     private CoreController coreController;
     private Point coordinates;
 
-    ShapeStepPreview(CoreController coreController, Point startCoordinates) {
+    StepPreview(CoreController coreController, Point startCoordinates) {
         this.coreController = coreController;
         this.coordinates = startCoordinates;
 
-        shape = new Circle(coordinates.getX(), coordinates.getY(), ShapeConstants.ENTITY_RADIUS, ShapeConstants.COLOR_PREVIEW);
+        shape = new Circle(coordinates.getX(), coordinates.getY(), Constants.ENTITY_RADIUS, Constants.COLOR_PREVIEW);
         shapeGroup.getChildren().add(shape);
     }
 
     public static void setMainPane(ZoomScrollPane mainPane) {
-        ShapeStepPreview.mainPane = mainPane;
+        StepPreview.mainPane = mainPane;
     }
 
     public static void setShapeGroup(Group shapeGroup) {
-        ShapeStepPreview.shapeGroup = shapeGroup;
+        StepPreview.shapeGroup = shapeGroup;
     }
 
     @Override
     public void relocate(Point coordinates) {
         this.coordinates = coordinates;
-        shape.relocate(coordinates.getX() - ShapeConstants.ENTITY_RADIUS, coordinates.getY() - ShapeConstants.ENTITY_RADIUS);
+        shape.relocate(coordinates.getX() - Constants.ENTITY_RADIUS, coordinates.getY() - Constants.ENTITY_RADIUS);
     }
 
     public void delete() {

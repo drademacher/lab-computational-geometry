@@ -5,20 +5,20 @@ import javafx.scene.shape.Circle;
 import lions_on_graph.core.CoreController;
 import util.Point;
 
-import static lions_on_graph.visualization.ShapeConstants.COLOR_RANGE;
-import static lions_on_graph.visualization.ShapeConstants.RANGE_RADIUS;
+import static lions_on_graph.visualization.Constants.COLOR_RANGE;
+import static lions_on_graph.visualization.Constants.RANGE_RADIUS;
 
 /**
  * Created by Jens on 29.06.2017.
  */
-public class ShapedRange implements ShapedVertex {
+public class Range implements Vertex {
     private static Group shapeGroup = new Group();
 
     private Circle shape;
     private CoreController coreController;
     private Point coordinates;
 
-    public ShapedRange(CoreController coreController, Point startCoordinates) {
+    public Range(CoreController coreController, Point startCoordinates) {
 
         this.coreController = coreController;
         this.coordinates = startCoordinates;
@@ -29,7 +29,7 @@ public class ShapedRange implements ShapedVertex {
     }
 
     public static void setShapeGroup(Group shapeGroup) {
-        ShapedRange.shapeGroup = shapeGroup;
+        Range.shapeGroup = shapeGroup;
     }
 
     public void relocate(Point coordinates) {

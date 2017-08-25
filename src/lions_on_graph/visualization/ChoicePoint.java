@@ -8,7 +8,7 @@ import lions_on_graph.core.CoreController;
 import lions_on_graph.core.entities.Entity;
 import util.Point;
 
-public class ShapedChoicePoint {
+public class ChoicePoint {
     private static Group shapeGroup = new Group();
 
     private Circle shape;
@@ -16,23 +16,23 @@ public class ShapedChoicePoint {
     private Point choice;
     private Entity entity;
 
-    public ShapedChoicePoint(CoreController coreController, Entity entity, Point startCoordinates, Color color) {
+    public ChoicePoint(CoreController coreController, Entity entity, Point startCoordinates, Color color) {
         this.coreController = coreController;
         this.entity = entity;
         this.choice = startCoordinates;
 
-        shape = new Circle(choice.getX(), choice.getY(), ShapeConstants.CHOICEPOINT_RADIUS, color);
+        shape = new Circle(choice.getX(), choice.getY(), Constants.CHOICEPOINT_RADIUS, color);
         shapeGroup.getChildren().add(shape);
 
         shape.setOnMouseClicked(event -> {
             entity.setNextPosition(coreController.getVertexByCoordinate(choice));
-            coreController.getShapeController().updateStepPreviewsAndChoicePoints();
+            coreController.getVisualCoreController().updateStepPreviewsAndChoicePoints();
         });
     }
 
 
     public static void setShapeGroup(Group shapeGroup) {
-        ShapedChoicePoint.shapeGroup = shapeGroup;
+        ChoicePoint.shapeGroup = shapeGroup;
     }
 
     public static void clear() {

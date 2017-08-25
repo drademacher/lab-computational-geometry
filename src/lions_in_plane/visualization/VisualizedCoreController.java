@@ -17,7 +17,7 @@ public class VisualizedCoreController extends CoreController {
     private ConvexHull hull;
     private Man manPoint;
     private ArrayList<Lion> allLionPoints;
-    private ArrayList<ArrayList<Point>> allPaths;
+    private AllPaths allPaths;
     private int pathCount;
     private int pathStoneCount;
     private ArrayList<Transition> animations;
@@ -31,7 +31,7 @@ public class VisualizedCoreController extends CoreController {
         super.setEditMode(editMode);
 
         if (!editMode) {
-            calcAllPaths(Integer.MAX_VALUE);
+            calcAllPaths(1);
             for (Lion lion : lions) {
                 lion.getShape().setVisible(false);
             }
@@ -43,8 +43,7 @@ public class VisualizedCoreController extends CoreController {
         this.lions = new ArrayList<>();
         this.manPoint = null;
         this.allLionPoints = new ArrayList<>();
-        this.allPaths = new ArrayList<>();
-        this.pathCount = 1;
+        this.pathCount = 0;
         this.pathStoneCount = 0;
         this.animations = new ArrayList<>();
 //        this.hull = new Point[0];
@@ -59,27 +58,27 @@ public class VisualizedCoreController extends CoreController {
     @Override
     public void setDefaultGraph1() {
         super.setDefaultGraph1();
-        calcAllPaths(Integer.MAX_VALUE);
+        calcAllPaths(1);
     }
 
     @Override
     public void setDefaultGraph2() {
         super.setDefaultGraph2();
-        calcAllPaths(Integer.MAX_VALUE);
+        calcAllPaths(1);
 
     }
 
     @Override
     public void setDefaultGraph3() {
         super.setDefaultGraph3();
-        calcAllPaths(Integer.MAX_VALUE);
+        calcAllPaths(1);
     }
 
     public void setRandomConfiguration() {
         super.setRandomConfiguration();
         lions.forEach(lion -> System.out.print(lion.getPosition() + ", "));
         System.out.println();
-        calcAllPaths(Integer.MAX_VALUE);
+        calcAllPaths(1);
     }
 
 
@@ -165,87 +164,41 @@ public class VisualizedCoreController extends CoreController {
     public boolean simulateStep() {
         boolean res = super.simulateStep();
 
-        if (pathCount >= allPaths.size()) {
+
+        if (pathCount >= lions.size()) {
             return false;
         }
 
         if (pathStoneCount == 0) {
-            if (pathCount == 1) {
-                new PolygonalPath(allPaths.get(0), Color.BLUE);
+            update();
+            PolygonalPath.clear();
+            new PolygonalPath(allPaths.getManPath(), Color.BLUE);
+            for (int i = 0; i <= pathCount; i++) {
+                new PolygonalPath(allPaths.getLionPaths().get(i), Color.RED);
             }
-
-            new PolygonalPath(allPaths.get(pathCount), Color.RED);
-            lions.get(pathCount - 1).getShape().setVisible(true);
-
+            lions.get(pathCount).getShape().setVisible(true);
         }
 
 
         for (int i = 0; i <= pathCount; i++) {
             if (i == 0) {
-                manPoint.getShape().setCenterX(allPaths.get(i).get(pathStoneCount).getX());
-                manPoint.getShape().setCenterY(allPaths.get(i).get(pathStoneCount).getY());
-            } else {
-                lions.get(i - 1).getShape().setCenterX(allPaths.get(i).get(pathStoneCount).getX());
-                lions.get(i - 1).getShape().setCenterY(allPaths.get(i).get(pathStoneCount).getY());
+                manPoint.getShape().setCenterX(allPaths.getManPath().get(pathStoneCount).getX());
+                manPoint.getShape().setCenterY(allPaths.getManPath().get(pathStoneCount).getY());
             }
 
-
-//            Path path = new Path();
-//            path.getElements().add(new MoveTo(allPaths.get(pathCount).get(0).getX(), allPaths.get(pathCount).get(0).getY()));
-//            for (int i = 1; i < allPaths.get(pathCount).size(); i++) {
-//                path.getElements().add(new LineTo(allPaths.get(pathCount).get(i).getX(), allPaths.get(pathCount).get(i).getY()));
-//            }
-//
-//
-//            PathTransition pathTransition = new PathTransition();
-//            pathTransition.setDuration(Duration.millis(1000));
-//            pathTransition.setPath(path);
-//            pathTransition.setNode(manPoint.getShape());
-//
-//            animations.add(new SequentialTransition(
-//                    new PauseTransition(Duration.millis(300)),
-//                    pathTransition
-//            ));
-
-        }
-
-        if (allPaths.get(pathCount).size() == pathStoneCount) {
-            pathStoneCount = 0;
-            pathCount++;
+            lions.get(i).setPosition(allPaths.getLionPaths().get(i).get(pathStoneCount));
+//            lions.get(i).getShape().setCenterX(allPaths.getLionPaths().get(i).get(pathStoneCount).getX());
+//            lions.get(i).getShape().setCenterY(allPaths.getLionPaths().get(i).get(pathStoneCount).getY());
         }
 
         pathStoneCount++;
 
-
-//
-//
-//        Path path = new Path();
-//        path.getElements().add(new MoveTo(allPaths.get(pathCount).get(0).getX(), allPaths.get(pathCount).get(0).getY()));
-//        for (int i = 1; i < allPaths.get(pathCount).size(); i++) {
-//            path.getElements().add(new LineTo(allPaths.get(pathCount).get(i).getX(), allPaths.get(pathCount).get(i).getY()));
-//        }
-//        // path.getElements().add(new LineTo(allPaths.get(pathCount).get(0).getX(), allPaths.get(pathCount).get(0).getY()));
-//
-//        PathTransition pathTransition = new PathTransition();
-//        pathTransition.setDuration(Duration.millis(1000));
-//        pathTransition.setPath(path);
-//        pathTransition.setNode(lions.get(pathCount - 1).getShape());
-//
-//        animations.add(new SequentialTransition(
-//                new PauseTransition(Duration.millis(300)),
-//                pathTransition
-//        ));
-//
-        if (allPaths.get(pathCount).size() == pathStoneCount) {
+        if (allPaths.getManPath().size() == pathStoneCount) {
             pathStoneCount = 0;
             pathCount++;
+            allPaths = calcAllPaths(pathCount + 1);
+            update();
         }
-
-
-//
-//        for (Transition ft : animations) {
-//            ft.play();
-//        }
 
         return res;
     }
@@ -254,25 +207,24 @@ public class VisualizedCoreController extends CoreController {
     @Override
     protected AllPaths calcAllPaths(int maxInductionsStep) {
         //TODO allPathsObject vs allPaths
-        AllPaths allPathsObject = super.calcAllPaths(maxInductionsStep);
+        allPaths = super.calcAllPaths(maxInductionsStep);
 
-        Point[] newHull = new Point[allPaths.size() - 1];
+//        Point[] newHull = new Point[allPaths.getLionPaths().size()];
+//
+//        //draw lion paths (position >= 1 in list)
+//        if (allPaths.getLionPaths().size() > 1) {
+//            for (int i = 1; i < allPaths.getLionPaths().size(); i++) {
+//                newHull[i - 1] = allPaths.getLionPaths().get(i).get(allPaths.getLionPaths().get(i).size() - 1);
+//            }
+//        }
+//
+//        // update();
+//
+//        // draw man path (position == = in list)
+//        if (allPaths.getLionPaths().size() > 0) {
+//            // new PolygonalPath(allPaths.get(0), Color.BLUE);
+//        }
 
-        //draw lion paths (position >= 1 in list)
-        if (allPaths.size() > 1) {
-            for (int i = 1; i < allPaths.size(); i++) {
-                newHull[i - 1] = allPaths.get(i).get(allPaths.get(i).size() - 1);
-            }
-        }
-
-        // update();
-
-        // draw man path (position == = in list)
-        if (allPaths.size() > 0) {
-            // new PolygonalPath(allPaths.get(0), Color.BLUE);
-        }
-
-        //TODO allPathsObject vs allPaths
-        return allPathsObject;
+        return allPaths;
     }
 }

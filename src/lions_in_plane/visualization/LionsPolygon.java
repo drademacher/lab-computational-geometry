@@ -7,20 +7,20 @@ import javafx.scene.paint.Color;
 public class LionsPolygon extends Shape {
     private static Group group = new Group();
 
-    private Lion[] lions;
+    private Lion[] points;
     private javafx.scene.shape.Polygon polygon;
 
     LionsPolygon(Lion[] points) {
-        this.lions = points;
+        this.points = points;
         this.polygon = new javafx.scene.shape.Polygon();
         polygon.setStroke(Color.GREEN);
         polygon.setFill(Color.TRANSPARENT);
 
-        for (int i = 0; i < lions.length; i++) {
+        for (int i = 0; i < this.points.length; i++) {
             final int j = i;
-            polygon.getPoints().addAll(lions[i].xPosProperty().get(), lions[i].yPosProperty().get());
-            lions[i].xPosProperty().addListener((observable, oldValue, newValue) -> polygon.getPoints().set(2 * j, newValue.doubleValue()));
-            lions[i].yPosProperty().addListener((observable, oldValue, newValue) -> polygon.getPoints().set(2 * j + 1, newValue.doubleValue()));
+            this.polygon.getPoints().addAll(this.points[i].xPosProperty().get(), this.points[i].yPosProperty().get());
+            this.points[i].xPosProperty().addListener((observable, oldValue, newValue) -> polygon.getPoints().set(2 * j, newValue.doubleValue()));
+            this.points[i].yPosProperty().addListener((observable, oldValue, newValue) -> polygon.getPoints().set(2 * j + 1, newValue.doubleValue()));
 
         }
 

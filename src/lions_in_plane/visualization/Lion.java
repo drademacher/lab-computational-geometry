@@ -92,7 +92,7 @@ public class Lion extends Shape {
     void setPosition(Point position) {
         this.xPos.set(position.getX());
         this.yPos.set(position.getY());
-        update();
+//        update();
 
         shape.relocate(position.getX() - ENTITY_RADIUS, position.getY() - ENTITY_RADIUS);
     }

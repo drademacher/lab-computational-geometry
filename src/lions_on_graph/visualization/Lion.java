@@ -9,20 +9,19 @@ import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.util.Duration;
 import lions_on_graph.core.CoreController;
-import lions_on_graph.core.entities.Lion;
 import util.ContextMenuHolder;
 import util.Point;
 import util.ZoomScrollPane;
 
 import java.util.Optional;
 
-import static lions_on_graph.visualization.ShapeConstants.COLOR_LION;
-import static lions_on_graph.visualization.ShapeConstants.ENTITY_RADIUS;
+import static lions_on_graph.visualization.Constants.COLOR_LION;
+import static lions_on_graph.visualization.Constants.ENTITY_RADIUS;
 
 /**
  * Created by Jens on 25.06.2017.
  */
-public class ShapedLion implements ShapedEntity {
+public class Lion implements Entity {
     private static ZoomScrollPane mainPane;
     private static Group shapeGroup = new Group();
 
@@ -30,7 +29,7 @@ public class ShapedLion implements ShapedEntity {
     private CoreController coreController;
     private Point coordinates;
 
-    public ShapedLion(CoreController coreController, Point startCcoordinates) {
+    public Lion(CoreController coreController, Point startCcoordinates) {
 
         this.coreController = coreController;
         this.coordinates = startCcoordinates;
@@ -66,17 +65,17 @@ public class ShapedLion implements ShapedEntity {
 
 
             iteme1.setOnAction(event2 -> {
-                Lion lion = coreController.getLionByCoordinate(coordinates);
+                lions_on_graph.core.entities.Lion lion = coreController.getLionByCoordinate(coordinates);
                 coreController.incrementLionRange(coordinates);
             });
 
             iteme2.setOnAction(event2 -> {
-                Lion lion = coreController.getLionByCoordinate(coordinates);
+                lions_on_graph.core.entities.Lion lion = coreController.getLionByCoordinate(coordinates);
                 coreController.decrementLionRange(coordinates);
             });
 
             iteme3.setOnAction(event2 -> {
-                Lion lion = coreController.getLionByCoordinate(coordinates);
+                lions_on_graph.core.entities.Lion lion = coreController.getLionByCoordinate(coordinates);
 
                 TextInputDialog dialog = new TextInputDialog("" + lion.getRange());
                 dialog.setTitle("Set Lion Range");
@@ -126,7 +125,7 @@ public class ShapedLion implements ShapedEntity {
 
             manualStrategyButton.setOnAction(event2 -> {
                 coreController.setLionStrategy(coordinates, CoreController.LionStrategy.Manually);
-                coreController.getShapeController().updateStepPreviewsAndChoicePoints();
+                coreController.getVisualCoreController().updateStepPreviewsAndChoicePoints();
             });
 
             contextMenu.getItems().addAll(item0, item1, strategyMenu, edgeMenu, new SeparatorMenuItem(), closeItem);
@@ -135,11 +134,11 @@ public class ShapedLion implements ShapedEntity {
     }
 
     public static void setMainPane(ZoomScrollPane mainPane) {
-        ShapedLion.mainPane = mainPane;
+        Lion.mainPane = mainPane;
     }
 
     public static void setShapeGroup(Group shapeGroup) {
-        ShapedLion.shapeGroup = shapeGroup;
+        Lion.shapeGroup = shapeGroup;
     }
 
     @Override

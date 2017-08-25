@@ -5,7 +5,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import lions_on_graph.Main;
 
-public class ShapeConstants {
+public class Constants {
 //    public static final Color COLOR_BACKGROUND = (Color) Paint.valueOf("#dbdbdb");
 
     public static final Color COLOR_BACKGROUND = (Color) ((Region) Main.getScene().getRoot()).getBackground().getFills().get(0).getFill();

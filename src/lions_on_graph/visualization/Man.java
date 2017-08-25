@@ -19,7 +19,7 @@ import util.ZoomScrollPane;
 /**
  * Created by Jens on 25.06.2017.
  */
-public class ShapedMan implements ShapedEntity {
+public class Man implements Entity {
     private static ZoomScrollPane mainPane;
     private static Group shapeGroup = new Group();
 
@@ -27,12 +27,12 @@ public class ShapedMan implements ShapedEntity {
     private CoreController coreController;
     private Point coordinates;
 
-    public ShapedMan(CoreController coreController, Point startCoordinates) {
+    public Man(CoreController coreController, Point startCoordinates) {
 
         this.coreController = coreController;
         this.coordinates = startCoordinates;
 
-        shape = new Circle(coordinates.getX(), coordinates.getY(), ShapeConstants.ENTITY_RADIUS, ShapeConstants.COLOR_MAN);
+        shape = new Circle(coordinates.getX(), coordinates.getY(), Constants.ENTITY_RADIUS, Constants.COLOR_MAN);
         shapeGroup.getChildren().add(shape);
 
         shape.setOnContextMenuRequested(event1 -> {
@@ -69,7 +69,7 @@ public class ShapedMan implements ShapedEntity {
 
             manualStrategyButton.setOnAction(event2 -> {
                 coreController.setManStrategy(coordinates, CoreController.ManStrategy.Manually);
-                coreController.getShapeController().updateStepPreviewsAndChoicePoints();
+                coreController.getVisualCoreController().updateStepPreviewsAndChoicePoints();
             });
 
             paperStrategyButton.setOnAction(event2 -> {
@@ -98,11 +98,11 @@ public class ShapedMan implements ShapedEntity {
     }
 
     public static void setMainPane(ZoomScrollPane mainPane) {
-        ShapedMan.mainPane = mainPane;
+        Man.mainPane = mainPane;
     }
 
     public static void setShapeGroup(Group shapeGroup) {
-        ShapedMan.shapeGroup = shapeGroup;
+        Man.shapeGroup = shapeGroup;
     }
 
     @Override
@@ -125,7 +125,7 @@ public class ShapedMan implements ShapedEntity {
 //    @Override
 //    public void relocate(Point coordinates) {
 //        this.coordinates = coordinates;
-//        shape.relocate(coordinates.getX() - ShapeConstants.ENTITY_RADIUS, coordinates.getY() - ShapeConstants.ENTITY_RADIUS);
+//        shape.relocate(coordinates.getX() - Constants.ENTITY_RADIUS, coordinates.getY() - Constants.ENTITY_RADIUS);
 //    }
 
 

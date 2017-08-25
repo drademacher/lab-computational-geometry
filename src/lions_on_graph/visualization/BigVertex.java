@@ -10,7 +10,7 @@ import util.ContextMenuHolder;
 import util.Point;
 import util.ZoomScrollPane;
 
-public class ShapedBigVertex implements ShapedVertex {
+public class BigVertex implements Vertex {
     private static ZoomScrollPane mainPane;
     private static Group shapeGroup;
 
@@ -19,15 +19,15 @@ public class ShapedBigVertex implements ShapedVertex {
     private Point coordinates;
 
 
-    public ShapedBigVertex(CoreController coreController, Point startCoordinates) {
+    public BigVertex(CoreController coreController, Point startCoordinates) {
         this.coreController = coreController;
         this.coordinates = startCoordinates;
 
 
-        shape = new Circle(coordinates.getX(), coordinates.getY(), ShapeConstants.BIG_VERTEX_RADIUS);
-        shape.setStrokeWidth(ShapeConstants.BIG_VERTEX_RADIUS / 5);
-        shape.setStroke(ShapeConstants.COLOR_VERTEX);
-        shape.setFill(ShapeConstants.COLOR_BACKGROUND);
+        shape = new Circle(coordinates.getX(), coordinates.getY(), Constants.BIG_VERTEX_RADIUS);
+        shape.setStrokeWidth(Constants.BIG_VERTEX_RADIUS / 5);
+        shape.setStroke(Constants.COLOR_VERTEX);
+        shape.setFill(Constants.COLOR_BACKGROUND);
         shapeGroup.getChildren().add(shape);
 
 //        shape.setOnMouseClicked(event -> event.consume());
@@ -101,16 +101,16 @@ public class ShapedBigVertex implements ShapedVertex {
     }
 
     public static void setMainPane(ZoomScrollPane mainPane) {
-        ShapedBigVertex.mainPane = mainPane;
+        BigVertex.mainPane = mainPane;
     }
 
     public static void setShapeGroup(Group shapeGroup) {
-        ShapedBigVertex.shapeGroup = shapeGroup;
+        BigVertex.shapeGroup = shapeGroup;
     }
 
     public void relocate(Point coordinates) {
         this.coordinates = coordinates;
-        shape.relocate(coordinates.getX() - ShapeConstants.BIG_VERTEX_RADIUS, coordinates.getY() - ShapeConstants.BIG_VERTEX_RADIUS);
+        shape.relocate(coordinates.getX() - Constants.BIG_VERTEX_RADIUS, coordinates.getY() - Constants.BIG_VERTEX_RADIUS);
     }
 
     public void delete() {

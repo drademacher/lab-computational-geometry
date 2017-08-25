@@ -4,8 +4,8 @@ import util.Point;
 
 import java.util.ArrayList;
 
-import static lions_on_graph.visualization.ShapeConstants.BIG_VERTEX_RADIUS;
-import static lions_on_graph.visualization.ShapeConstants.SMALL_VERTEX_RADIUS;
+import static lions_on_graph.visualization.Constants.BIG_VERTEX_RADIUS;
+import static lions_on_graph.visualization.Constants.SMALL_VERTEX_RADIUS;
 
 public class GraphController {
 

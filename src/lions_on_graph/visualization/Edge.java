@@ -9,10 +9,10 @@ import util.Point;
 
 import java.util.Optional;
 
-import static lions_on_graph.visualization.ShapeConstants.COLOR_EDGE;
+import static lions_on_graph.visualization.Constants.COLOR_EDGE;
 
 
-public class ShapedEdge {
+public class Edge {
     private static Group shapeGroup = new Group();
 
     private CoreController coreController;
@@ -20,7 +20,7 @@ public class ShapedEdge {
     private Point from;
     private Point to;
 
-    public ShapedEdge(CoreController coreController, Point startFrom, Point startTo) {
+    public Edge(CoreController coreController, Point startFrom, Point startTo) {
 
         this.coreController = coreController;
         this.from = startFrom;
@@ -83,7 +83,7 @@ public class ShapedEdge {
     }
 
     public static void setShapeGroup(Group shapeGroup) {
-        ShapedEdge.shapeGroup = shapeGroup;
+        Edge.shapeGroup = shapeGroup;
     }
 
     public void relocate(Point from, Point to) {

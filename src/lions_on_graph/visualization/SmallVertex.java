@@ -9,22 +9,22 @@ import lions_on_graph.core.CoreController;
 import util.ContextMenuHolder;
 import util.Point;
 
-public class ShapedSmallVertex implements ShapedVertex {
+public class SmallVertex implements Vertex {
     private static Group shapeGroup = new Group();
 
     private Circle shape;
     private CoreController coreController;
     private Point coordinates;
 
-    public ShapedSmallVertex(CoreController coreController, Point startCoordinates) {
+    public SmallVertex(CoreController coreController, Point startCoordinates) {
 
         this.coreController = coreController;
         this.coordinates = startCoordinates;
 
-        shape = new Circle(coordinates.getX(), coordinates.getY(), ShapeConstants.SMALL_VERTEX_RADIUS);
-        shape.setStrokeWidth(ShapeConstants.SMALL_VERTEX_RADIUS / 5);
-        shape.setStroke(ShapeConstants.COLOR_SMALL_VERTEX);
-        shape.setFill(ShapeConstants.COLOR_BACKGROUND);
+        shape = new Circle(coordinates.getX(), coordinates.getY(), Constants.SMALL_VERTEX_RADIUS);
+        shape.setStrokeWidth(Constants.SMALL_VERTEX_RADIUS / 5);
+        shape.setStroke(Constants.COLOR_SMALL_VERTEX);
+        shape.setFill(Constants.COLOR_BACKGROUND);
         shapeGroup.getChildren().add(shape);
 
         shape.setOnContextMenuRequested(event1 -> {
@@ -57,12 +57,12 @@ public class ShapedSmallVertex implements ShapedVertex {
     }
 
     public static void setShapeGroup(Group shapeGroup) {
-        ShapedSmallVertex.shapeGroup = shapeGroup;
+        SmallVertex.shapeGroup = shapeGroup;
     }
 
     public void relocate(Point coordinates) {
         this.coordinates = coordinates;
-        shape.relocate(coordinates.getX() - ShapeConstants.SMALL_VERTEX_RADIUS, coordinates.getY() - ShapeConstants.SMALL_VERTEX_RADIUS);
+        shape.relocate(coordinates.getX() - Constants.SMALL_VERTEX_RADIUS, coordinates.getY() - Constants.SMALL_VERTEX_RADIUS);
     }
 
     public void delete() {

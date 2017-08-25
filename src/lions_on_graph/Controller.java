@@ -391,17 +391,17 @@ class Controller {
         zoomScrollPane.getNodesHolder().clear();
         zoomScrollPane.getNodesHolder().addAll(edgeShapes, vertexShapes, stepPreviewShapes, lionRangeShapes, entityShapes, choisePointShapes);
 
-        ShapedBigVertex.setMainPane(zoomScrollPane);
-        ShapedBigVertex.setShapeGroup(vertexShapes);
-        ShapedSmallVertex.setShapeGroup(vertexShapes);
-        ShapedEdge.setShapeGroup(edgeShapes);
-        ShapedMan.setMainPane(zoomScrollPane);
-        ShapedMan.setShapeGroup(entityShapes);
-        ShapedLion.setMainPane(zoomScrollPane);
-        ShapedLion.setShapeGroup(entityShapes);
-        ShapedRange.setShapeGroup(lionRangeShapes);
-        ShapeStepPreview.setShapeGroup(stepPreviewShapes);
-        ShapedChoicePoint.setShapeGroup(choisePointShapes);
+        BigVertex.setMainPane(zoomScrollPane);
+        BigVertex.setShapeGroup(vertexShapes);
+        SmallVertex.setShapeGroup(vertexShapes);
+        Edge.setShapeGroup(edgeShapes);
+        Man.setMainPane(zoomScrollPane);
+        Man.setShapeGroup(entityShapes);
+        Lion.setMainPane(zoomScrollPane);
+        Lion.setShapeGroup(entityShapes);
+        Range.setShapeGroup(lionRangeShapes);
+        StepPreview.setShapeGroup(stepPreviewShapes);
+        ChoicePoint.setShapeGroup(choisePointShapes);
     }
 
 

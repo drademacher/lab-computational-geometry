@@ -172,9 +172,9 @@ public class VisualizedCoreController extends CoreController {
         if (pathStoneCount == 0) {
             update();
             PolygonalPath.clear();
-            new PolygonalPath(allPaths.getManPath(), Color.BLUE);
+            new PolygonalPath(allPaths.manPath, Color.BLUE);
             for (int i = 0; i <= pathCount; i++) {
-                new PolygonalPath(allPaths.getLionPaths().get(i), Color.RED);
+                new PolygonalPath(allPaths.lionPaths.get(i), Color.RED);
             }
             lions.get(pathCount).getShape().setVisible(true);
         }
@@ -182,18 +182,18 @@ public class VisualizedCoreController extends CoreController {
 
         for (int i = 0; i <= pathCount; i++) {
             if (i == 0) {
-                manPoint.getShape().setCenterX(allPaths.getManPath().get(pathStoneCount).getX());
-                manPoint.getShape().setCenterY(allPaths.getManPath().get(pathStoneCount).getY());
+                manPoint.getShape().setCenterX(allPaths.manPath.get(pathStoneCount).getX());
+                manPoint.getShape().setCenterY(allPaths.manPath.get(pathStoneCount).getY());
             }
 
-            lions.get(i).setPosition(allPaths.getLionPaths().get(i).get(pathStoneCount));
-//            lions.get(i).getShape().setCenterX(allPaths.getLionPaths().get(i).get(pathStoneCount).getX());
-//            lions.get(i).getShape().setCenterY(allPaths.getLionPaths().get(i).get(pathStoneCount).getY());
+            lions.get(i).setPosition(allPaths.lionPaths.get(i).get(pathStoneCount));
+//            lions.get(i).getShape().setCenterX(allPaths.lionPaths.get(i).get(pathStoneCount).getX());
+//            lions.get(i).getShape().setCenterY(allPaths.lionPaths.get(i).get(pathStoneCount).getY());
         }
 
         pathStoneCount++;
 
-        if (allPaths.getManPath().size() == pathStoneCount) {
+        if (allPaths.pathSize == pathStoneCount) {
             pathStoneCount = 0;
             pathCount++;
             allPaths = calcAllPaths(pathCount + 1);
@@ -209,19 +209,19 @@ public class VisualizedCoreController extends CoreController {
         //TODO allPathsObject vs allPaths
         allPaths = super.calcAllPaths(maxInductionsStep);
 
-//        Point[] newHull = new Point[allPaths.getLionPaths().size()];
+//        Point[] newHull = new Point[allPaths.pathSize];
 //
 //        //draw lion paths (position >= 1 in list)
-//        if (allPaths.getLionPaths().size() > 1) {
-//            for (int i = 1; i < allPaths.getLionPaths().size(); i++) {
-//                newHull[i - 1] = allPaths.getLionPaths().get(i).get(allPaths.getLionPaths().get(i).size() - 1);
+//        if (allPaths.pathSize > 1) {
+//            for (int i = 1; i < allPaths.pathSize; i++) {
+//                newHull[i - 1] = allPaths.lionPaths.get(i).get(allPaths.lionPaths.get(i).size() - 1);
 //            }
 //        }
 //
 //        // update();
 //
 //        // draw man path (position == = in list)
-//        if (allPaths.getLionPaths().size() > 0) {
+//        if (allPaths.pathSize > 0) {
 //            // new PolygonalPath(allPaths.get(0), Color.BLUE);
 //        }
 

@@ -9,19 +9,21 @@ import java.util.ArrayList;
  */
 public class AllPaths {
 
-    private ArrayList<Point> manPath = new ArrayList<>();
-    private ArrayList<ArrayList<Point>> lionPaths = new ArrayList<>();
+    public final ArrayList<Point> manPath;
+    public final ArrayList<ArrayList<Point>> lionPaths;
+    public final int pathSize;
 
-    public AllPaths(ArrayList<Point> manPath, ArrayList<ArrayList<Point>> lionPaths){
+    public AllPaths(ArrayList<Point> manPath, ArrayList<ArrayList<Point>> lionPaths) {
         this.manPath = manPath;
         this.lionPaths = lionPaths;
-    }
+        this.pathSize = manPath.size();
 
-    public ArrayList<Point> getManPath(){
-        return manPath;
-    }
-
-    public ArrayList<ArrayList<Point>> getLionPaths(){
-        return lionPaths;
+        //just check the sizes
+        for(ArrayList<Point> lionPath : this.lionPaths){
+            if(lionPath.size() != this.pathSize){
+                System.out.println("Paths sizes are not equal!");
+                throw new Error("Paths sizes are not equal!");
+            }
+        }
     }
 }

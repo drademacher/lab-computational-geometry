@@ -6,10 +6,10 @@ import util.Point;
 
 import java.util.ArrayList;
 
-public class Wait implements Strategy {
+public class Wait extends Strategy {
 
-    public Wait() {
-
+    public Wait(StrategyEnumMan strategyEnumMan) {
+        super(strategyEnumMan);
     }
 
     @Override

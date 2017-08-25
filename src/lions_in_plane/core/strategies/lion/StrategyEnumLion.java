@@ -9,9 +9,9 @@ public enum StrategyEnumLion {
     public Strategy getStrategy() {
         switch (this) {
             case Greedy:
-                return new Greedy();
+                return new Greedy(this);
             case Wait:
-                return new Wait();
+                return new Wait(this);
             default:
                 throw new IllegalArgumentException("invalid input: " + this);
         }

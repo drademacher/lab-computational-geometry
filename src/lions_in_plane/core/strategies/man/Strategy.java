@@ -10,7 +10,18 @@ import java.util.ArrayList;
 /**
  * Created by Jens on 20.07.2017.
  */
-public interface Strategy {
+public abstract class Strategy {
 
-    ArrayList<Point> getPath(Man man, ArrayList<Lion> lions, int index, ArrayList<Point> inductionPath);
+
+    private StrategyEnumMan strategyEnumMan;
+
+    public Strategy(StrategyEnumMan strategyEnumMan){
+        this.strategyEnumMan = strategyEnumMan;
+    }
+
+    public abstract ArrayList<Point> getPath(Man man, ArrayList<Lion> lions, int index, ArrayList<Point> inductionPath);
+
+    public String getName(){
+        return strategyEnumMan.name();
+    }
 }

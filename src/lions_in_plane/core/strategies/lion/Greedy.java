@@ -9,7 +9,12 @@ import java.util.ArrayList;
 /**
  * Created by Jens on 21.07.2017.
  */
-public class Greedy implements Strategy {
+public class Greedy extends Strategy {
+
+    public Greedy(StrategyEnumLion strategyEnumLion) {
+        super(strategyEnumLion);
+    }
+
     @Override
     public ArrayList<Point> getPath(Lion lion, Man man, ArrayList<Point> manPath, ArrayList<Point> prevPath) {
 

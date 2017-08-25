@@ -9,13 +9,13 @@ import java.util.ArrayList;
 /**
  * Created by Jens on 20.07.2017.
  */
-public class Paper implements Strategy {
+public class Paper extends Strategy {
 
     private double saveRadius;
     private double radiusMan;
 
-    public Paper() {
-
+    public Paper(StrategyEnumMan strategyEnumMan) {
+        super(strategyEnumMan);
     }
 
     @Override

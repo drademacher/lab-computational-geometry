@@ -139,6 +139,7 @@ public class CoreController {
             }
         } catch (Exception e) {
             e.fillInStackTrace();
+            System.out.println(e);
         }
     }
 
@@ -153,14 +154,14 @@ public class CoreController {
 
             for (Man man : plane.getMen()) {
 //                System.out.println("M##" + man.getPosition().getX() + "##" + man.getPosition().getY() + "##" + man.getStrategy().toString() + "##" + man.getSpeed());
-                bufferedWriter.write("M##" + man.getPosition().getX() + "##" + man.getPosition().getY() + "##" + man.getStrategy().toString() + "##" + man.getEpsilon());
+                bufferedWriter.write("M##" + man.getPosition().getX() + "##" + man.getPosition().getY() + "##" + man.getStrategy().getName() + "##" + man.getEpsilon());
                 bufferedWriter.newLine();
                 bufferedWriter.flush();
             }
 
             for (Lion lion : plane.getLions()) {
                 System.out.println(lion.getStrategy());
-                bufferedWriter.write("L##" + lion.getPosition().getX() + "##" + lion.getPosition().getY() + "##" + lion.getStrategy().toString() + "##" + lion.getSpeed() + "##" + lion.getRange());
+                bufferedWriter.write("L##" + lion.getPosition().getX() + "##" + lion.getPosition().getY() + "##" + lion.getStrategy().getName() + "##" + lion.getSpeed() + "##" + lion.getRange());
                 bufferedWriter.newLine();
                 bufferedWriter.flush();
             }

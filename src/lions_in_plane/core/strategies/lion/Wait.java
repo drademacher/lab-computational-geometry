@@ -6,7 +6,12 @@ import util.Point;
 
 import java.util.ArrayList;
 
-public class Wait implements Strategy {
+public class Wait extends Strategy {
+
+    public Wait(StrategyEnumLion strategyEnumLion) {
+        super(strategyEnumLion);
+    }
+
     @Override
     public ArrayList<Point> getPath(Lion lion, Man man, ArrayList<Point> manPath, ArrayList<Point> prevPath) {
         ArrayList<Point> path = new ArrayList<>();

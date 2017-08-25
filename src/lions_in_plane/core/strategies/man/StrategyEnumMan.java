@@ -10,9 +10,9 @@ public enum StrategyEnumMan {
     public Strategy getStrategy() {
         switch (this) {
             case Wait:
-                return new Wait();
+                return new Wait(this);
             case Paper:
-                return new Paper();
+                return new Paper(this);
             default:
                 throw new IllegalArgumentException("invalid input: " + this);
         }

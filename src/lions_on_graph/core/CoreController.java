@@ -798,6 +798,7 @@ public class CoreController {
         this.setLionStrategy(lion2, LionStrategy.Clever);
         this.setLion(lion3);
         this.setLionStrategy(lion3, LionStrategy.Clever);
+
         this.setMan(this.graph.getSmallVertices().get(0).getCoordinates());
         this.setManStrategy(this.graph.getSmallVertices().get(0).getCoordinates(), ManStrategy.Paper);
 
@@ -874,11 +875,9 @@ public class CoreController {
         this.createEdge(new Point(100, 140), new Point(90, 100));
         this.createEdge(new Point(90, 100), new Point(120, 70));
 
-
-        this.setMan(this.graph.getSmallVertices().get(0).getCoordinates());
         this.setLion(this.graph.getSmallVertices().get(3).getCoordinates());
         this.setLion(this.graph.getSmallVertices().get(17).getCoordinates());
-
+        this.setMan(this.graph.getSmallVertices().get(0).getCoordinates());
 
         this.setAllManStrategy(ManStrategy.Paper);
         this.setAllLionStrategy(LionStrategy.AggroGreedy);

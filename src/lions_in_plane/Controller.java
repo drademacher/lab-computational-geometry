@@ -68,7 +68,7 @@ class Controller {
      * Initialize the mode toggle button and add the button logic.
      */
     private void initModeButton() {
-        modeToggleButton.setOnMouseClicked(event -> {
+        modeToggleButton.setOnAction(event -> {
             buttonBar.getChildren().clear();
 
             if (editMode.getValue()) {
@@ -294,15 +294,15 @@ class Controller {
         stopAnimationButton.disableProperty().bind(editMode.or(activePlaying.not()));
 
 
-        stepAnimationButton.setOnMouseClicked(event -> {
+        stepAnimationButton.setOnAction(event -> {
             activePlaying.set(false);
             boolean gameOver = coreController.simulateStep();
             if (gameOver) {
                 gameOverAlert.show();
             }
         });
-        playAnimationButton.setOnMouseClicked(event -> activePlaying.set(true));
-        stopAnimationButton.setOnMouseClicked(event -> activePlaying.set(false));
+        playAnimationButton.setOnAction(event -> activePlaying.set(true));
+        stopAnimationButton.setOnAction(event -> activePlaying.set(false));
 
         activePlaying.addListener((observable, oldValue, newValue) -> {
             if (newValue) {

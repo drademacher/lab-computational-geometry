@@ -19,8 +19,8 @@ public class AllPaths {
         this.pathSize = manPath.size();
 
         //just check the sizes
-        for(ArrayList<Point> lionPath : this.lionPaths){
-            if(lionPath.size() != this.pathSize){
+        for (ArrayList<Point> lionPath : this.lionPaths) {
+            if (lionPath.size() != this.pathSize) {
                 System.out.println("Paths sizes are not equal!");
                 throw new Error("Paths sizes are not equal!");
             }

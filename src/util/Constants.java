@@ -5,5 +5,5 @@ package util;
  */
 public class Constants {
 
-    public static final String API_VERSION  = "v0.2";
+    public static final String API_VERSION = "v0.2";
 }

@@ -22,7 +22,7 @@ public class Paper extends Strategy {
     public ArrayList<Point> getPath(Man man, ArrayList<Lion> lions, int index, ArrayList<Point> inductionPath) {
 
 //        this.radiusMan = man.getSpeed();
-        this.radiusMan = 1 + (man.getEpsilon() * (1 - (Math.pow(2, -(index+1)))));
+        this.radiusMan = 1 + (man.getEpsilon() * (1 - (Math.pow(2, -(index + 1)))));
 
         ArrayList<Point> result;
         ArrayList<Point> curPath = man.getCalculatedPath();
@@ -46,7 +46,7 @@ public class Paper extends Strategy {
     *
     */
     private ArrayList<Point> doMove(Man man, Lion lion, ArrayList<Point> inductionPath, ArrayList<Point> curPath) {
-        this.saveRadius = lion.getRange()*2;
+        this.saveRadius = lion.getRange() * 2;
 
         Point curLionPosition = lion.getCalculatedPositionAtTime(curPath.size() - 2);
 

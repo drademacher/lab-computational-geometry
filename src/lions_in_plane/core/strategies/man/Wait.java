@@ -15,7 +15,7 @@ public class Wait extends Strategy {
     @Override
     public ArrayList<Point> getPath(Man man, ArrayList<Lion> lions, int index, ArrayList<Point> inductionPath) {
         ArrayList<Point> path = new ArrayList<>();
-        for(int i = 0; i < 200; i++){
+        for (int i = 0; i < 200; i++) {
             path.add(man.getPosition());
         }
         return path;

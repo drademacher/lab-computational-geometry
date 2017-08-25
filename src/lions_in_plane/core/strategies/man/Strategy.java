@@ -15,13 +15,13 @@ public abstract class Strategy {
 
     private StrategyEnumMan strategyEnumMan;
 
-    public Strategy(StrategyEnumMan strategyEnumMan){
+    public Strategy(StrategyEnumMan strategyEnumMan) {
         this.strategyEnumMan = strategyEnumMan;
     }
 
     public abstract ArrayList<Point> getPath(Man man, ArrayList<Lion> lions, int index, ArrayList<Point> inductionPath);
 
-    public String getName(){
+    public String getName() {
         return strategyEnumMan.name();
     }
 }

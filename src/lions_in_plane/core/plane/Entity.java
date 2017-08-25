@@ -58,7 +58,7 @@ public abstract class Entity {
         return null;
     }
 
-    public Point getCalculatedLastPosition(){
+    public Point getCalculatedLastPosition() {
         return getCalculatedPath().get(getCalculatedPath().size() - 1);
     }
 }

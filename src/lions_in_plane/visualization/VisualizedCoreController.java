@@ -30,7 +30,7 @@ public class VisualizedCoreController extends CoreController {
         super.setEditMode(editMode);
 
         if (!editMode) {
-            calcAllPaths();
+            calcAllPaths(Integer.MAX_VALUE);
             for (Lion lion : lions) {
                 lion.getShape().setVisible(false);
             }
@@ -58,27 +58,27 @@ public class VisualizedCoreController extends CoreController {
     @Override
     public void setDefaultGraph1() {
         super.setDefaultGraph1();
-        calcAllPaths();
+        calcAllPaths(Integer.MAX_VALUE);
     }
 
     @Override
     public void setDefaultGraph2() {
         super.setDefaultGraph2();
-        calcAllPaths();
+        calcAllPaths(Integer.MAX_VALUE);
 
     }
 
     @Override
     public void setDefaultGraph3() {
         super.setDefaultGraph3();
-        calcAllPaths();
+        calcAllPaths(Integer.MAX_VALUE);
     }
 
     public void setRandomConfiguration() {
         super.setRandomConfiguration();
         lions.forEach(lion -> System.out.print(lion.getPosition() + ", "));
         System.out.println();
-        calcAllPaths();
+        calcAllPaths(Integer.MAX_VALUE);
     }
 
 
@@ -251,8 +251,9 @@ public class VisualizedCoreController extends CoreController {
 
 
     @Override
-    protected ArrayList<ArrayList<Point>> calcAllPaths() {
-        allPaths = super.calcAllPaths();
+    protected ArrayList<ArrayList<Point>> calcAllPaths(int maxInductionsStep) {
+        allPaths = super.calcAllPaths(maxInductionsStep);
+
 
         Point[] newHull = new Point[allPaths.size() - 1];
 

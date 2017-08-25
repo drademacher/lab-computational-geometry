@@ -61,7 +61,7 @@ public class CoreController {
     public void setDefaultGraph2() {
         setEmptyGraph();
 
-        Point[] lions = new Point[]{new Point(385.0, 115.0), new Point(170.0, 90.0), new Point(225.0, 455.0), new Point(295.0, 50.0), new Point(415.0, 290.0), new Point(95.0, 220.0), new Point(155.0, 495.0), new Point(225.0, 360.0), new Point(280.0, 355.0), new Point(470.0, 485.0), new Point(295.0, 50.0), new Point(270.0, 80.0), new Point(185.0, 55.0), new Point(20.0, 265.0), new Point(40.0, 445.0), new Point(210.0, 245.0)};
+        Point[] lions = new Point[]{ new Point(470.0, 485.0),new Point(385.0, 115.0), new Point(170.0, 90.0), new Point(225.0, 455.0), new Point(295.0, 50.0), new Point(415.0, 290.0), new Point(95.0, 220.0), new Point(155.0, 495.0), new Point(225.0, 360.0), new Point(280.0, 355.0), new Point(295.0, 50.0), new Point(270.0, 80.0), new Point(185.0, 55.0), new Point(20.0, 265.0), new Point(40.0, 445.0), new Point(210.0, 245.0)};
 
         for (Point p : lions) {
             createLion(new Point(p.getX(), p.getY()));
@@ -264,13 +264,13 @@ public class CoreController {
     }
 
 
-    protected ArrayList<ArrayList<Point>> calcAllPaths() {
+    protected ArrayList<ArrayList<Point>> calcAllPaths(int maxInductionsStep) {
 
         ArrayList<Point> resultPath = new ArrayList<>();
         ArrayList<Point> inductionPath;
         Map<Integer, ArrayList<Point>> lionPaths = new HashMap<>();
 
-        for (int k = 0; k < this.plane.getLionsSize(); k++) {
+        for (int k = 0; k < Math.min(this.plane.getLionsSize(), maxInductionsStep); k++) {
 
             inductionPath = resultPath;
             resultPath = new ArrayList<>();
@@ -293,6 +293,7 @@ public class CoreController {
             }
         }
 
+        // defined: man path is the first value
         ArrayList<ArrayList<Point>> allPaths = new ArrayList<>();
         allPaths.add(resultPath);
 

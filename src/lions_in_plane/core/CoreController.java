@@ -151,12 +151,12 @@ public class CoreController {
             bufferedWriter.flush();
 
 
-            for (Man man : plane.getMen()) {
+            Man man = plane.getMan();
 //                System.out.println("M##" + man.getPosition().getX() + "##" + man.getPosition().getY() + "##" + man.getStrategy().toString() + "##" + man.getSpeed());
                 bufferedWriter.write("M##" + man.getPosition().getX() + "##" + man.getPosition().getY() + "##" + man.getStrategy().getName() + "##" + man.getEpsilon());
                 bufferedWriter.newLine();
                 bufferedWriter.flush();
-            }
+
 
             for (Lion lion : plane.getLions()) {
                 System.out.println(lion.getStrategy());
@@ -205,9 +205,9 @@ public class CoreController {
     private void setMaxLionSpeed(double speed){
         if(speed > maxLionSpeed){
             maxLionSpeed = speed;
-            for(Man man : plane.getMen()){
+            Man man = plane.getMan();
                 man.setSpeed(maxLionSpeed);
-            }
+
         }
     }
 
@@ -278,9 +278,9 @@ public class CoreController {
     }
 
     public void setAllManStrategy(StrategyEnumMan strategyEnum){
-        for(Man man : plane.getMen()){
+        Man man = plane.getMan();
             plane.setManStrategy(man.getPosition(), strategyEnum);
-        }
+
     }
 
     public void setLionStrategy(Point coordinates, StrategyEnumLion strategyEnum) {

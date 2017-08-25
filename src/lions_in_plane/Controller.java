@@ -75,7 +75,7 @@ class Controller {
                 editMode.set(false);
 
                 modeToggleButton.setText("Edit Mode");
-                buttonBar.getChildren().addAll(modeToggleButton, playAnimationButton, stopAnimationButton, stepAnimationButton);
+                buttonBar.getChildren().addAll(modeToggleButton, playAnimationButton, stopAnimationButton, stepAnimationButton, setViewMenu);
 
                 zoomScrollPane.autoZoom();
 

@@ -33,7 +33,7 @@ public class VisualizedCoreController extends CoreController {
         if (!editMode) {
             calcAllPaths(1);
             for (Lion lion : lions) {
-                lion.getShape().setVisible(false);
+//                lion.getShape().setVisible(false);
             }
         }
     }
@@ -170,7 +170,7 @@ public class VisualizedCoreController extends CoreController {
         }
 
         if (pathStoneCount == 0) {
-            update();
+//            update();
             PolygonalPath.clear();
             new PolygonalPath(allPaths.manPath, Color.BLUE);
             for (int i = 0; i <= pathCount; i++) {
@@ -182,8 +182,7 @@ public class VisualizedCoreController extends CoreController {
 
         for (int i = 0; i <= pathCount; i++) {
             if (i == 0) {
-                manPoint.getShape().setCenterX(allPaths.manPath.get(pathStoneCount).getX());
-                manPoint.getShape().setCenterY(allPaths.manPath.get(pathStoneCount).getY());
+                manPoint.setPosition(allPaths.manPath.get(pathStoneCount));
             }
 
             lions.get(i).setPosition(allPaths.lionPaths.get(i).get(pathStoneCount));
@@ -196,8 +195,11 @@ public class VisualizedCoreController extends CoreController {
         if (allPaths.pathSize == pathStoneCount) {
             pathStoneCount = 0;
             pathCount++;
+            if (pathCount >= lions.size()) {
+                return false;
+            }
             allPaths = calcAllPaths(pathCount + 1);
-            update();
+//            update();
         }
 
         return res;

@@ -31,29 +31,27 @@ public class CoreController {
         return visualCoreController;
     }
 
-    public BigVertex createVertex(Point coordinate) {
+    public void createVertex(Point coordinate) {
         if (coordinate == null) {
-            return null;
+            return;
         }
-        BigVertex vertex = this.graph.createVertex(coordinate);
+        this.graph.createVertex(coordinate);
 
         this.visualCoreController.createVertex(coordinate);
-        return vertex;//TODO
     }
 
-    public BigVertex relocateVertex(Point vertexCoordinates, Point newCoordinate) {
+    public void relocateVertex(Point vertexCoordinates, Point newCoordinate) {
         if (vertexCoordinates == null || newCoordinate == null) {
-            return null;
+            return;
         }
         BigVertex vertex = getBigVertexByCoordinate(vertexCoordinates);
         if (vertex == null) {
-            return null;
+            return;
         }
 
         vertex = this.graph.relocateVertex(vertex, newCoordinate);
 
         this.visualCoreController.relocateVertex(vertex, newCoordinate);
-        return vertex;//TODO
     }
 
     /* ****************************
@@ -62,13 +60,13 @@ public class CoreController {
      *
      * ****************************/
 
-    public BigVertex deleteVertex(Point vertexCoordinates) {
+    public void deleteVertex(Point vertexCoordinates) {
         if (vertexCoordinates == null) {
-            return null;
+            return;
         }
         BigVertex vertex = getBigVertexByCoordinate(vertexCoordinates);
         if (vertex == null) {
-            return null;
+            return;
         }
 
         //remove Entities
@@ -88,24 +86,23 @@ public class CoreController {
 
         //delete Vertex
         this.visualCoreController.deleteVertex(vertex);
-        vertex = this.graph.deleteVertex(vertex);
+        this.graph.deleteVertex(vertex);
         this.visualCoreController.updateAllLionRanges(lions);
 
-        return vertex; //TODO
     }
 
-    public Edge createEdge(Point vertex1Coordinates, Point vertex2Coordinates) {
-        return createEdge(vertex1Coordinates, vertex2Coordinates, GraphController.getDefaultEdgeWeight());
+    public void createEdge(Point vertex1Coordinates, Point vertex2Coordinates) {
+        createEdge(vertex1Coordinates, vertex2Coordinates, GraphController.getDefaultEdgeWeight());
     }
 
-    public Edge createEdge(Point vertex1Coordinates, Point vertex2Coordinates, int weight) {
+    public void createEdge(Point vertex1Coordinates, Point vertex2Coordinates, int weight) {
         if (vertex1Coordinates == null || vertex2Coordinates == null || weight < 0) {
-            return null;
+            return;
         }
         BigVertex vertex1 = getBigVertexByCoordinate(vertex1Coordinates);
         BigVertex vertex2 = getBigVertexByCoordinate(vertex2Coordinates);
         if (vertex1 == null || vertex2 == null) {
-            return null;
+            return;
         }
 
 
@@ -113,17 +110,16 @@ public class CoreController {
 
         this.visualCoreController.createEdge(edge);
         this.visualCoreController.updateAllLionRanges(lions);
-        return edge;//TODO
     }
 
-    public Edge removeEdge(Point vertex1Coordinates, Point vertex2Coordinates) {
+    public void removeEdge(Point vertex1Coordinates, Point vertex2Coordinates) {
         if (vertex1Coordinates == null || vertex2Coordinates == null) {
-            return null;
+            return;
         }
         BigVertex vertex1 = getBigVertexByCoordinate(vertex1Coordinates);
         BigVertex vertex2 = getBigVertexByCoordinate(vertex2Coordinates);
         if (vertex1 == null || vertex2 == null) {
-            return null;
+            return;
         }
 
         Edge edge = this.graph.removeEdge(vertex1, vertex2);
@@ -138,22 +134,17 @@ public class CoreController {
         //remove edge
         this.visualCoreController.removeEdge(edge);
         this.visualCoreController.updateAllLionRanges(lions);
-        return edge;//TODO
     }
 
-    public Edge changeEdgeWeight(Point vertex1Coordinates, Point vertex2Coordinates) {
-        return changeEdgeWeight(vertex1Coordinates, vertex2Coordinates, GraphController.getDefaultEdgeWeight());
-    }
-
-    public Edge changeEdgeWeight(Point vertex1Coordinates, Point vertex2Coordinates, int weight) {
+    public void changeEdgeWeight(Point vertex1Coordinates, Point vertex2Coordinates, int weight) {
 
         if (vertex1Coordinates == null || vertex2Coordinates == null || weight < 1) {
-            return null;
+            return;
         }
         BigVertex vertex1 = getBigVertexByCoordinate(vertex1Coordinates);
         BigVertex vertex2 = getBigVertexByCoordinate(vertex2Coordinates);
         if (vertex1 == null || vertex2 == null) {
-            return null;
+            return;
         }
 
         Edge edge = getEdgeByVertices(vertex1, vertex2);
@@ -174,7 +165,6 @@ public class CoreController {
         this.visualCoreController.updateAllLionRanges(lions);
         relocateAllLions();
         relocateAllMen();
-        return edge;
     }
 
     public BigVertex getBigVertexByCoordinate(Point coordinate) {
@@ -191,14 +181,6 @@ public class CoreController {
 
     public Edge getEdgeByVertices(BigVertex vertex1, BigVertex vertex2) {
         return this.graph.getEdgeByVertices(vertex1, vertex2);
-    }
-
-    public void debugGraph() {
-
-        System.out.println("##############");
-        System.out.println("men: " + men);
-        System.out.println("lions: " + lions);
-        graph.debugGraph();
     }
 
     public GraphController getGraph() {
@@ -228,7 +210,7 @@ public class CoreController {
     public void setAllEdgeWeight(int weight) {
         GraphController.setDefaultEdgeWeight(weight);
         for (Edge edge : this.graph.getEdges()) {
-            changeEdgeWeight(edge.getStartCoordinates(), edge.getEndCoordinates());
+            changeEdgeWeight(edge.getStartCoordinates(), edge.getEndCoordinates(), weight);
         }
     }
 
@@ -246,13 +228,13 @@ public class CoreController {
      *
      * ****************************/
 
-    public boolean setMan(Point vertexCoorinate) {
+    public void setMan(Point vertexCoorinate) {
         if (vertexCoorinate == null) {
-            return false;
+            return;
         }
         Vertex vertex = getVertexByCoordinate(vertexCoorinate);
         if (vertex == null) {
-            return false;
+            return;
         }
 
         Man man = new Man(vertex, this);
@@ -260,7 +242,6 @@ public class CoreController {
         setManStrategy(man.getCoordinates(), Man.getDefaultStrategy());
         visualCoreController.createMan(man);
         this.visualCoreController.updateStepPreviewsAndChoicePoints();
-        return bool;
     }
 
     public void setNextManStep(Point manCoordinates, Point nextStepCoordinates) {
@@ -311,13 +292,13 @@ public class CoreController {
         return false;
     }
 
-    public boolean setLion(Point vertexCoorinate) {
+    public void setLion(Point vertexCoorinate) {
         if (vertexCoorinate == null) {
-            return false;
+            return;
         }
         Vertex vertex = getVertexByCoordinate(vertexCoorinate);
         if (vertex == null) {
-            return false;
+            return;
         }
 
         Lion lion = new Lion(vertex, this);
@@ -325,7 +306,6 @@ public class CoreController {
         setLionStrategy(lion.getCoordinates(), Lion.getDefaultStrategy());
         visualCoreController.createLion(lion);
         this.visualCoreController.updateStepPreviewsAndChoicePoints();
-        return bool;
     }
 
     public void setNextLionStep(Point lionCoordinates, Point nextStepCoordinates) {
@@ -398,43 +378,41 @@ public class CoreController {
         return false;
     }
 
-    public boolean removeMan(Point manCoordinate) {
+    public void removeMan(Point manCoordinate) {
         if (manCoordinate == null) {
-            return false;
+            return;
         }
         Man man = getManByCoordinate(manCoordinate);
         if (man == null) {
-            return false;
+            return;
         }
 
         visualCoreController.removeMan(man);
-        boolean bool = men.remove(man);
+        men.remove(man);
         this.visualCoreController.updateStepPreviewsAndChoicePoints();
-        return bool;
     }
 
-    public void removeAllMen(ArrayList<Man> menToDelete) {
+    private void removeAllMen(ArrayList<Man> menToDelete) {
         for (Man man : menToDelete) {
             removeMan(man.getCoordinates());
         }
     }
 
-    public boolean removeLion(Point lionCoordinate) {
+    public void removeLion(Point lionCoordinate) {
         if (lionCoordinate == null) {
-            return false;
+            return;
         }
         Lion lion = getLionByCoordinate(lionCoordinate);
         if (lion == null) {
-            return false;
+            return;
         }
 
         visualCoreController.removeLion(lion);
         boolean bool = lions.remove(lion);
         this.visualCoreController.updateStepPreviewsAndChoicePoints();
-        return bool;
     }
 
-    public void removeAllLions(ArrayList<Lion> lionsToDelete) {
+    private void removeAllLions(ArrayList<Lion> lionsToDelete) {
         for (Lion lion : lionsToDelete) {
             removeLion(lion.getCoordinates());
         }
@@ -897,9 +875,6 @@ public class CoreController {
         setLionRange(new Point(40, 20), 1);
 
         this.setMan(new Point(0, 0));
-
-
-        debugGraph();
     }
 
     public void setDefaultGraph4() {
@@ -978,7 +953,7 @@ public class CoreController {
         }
 
         System.out.println("done.");
-        debugGraph();
+
     }
 
     public void saveGraphToFile(File file) {

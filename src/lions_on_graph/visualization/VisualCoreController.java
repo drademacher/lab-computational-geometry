@@ -1,5 +1,6 @@
 package lions_on_graph.visualization;
 
+import lions_in_plane.visualization.VisualizedCoreController;
 import lions_on_graph.core.CoreController;
 import lions_on_graph.core.graph.Connection;
 import util.Point;
@@ -10,7 +11,7 @@ import java.util.Map;
 
 import static lions_on_graph.visualization.Constants.*;
 
-public class VisualCoreController {
+public class VisualCoreController extends VisualizedCoreController {
 
     private Map<lions_on_graph.core.graph.Vertex, Vertex> mapVertices = new HashMap<>();
     private Map<lions_on_graph.core.entities.Entity, Entity> mapEntities = new HashMap<>();

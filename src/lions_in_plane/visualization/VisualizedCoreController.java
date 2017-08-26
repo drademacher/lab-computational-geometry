@@ -33,7 +33,7 @@ public class VisualizedCoreController extends CoreController {
         if (!editMode) {
             calcAllPaths(1);
             for (Lion lion : lions) {
-//                lion.getShape().setVisible(false);
+                lion.getShape().setVisible(false);
             }
         }
     }
@@ -107,7 +107,7 @@ public class VisualizedCoreController extends CoreController {
         lions.add(new Lion(coordinates));
 
         if (hull == null || !hull.insideHull(coordinates)) {
-            update();
+            update(lions);
         }
     }
 
@@ -138,7 +138,7 @@ public class VisualizedCoreController extends CoreController {
 
     }
 
-    private void update() {
+    private void update(List<Lion> lions) {
         hull = new ConvexHull(lions);
         Lion[] lionsInHull = new Lion[hull.getPoints().length];
         for (int i = 0; i < lionsInHull.length; i++) {
@@ -170,11 +170,10 @@ public class VisualizedCoreController extends CoreController {
         }
 
         if (pathStoneCount == 0) {
-//            update();
             PolygonalPath.clear();
-            new PolygonalPath(allPaths.manPath, Color.BLUE);
+            new PolygonalPath(allPaths.manPath, Color.TRANSPARENT);
             for (int i = 0; i <= pathCount; i++) {
-                new PolygonalPath(allPaths.lionPaths.get(i), Color.RED);
+                new PolygonalPath(allPaths.lionPaths.get(i), Color.TRANSPARENT);
             }
             lions.get(pathCount).getShape().setVisible(true);
         }
@@ -186,8 +185,10 @@ public class VisualizedCoreController extends CoreController {
             }
 
             lions.get(i).setPosition(allPaths.lionPaths.get(i).get(pathStoneCount));
-//            lions.get(i).getShape().setCenterX(allPaths.lionPaths.get(i).get(pathStoneCount).getX());
-//            lions.get(i).getShape().setCenterY(allPaths.lionPaths.get(i).get(pathStoneCount).getY());
+        }
+
+        if (pathStoneCount == 0) {
+            update(lions.subList(0, pathCount + 1));
         }
 
         pathStoneCount++;

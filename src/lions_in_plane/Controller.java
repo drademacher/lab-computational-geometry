@@ -279,7 +279,7 @@ class Controller {
 
         CheckMenuItem viewCompletePath = new CheckMenuItem("View Complete Movement Path");
         completePathShapes.visibleProperty().bind(viewCompletePath.selectedProperty());
-        viewCompletePath.setSelected(true);
+        viewCompletePath.setSelected(false);
 
         setViewMenu.getItems().addAll(viewEntities, viewLionRanges, viewConvexHull, viewCompletePath);
     }

@@ -1,6 +1,5 @@
 package lions_in_plane.visualization;
 
-import javafx.animation.Transition;
 import lions_in_plane.core.CoreController;
 import lions_in_plane.core.plane.AllPaths;
 import util.ConvexHull;
@@ -11,15 +10,12 @@ import java.util.List;
 
 
 public class VisualizedCoreController extends CoreController {
-    private ArrayList<Man> men;
     private List<Lion> lions;
     private ConvexHull hull;
     private Man manPoint;
-    private ArrayList<Lion> allLionPoints;
     private AllPaths allPaths;
     private int pathCount;
     private int pathStoneCount;
-    private ArrayList<Transition> animations;
 
     public VisualizedCoreController() {
         reset();
@@ -42,15 +38,24 @@ public class VisualizedCoreController extends CoreController {
         }
     }
 
-    private void reset() {
-        this.men = new ArrayList<>();
+    public void reset() {
+        if (this.lions != null) {
+            this.lions.forEach(Lion::clear);
+        }
         this.lions = new ArrayList<>();
-        this.manPoint = null;
-        this.allLionPoints = new ArrayList<>();
+        for (lions_in_plane.core.plane.Lion lion : plane.getLions()) {
+            this.lions.add(new Lion(lion.getPosition()));
+        }
+        if (this.manPoint != null) {
+            this.manPoint.clear();
+        }
+        if (plane.getMan() != null) {
+            this.manPoint = new Man(plane.getMan().getPosition());
+        }
+
         this.pathCount = 0;
         this.pathStoneCount = 0;
-        this.animations = new ArrayList<>();
-//        this.hull = new Point[0];
+        update(lions);
     }
 
 
@@ -91,18 +96,14 @@ public class VisualizedCoreController extends CoreController {
         super.createMan(coordinates);
 
         manPoint = new Man(coordinates);
-        men.add(manPoint);
-//        // TODO: total debug
-//        ArrayList<Point> path = new ArrayList<>(Arrays.asList(hull));
-//        new PolygonalPath(path, Color.BLACK);
     }
 
     @Override
     public void removeMan(Point coordinates) {
         super.removeMan(coordinates);
 
-        men.stream().filter(man -> man.getPosition() == coordinates).forEach(Man::clear);
-        men.removeIf(man -> man.getPosition() == coordinates);
+        manPoint.clear();
+        manPoint = null;
     }
 
     @Override
@@ -128,8 +129,7 @@ public class VisualizedCoreController extends CoreController {
     @Override
     public void relocateMan(Point from, Point to) {
         super.relocateMan(from, to);
-
-        men.stream().filter(man -> man.getPosition() == from).forEach(man -> man.setPosition(to));
+        manPoint.setPosition(to);
     }
 
     @Override
@@ -174,7 +174,7 @@ public class VisualizedCoreController extends CoreController {
         }
 
         if (pathStoneCount == 0) {
-            ManPath.clear();
+            ManPath.transfer();
             LionPath.clear();
             InvisiblePath.clear();
             new InvisiblePath(allPaths.manPath);

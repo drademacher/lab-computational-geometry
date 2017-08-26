@@ -9,7 +9,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import lions_in_plane.core.CoreController;
 import lions_in_plane.core.strategies.lion.StrategyEnumLion;
 import lions_in_plane.core.strategies.man.StrategyEnumMan;
 import lions_in_plane.visualization.*;
@@ -36,7 +35,7 @@ class Controller {
     private Alert gameOverAlert;
     private BooleanProperty editMode, activePlaying;
 
-    private CoreController coreController = new VisualizedCoreController();
+    private VisualizedCoreController coreController = new VisualizedCoreController();
 
     private Stage stage;
 
@@ -56,9 +55,6 @@ class Controller {
         activePlaying = new SimpleBooleanProperty(false);
         editMode.addListener((observable, oldValue, newValue) -> {
             this.coreController.setEditMode(newValue);
-            if (newValue) {
-                zoomScrollPane.autoZoom();
-            }
         });
 
         initEditButtons();
@@ -82,9 +78,6 @@ class Controller {
 
                 modeToggleButton.setText("Edit Mode");
                 buttonBar.getChildren().addAll(modeToggleButton, playAnimationButton, stopAnimationButton, stepAnimationButton, setViewMenu);
-
-                zoomScrollPane.autoZoom();
-
             } else {
                 editMode.set(true);
                 activePlaying.set(false);
@@ -92,6 +85,9 @@ class Controller {
                 modeToggleButton.setText("Play Mode");
                 buttonBar.getChildren().addAll(modeToggleButton, setGraphButton, setParameterButton, newPermutationButton, setViewMenu);
                 lionsPathShapes.getChildren().clear();
+
+                clearAnimationShapes();
+                zoomScrollPane.autoZoom();
             }
         });
 
@@ -326,7 +322,7 @@ class Controller {
         });
 
         newPermutationButton.setOnAction(event -> {
-            System.out.println("TODO: CALL CORE CONTROLLER");
+            coreController.shuffleLionOrder();
         });
     }
 
@@ -367,13 +363,13 @@ class Controller {
                 tickAccount += 1;
                 if (tickAccount >= ticksPerStep) {
                     tickAccount -= ticksPerStep;
-                    if (coreController.getMenWithManualInput().isEmpty() && coreController.getLionsWithManualInput().isEmpty()) {
+
                         boolean gameOver = coreController.simulateStep();
                         if (gameOver) {
                             gameOverAlert.show();
                             activePlaying.set(false);
                         }
-                    }
+
                 }
             }
         };
@@ -400,18 +396,6 @@ class Controller {
         ManPath.setGroup1(manPathShapes);
         ManPath.setGroup2(previousPathShapes);
         LionPath.setGroup(lionsPathShapes);
-//
-//        BigVertex.setMainPane(zoomScrollPane);
-//        BigVertex.setShapeGroup(vertexShapes);
-//        SmallVertex.setShapeGroup(vertexShapes);
-//        Edge.setShapeGroup(edgeShapes);
-//        Man.setMainPane(zoomScrollPane);
-//        Man.setShapeGroup(entityShapes);
-//        Lion.setMainPane(zoomScrollPane);
-//        Lion.setShapeGroup(entityShapes);
-//        Range.setShapeGroup(lionRangeShapes);
-//        StepPreview.setShapeGroup(stepPreviewShapes);
-//        ChoicePoint.setShapeGroup(choisePointShapes);
     }
 
 
@@ -421,12 +405,19 @@ class Controller {
      */
     private void clearGraphShapes() {
         entityShapes.getChildren().clear();
+        clearAnimationShapes();
+    }
+
+    private void clearAnimationShapes() {
         convexHullShapes.getChildren().clear();
         lionsPathShapes.getChildren().clear();
-//        vertexShapes.getChildren().clear();
-//        edgeShapes.getChildren().clear();
-//        entityShapes.getChildren().clear();
-//        lionRangeShapes.getChildren().clear();
+
+        previousPathShapes.getChildren().clear();
+        manPathShapes.getChildren().clear();
+        boundingPathShapes.getChildren().clear();
+        boundingPointsShapes.getChildren().clear();
+
+        coreController.reset();
     }
 
     private void initGameOverAlert() {

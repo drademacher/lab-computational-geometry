@@ -27,7 +27,7 @@ public class CoreController {
     private double defaultLionsRange = 5;
     private double maxLionSpeed = defaultLionsSpeed;
 
-    private Plane plane = new Plane();
+    protected Plane plane = new Plane();
 
     public void setEmptyGraph() {
         plane = new Plane();

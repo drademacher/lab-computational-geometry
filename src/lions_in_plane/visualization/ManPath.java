@@ -17,7 +17,7 @@ public class ManPath extends Shape {
         this.points = points;
         currentShape = new Polyline();
 
-        currentShape.setStroke(Color.BLUE);
+        currentShape.setStroke(Color.BLUE.deriveColor(1, 1, 1, 0.6));
         for (Point p : points) {
             currentShape.getPoints().addAll(p.getX(), p.getY());
         }
@@ -34,10 +34,15 @@ public class ManPath extends Shape {
     }
 
     public static void clear() {
+        group1.getChildren().clear();
+        group2.getChildren().clear();
+    }
+
+    public static void transfer() {
         group2.getChildren().clear();
 
         if (currentShape != null) {
-            currentShape.setStroke(Color.BLUE.deriveColor(1, 1, 1, 0.2));
+            currentShape.setStroke(Color.BLUE.deriveColor(1, 1, 1, 0.3));
             group2.getChildren().add(currentShape);
             currentShape = null;
         }

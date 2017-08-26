@@ -17,7 +17,7 @@ public class LionPath extends Shape {
         this.points = points;
         this.shape = new Polyline();
 
-        shape.setStroke(Color.RED);
+        shape.setStroke(Color.RED.deriveColor(1, 1, 1, 0.1));
         for (Point p : points) {
             shape.getPoints().addAll(p.getX(), p.getY());
         }

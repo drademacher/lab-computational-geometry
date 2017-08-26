@@ -195,6 +195,9 @@ public class VisualizedCoreController extends CoreController {
         if (allPaths.pathSize == pathStoneCount) {
             pathStoneCount = 0;
             pathCount++;
+            if (pathCount >= lions.size()) {
+                return false;
+            }
             allPaths = calcAllPaths(pathCount + 1);
 //            update();
         }

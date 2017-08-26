@@ -1,11 +1,13 @@
 package lions_in_plane.core.plane;
 
 
+import lions_in_plane.core.strategies.lion.Strategy;
 import lions_in_plane.core.strategies.lion.StrategyEnumLion;
 import lions_in_plane.core.strategies.man.StrategyEnumMan;
 import util.Point;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Plane {
     private Man man;
@@ -19,7 +21,8 @@ public class Plane {
     public void addMan(Point pos, double speed, double epsilon) {
         man = new Man(pos, speed, epsilon);
         setManStrategy(pos, StrategyEnumMan.Paper);
-        System.out.println("man position @ " + pos);
+//        System.out.println(man.getStrategy());
+//        System.out.println("man position @ " + pos);
     }
 
     public void removeMan(Point coordinates) {
@@ -27,16 +30,17 @@ public class Plane {
     }
 
     public void addLion(Point pos, double speed, double range) {
-        lions.add(new Lion(pos, speed, range));
+        Lion lion = new Lion(pos, speed, range);
+        lions.add(lion);
         setLionStrategy(pos, StrategyEnumLion.Greedy);
+//        System.out.println(pos + " # " + lion.getStrategy());
     }
 
     public void removeLion(Point coordinates) {
-        lions.removeIf(lion -> lion.getPosition() == coordinates);
+        lions.removeIf(lion -> lion.getPosition().equals(coordinates));
     }
 
     public void setManStrategy(Point coordinates, StrategyEnumMan strategyEnum) {
-        System.out.println("set man strategy to " + strategyEnum.toString());
         Man man = getManByCoordinate(coordinates);
         if (man == null) {
             return;
@@ -45,6 +49,9 @@ public class Plane {
     }
 
     public void setLionStrategy(Point coordinates, StrategyEnumLion strategyEnum) {
+//        System.out.println(coordinates.toString());
+
+
         Lion lion = getLionByCoordinate(coordinates);
         if (lion == null) {
             System.out.println("no lion, no strategy");
@@ -53,7 +60,13 @@ public class Plane {
         if (strategyEnum == null) {
             System.out.println("no strategy!!");
         }
-        lion.setStrategy(strategyEnum.getStrategy());
+        Strategy strat = strategyEnum.getStrategy();
+        lion.setStrategy(strat);
+
+        if (Objects.equals(coordinates.toString(), "(295.0, 50.0)")) {
+            System.out.println("wow");
+//            System.out.println(lion.getStrategy());
+        }
     }
 
     public Man getManByCoordinate(Point coordinates) {

@@ -347,6 +347,5 @@ public class CoreController {
         AllPaths allPaths = new AllPaths(resultPath, lionPathList);
 
         return allPaths;
-
     }
 }

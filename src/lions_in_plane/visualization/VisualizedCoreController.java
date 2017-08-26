@@ -1,7 +1,6 @@
 package lions_in_plane.visualization;
 
 import javafx.animation.Transition;
-import javafx.scene.paint.Color;
 import lions_in_plane.core.CoreController;
 import lions_in_plane.core.plane.AllPaths;
 import util.ConvexHull;
@@ -33,7 +32,12 @@ public class VisualizedCoreController extends CoreController {
         if (!editMode) {
             calcAllPaths(1);
             for (Lion lion : lions) {
+                new InvisiblePoints(lion.getPosition());
                 lion.getShape().setVisible(false);
+            }
+        } else {
+            for (Lion lion : lions) {
+                lion.getShape().setVisible(true);
             }
         }
     }
@@ -170,10 +174,14 @@ public class VisualizedCoreController extends CoreController {
         }
 
         if (pathStoneCount == 0) {
-            PolygonalPath.clear();
-            new PolygonalPath(allPaths.manPath, Color.TRANSPARENT);
+            ManPath.clear();
+            LionPath.clear();
+            InvisiblePath.clear();
+            new InvisiblePath(allPaths.manPath);
+            new ManPath(allPaths.manPath);
             for (int i = 0; i <= pathCount; i++) {
-                new PolygonalPath(allPaths.lionPaths.get(i), Color.TRANSPARENT);
+                new InvisiblePath(allPaths.lionPaths.get(i));
+                new LionPath(allPaths.lionPaths.get(i));
             }
             lions.get(pathCount).getShape().setVisible(true);
         }

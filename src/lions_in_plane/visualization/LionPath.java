@@ -1,4 +1,3 @@
-/*
 package lions_in_plane.visualization;
 
 import javafx.scene.Group;
@@ -8,17 +7,17 @@ import util.Point;
 
 import java.util.ArrayList;
 
-public abstract class PolygonalPath extends Shape {
+public class LionPath extends Shape {
     private static Group group = new Group();
 
     private ArrayList<Point> points;
     private Polyline shape;
 
-    PolygonalPath(ArrayList<Point> points, Color color) {
+    LionPath(ArrayList<Point> points) {
         this.points = points;
         this.shape = new Polyline();
 
-        shape.setStroke(color);
+        shape.setStroke(Color.RED);
         for (Point p : points) {
             shape.getPoints().addAll(p.getX(), p.getY());
         }
@@ -27,11 +26,10 @@ public abstract class PolygonalPath extends Shape {
     }
 
     public static void setGroup(Group group) {
-        PolygonalPath.group = group;
+        LionPath.group = group;
     }
 
     public static void clear() {
         group.getChildren().clear();
     }
 }
-*/

@@ -27,11 +27,12 @@ class Controller {
     private ZoomScrollPane zoomScrollPane;
     private HBox buttonBar;
     private Button modeToggleButton = new Button("Edit Mode");
-    private Group entityShapes = new Group(), lionRangeShapes = new Group(), convexHullShapes = new Group(), completePathShapes = new Group();
+    private Group entityShapes = new Group(), lionRangeShapes = new Group(), convexHullShapes = new Group(), lionsPathShapes = new Group(), manPathShapes = new Group(), previousPathShapes = new Group(), boundingPathShapes = new Group(), boundingPointsShapes = new Group();
     private Button playAnimationButton = new Button("Play");
     private Button stopAnimationButton = new Button("Stop");
     private Button stepAnimationButton = new Button("Single Step");
     private MenuButton setGraphButton = new MenuButton("Set Graph"), setParameterButton = new MenuButton("Set Parameter"), setViewMenu = new MenuButton("View");
+    private Button newPermutationButton = new Button("Permute Lion Insertion Order");
     private Alert gameOverAlert;
     private BooleanProperty editMode, activePlaying;
 
@@ -53,7 +54,12 @@ class Controller {
 
         editMode = new SimpleBooleanProperty(true);
         activePlaying = new SimpleBooleanProperty(false);
-        editMode.addListener((observable, oldValue, newValue) -> this.coreController.setEditMode(newValue));
+        editMode.addListener((observable, oldValue, newValue) -> {
+            this.coreController.setEditMode(newValue);
+            if (newValue) {
+                zoomScrollPane.autoZoom();
+            }
+        });
 
         initEditButtons();
         initPlayButtons();
@@ -84,8 +90,8 @@ class Controller {
                 activePlaying.set(false);
 
                 modeToggleButton.setText("Play Mode");
-                buttonBar.getChildren().addAll(modeToggleButton, setGraphButton, setParameterButton, setViewMenu);
-                completePathShapes.getChildren().clear();
+                buttonBar.getChildren().addAll(modeToggleButton, setGraphButton, setParameterButton, newPermutationButton, setViewMenu);
+                lionsPathShapes.getChildren().clear();
             }
         });
 
@@ -107,7 +113,7 @@ class Controller {
 
         setGraphButton.getItems().addAll(emptyMapMenuItem, new SeparatorMenuItem(), graph1MenuItem, graph2MenuItem, graph3MenuItem, randomConfigurationButton, new SeparatorMenuItem(), openMapMenuItem, saveMapMenuItem);
 
-        buttonBar.getChildren().addAll(modeToggleButton, setGraphButton, setParameterButton, setViewMenu);
+        buttonBar.getChildren().addAll(modeToggleButton, setGraphButton, setParameterButton, newPermutationButton, setViewMenu);
 
         emptyMapMenuItem.setOnAction(event -> {
             clearGraphShapes();
@@ -264,7 +270,6 @@ class Controller {
             }
         });
 
-
         CheckMenuItem viewEntities = new CheckMenuItem("View Entities");
         entityShapes.visibleProperty().bind(viewEntities.selectedProperty());
         viewEntities.setSelected(true);
@@ -274,14 +279,22 @@ class Controller {
         viewLionRanges.setSelected(true);
 
         CheckMenuItem viewConvexHull = new CheckMenuItem("View Convex Hull");
-        convexHullShapes.visibleProperty().bind(viewConvexHull.selectedProperty());
-        viewConvexHull.setSelected(true);
+        convexHullShapes.visibleProperty().bind(viewConvexHull.selectedProperty().or(editMode));
+        viewConvexHull.setSelected(false);
 
-        CheckMenuItem viewCompletePath = new CheckMenuItem("View Complete Movement Path");
-        completePathShapes.visibleProperty().bind(viewCompletePath.selectedProperty());
-        viewCompletePath.setSelected(false);
+        CheckMenuItem viewManPath = new CheckMenuItem("View Man Paths");
+        manPathShapes.visibleProperty().bind(viewManPath.selectedProperty());
+        viewManPath.setSelected(true);
 
-        setViewMenu.getItems().addAll(viewEntities, viewLionRanges, viewConvexHull, viewCompletePath);
+        CheckMenuItem viewPreviousManPath = new CheckMenuItem("View Man Path Difference");
+        previousPathShapes.visibleProperty().bind(viewPreviousManPath.selectedProperty());
+        viewPreviousManPath.setSelected(true);
+
+        CheckMenuItem viewLionPath = new CheckMenuItem("View Lion Paths");
+        lionsPathShapes.visibleProperty().bind(viewLionPath.selectedProperty());
+        viewLionPath.setSelected(false);
+
+        setViewMenu.getItems().addAll(viewEntities, viewLionRanges, viewConvexHull, viewManPath, viewPreviousManPath, viewLionPath);
     }
 
 
@@ -310,6 +323,10 @@ class Controller {
             } else {
                 TickTimer.getInstance().removeTicker(animation);
             }
+        });
+
+        newPermutationButton.setOnAction(event -> {
+            System.out.println("TODO: CALL CORE CONTROLLER");
         });
     }
 
@@ -372,13 +389,17 @@ class Controller {
         Shape.setPane(zoomScrollPane);
 
         zoomScrollPane.getNodesHolder().clear();
-        zoomScrollPane.getNodesHolder().addAll(lionRangeShapes, convexHullShapes, completePathShapes, entityShapes);
+        zoomScrollPane.getNodesHolder().addAll(lionRangeShapes, convexHullShapes, previousPathShapes, manPathShapes, lionsPathShapes, entityShapes, boundingPathShapes, boundingPointsShapes);
 
 
         Man.setGroup(entityShapes);
         Lion.setGroup(entityShapes);
         LionsPolygon.setGroup(convexHullShapes);
-        PolygonalPath.setGroup(completePathShapes);
+        InvisiblePath.setGroup(boundingPathShapes);
+        InvisiblePoints.setGroup(boundingPointsShapes);
+        ManPath.setGroup1(manPathShapes);
+        ManPath.setGroup2(previousPathShapes);
+        LionPath.setGroup(lionsPathShapes);
 //
 //        BigVertex.setMainPane(zoomScrollPane);
 //        BigVertex.setShapeGroup(vertexShapes);
@@ -401,7 +422,7 @@ class Controller {
     private void clearGraphShapes() {
         entityShapes.getChildren().clear();
         convexHullShapes.getChildren().clear();
-        completePathShapes.getChildren().clear();
+        lionsPathShapes.getChildren().clear();
 //        vertexShapes.getChildren().clear();
 //        edgeShapes.getChildren().clear();
 //        entityShapes.getChildren().clear();

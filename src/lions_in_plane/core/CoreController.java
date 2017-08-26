@@ -7,6 +7,7 @@ import lions_in_plane.core.plane.Plane;
 import lions_in_plane.core.strategies.lion.StrategyEnumLion;
 import lions_in_plane.core.strategies.man.StrategyEnumMan;
 import util.Constants;
+import util.ConvexHull;
 import util.Point;
 import util.Random;
 
@@ -301,6 +302,15 @@ public class CoreController {
         ArrayList<Point> inductionPath;
         Map<Integer, ArrayList<Point>> lionPaths = new HashMap<>();
 
+        // convex hull from the default situation
+        ArrayList<Lion> allLions = this.plane.getLions();
+        Point[] lionPoints = new Point[allLions.size()];
+        for (int i = 0; i < allLions.size(); i++) {
+            lionPoints[i] = allLions.get(i).getPosition();
+        }
+        //TODO convex hull from all lions, not from the active lions
+        ConvexHull allLionsHull = new ConvexHull(lionPoints);
+
         for (int k = 0; k < Math.min(this.plane.getLionsSize(), maxInductionsStep); k++) {
 
             inductionPath = resultPath;
@@ -309,18 +319,16 @@ public class CoreController {
             this.plane.resetManPath();
 
             int steps = 0;
-            //TODO calc the path until the man escaped OR is caught
-            //TODO if (last) lion is to close to end of line
-//            while ((resultPath.size() == 0 || insideHull(resultPath.get(resultPath.size() - 1))) && steps < 500) {
-
-            Point[] lionPoints = new Point[k + 1];
-            for (int j = 0; j <= k; j++) {
-                lionPoints[j] = this.plane.getLions().get(j).getCalculatedLastPosition();
-            }
 
 
-            for (int i = 0; i < 200; i++) {
-//            while(resultPath.size() < 20 || new ConvexHull(lionPoints).insideHull(this.plane.getMen().get(0).getPosition())){
+//            for (int i = 0; i < 200; i++) {
+            int stepsToGo = 200;
+            while(stepsToGo > 0){
+
+                if(resultPath.size() > 10 && !allLionsHull.insideHull(resultPath.get(resultPath.size()-1))){
+                    stepsToGo--;
+                }
+
                 steps++;
 
                 resultPath = this.plane.calcManPath(k, inductionPath);

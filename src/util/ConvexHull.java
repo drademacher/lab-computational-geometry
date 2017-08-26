@@ -111,10 +111,13 @@ public class ConvexHull {
         }
 
         for (int i = 0; i < hull.length - 1; i++) {
-            if (isRightOf(hull[i], hull[i + 1], p) < 1) {
+            if (isRightOf(hull[i], hull[i + 1], p) < 0) {
                 return false;
             }
         }
+//        if (isRightOf(hull[hull.length-1], hull[0], p) < 0) {
+//            return false;
+//        }
 
         return true;
     }

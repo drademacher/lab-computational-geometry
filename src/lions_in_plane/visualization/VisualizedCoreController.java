@@ -171,9 +171,9 @@ public class VisualizedCoreController extends CoreController {
 
         if (pathStoneCount == 0) {
             PolygonalPath.clear();
-            new PolygonalPath(allPaths.manPath, Color.BLUE);
+            new PolygonalPath(allPaths.manPath, Color.TRANSPARENT);
             for (int i = 0; i <= pathCount; i++) {
-                new PolygonalPath(allPaths.lionPaths.get(i), Color.RED);
+                new PolygonalPath(allPaths.lionPaths.get(i), Color.TRANSPARENT);
             }
             lions.get(pathCount).getShape().setVisible(true);
         }

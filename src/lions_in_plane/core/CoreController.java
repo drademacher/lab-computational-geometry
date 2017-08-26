@@ -84,7 +84,6 @@ public class CoreController {
         for (Point p : lions) {
             createLion(new Point(p.getX(), p.getY()));
         }
-
         createMan(new Point(193, 101));
     }
 
@@ -152,13 +151,11 @@ public class CoreController {
             bufferedWriter.newLine();
             bufferedWriter.flush();
 
-
             Man man = plane.getMan();
 //                System.out.println("M##" + man.getPosition().getX() + "##" + man.getPosition().getY() + "##" + man.getStrategy().toString() + "##" + man.getSpeed());
             bufferedWriter.write("M##" + man.getPosition().getX() + "##" + man.getPosition().getY() + "##" + man.getStrategy().getName() + "##" + man.getEpsilon());
             bufferedWriter.newLine();
             bufferedWriter.flush();
-
 
             for (Lion lion : plane.getLions()) {
                 System.out.println(lion.getStrategy());
@@ -166,7 +163,6 @@ public class CoreController {
                 bufferedWriter.newLine();
                 bufferedWriter.flush();
             }
-
 
             bufferedWriter.close();
         } catch (IOException e) {
@@ -227,16 +223,6 @@ public class CoreController {
         this.editMode = editMode;
     }
 
-    public ArrayList<Point> getMenWithManualInput() {
-        // TODO: IMPLEMENT THIS
-        return new ArrayList<>();
-    }
-
-    public ArrayList<Point> getLionsWithManualInput() {
-        // TODO: IMPLEMENT THIS
-        return new ArrayList<>();
-    }
-
     public void createMan(Point coordinates) {
         plane.addMan(coordinates, maxLionSpeed, defaultMenEpsilon);
     }
@@ -276,6 +262,10 @@ public class CoreController {
         setMaxLionSpeed(speed);
     }
 
+    public void shuffleLionOrder(){
+        plane.shuffleLionOrder();
+    }
+
     public void setManStrategy(Point coordinates, StrategyEnumMan strategyEnum) {
         plane.setManStrategy(coordinates, strategyEnum);
     }
@@ -295,7 +285,6 @@ public class CoreController {
             plane.setLionStrategy(lion.getPosition(), strategyEnum);
         }
     }
-
 
     protected AllPaths calcAllPaths(int maxInductionsStep) {
 

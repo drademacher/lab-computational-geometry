@@ -5,8 +5,10 @@ import lions_in_plane.core.strategies.lion.Strategy;
 import lions_in_plane.core.strategies.lion.StrategyEnumLion;
 import lions_in_plane.core.strategies.man.StrategyEnumMan;
 import util.Point;
+import util.Random;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Objects;
 
 public class Plane {
@@ -67,6 +69,10 @@ public class Plane {
             System.out.println("wow");
 //            System.out.println(lion.getStrategy());
         }
+    }
+
+    public void shuffleLionOrder(){
+        Collections.shuffle(lions, Random.getRANDOM());
     }
 
     public Man getManByCoordinate(Point coordinates) {

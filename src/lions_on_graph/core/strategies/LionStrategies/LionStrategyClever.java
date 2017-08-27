@@ -56,6 +56,35 @@ public class LionStrategyClever extends StrategyLion {
             }
         }
 
+        int minimalDistanceToMan = Integer.MAX_VALUE;
+        for(Man man : coreController.getMen()){
+            boolean endGamePath = true;
+            int distanceToMan = helper.getDistanceBetween(currentPosition, man.getCurrentPosition());
+
+            if(distanceToMan < minimalDistanceToMan) {
+                minimalDistanceToMan = distanceToMan;
+
+                for (Lion otherLion : coreController.getLions()) {
+                    if (!currentPosition.equals(otherLion.getCurrentPosition())) {
+                        int distanceToOtherLion = helper.getDistanceBetween(currentPosition, otherLion.getCurrentPosition());
+                        if (distanceToMan > distanceToOtherLion){
+                            endGamePath = false;
+                        }
+
+                        int distanceToLionInManDirection = helper.BFSToLion(currentPosition, helper.getPathBetween(currentPosition, man.getCurrentPosition()).get(0));
+                        int distanceToBigVertexInManDirection = helper.getDistanceBetween(currentPosition, helper.getNeighborBigVertices(currentPosition, helper.getPathBetween(currentPosition, man.getCurrentPosition()).get(0)).get(0));
+                        if(distanceToLionInManDirection >  distanceToBigVertexInManDirection){
+                            endGamePath = false;
+                        }
+                    }
+                }
+
+                if(endGamePath){
+                    result.add(0, helper.getPathBetween(currentPosition, man.getCurrentPosition()).get(0));
+                }
+            }
+        }
+
 
         return result;
     }

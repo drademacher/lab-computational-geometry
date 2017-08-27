@@ -235,6 +235,10 @@ public class GraphHelper {
     }
 
     public ArrayList<Vertex> getNeighborBigVertices(Vertex vertex) {
+        return getNeighborBigVertices(vertex, null);
+    }
+    public ArrayList<Vertex> getNeighborBigVertices(Vertex vertex, Vertex directionVertex) {
+
         ArrayList<Vertex> result = new ArrayList<>();
 
         Set<Vertex> set = new HashSet<>();
@@ -243,8 +247,13 @@ public class GraphHelper {
 
 
         set.add(vertex);
-        queue.add(vertex);
 
+        if (directionVertex != null) {
+            queue.add(directionVertex);
+            set.add(directionVertex);
+        } else {
+            queue.add(vertex);
+        }
 
         while (!queue.isEmpty()) {
             current = queue.poll();

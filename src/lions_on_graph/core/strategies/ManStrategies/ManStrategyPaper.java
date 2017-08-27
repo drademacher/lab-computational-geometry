@@ -108,7 +108,7 @@ public class ManStrategyPaper extends StrategyMan {
             return false;
         }
 
-        if (this.coreController.isDangerOnVertex(vertex.getCoordinates())) {
+        if (this.coreController.isLionDangerOnVertex(vertex.getCoordinates())) {
             return false;
         }
 

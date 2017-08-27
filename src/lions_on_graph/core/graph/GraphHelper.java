@@ -50,7 +50,7 @@ public class GraphHelper {
             current = queue.poll();
 
             // check break condition
-            if (coreController.isManOnVertex(current.getCoordinates())) {
+            if (coreController.isManRangeOnVertex(current.getCoordinates())) {
                 return map.get(current);
             }
 
@@ -89,7 +89,7 @@ public class GraphHelper {
             current = queue.poll();
 
             // check break condition
-            if (coreController.isDangerOnVertex(current.getCoordinates())) {
+            if (coreController.isLionDangerOnVertex(current.getCoordinates())) {
                 return map.get(current);
             }
 
@@ -100,7 +100,7 @@ public class GraphHelper {
                     map.put(nextVertex, map.get(current) + 1);
                     set.add(nextVertex);
 
-                    if (!coreController.isManOnVertex(nextVertex.getCoordinates())) {
+                    if (!coreController.isManRangeOnVertex(nextVertex.getCoordinates())) {
                         queue.add(nextVertex);
                     }
                 }

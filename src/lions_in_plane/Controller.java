@@ -350,13 +350,13 @@ class Controller {
                 tickAccount += 1;
                 if (tickAccount >= ticksPerStep) {
                     tickAccount -= ticksPerStep;
-                    if (coreController.getMenWithManualInput().isEmpty() && coreController.getLionsWithManualInput().isEmpty()) {
+//                    if (coreController.getMenWithManualInput().isEmpty() && coreController.getLionsWithManualInput().isEmpty()) {
                         boolean gameOver = coreController.simulateStep();
                         if (gameOver) {
                             gameOverAlert.show();
                             activePlaying.set(false);
                         }
-                    }
+//                    }
                 }
             }
         };

@@ -39,7 +39,7 @@ public abstract class StrategyMan implements Strategy {
 
     public boolean vertexIsValidStep(Vertex vertex) {
 
-        if (this.coreController.isDangerOnVertex(vertex.getCoordinates())) {
+        if (this.coreController.isLionDangerOnVertex(vertex.getCoordinates())) {
             return false;
         }
 
@@ -60,15 +60,10 @@ public abstract class StrategyMan implements Strategy {
 
         for (Man otherMan : coreController.getMen()) {
             if (!otherMan.equals(man)) {
-                if (Man.keepDistanceExact()) {
-                    if (Man.getDistance() != helper.getDistanceBetween(vertex, otherMan.getCurrentPosition())) {
+
+                    if (Man.getMinimumDistance() >= helper.getDistanceBetween(vertex, otherMan.getCurrentPosition())) {
                         isValidVertex = false;
                     }
-                } else {
-                    if (Man.getDistance() >= helper.getDistanceBetween(vertex, otherMan.getCurrentPosition())) {
-                        isValidVertex = false;
-                    }
-                }
             }
         }
 

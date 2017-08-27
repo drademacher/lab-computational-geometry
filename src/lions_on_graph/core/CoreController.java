@@ -95,7 +95,7 @@ public class CoreController {
         createEdge(vertex1Coordinates, vertex2Coordinates, GraphController.getDefaultEdgeWeight());
     }
 
-    public void createEdge(Point vertex1Coordinates, Point vertex2Coordinates, int weight) {
+    private void createEdge(Point vertex1Coordinates, Point vertex2Coordinates, int weight) {
         if (vertex1Coordinates == null || vertex2Coordinates == null || weight < 0) {
             return;
         }
@@ -171,9 +171,9 @@ public class CoreController {
         return this.graph.getBigVertexByCoordinate(coordinate);
     }
 
-    public SmallVertex getSmallVertexByCoordinate(Point coordinate) {
-        return this.graph.getSmallVertexByCoordinate(coordinate);
-    }
+//    public SmallVertex getSmallVertexByCoordinate(Point coordinate) {
+//        return this.graph.getSmallVertexByCoordinate(coordinate);
+//    }
 
     public Vertex getVertexByCoordinate(Point coordinate) {
         return this.graph.getVertexByCoordinate(coordinate);
@@ -187,21 +187,21 @@ public class CoreController {
         return graph;
     }
 
-    public BigVertex getBigVertexById(int id) {
-        return this.graph.getBigVertexById(id);
-    }
-
-    public ArrayList<BigVertex> getBigVertices() {
-        return this.graph.getBigVertices();
-    }
-
-    public ArrayList<SmallVertex> getSmallVertices() {
-        return this.graph.getSmallVertices();
-    }
-
-    public ArrayList<Edge> getEdges() {
-        return this.graph.getEdges();
-    }
+//    public BigVertex getBigVertexById(int id) {
+//        return this.graph.getBigVertexById(id);
+//    }
+//
+//    public ArrayList<BigVertex> getBigVertices() {
+//        return this.graph.getBigVertices();
+//    }
+//
+//    public ArrayList<SmallVertex> getSmallVertices() {
+//        return this.graph.getSmallVertices();
+//    }
+//
+//    public ArrayList<Edge> getEdges() {
+//        return this.graph.getEdges();
+//    }
 
     public int getDefaultEdgeWeight() {
         return GraphController.getDefaultEdgeWeight();
@@ -214,13 +214,13 @@ public class CoreController {
         }
     }
 
-    private boolean isEntityOnEdge(Edge edge) {
-        return isManOnEdge(edge) || isLionOnEdge(edge);
-    }
-
-    private boolean isEntityOnVertex(Point vertexCoordinate) {
-        return isManOnVertex(vertexCoordinate) || isLionOnVertex(vertexCoordinate);
-    }
+//    private boolean isEntityOnEdge(Edge edge) {
+//        return isManOnEdge(edge) || isLionOnEdge(edge);
+//    }
+//
+//    private boolean isEntityOnVertex(Point vertexCoordinate) {
+//        return isManOnVertex(vertexCoordinate) || isLionOnVertex(vertexCoordinate);
+//    }
 
     /* ****************************
      *
@@ -238,29 +238,28 @@ public class CoreController {
         }
 
         Man man = new Man(vertex, this);
-        boolean bool = men.add(man);
         setManStrategy(man.getCoordinates(), Man.getDefaultStrategy());
         visualCoreController.createMan(man);
         this.visualCoreController.updateStepPreviewsAndChoicePoints();
     }
 
-    public void setNextManStep(Point manCoordinates, Point nextStepCoordinates) {
-        if (manCoordinates == null || nextStepCoordinates == null) {
-            return;
-        }
-        Vertex vertex = getVertexByCoordinate(nextStepCoordinates);
-        if (vertex == null) {
-            return;
-        }
-        Man man = getManByCoordinate(manCoordinates);
-        if (man == null) {
-            return;
-        }
-        man.setNextPosition(vertex);
-        this.visualCoreController.updateStepPreviewsAndChoicePoints();
-    }
+//    public void setNextManStep(Point manCoordinates, Point nextStepCoordinates) {
+//        if (manCoordinates == null || nextStepCoordinates == null) {
+//            return;
+//        }
+//        Vertex vertex = getVertexByCoordinate(nextStepCoordinates);
+//        if (vertex == null) {
+//            return;
+//        }
+//        Man man = getManByCoordinate(manCoordinates);
+//        if (man == null) {
+//            return;
+//        }
+//        man.setNextPosition(vertex);
+//        this.visualCoreController.updateStepPreviewsAndChoicePoints();
+//    }
 
-    public boolean isManOnVertex(Point vertexCoorinate) {
+    public boolean isManRangeOnVertex(Point vertexCoorinate) {
         if (vertexCoorinate == null) {
             return false;
         }
@@ -273,24 +272,29 @@ public class CoreController {
             if (man.getCurrentPosition().equals(vertex)) {
                 return true;
             }
-        }
-        return false;
-    }
-
-    private boolean isManOnEdge(Edge edge) {
-        if (edge == null) {
-            return false;
-        }
-
-        for (Man man : men) {
-            for (Vertex vertex : edge.getEdgeVertices()) {
-                if (man.getCurrentPosition().equals(vertex)) {
+            for (Vertex rangeVertex : man.getRangeVertices()) {
+                if (rangeVertex.equals(vertex)) {
                     return true;
                 }
             }
         }
         return false;
     }
+
+//    private boolean isManOnEdge(Edge edge) {
+//        if (edge == null) {
+//            return false;
+//        }
+//
+//        for (Man man : men) {
+//            for (Vertex vertex : edge.getEdgeVertices()) {
+//                if (man.getCurrentPosition().equals(vertex)) {
+//                    return true;
+//                }
+//            }
+//        }
+//        return false;
+//    }
 
     public void setLion(Point vertexCoorinate) {
         if (vertexCoorinate == null) {
@@ -302,27 +306,26 @@ public class CoreController {
         }
 
         Lion lion = new Lion(vertex, this);
-        boolean bool = lions.add(lion);
         setLionStrategy(lion.getCoordinates(), Lion.getDefaultStrategy());
         visualCoreController.createLion(lion);
         this.visualCoreController.updateStepPreviewsAndChoicePoints();
     }
 
-    public void setNextLionStep(Point lionCoordinates, Point nextStepCoordinates) {
-        if (lionCoordinates == null || nextStepCoordinates == null) {
-            return;
-        }
-        Vertex vertex = getVertexByCoordinate(nextStepCoordinates);
-        if (vertex == null) {
-            return;
-        }
-        Lion lion = getLionByCoordinate(lionCoordinates);
-        if (lion == null) {
-            return;
-        }
-        lion.setNextPosition(vertex);
-        this.visualCoreController.updateStepPreviewsAndChoicePoints();
-    }
+//    public void setNextLionStep(Point lionCoordinates, Point nextStepCoordinates) {
+//        if (lionCoordinates == null || nextStepCoordinates == null) {
+//            return;
+//        }
+//        Vertex vertex = getVertexByCoordinate(nextStepCoordinates);
+//        if (vertex == null) {
+//            return;
+//        }
+//        Lion lion = getLionByCoordinate(lionCoordinates);
+//        if (lion == null) {
+//            return;
+//        }
+//        lion.setNextPosition(vertex);
+//        this.visualCoreController.updateStepPreviewsAndChoicePoints();
+//    }
 
     public boolean isLionOnVertex(Point vertexCoorinate) {
         if (vertexCoorinate == null) {
@@ -341,22 +344,22 @@ public class CoreController {
         return false;
     }
 
-    private boolean isLionOnEdge(Edge edge) {
-        if (edge == null) {
-            return false;
-        }
+//    private boolean isLionOnEdge(Edge edge) {
+//        if (edge == null) {
+//            return false;
+//        }
+//
+//        for (Lion lion : lions) {
+//            for (Vertex vertex : edge.getEdgeVertices()) {
+//                if (lion.getCurrentPosition().equals(vertex)) {
+//                    return true;
+//                }
+//            }
+//        }
+//        return false;
+//    }
 
-        for (Lion lion : lions) {
-            for (Vertex vertex : edge.getEdgeVertices()) {
-                if (lion.getCurrentPosition().equals(vertex)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    public boolean isDangerOnVertex(Point vertexCoorinate) {
+    public boolean isLionDangerOnVertex(Point vertexCoorinate) {
         if (vertexCoorinate == null) {
             return false;
         }
@@ -408,7 +411,6 @@ public class CoreController {
         }
 
         visualCoreController.removeLion(lion);
-        boolean bool = lions.remove(lion);
         this.visualCoreController.updateStepPreviewsAndChoicePoints();
     }
 
@@ -536,7 +538,7 @@ public class CoreController {
         return result;
     }
 
-    public ArrayList<Man> getMenByCoordinate(Point coordinates) {
+    private ArrayList<Man> getMenByCoordinate(Point coordinates) {
         ArrayList<Man> menOnVertex = new ArrayList<>();
         if (coordinates == null) {
             return null;
@@ -549,7 +551,7 @@ public class CoreController {
         return menOnVertex;
     }
 
-    public Man getManByCoordinate(Point coordinates) {
+    private Man getManByCoordinate(Point coordinates) {
         ArrayList<Man> men = getMenByCoordinate(coordinates);
         if (men.size() > 0) {
             return men.get(0);
@@ -565,7 +567,7 @@ public class CoreController {
         return menOnEdge;
     }
 
-    public ArrayList<Lion> getLionsByCoordinate(Point coordinates) {
+    private ArrayList<Lion> getLionsByCoordinate(Point coordinates) {
         ArrayList<Lion> lionsOnVertex = new ArrayList<>();
         if (coordinates == null) {
             return null;
@@ -642,39 +644,69 @@ public class CoreController {
         return Lion.getDefaultLionRange();
     }
 
-    public int getExactManDistance() {
-        if (Man.keepDistanceExact()) {
-            return Man.getDistance();
-        }
-        return 0;
-    }
-
-    public void setExactManDistance(int distance) {
-        if (distance < 0) {
+    public void incrementManRange(Point manCoordinate) {
+        if (manCoordinate == null) {
             return;
         }
-        Man.setDistance(distance);
-        Man.setKeepDistanceExact(true);
+        Man man = getManByCoordinate(manCoordinate);
+        if (man == null) {
+            return;
+        }
+
+        setManRange(manCoordinate, man.getRange() + 1);
+    }
+
+    public void decrementManRange(Point manCoordinate) {
+        if (manCoordinate == null) {
+            return;
+        }
+        Man man = getManByCoordinate(manCoordinate);
+        if (man == null) {
+            return;
+        }
+
+        setManRange(manCoordinate, man.getRange() - 1);
+    }
+
+    public void setManRange(Point manCoordinate, int range) {
+        if (manCoordinate == null || range < 0) {
+            return;
+        }
+        Man man = getManByCoordinate(manCoordinate);
+        if (man == null) {
+            return;
+        }
+
+        man.setRange(range);
+        //TODO implement
+//        visualCoreController.updatManRange(man);
+    }
+
+    public void setAllManRange(int range) {
+        Man.setDefaultRange(range);
+        for (Man man : men) {
+            setManRange(man.getCoordinates(), range);
+        }
+    }
+
+    public int getDefaultManRange() {
+        return Man.getDefaultLionRange();
     }
 
     public int getMinimumManDistance() {
-        if (Man.keepDistanceExact()) {
-            return 0;
-        }
-        return Man.getDistance();
+        return Man.getMinimumDistance();
     }
 
     public void setMinimumManDistance(int distance) {
         if (distance < 0) {
             return;
         }
-        Man.setDistance(distance);
-        Man.setKeepDistanceExact(false);
+        Man.setMinimumDistance(distance);
     }
 
-    public void removeManDistance() {
-        Man.removeDistance();
-    }
+//    public void removeManDistance() {
+//        Man.removeDistance();
+//    }
 
     public boolean isEditMode() {
         return editMode;
@@ -877,22 +909,22 @@ public class CoreController {
         this.setMan(new Point(0, 0));
     }
 
-    public void setDefaultGraph4() {
-        setEmptyGraph();
-        this.setDefaultGraph1();
-    }
-
-    public void setDefaultGraph5() {
-        setEmptyGraph();
-
-        this.setDefaultGraph1();
-    }
-
-    public void setRandomGraph() {
-        setEmptyGraph();
-        // TODO: implement random graph algorithm
-        this.setDefaultGraph1();
-    }
+//    public void setDefaultGraph4() {
+//        setEmptyGraph();
+//        this.setDefaultGraph1();
+//    }
+//
+//    public void setDefaultGraph5() {
+//        setEmptyGraph();
+//
+//        this.setDefaultGraph1();
+//    }
+//
+//    public void setRandomGraph() {
+//        setEmptyGraph();
+//        // TODO: implement random graph algorithm
+//        this.setDefaultGraph1();
+//    }
 
     public void setGraphFromFile(File file) throws Exception {
         setEmptyGraph();
@@ -919,12 +951,12 @@ public class CoreController {
 
                 switch (lineElements[0]) {
                     case "S":
-                        Man.setDistance(Integer.parseInt(lineElements[1]));
-                        Man.setKeepDistanceExact(Boolean.parseBoolean(lineElements[2]));
-                        Man.setDefaultStrategy(ManStrategy.valueOf(lineElements[3]));
-                        Lion.setDefaultRange(Integer.parseInt((lineElements[4])));
-                        Lion.setDefaultStrategy(LionStrategy.valueOf(lineElements[5]));
-                        GraphController.setDefaultEdgeWeight(Integer.parseInt((lineElements[6])));
+                        Man.setMinimumDistance(Integer.parseInt(lineElements[1]));
+//                        Man.setKeepDistanceExact(Boolean.parseBoolean(lineElements[2]));
+                        Man.setDefaultStrategy(ManStrategy.valueOf(lineElements[2]));
+                        Lion.setDefaultRange(Integer.parseInt((lineElements[3])));
+                        Lion.setDefaultStrategy(LionStrategy.valueOf(lineElements[4]));
+                        GraphController.setDefaultEdgeWeight(Integer.parseInt((lineElements[5])));
                         break;
                     case "V":
                         this.createVertex(new Point(Double.parseDouble(lineElements[1]), Double.parseDouble(lineElements[2])));
@@ -948,7 +980,6 @@ public class CoreController {
                 }
             }
         } catch (Exception e) {
-            // TODO: search up the right exception type
             throw new Exception("test");
         }
 
@@ -976,7 +1007,7 @@ public class CoreController {
             bufferedWriter.newLine();
             bufferedWriter.flush();
 
-            bufferedWriter.write("S##" + Man.getDistance() + "##" + Man.keepDistanceExact() + "##" + Man.getDefaultStrategy().name() + "##" + Lion.getDefaultLionRange() + "##" + Lion.getDefaultStrategy().name() + "##" + GraphController.getDefaultEdgeWeight());
+            bufferedWriter.write("S##" + Man.getMinimumDistance() + /*"##" + Man.keepDistanceExact() +*/ "##" + Man.getDefaultStrategy().name() + "##" + Lion.getDefaultLionRange() + "##" + Lion.getDefaultStrategy().name() + "##" + GraphController.getDefaultEdgeWeight());
             bufferedWriter.newLine();
             bufferedWriter.flush();
 

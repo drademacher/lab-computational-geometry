@@ -88,6 +88,7 @@ public class CoreController {
         this.visualCoreController.deleteVertex(vertex);
         this.graph.deleteVertex(vertex);
         this.visualCoreController.updateAllLionRanges(lions);
+        this.visualCoreController.updateAllManRanges(men);
 
     }
 
@@ -110,6 +111,7 @@ public class CoreController {
 
         this.visualCoreController.createEdge(edge);
         this.visualCoreController.updateAllLionRanges(lions);
+        this.visualCoreController.updateAllManRanges(men);
     }
 
     public void removeEdge(Point vertex1Coordinates, Point vertex2Coordinates) {
@@ -134,6 +136,7 @@ public class CoreController {
         //remove edge
         this.visualCoreController.removeEdge(edge);
         this.visualCoreController.updateAllLionRanges(lions);
+        this.visualCoreController.updateAllManRanges(men);
     }
 
     public void changeEdgeWeight(Point vertex1Coordinates, Point vertex2Coordinates, int weight) {
@@ -163,6 +166,7 @@ public class CoreController {
 
         this.visualCoreController.createEdge(edge);
         this.visualCoreController.updateAllLionRanges(lions);
+        this.visualCoreController.updateAllManRanges(men);
         relocateAllLions();
         relocateAllMen();
     }
@@ -238,6 +242,7 @@ public class CoreController {
         }
 
         Man man = new Man(vertex, this);
+        men.add(man);
         setManStrategy(man.getCoordinates(), Man.getDefaultStrategy());
         visualCoreController.createMan(man);
         this.visualCoreController.updateStepPreviewsAndChoicePoints();
@@ -306,6 +311,7 @@ public class CoreController {
         }
 
         Lion lion = new Lion(vertex, this);
+        lions.add(lion);
         setLionStrategy(lion.getCoordinates(), Lion.getDefaultStrategy());
         visualCoreController.createLion(lion);
         this.visualCoreController.updateStepPreviewsAndChoicePoints();
@@ -411,6 +417,7 @@ public class CoreController {
         }
 
         visualCoreController.removeLion(lion);
+        lions.remove(lion);
         this.visualCoreController.updateStepPreviewsAndChoicePoints();
     }
 
@@ -551,7 +558,7 @@ public class CoreController {
         return menOnVertex;
     }
 
-    private Man getManByCoordinate(Point coordinates) {
+    public Man getManByCoordinate(Point coordinates) {
         ArrayList<Man> men = getMenByCoordinate(coordinates);
         if (men.size() > 0) {
             return men.get(0);
@@ -678,8 +685,7 @@ public class CoreController {
         }
 
         man.setRange(range);
-        //TODO implement
-//        visualCoreController.updatManRange(man);
+        visualCoreController.updateManRange(man);
     }
 
     public void setAllManRange(int range) {

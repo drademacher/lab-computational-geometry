@@ -2,10 +2,7 @@ package lions_on_graph.visualization;
 
 import javafx.animation.PathTransition;
 import javafx.scene.Group;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.SeparatorMenuItem;
+import javafx.scene.control.*;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
@@ -15,6 +12,8 @@ import lions_on_graph.core.CoreController;
 import util.ContextMenuHolder;
 import util.Point;
 import util.ZoomScrollPane;
+
+import java.util.Optional;
 
 /**
  * Created by Jens on 25.06.2017.
@@ -54,6 +53,39 @@ public class Man implements Entity {
             MenuItem paperStrategyButton = new MenuItem("Paper");
             strategyMenu.getItems().addAll(waitStrategyButton, greedyStrategyButton, randomStrategyButton, manualStrategyButton, paperStrategyButton);
 
+            Menu edgeMenu = new Menu("Man Range");
+
+            MenuItem iteme1 = new MenuItem("Increment");
+            MenuItem iteme2 = new MenuItem("Decrement");
+            MenuItem iteme3 = new MenuItem("Set");
+
+
+            iteme1.setOnAction(event2 -> {
+                lions_on_graph.core.entities.Man man = coreController.getManByCoordinate(coordinates);
+                coreController.incrementManRange(coordinates);
+            });
+
+            iteme2.setOnAction(event2 -> {
+                lions_on_graph.core.entities.Man man = coreController.getManByCoordinate(coordinates);
+                coreController.decrementManRange(coordinates);
+            });
+
+            iteme3.setOnAction(event2 -> {
+                lions_on_graph.core.entities.Man man = coreController.getManByCoordinate(coordinates);
+
+                TextInputDialog dialog = new TextInputDialog("" + man.getRange());
+                dialog.setTitle("Set Man Range");
+                dialog.setHeaderText("Enter the new range of the man.");
+
+                Optional<String> result = dialog.showAndWait();
+
+                if (result.isPresent()) {
+                    int newWeight = Integer.parseInt(result.get());
+                    coreController.setManRange(coordinates, newWeight);
+                }
+            });
+
+            edgeMenu.getItems().addAll(iteme1, iteme2, iteme3);
 
             waitStrategyButton.setOnAction(event2 -> {
                 coreController.setManStrategy(coordinates, CoreController.ManStrategy.DoNothing);
@@ -92,7 +124,7 @@ public class Man implements Entity {
                 });
             });
 
-            contextMenu.getItems().addAll(item0, item1, strategyMenu, new SeparatorMenuItem(), closeItem);
+            contextMenu.getItems().addAll(item0, item1, strategyMenu, edgeMenu, new SeparatorMenuItem(), closeItem);
             contextMenu.show(shape, event1.getScreenX(), event1.getScreenY());
         });
     }

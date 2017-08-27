@@ -14,7 +14,8 @@ public class Constants {
     public static final Color COLOR_EDGE = (Color) Paint.valueOf("#A1A1A1");
     public static final Color COLOR_MAN = (Color) Paint.valueOf("#0922e5");
     public static final Color COLOR_LION = (Color) Paint.valueOf("#e51408");
-    public static final Color COLOR_RANGE = (Color) Paint.valueOf("#F28983");
+    public static final Color COLOR_MAN_RANGE = (Color) Paint.valueOf("#0922e5");
+    public static final Color COLOR_LION_RANGE = (Color) Paint.valueOf("#F28983");
     public static final Color COLOR_PREVIEW = (Color) Paint.valueOf("#FFFF00");
     public static final Color COLOR_CHOICEPOINT = (Color) Paint.valueOf("#7a7a7a99");
 

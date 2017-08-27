@@ -1070,14 +1070,31 @@ public class CoreController {
     private boolean lionsHaveWon() {
         for (Man man : getMen()) {
             for (Lion lion : getLions()) {
+                //lion and man
                 if (man.getCurrentPosition().equals(lion.getCurrentPosition())) {
                     return true;
                 }
-                for (Vertex rangeVertex : lion.getRangeVertices()) {
-                    if (man.getCurrentPosition().equals(rangeVertex)) {
+                for(Vertex manRangeVertex : man.getRangeVertices()){
+                    ///lion and man range
+                    if(manRangeVertex.equals(lion.getCurrentPosition())){
                         return true;
                     }
                 }
+
+
+                for (Vertex lionRangeVertex : lion.getRangeVertices()) {
+                    //lion range and man
+                    if (man.getCurrentPosition().equals(lionRangeVertex)) {
+                        return true;
+                    }
+                    for(Vertex manRangeVertex : man.getRangeVertices()){
+                        //lion range and man range
+                        if(manRangeVertex.equals(lionRangeVertex)){
+                            return true;
+                        }
+                    }
+                }
+
             }
         }
         return false;

@@ -6,7 +6,7 @@ import lions_in_plane.core.plane.Man;
 import lions_in_plane.core.plane.Plane;
 import lions_in_plane.core.strategies.lion.StrategyEnumLion;
 import lions_in_plane.core.strategies.man.StrategyEnumMan;
-import util.Constants;
+import util.Global;
 import util.ConvexHull;
 import util.Point;
 import util.Random;
@@ -21,7 +21,7 @@ public class CoreController {
 
     private boolean editMode = true;
 
-    private final int STEPS_TO_GO_AFTER_CH = 50;
+    private final int STEPS_TO_GO_AFTER_ESCAPE = 50;
     private double defaultMenEpsilon = 0.1;
     private double defaultLionsSpeed = 1;
     private double defaultLionsRange = 5;
@@ -104,11 +104,11 @@ public class CoreController {
             //config line
             currentLine = br.readLine();
             if (currentLine == null) {
-                throw new Error("wrong file input version: " + Constants.API_VERSION + " expected");
+                throw new Error("wrong file input version: " + Global.API_VERSION + " expected");
             }
             String[] lineElements = currentLine.split("##");
-            if (!lineElements[2].equals(Constants.API_VERSION)) {
-                throw new Error("wrong file  input version: " + Constants.API_VERSION + " expected");
+            if (!lineElements[2].equals(Global.API_VERSION)) {
+                throw new Error("wrong file  input version: " + Global.API_VERSION + " expected");
             }
 
             // valid version, read file
@@ -147,7 +147,7 @@ public class CoreController {
         try {
             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(selectedFile));
 
-            bufferedWriter.write("C##>>>>>Configuration for LionsInPlane Applet<<<<<##" + Constants.API_VERSION);
+            bufferedWriter.write("C##>>>>>Configuration for LionsInPlane Applet<<<<<##" + Global.API_VERSION);
             bufferedWriter.newLine();
             bufferedWriter.flush();
 
@@ -307,7 +307,7 @@ public class CoreController {
             lionPaths.clear();
             this.plane.resetManPath();
 
-            int stepsToGo = STEPS_TO_GO_AFTER_CH;
+            int stepsToGo = STEPS_TO_GO_AFTER_ESCAPE;
             while(stepsToGo > 0){
 
                 resultPath = this.plane.calcManPath(k, inductionPath);
@@ -334,7 +334,7 @@ public class CoreController {
 
                         //check if we escaped this new ch, if not -> do more steps (reset the stepsToGo counter)
                         if(allLionsHull.insideHull(resultPath.get(resultPath.size()-1))){
-                            stepsToGo = STEPS_TO_GO_AFTER_CH;
+                            stepsToGo = STEPS_TO_GO_AFTER_ESCAPE;
                         }
                     }
                 }

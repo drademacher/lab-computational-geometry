@@ -1,5 +1,13 @@
 package lions_in_plane.visualization;
 
+import javafx.animation.FadeTransition;
+import javafx.animation.ParallelTransition;
+import javafx.animation.PathTransition;
+import javafx.animation.SequentialTransition;
+import javafx.scene.shape.LineTo;
+import javafx.scene.shape.MoveTo;
+import javafx.scene.shape.Path;
+import javafx.util.Duration;
 import lions_in_plane.core.CoreController;
 import lions_in_plane.core.plane.AllPaths;
 import util.ConvexHull;
@@ -7,6 +15,9 @@ import util.Point;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static lions_in_plane.visualization.Constants.ANIMATION_DURATION;
+import static lions_in_plane.visualization.Constants.FADE_IN_DURATION;
 
 
 public class VisualizedCoreController extends CoreController {
@@ -168,48 +179,78 @@ public class VisualizedCoreController extends CoreController {
     public boolean simulateStep() {
         boolean res = super.simulateStep();
 
-
         if (pathCount >= lions.size()) {
             return false;
         }
 
-        if (pathStoneCount == 0) {
-            ManPath.transfer();
-            LionPath.clear();
-            InvisiblePath.clear();
-            new InvisiblePath(allPaths.manPath);
-            new ManPath(allPaths.manPath);
-            for (int i = 0; i <= pathCount; i++) {
-                new InvisiblePath(allPaths.lionPaths.get(i));
-                new LionPath(allPaths.lionPaths.get(i));
-            }
-            lions.get(pathCount).getShape().setVisible(true);
+        // draw path stuff
+        ManPath.transfer();
+        LionPath.clear();
+        InvisiblePath.clear();
+        new InvisiblePath(allPaths.manPath);
+        new ManPath(allPaths.manPath);
+        for (int i = 0; i <= pathCount; i++) {
+            new InvisiblePath(allPaths.lionPaths.get(i));
+            new LionPath(allPaths.lionPaths.get(i));
         }
 
+        // fade in next lion
+        lions.get(pathCount).getShape().setVisible(true);
+        FadeTransition fadeIn = new FadeTransition();
+        fadeIn.setNode(lions.get(pathCount).getShape());
+        fadeIn.setFromValue(0.0);
+        fadeIn.setToValue(1.0);
+        fadeIn.setDuration(Duration.millis(FADE_IN_DURATION));
+        fadeIn.play();
 
+
+        ParallelTransition allPathTransition = new ParallelTransition();
+
+        // man transition
+        Path manPath = new Path();
+        manPath.getElements().add(new MoveTo(manPoint.getPosition().getX(), manPoint.getPosition().getY()));
+        for (int i = 0; i < allPaths.pathSize; i++) {
+            manPath.getElements().add(new LineTo(allPaths.manPath.get(i).getX(), allPaths.manPath.get(i).getY()));
+        }
+
+        PathTransition manTransition = new PathTransition();
+        manTransition.setDuration(Duration.millis(ANIMATION_DURATION));
+        manTransition.setPath(manPath);
+        manTransition.setNode(manPoint.getShape());
+        allPathTransition.getChildren().add(manTransition);
+
+
+        // lions transitions
         for (int i = 0; i <= pathCount; i++) {
-            if (i == 0) {
-                manPoint.setPosition(allPaths.manPath.get(pathStoneCount));
+            Path lionPath = new Path();
+            lionPath.getElements().add(new MoveTo(lions.get(i).getPosition().getX(), lions.get(i).getPosition().getY()));
+            for (int j = 0; j < allPaths.pathSize; j++) {
+                lionPath.getElements().add(new LineTo(allPaths.lionPaths.get(i).get(j).getX(), allPaths.lionPaths.get(i).get(j).getY()));
             }
 
-            lions.get(i).setPosition(allPaths.lionPaths.get(i).get(pathStoneCount));
+            PathTransition lionTransition = new PathTransition();
+            lionTransition.setDuration(Duration.millis(ANIMATION_DURATION));
+            lionTransition.setPath(lionPath);
+            lionTransition.setNode(lions.get(i).getShape());
+            allPathTransition.getChildren().add(lionTransition);
+
+
+//            lions.get(i).setPosition(allPaths.lionPaths.get(i).get(pathStoneCount));
         }
 
         if (pathStoneCount == 0) {
             update(lions.subList(0, pathCount + 1));
         }
 
-        pathStoneCount++;
 
-        if (allPaths.pathSize == pathStoneCount) {
-            pathStoneCount = 0;
-            pathCount++;
-            if (pathCount >= lions.size()) {
-                return false;
-            }
-            allPaths = calcAllPaths(pathCount + 1);
-//            update();
-        }
+
+
+        pathCount++;
+        allPaths = calcAllPaths(pathCount + 1);
+
+        SequentialTransition fullTransition = new SequentialTransition();
+        fullTransition.getChildren().addAll(fadeIn, allPathTransition);
+        fullTransition.play();
 
         return res;
     }

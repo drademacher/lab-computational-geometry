@@ -24,8 +24,7 @@ import static lions_on_graph.visualization.Constants.SINGLE_STEP_DURATION;
 
 
 class Controller {
-    private Timer playerTimer;
-    private TimerTask playerTask;
+    private Timer player;
 
 
     private ZoomScrollPane zoomScrollPane;
@@ -332,8 +331,8 @@ class Controller {
 
         activePlaying.addListener((observable, oldValue, newValue) -> {
             if (newValue) {
-                playerTimer = new Timer("Computational Geometry Lab");
-                playerTimer.schedule(new TimerTask() {
+                player = new Timer("Computational Geometry Lab");
+                player.schedule(new TimerTask() {
                     @Override
                     public void run() {
                         Platform.runLater(() -> {
@@ -348,7 +347,7 @@ class Controller {
                     }
                 }, 0, SINGLE_STEP_DURATION);
             } else {
-                playerTimer.cancel();
+                player.cancel();
             }
 
         });

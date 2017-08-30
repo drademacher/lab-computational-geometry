@@ -86,7 +86,7 @@ public class Lion extends Shape {
     }
 
     public Point getPosition() {
-        return new Point(realXPos.getValue(), realYPos.getValue());
+        return new Point(xPos.getValue(), yPos.getValue());
     }
 
     void setPosition(Point position) {

@@ -31,4 +31,10 @@ public class Constants {
                 (int) (color.getBlue() * 255));
         return hex;
     }
+
+
+
+    public static final int ANIMATION_DURATION = 1000;
+    public static final int FADE_IN_DURATION = 200;
+    public static final int SINGLE_STEP_DURATION = 200 + ANIMATION_DURATION + FADE_IN_DURATION;
 }

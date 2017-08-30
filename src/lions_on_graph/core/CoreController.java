@@ -7,7 +7,7 @@ import lions_on_graph.core.strategies.LionStrategies.*;
 import lions_on_graph.core.strategies.ManStrategies.*;
 import lions_on_graph.core.strategies.StrategyLion;
 import lions_on_graph.core.strategies.StrategyMan;
-import util.Constants;
+import util.Global;
 import lions_on_graph.visualization.VisualCoreController;
 import util.Point;
 
@@ -942,11 +942,11 @@ public class CoreController {
             //config line
             currentLine = br.readLine();
             if (currentLine == null) {
-                throw new Error("wrong file input version: " + Constants.API_VERSION + " expected");
+                throw new Error("wrong file input version: " + Global.API_VERSION + " expected");
             }
             String[] lineElements = currentLine.split("##");
-            if (!lineElements[2].equals(Constants.API_VERSION)) {
-                throw new Error("wrong file  input version: " + Constants.API_VERSION + " expected");
+            if (!lineElements[2].equals(Global.API_VERSION)) {
+                throw new Error("wrong file  input version: " + Global.API_VERSION + " expected");
             }
 
             // valid version, read file
@@ -1009,7 +1009,7 @@ public class CoreController {
 
             bufferedWriter = new BufferedWriter(new FileWriter(file));
 
-            bufferedWriter.write("C##>>>>>Configuration for LionsOnGraph Applet<<<<<##" + Constants.API_VERSION);
+            bufferedWriter.write("C##>>>>>Configuration for LionsOnGraph Applet<<<<<##" + Global.API_VERSION);
             bufferedWriter.newLine();
             bufferedWriter.flush();
 

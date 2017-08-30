@@ -159,7 +159,7 @@ public class Man implements Entity {
 //    @Override
 //    public void relocate(Point coordinates) {
 //        this.coordinates = coordinates;
-//        shape.relocate(coordinates.getX() - Constants.ENTITY_RADIUS, coordinates.getY() - Constants.ENTITY_RADIUS);
+//        shape.relocate(coordinates.getX() - Global.ENTITY_RADIUS, coordinates.getY() - Global.ENTITY_RADIUS);
 //    }
 
 

@@ -1,5 +1,6 @@
 package lions_in_plane;
 
+import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Insets;
@@ -13,15 +14,18 @@ import lions_in_plane.core.strategies.lion.StrategyEnumLion;
 import lions_in_plane.core.strategies.man.StrategyEnumMan;
 import lions_in_plane.visualization.*;
 import util.ContextMenuHolder;
-import util.TickTimer;
 import util.ZoomScrollPane;
 
 import java.io.File;
 import java.util.Optional;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import static lions_in_plane.visualization.Constants.SINGLE_STEP_DURATION;
 
 
 class Controller {
-    private TickTimer.Ticker animation;
+    private Timer player;
 
     private ZoomScrollPane zoomScrollPane;
     private HBox buttonBar;
@@ -60,7 +64,6 @@ class Controller {
         initEditButtons();
         initPlayButtons();
         initModeButton();
-        initAnimationTimer();
         initContextMenu();
         initZoomScrollPane();
         initGameOverAlert();
@@ -315,9 +318,21 @@ class Controller {
 
         activePlaying.addListener((observable, oldValue, newValue) -> {
             if (newValue) {
-                TickTimer.getInstance().addTicker(animation);
+                player = new Timer("Computational Geometry Lab");
+                player.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        Platform.runLater(() -> {
+                            boolean gameOver = coreController.simulateStep();
+                            if (gameOver) {
+                                gameOverAlert.show();
+                                activePlaying.set(false);
+                            }
+                        });
+                    }
+                }, 0, SINGLE_STEP_DURATION);
             } else {
-                TickTimer.getInstance().removeTicker(animation);
+                player.cancel();
             }
         });
 
@@ -354,23 +369,7 @@ class Controller {
      * It works on a fixed amount of FPS (60 is the standard).
      */
     private void initAnimationTimer() {
-        animation = new TickTimer.Ticker() {
-            int tickAccount = 0;
-            int ticksPerStep = 1;
 
-            @Override
-            public void action() {
-                tickAccount += 1;
-                if (tickAccount >= ticksPerStep) {
-                    tickAccount -= ticksPerStep;
-                    boolean gameOver = coreController.simulateStep();
-                    if (gameOver) {
-                        gameOverAlert.show();
-                        activePlaying.set(false);
-                    }
-                }
-            }
-        };
     }
 
     /**

@@ -1,42 +1,37 @@
 package lions_on_graph.core.entities;
 
 import lions_on_graph.core.CoreController;
+import lions_on_graph.core.graph.GraphHelper;
 import lions_on_graph.core.graph.Vertex;
 import lions_on_graph.core.strategies.ManStrategies.ManStrategyManually;
 import lions_on_graph.core.strategies.StrategyMan;
 
+import java.util.ArrayList;
+
 
 public class Man extends Entity {
 
-    private static boolean keepDistanceExact = false;
-    private static int distance = 0;
+    private static int minimumDistance = 0;
     private static CoreController.ManStrategy defaultStrategy = CoreController.ManStrategy.Paper;
     private StrategyMan strategy;
+    private int range = defaultRange;
+    private static int defaultRange = 0;
 
 
     public Man(Vertex startPosition, CoreController coreController) {
         super(startPosition, coreController);
     }
 
-    public static int getDistance() {
-        return distance;
+    public static int getMinimumDistance() {
+        return minimumDistance;
     }
 
-    public static void setDistance(int distance) {
-        Man.distance = distance;
+    public static void setMinimumDistance(int distance) {
+        Man.minimumDistance = distance;
     }
 
-    public static void removeDistance() {
-        Man.distance = 0;
-        Man.keepDistanceExact = false;
-    }
-
-    public static void setKeepDistanceExact(boolean keepDistanceExact) {
-        Man.keepDistanceExact = keepDistanceExact;
-    }
-
-    public static boolean keepDistanceExact() {
-        return keepDistanceExact;
+    public static void removeMinimumDistance() {
+        Man.minimumDistance = 0;
     }
 
     public static CoreController.ManStrategy getDefaultStrategy() {
@@ -78,5 +73,26 @@ public class Man extends Entity {
     public void setStrategy(StrategyMan strategy) {
         strategy.setMan(this);
         this.strategy = strategy;
+    }
+
+    public int getRange() {
+        return range;
+    }
+
+    public void setRange(int range) {
+        this.range = range;
+    }
+
+    public static void setDefaultRange(int defaultRange) {
+        Man.defaultRange = defaultRange;
+    }
+
+    public static int getDefaultLionRange() {
+        return Man.defaultRange;
+    }
+
+    public ArrayList<Vertex> getRangeVertices() {
+        GraphHelper graphHelper = GraphHelper.createGraphHelper(coreController);
+        return graphHelper.BFSgetAllVerticesTill(position, getRange());
     }
 }

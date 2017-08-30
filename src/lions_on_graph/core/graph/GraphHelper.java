@@ -50,7 +50,7 @@ public class GraphHelper {
             current = queue.poll();
 
             // check break condition
-            if (coreController.isManOnVertex(current.getCoordinates())) {
+            if (coreController.isManRangeOnVertex(current.getCoordinates())) {
                 return map.get(current);
             }
 
@@ -89,7 +89,7 @@ public class GraphHelper {
             current = queue.poll();
 
             // check break condition
-            if (coreController.isDangerOnVertex(current.getCoordinates())) {
+            if (coreController.isLionDangerOnVertex(current.getCoordinates())) {
                 return map.get(current);
             }
 
@@ -100,7 +100,7 @@ public class GraphHelper {
                     map.put(nextVertex, map.get(current) + 1);
                     set.add(nextVertex);
 
-                    if (!coreController.isManOnVertex(nextVertex.getCoordinates())) {
+                    if (!coreController.isManRangeOnVertex(nextVertex.getCoordinates())) {
                         queue.add(nextVertex);
                     }
                 }
@@ -235,6 +235,10 @@ public class GraphHelper {
     }
 
     public ArrayList<Vertex> getNeighborBigVertices(Vertex vertex) {
+        return getNeighborBigVertices(vertex, null);
+    }
+    public ArrayList<Vertex> getNeighborBigVertices(Vertex vertex, Vertex directionVertex) {
+
         ArrayList<Vertex> result = new ArrayList<>();
 
         Set<Vertex> set = new HashSet<>();
@@ -243,8 +247,13 @@ public class GraphHelper {
 
 
         set.add(vertex);
-        queue.add(vertex);
 
+        if (directionVertex != null) {
+            queue.add(directionVertex);
+            set.add(directionVertex);
+        } else {
+            queue.add(vertex);
+        }
 
         while (!queue.isEmpty()) {
             current = queue.poll();

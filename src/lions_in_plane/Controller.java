@@ -363,14 +363,11 @@ class Controller {
                 tickAccount += 1;
                 if (tickAccount >= ticksPerStep) {
                     tickAccount -= ticksPerStep;
-
                         boolean gameOver = coreController.simulateStep();
                         if (gameOver) {
                             gameOverAlert.show();
                             activePlaying.set(false);
                         }
-
-                }
             }
         };
     }

@@ -16,6 +16,7 @@ public class VisualCoreController extends VisualizedCoreController {
     private Map<lions_on_graph.core.graph.Vertex, Vertex> mapVertices = new HashMap<>();
     private Map<lions_on_graph.core.entities.Entity, Entity> mapEntities = new HashMap<>();
     private Map<lions_on_graph.core.graph.Edge, Edge> mapEdges = new HashMap<>();
+    private Map<lions_on_graph.core.entities.Man, ArrayList<Range>> mapManRange = new HashMap<>();
     private Map<lions_on_graph.core.entities.Lion, ArrayList<Range>> mapLionRange = new HashMap<>();
     private Map<lions_on_graph.core.entities.Entity, Vertex> mapStepPreviews = new HashMap<>();
     private CoreController coreController;
@@ -39,6 +40,17 @@ public class VisualCoreController extends VisualizedCoreController {
             entry.getValue().delete();
         }
         mapEdges.clear();
+
+        for (Map.Entry<lions_on_graph.core.entities.Man, ArrayList<Range>> entry : mapManRange.entrySet()) {
+            ArrayList<Range> shapeList = entry.getValue();
+            if (shapeList == null) {
+                shapeList = new ArrayList<>();
+            }
+            for (Range shape : shapeList) {
+                shape.delete();
+            }
+        }
+        mapLionRange.clear();
 
         for (Map.Entry<lions_on_graph.core.entities.Lion, ArrayList<Range>> entry : mapLionRange.entrySet()) {
             ArrayList<Range> shapeList = entry.getValue();
@@ -141,6 +153,7 @@ public class VisualCoreController extends VisualizedCoreController {
     public void createMan(lions_on_graph.core.entities.Man man) {
         Man shape = new Man(coreController, man.getCoordinates());
         mapEntities.put(man, shape);
+        updateManRange(man);
     }
 
     public void createLion(lions_on_graph.core.entities.Lion lion) {
@@ -152,6 +165,7 @@ public class VisualCoreController extends VisualizedCoreController {
     public void relocateMan(lions_on_graph.core.entities.Man man) {
         Entity shape = mapEntities.get(man);
         shape.relocate(man.getCoordinates());
+        updateManRange(man);
     }
 
     public void relocateLion(lions_on_graph.core.entities.Lion lion) {
@@ -170,6 +184,34 @@ public class VisualCoreController extends VisualizedCoreController {
         shape.delete();
     }
 
+    public void updateManRange(lions_on_graph.core.entities.Man man) {
+        ArrayList<Range> rangeVertices = mapManRange.get(man);
+        if (rangeVertices == null) {
+            rangeVertices = new ArrayList<>();
+        }
+
+        while (man.getRangeVertices().size() > rangeVertices.size()) {
+            rangeVertices.add(new Range(coreController, new Point(0, 0), true));
+        }
+        while (man.getRangeVertices().size() < rangeVertices.size()) {
+            rangeVertices.get(0).delete();
+            rangeVertices.remove(0);
+        }
+
+        //update
+        for (int i = 0; i < rangeVertices.size(); i++) {
+            rangeVertices.get(i).relocate(man.getRangeVertices().get(i).getCoordinates());
+        }
+
+        mapManRange.put(man, rangeVertices);
+    }
+
+    public void updateAllManRanges(ArrayList<lions_on_graph.core.entities.Man> men) {
+        for (lions_on_graph.core.entities.Man man : men) {
+            updateManRange(man);
+        }
+    }
+
     public void updateLionRange(lions_on_graph.core.entities.Lion lion) {
         ArrayList<Range> rangeVertices = mapLionRange.get(lion);
         if (rangeVertices == null) {
@@ -177,7 +219,7 @@ public class VisualCoreController extends VisualizedCoreController {
         }
 
         while (lion.getRangeVertices().size() > rangeVertices.size()) {
-            rangeVertices.add(new Range(coreController, new Point(0, 0)));
+            rangeVertices.add(new Range(coreController, new Point(0, 0), false));
         }
         while (lion.getRangeVertices().size() < rangeVertices.size()) {
             rangeVertices.get(0).delete();

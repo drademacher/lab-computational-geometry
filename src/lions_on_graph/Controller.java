@@ -163,7 +163,7 @@ class Controller {
 
         MenuItem setEdgeWeight = new MenuItem("Set Edge Weight");
         MenuItem setManMinDistance = new MenuItem("Set Man Minimum Distance");
-        MenuItem setManFixDistance = new MenuItem("Set Man Fixed Distance");
+        MenuItem setManRange = new MenuItem("Set Man Range");
         MenuItem setLionRange = new MenuItem("Set Lion Range");
 
         Menu manMenu = new Menu("Set Man Strategy");
@@ -193,7 +193,7 @@ class Controller {
         lionMenu.getItems().addAll(setLionsStrategyWait, setLionsStrategyRandom, setLionsStrategyGreedy, setLionsStrategyClever, setLionsStrategyManual);
 
 
-        setParameterButton.getItems().addAll(setEdgeWeight, new SeparatorMenuItem(), manMenu, lionMenu, new SeparatorMenuItem(), setManMinDistance, setManFixDistance, setLionRange);
+        setParameterButton.getItems().addAll(setEdgeWeight, new SeparatorMenuItem(), manMenu, lionMenu, new SeparatorMenuItem(), setManMinDistance, setManRange, setLionRange);
 
         setEdgeWeight.setOnAction(event -> {
             int currentValue = this.coreController.getDefaultEdgeWeight();
@@ -242,19 +242,19 @@ class Controller {
         });
 
 
-        setManFixDistance.setOnAction(event -> {
-            int currentValue = this.coreController.getExactManDistance();
+        setManRange.setOnAction(event -> {
+            int currentValue = this.coreController.getDefaultManRange();
 
             TextInputDialog dialog = new TextInputDialog("" + currentValue);
-            dialog.setTitle("Set Minimum Distance");
-            dialog.setHeaderText("Enter the minimum distance men must be afar from each other.");
+            dialog.setTitle("Set Man Range");
+            dialog.setHeaderText("Enter the range for all men.");
 
             Optional<String> result = dialog.showAndWait();
 
             if (result.isPresent()) {
                 try {
                     int inputValue = Integer.parseInt(result.get());
-                    this.coreController.setExactManDistance(inputValue);
+                    this.coreController.setAllManRange(inputValue);
                 } catch (Exception ignore) {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Error");

@@ -9,8 +9,6 @@ public class TickTimer {
     private final double FPS = 60.0;
     private ArrayList<Ticker> tickers;
     private ArrayList<Ticker> softDeleteTickers;
-    private AnimationTimer animationTimer;
-    private int passedTicks = 0;
     private double lastNanoTime = System.nanoTime();
     private double time = 0;
 
@@ -19,13 +17,13 @@ public class TickTimer {
         tickers = new ArrayList<>();
         softDeleteTickers = new ArrayList<>();
 
-        animationTimer = new AnimationTimer() {
+        AnimationTimer animationTimer = new AnimationTimer() {
             @Override
             public void handle(long currentNanoTime) {
                 // calculate time since last update.
                 time += currentNanoTime - lastNanoTime;
                 lastNanoTime = currentNanoTime;
-                passedTicks = (int) Math.floor(time * FPS / 1000000000.0);
+                int passedTicks = (int) Math.floor(time * FPS / 1000000000.0);
                 time -= passedTicks / FPS;
                 if (passedTicks >= 1) {
                     for (Ticker remove : softDeleteTickers) {

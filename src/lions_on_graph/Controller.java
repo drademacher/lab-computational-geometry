@@ -1,5 +1,6 @@
 package lions_on_graph;
 
+import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Insets;
@@ -12,15 +13,19 @@ import javafx.stage.Stage;
 import lions_on_graph.core.CoreController;
 import lions_on_graph.visualization.*;
 import util.ContextMenuHolder;
-import util.TickTimer;
 import util.ZoomScrollPane;
 
 import java.io.File;
 import java.util.Optional;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import static lions_on_graph.visualization.Constants.SINGLE_STEP_DURATION;
 
 
 class Controller {
-    private TickTimer.Ticker animation;
+    private Timer playerTimer;
+    private TimerTask playerTask;
 
 
     private ZoomScrollPane zoomScrollPane;
@@ -54,10 +59,10 @@ class Controller {
         activePlaying = new SimpleBooleanProperty(false);
         editMode.addListener((observable, oldValue, newValue) -> this.coreController.setEditMode(newValue));
 
+        initAnimationTimer();
         initEditButtons();
         initPlayButtons();
         initModeButton();
-        initAnimationTimer();
         initContextMenu();
         initZoomScrollPane();
         initGameOverAlert();
@@ -327,9 +332,23 @@ class Controller {
 
         activePlaying.addListener((observable, oldValue, newValue) -> {
             if (newValue) {
-                TickTimer.getInstance().addTicker(animation);
+                playerTimer = new Timer("Computational Geometry Lab");
+                playerTimer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        Platform.runLater(() -> {
+                            if (coreController.getMenWithManualInput().isEmpty() && coreController.getLionsWithManualInput().isEmpty()) {
+                                boolean gameOver = coreController.simulateStep();
+                                if (gameOver) {
+                                    gameOverAlert.show();
+                                    activePlaying.set(false);
+                                }
+                            }
+                        });
+                    }
+                }, 0, SINGLE_STEP_DURATION);
             } else {
-                TickTimer.getInstance().removeTicker(animation);
+                playerTimer.cancel();
             }
 
         });
@@ -359,25 +378,10 @@ class Controller {
      * It works on a fixed amount of FPS (60 is the standard).
      */
     private void initAnimationTimer() {
-        animation = new TickTimer.Ticker() {
-            int tickAccount = 0;
-            int ticksPerStep = 20;
+//        playerTask = ;
 
-            @Override
-            public void action() {
-                tickAccount += 1;
-                if (tickAccount >= ticksPerStep) {
-                    tickAccount -= ticksPerStep;
-                    if (coreController.getMenWithManualInput().isEmpty() && coreController.getLionsWithManualInput().isEmpty()) {
-                        boolean gameOver = coreController.simulateStep();
-                        if (gameOver) {
-                            gameOverAlert.show();
-                            activePlaying.set(false);
-                        }
-                    }
-                }
-            }
-        };
+
+
 
         // TickTimer.getInstance().addTicker(animation);
     }

@@ -15,6 +15,8 @@ import util.ZoomScrollPane;
 
 import java.util.Optional;
 
+import static lions_on_graph.visualization.Constants.ANIMATION_DURATION;
+
 /**
  * Created by Jens on 25.06.2017.
  */
@@ -145,7 +147,7 @@ public class Man implements Entity {
         path.getElements().add(new MoveTo(this.coordinates.getX(), this.coordinates.getY()));
         path.getElements().add(new LineTo(coordinates.getX(), coordinates.getY()));
         PathTransition pathTransition = new PathTransition();
-        pathTransition.setDuration(Duration.millis(250));
+        pathTransition.setDuration(Duration.millis(ANIMATION_DURATION));
         pathTransition.setPath(path);
         pathTransition.setNode(shape);
         pathTransition.play();

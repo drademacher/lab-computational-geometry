@@ -8,6 +8,7 @@ public class TickTimer {
     private static TickTimer instance;
     private final double FPS = 60.0;
     private ArrayList<Ticker> tickers;
+    private ArrayList<Ticker> softDeleteTickers;
     private AnimationTimer animationTimer;
     private int passedTicks = 0;
     private double lastNanoTime = System.nanoTime();
@@ -16,6 +17,7 @@ public class TickTimer {
 
     private TickTimer() {
         tickers = new ArrayList<>();
+        softDeleteTickers = new ArrayList<>();
 
         animationTimer = new AnimationTimer() {
             @Override
@@ -26,6 +28,11 @@ public class TickTimer {
                 passedTicks = (int) Math.floor(time * FPS / 1000000000.0);
                 time -= passedTicks / FPS;
                 if (passedTicks >= 1) {
+                    for (Ticker remove : softDeleteTickers) {
+                        tickers.removeIf(ticker1 -> ticker1.equals(remove));
+                    }
+                    softDeleteTickers.clear();
+
                     for (Ticker ticker : tickers) {
                         ticker.action();
                     }
@@ -48,7 +55,7 @@ public class TickTimer {
     }
 
     public void removeTicker(Ticker ticker) {
-        tickers.removeIf(ticker1 -> ticker1.equals(ticker));
+        softDeleteTickers.add(ticker);
     }
 
     public interface Ticker {

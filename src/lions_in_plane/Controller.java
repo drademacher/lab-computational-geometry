@@ -308,10 +308,10 @@ class Controller {
 
         stepAnimationButton.setOnAction(event -> {
             activePlaying.set(false);
-            boolean gameOver = coreController.simulateStep();
-            if (gameOver) {
-                gameOverAlert.show();
-            }
+            /*boolean gameOver = */coreController.simulateStep();
+//            if (gameOver) {
+//                gameOverAlert.show();
+//            }
         });
         playAnimationButton.setOnAction(event -> activePlaying.set(true));
         stopAnimationButton.setOnAction(event -> activePlaying.set(false));
@@ -323,11 +323,11 @@ class Controller {
                     @Override
                     public void run() {
                         Platform.runLater(() -> {
-                            boolean gameOver = coreController.simulateStep();
-                            if (gameOver) {
-                                gameOverAlert.show();
-                                activePlaying.set(false);
-                            }
+                            /*boolean gameOver = */coreController.simulateStep();
+//                            if (gameOver) {
+//                                gameOverAlert.show();
+//                                activePlaying.set(false);
+//                            }
                         });
                     }
                 }, 0, SINGLE_STEP_DURATION);

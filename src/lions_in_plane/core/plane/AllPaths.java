@@ -12,11 +12,20 @@ public class AllPaths {
     public final ArrayList<Point> manPath;
     public final ArrayList<ArrayList<Point>> lionPaths;
     public final int pathSize;
+    public final boolean finished;
 
-    public AllPaths(ArrayList<Point> manPath, ArrayList<ArrayList<Point>> lionPaths) {
+    public AllPaths(){
+        this.manPath = new ArrayList<>();
+        this.lionPaths = new ArrayList<>();
+        this.pathSize = 0;
+        this.finished = true;
+    }
+
+    public AllPaths(ArrayList<Point> manPath, ArrayList<ArrayList<Point>> lionPaths, boolean finished) {
         this.manPath = manPath;
         this.lionPaths = lionPaths;
         this.pathSize = manPath.size();
+        this.finished = finished;
 
         //just check the sizes
         for (ArrayList<Point> lionPath : this.lionPaths) {

@@ -27,6 +27,9 @@ public class CoreController {
     private double defaultLionsRange = 5;
     private double maxLionSpeed = defaultLionsSpeed;
 
+    private AllPaths allPaths = new AllPaths();
+    private int maxInductionsStep = 0;
+
     protected Plane plane = new Plane();
 
     public void setEmptyGraph() {
@@ -210,9 +213,74 @@ public class CoreController {
         }
     }
 
-    public boolean simulateStep() {
-        // TODO: IMPLEMENT THIS
-        return false;
+    public AllPaths simulateStep() {
+
+        if(allPaths.finished){
+            maxInductionsStep = 1;
+        }else{
+            maxInductionsStep++;
+        }
+
+        ArrayList<Point> resultPath = new ArrayList<>();
+        ArrayList<Point> inductionPath;
+        Map<Integer, ArrayList<Point>> lionPaths = new HashMap<>();
+
+        for (int k = 0; k < Math.min(this.plane.getLionsSize(), maxInductionsStep); k++) {
+
+            // calculate the ch from the active lions
+            ArrayList<Lion> allLions = this.plane.getLions();
+            Point[] lionPoints = new Point[k+1];
+            for (int i = 0; i <= k; i++) {
+                lionPoints[i] = allLions.get(i).getPosition();
+            }
+            ConvexHull allLionsHull = new ConvexHull(lionPoints);
+
+            inductionPath = resultPath;
+            resultPath = new ArrayList<>();
+            lionPaths.clear();
+            this.plane.resetManPath();
+
+            int stepsToGo = STEPS_TO_GO_AFTER_ESCAPE;
+            while(stepsToGo > 0){
+
+                resultPath = this.plane.calcManPath(k, inductionPath);
+
+                for (int j = 0; j <= k; j++) {
+                    lionPaths.put(j, this.plane.calcLionPath(j, lionPaths.get(j), resultPath));
+//                    this.plane.setCalculatedLionPath(lionPaths.get(j), j);
+                }
+
+
+                //check if the lion escaped the ch
+                if(resultPath.size() > 10 && !allLionsHull.insideHull(resultPath.get(resultPath.size()-1))){
+                    stepsToGo--;
+
+                    //we escaped the origin ch and did the extra steps (stepsToGo)
+                    if(stepsToGo == 0){
+
+                        //calculate a new ch from the current positions of all active lions
+                        lionPoints = new Point[k+1];
+                        for (int i = 0; i <= k; i++) {
+                            lionPoints[i] = lionPaths.get(i).get(lionPaths.get(i).size() -1);
+                        }
+                        allLionsHull = new ConvexHull(lionPoints);
+
+                        //check if we escaped this new ch, if not -> do more steps (reset the stepsToGo counter)
+                        if(allLionsHull.insideHull(resultPath.get(resultPath.size()-1))){
+                            stepsToGo = STEPS_TO_GO_AFTER_ESCAPE;
+                        }
+                    }
+                }
+            }
+        }
+
+        ArrayList<ArrayList<Point>> lionPathList = new ArrayList<>();
+        lionPaths.forEach((k, v) -> {
+            lionPathList.add(v);
+        });
+        allPaths = new AllPaths(resultPath, lionPathList, (maxInductionsStep == plane.getLionsSize()));
+
+        return allPaths;
     }
 
     public boolean isEditMode() {
@@ -287,69 +355,5 @@ public class CoreController {
         for (Lion lion : plane.getLions()) {
             plane.setLionStrategy(lion.getPosition(), strategyEnum);
         }
-    }
-
-    protected AllPaths calcAllPaths(int maxInductionsStep) {
-
-        ArrayList<Point> resultPath = new ArrayList<>();
-        ArrayList<Point> inductionPath;
-        Map<Integer, ArrayList<Point>> lionPaths = new HashMap<>();
-
-        for (int k = 0; k < Math.min(this.plane.getLionsSize(), maxInductionsStep); k++) {
-
-            // calculate the ch from the active lions
-            ArrayList<Lion> allLions = this.plane.getLions();
-            Point[] lionPoints = new Point[k+1];
-            for (int i = 0; i <= k; i++) {
-                lionPoints[i] = allLions.get(i).getPosition();
-            }
-            ConvexHull allLionsHull = new ConvexHull(lionPoints);
-
-            inductionPath = resultPath;
-            resultPath = new ArrayList<>();
-            lionPaths.clear();
-            this.plane.resetManPath();
-
-            int stepsToGo = STEPS_TO_GO_AFTER_ESCAPE;
-            while(stepsToGo > 0){
-
-                resultPath = this.plane.calcManPath(k, inductionPath);
-
-                for (int j = 0; j <= k; j++) {
-                    lionPaths.put(j, this.plane.calcLionPath(j, lionPaths.get(j), resultPath));
-//                    this.plane.setCalculatedLionPath(lionPaths.get(j), j);
-                }
-
-
-                //check if the lion escaped the ch
-                if(resultPath.size() > 10 && !allLionsHull.insideHull(resultPath.get(resultPath.size()-1))){
-                    stepsToGo--;
-
-                    //we escaped the origin ch and did the extra steps (stepsToGo)
-                    if(stepsToGo == 0){
-
-                        //calculate a new ch from the current positions of all active lions
-                        lionPoints = new Point[k+1];
-                        for (int i = 0; i <= k; i++) {
-                            lionPoints[i] = lionPaths.get(i).get(lionPaths.get(i).size() -1);
-                        }
-                        allLionsHull = new ConvexHull(lionPoints);
-
-                        //check if we escaped this new ch, if not -> do more steps (reset the stepsToGo counter)
-                        if(allLionsHull.insideHull(resultPath.get(resultPath.size()-1))){
-                            stepsToGo = STEPS_TO_GO_AFTER_ESCAPE;
-                        }
-                    }
-                }
-            }
-        }
-
-        ArrayList<ArrayList<Point>> lionPathList = new ArrayList<>();
-        lionPaths.forEach((k, v) -> {
-            lionPathList.add(v);
-        });
-        AllPaths allPaths = new AllPaths(resultPath, lionPathList);
-
-        return allPaths;
     }
 }

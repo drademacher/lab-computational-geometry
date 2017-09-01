@@ -37,7 +37,7 @@ public class VisualizedCoreController extends CoreController {
         super.setEditMode(editMode);
 
         if (!editMode) {
-            calcAllPaths(1);
+//            calcAllPaths(1);
             for (Lion lion : lions) {
                 new InvisiblePoints(lion.getPosition());
                 lion.getShape().setVisible(false);
@@ -78,27 +78,27 @@ public class VisualizedCoreController extends CoreController {
     @Override
     public void setDefaultGraph1() {
         super.setDefaultGraph1();
-        calcAllPaths(1);
+//        calcAllPaths(1);
     }
 
     @Override
     public void setDefaultGraph2() {
         super.setDefaultGraph2();
-        calcAllPaths(1);
+//        calcAllPaths(1);
 
     }
 
     @Override
     public void setDefaultGraph3() {
         super.setDefaultGraph3();
-        calcAllPaths(1);
+//        calcAllPaths(1);
     }
 
     public void setRandomConfiguration() {
         super.setRandomConfiguration();
         lions.forEach(lion -> System.out.print(lion.getPosition() + ", "));
         System.out.println();
-        calcAllPaths(1);
+//        calcAllPaths(1);
     }
 
 
@@ -176,11 +176,12 @@ public class VisualizedCoreController extends CoreController {
 
 
     @Override
-    public boolean simulateStep() {
-        boolean res = super.simulateStep();
+    public AllPaths simulateStep() {
+         allPaths = super.simulateStep();
 
-        if (pathCount >= lions.size()) {
-            return false;
+        if (allPaths.finished) {
+            reset();
+            return allPaths;
         }
 
         // draw path stuff
@@ -246,37 +247,13 @@ public class VisualizedCoreController extends CoreController {
 
 
         pathCount++;
-        allPaths = calcAllPaths(pathCount + 1);
+//        allPaths = simulateStep();
 
         SequentialTransition fullTransition = new SequentialTransition();
         fullTransition.getChildren().addAll(fadeIn, allPathTransition);
         fullTransition.play();
 
-        return res;
-    }
-
-
-    @Override
-    protected AllPaths calcAllPaths(int maxInductionsStep) {
-        //TODO allPathsObject vs allPaths
-        allPaths = super.calcAllPaths(maxInductionsStep);
-
-//        Point[] newHull = new Point[allPaths.pathSize];
-//
-//        //draw lion paths (position >= 1 in list)
-//        if (allPaths.pathSize > 1) {
-//            for (int i = 1; i < allPaths.pathSize; i++) {
-//                newHull[i - 1] = allPaths.lionPaths.get(i).get(allPaths.lionPaths.get(i).size() - 1);
-//            }
-//        }
-//
-//        // update();
-//
-//        // draw man path (position == = in list)
-//        if (allPaths.pathSize > 0) {
-//            // new PolygonalPath(allPaths.get(0), Color.BLUE);
-//        }
-
         return allPaths;
     }
+
 }

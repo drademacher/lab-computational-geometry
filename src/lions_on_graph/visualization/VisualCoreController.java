@@ -11,7 +11,7 @@ import java.util.Map;
 
 import static lions_on_graph.visualization.Constants.*;
 
-public class VisualCoreController extends VisualizedCoreController {
+public class VisualCoreController extends CoreController {
 
     private Map<lions_on_graph.core.graph.Vertex, Vertex> mapVertices = new HashMap<>();
     private Map<lions_on_graph.core.entities.Entity, Entity> mapEntities = new HashMap<>();
@@ -19,10 +19,11 @@ public class VisualCoreController extends VisualizedCoreController {
     private Map<lions_on_graph.core.entities.Man, ArrayList<Range>> mapManRange = new HashMap<>();
     private Map<lions_on_graph.core.entities.Lion, ArrayList<Range>> mapLionRange = new HashMap<>();
     private Map<lions_on_graph.core.entities.Entity, Vertex> mapStepPreviews = new HashMap<>();
-    private CoreController coreController;
+//    private CoreController coreController;
 
-    public VisualCoreController(CoreController coreController) {
-        this.coreController = coreController;
+    public VisualCoreController(/*CoreController coreController*/) {
+        super();
+//        this.coreController = coreController;
     }
 
     public void removeAllShapes() {
@@ -78,7 +79,10 @@ public class VisualCoreController extends VisualizedCoreController {
      * ****************************/
 
 
-    public void relocateVertex(lions_on_graph.core.graph.BigVertex vertex, Point newCoordinate) {
+    public void relocateVertex(Point vertexCoordinates, Point newCoordinate) {
+
+        super.relocateVertex(vertexCoordinates, newCoordinate);
+
         Vertex shape = mapVertices.get(vertex);
         shape.relocate(newCoordinate);
 
@@ -100,11 +104,12 @@ public class VisualCoreController extends VisualizedCoreController {
     }
 
     public void createVertex(Point coordinate) {
-        BigVertex shape = new BigVertex(coreController, coordinate);
-        mapVertices.put(coreController.getBigVertexByCoordinate(coordinate), shape);
+        super.createVertex(coordinate);
+        BigVertex shape = new BigVertex(this, coordinate);
+        mapVertices.put(getBigVertexByCoordinate(coordinate), shape);
     }
 
-    public void deleteVertex(lions_on_graph.core.graph.BigVertex vertex) {
+    public void deleteVertex(Point vertexCoordinates) {
         Vertex shape = mapVertices.get(vertex);
         shape.delete();
         mapVertices.remove(vertex);
@@ -120,19 +125,38 @@ public class VisualCoreController extends VisualizedCoreController {
                 smallVertexShape.delete();
             }
         }
+
+        super.deleteVertex(vertexCoordinates);
+
+
+        this.visualCoreController.updateAllLionRanges(lions);
+        this.visualCoreController.updateAllManRanges(men);
     }
 
-    public void createEdge(lions_on_graph.core.graph.Edge edge) {
-        Edge shape = new Edge(coreController, edge.getStartCoordinates(), edge.getEndCoordinates());
+    public void createEdge(Point vertex1Coordinates, Point vertex2Coordinates) {
+        createEdge(vertex1Coordinates, vertex2Coordinates, getDefaultEdgeWeight());
+    }
+
+    public void createEdge(Point vertex1Coordinates, Point vertex2Coordinates, int weight) {
+
+        super.createEdge(vertex1Coordinates, vertex2Coordinates, weight);
+
+        Edge shape = new Edge(this, edge.getStartCoordinates(), edge.getEndCoordinates());
         mapEdges.put(edge, shape);
 
         for (lions_on_graph.core.graph.SmallVertex smallVertex : edge.getEdgeVertices()) {
-            SmallVertex smallVertexShape = new SmallVertex(coreController, smallVertex.getCoordinates());
+            SmallVertex smallVertexShape = new SmallVertex(this, smallVertex.getCoordinates());
             mapVertices.put(smallVertex, smallVertexShape);
         }
+
+        this.visualCoreController.updateAllLionRanges(lions);
+        this.visualCoreController.updateAllManRanges(men);
     }
 
-    public void removeEdge(lions_on_graph.core.graph.Edge edge) {
+    public void removeEdge(Point vertex1Coordinates, Point vertex2Coordinates) {
+
+        super.removeEdge(vertex1Coordinates, vertex2Coordinates);
+
         Edge shape = mapEdges.get(edge);
         shape.delete();
         mapEdges.remove(edge);
@@ -141,8 +165,21 @@ public class VisualCoreController extends VisualizedCoreController {
             mapVertices.remove(smallVertex);
             smalLVertexShape.delete();
         }
+
+        this.visualCoreController.updateAllLionRanges(lions);
+        this.visualCoreController.updateAllManRanges(men);
     }
 
+    @Override
+    public void changeEdgeWeight(Point vertex1Coordinates, Point vertex2Coordinates, int weight) {
+
+        removeEdge(vertex1Coordinates, vertex2Coordinates);
+        createEdge(vertex1Coordinates, vertex2Coordinates, weight);
+//        super.changeEdgeWeight(vertex1Coordinates, vertex2Coordinates, weight);
+
+        this.visualCoreController.updateAllLionRanges(lions);
+        this.visualCoreController.updateAllManRanges(men);
+    }
 
     /* ****************************
      *
@@ -150,38 +187,100 @@ public class VisualCoreController extends VisualizedCoreController {
      *
      * ****************************/
 
-    public void createMan(lions_on_graph.core.entities.Man man) {
+    public void setMan(Point vertexCoorinate) {
+
+        super.setMan(vertexCoorinate);
+
         Man shape = new Man(coreController, man.getCoordinates());
         mapEntities.put(man, shape);
         updateManRange(man);
+
+        this.visualCoreController.updateStepPreviewsAndChoicePoints();
     }
 
-    public void createLion(lions_on_graph.core.entities.Lion lion) {
+    public void setLion(Point vertexCoorinate) {
+
+        super.setLion(vertexCoorinate);
+
         Lion shape = new Lion(coreController, lion.getCoordinates());
         mapEntities.put(lion, shape);
         updateLionRange(lion);
+
+        this.visualCoreController.updateStepPreviewsAndChoicePoints();
     }
 
-    public void relocateMan(lions_on_graph.core.entities.Man man) {
+    public void relocateMan(Point manCoordinate, Point vertexCoordinate) {
+
+        super.relocateMan(manCoordinate, vertexCoordinate);
+
         Entity shape = mapEntities.get(man);
         shape.relocate(man.getCoordinates());
         updateManRange(man);
+
+
+        this.visualCoreController.updateStepPreviewsAndChoicePoints();
     }
 
-    public void relocateLion(lions_on_graph.core.entities.Lion lion) {
+    public void relocateLion(Point lionCoordinate, Point vertexCoordinate) {
+
+        super.relocateLion(lionCoordinate, vertexCoordinate);
+
         Entity shape = mapEntities.get(lion);
         shape.relocate(lion.getCoordinates());
         updateLionRange(lion);
+
+        this.visualCoreController.updateStepPreviewsAndChoicePoints();
     }
 
-    public void removeMan(lions_on_graph.core.entities.Man man) {
+    public void removeMan(Point manCoordinate) {
         Entity shape = mapEntities.get(man);
         shape.delete();
+
+        super.removeMan(manCoordinate);
+        this.visualCoreController.updateStepPreviewsAndChoicePoints();
     }
 
-    public void removeLion(lions_on_graph.core.entities.Lion lion) {
+    public void removeLion(Point lionCoordinate) {
         Entity shape = mapEntities.get(lion);
         shape.delete();
+
+        super.removeLion(lionCoordinate);
+        this.visualCoreController.updateStepPreviewsAndChoicePoints();
+    }
+
+    @Override
+    public void setManStrategy(Point manCoordinate, ManStrategy strategy) {
+        super.setManStrategy(manCoordinate, strategy);
+
+        visualCoreController.updateStepPreviewsAndChoicePoints();
+    }
+
+    @Override
+    public void setLionStrategy(Point lionCoordinate, LionStrategy strategy) {
+        super.setLionStrategy(lionCoordinate, strategy);
+
+        visualCoreController.updateStepPreviewsAndChoicePoints();
+    }
+
+    @Override
+    public void setAllManStrategy(ManStrategy strategy) {
+        super.setAllManStrategy(strategy);
+
+        visualCoreController.updateStepPreviewsAndChoicePoints();
+    }
+
+    @Override
+    public void setAllLionStrategy(LionStrategy strategy) {
+        super.setAllLionStrategy(strategy);
+
+        visualCoreController.updateStepPreviewsAndChoicePoints();
+    }
+
+    @Override
+    public void setManRange(Point manCoordinate, int range) {
+        super.setManRange(manCoordinate, range);
+
+        visualCoreController.updateManRange(man);
     }
 
     public void updateManRange(lions_on_graph.core.entities.Man man) {
@@ -210,6 +309,13 @@ public class VisualCoreController extends VisualizedCoreController {
         for (lions_on_graph.core.entities.Man man : men) {
             updateManRange(man);
         }
+    }
+
+    @Override
+    public void setLionRange(Point lionCoordinate, int range) {
+        super.setLionRange(lionCoordinate, range);
+
+        visualCoreController.updateLionRange(lion);
     }
 
     public void updateLionRange(lions_on_graph.core.entities.Lion lion) {
@@ -280,4 +386,18 @@ public class VisualCoreController extends VisualizedCoreController {
         }
     }
 
+    @Override
+    public boolean simulateStep() {
+        boolean lionsHaveWon = super.simulateStep();
+
+        for (Man man : this.getMen()) {
+            visualCoreController.relocateMan(man);
+        }
+        for (Lion lion : this.getLions()) {
+            visualCoreController.relocateLion(lion);
+        }
+        this.visualCoreController.updateStepPreviewsAndChoicePoints();
+
+        return lionsHaveWon;
+    }
 }

@@ -20,16 +20,16 @@ public class CoreController {
     private ArrayList<Lion> lions = new ArrayList<>();
     private ArrayList<Man> men = new ArrayList<>();
     private GraphController graph;
-    private VisualCoreController visualCoreController;
+//    private VisualCoreController visualCoreController;
 
     public CoreController() {
         this.graph = new GraphController();
-        this.visualCoreController = new VisualCoreController(this);
+//        this.visualCoreController = new VisualCoreController(this);
     }
 
-    public VisualCoreController getVisualCoreController() {
-        return visualCoreController;
-    }
+//    public VisualCoreController getVisualCoreController() {
+//        return visualCoreController;
+//    }
 
     public void createVertex(Point coordinate) {
         if (coordinate == null) {
@@ -37,7 +37,7 @@ public class CoreController {
         }
         this.graph.createVertex(coordinate);
 
-        this.visualCoreController.createVertex(coordinate);
+//        this.visualCoreController.createVertex(coordinate);
     }
 
     public void relocateVertex(Point vertexCoordinates, Point newCoordinate) {
@@ -49,9 +49,9 @@ public class CoreController {
             return;
         }
 
-        vertex = this.graph.relocateVertex(vertex, newCoordinate);
+        this.graph.relocateVertex(vertex, newCoordinate);
 
-        this.visualCoreController.relocateVertex(vertex, newCoordinate);
+//        this.visualCoreController.relocateVertex(vertex, newCoordinate);
     }
 
     /* ****************************
@@ -85,18 +85,16 @@ public class CoreController {
         removeAllLions(lionsToDelete);
 
         //delete Vertex
-        this.visualCoreController.deleteVertex(vertex);
         this.graph.deleteVertex(vertex);
-        this.visualCoreController.updateAllLionRanges(lions);
-        this.visualCoreController.updateAllManRanges(men);
 
     }
 
     public void createEdge(Point vertex1Coordinates, Point vertex2Coordinates) {
-        createEdge(vertex1Coordinates, vertex2Coordinates, GraphController.getDefaultEdgeWeight());
+        createEdge(vertex1Coordinates, vertex2Coordinates, getDefaultEdgeWeight());
     }
 
-    private void createEdge(Point vertex1Coordinates, Point vertex2Coordinates, int weight) {
+    protected void createEdge(Point vertex1Coordinates, Point vertex2Coordinates, int weight) {
+
         if (vertex1Coordinates == null || vertex2Coordinates == null || weight < 0) {
             return;
         }
@@ -107,11 +105,7 @@ public class CoreController {
         }
 
 
-        Edge edge = this.graph.createEdge(vertex1, vertex2, weight);
-
-        this.visualCoreController.createEdge(edge);
-        this.visualCoreController.updateAllLionRanges(lions);
-        this.visualCoreController.updateAllManRanges(men);
+        this.graph.createEdge(vertex1, vertex2, weight);
     }
 
     public void removeEdge(Point vertex1Coordinates, Point vertex2Coordinates) {
@@ -133,45 +127,42 @@ public class CoreController {
         ArrayList<Lion> lionsToDelete = getLionsOnEdge(edge);
         removeAllLions(lionsToDelete);
 
-        //remove edge
-        this.visualCoreController.removeEdge(edge);
-        this.visualCoreController.updateAllLionRanges(lions);
-        this.visualCoreController.updateAllManRanges(men);
     }
 
     public void changeEdgeWeight(Point vertex1Coordinates, Point vertex2Coordinates, int weight) {
-
-        if (vertex1Coordinates == null || vertex2Coordinates == null || weight < 1) {
-            return;
-        }
-        BigVertex vertex1 = getBigVertexByCoordinate(vertex1Coordinates);
-        BigVertex vertex2 = getBigVertexByCoordinate(vertex2Coordinates);
-        if (vertex1 == null || vertex2 == null) {
-            return;
-        }
-
-        Edge edge = getEdgeByVertices(vertex1, vertex2);
-
-        if (edge.getEdgeWeight() > weight) {
-            ArrayList<Man> menToDelete = getMenOnEdge(edge);
-            removeAllMen(menToDelete);
-
-            ArrayList<Lion> lionsToDelete = getLionsOnEdge(edge);
-            removeAllLions(lionsToDelete);
-        }
-
-        this.visualCoreController.removeEdge(edge);
-
-        this.graph.changeEdgeWeight(vertex1, vertex2, weight);
-
-        this.visualCoreController.createEdge(edge);
-        this.visualCoreController.updateAllLionRanges(lions);
-        this.visualCoreController.updateAllManRanges(men);
-        relocateAllLions();
-        relocateAllMen();
+//
+//
+//
+//        if (vertex1Coordinates == null || vertex2Coordinates == null || weight < 1) {
+//            return;
+//        }
+//        BigVertex vertex1 = getBigVertexByCoordinate(vertex1Coordinates);
+//        BigVertex vertex2 = getBigVertexByCoordinate(vertex2Coordinates);
+//        if (vertex1 == null || vertex2 == null) {
+//            return;
+//        }
+//
+//        Edge edge = getEdgeByVertices(vertex1, vertex2);
+//
+//        if (edge.getEdgeWeight() > weight) {
+//            ArrayList<Man> menToDelete = getMenOnEdge(edge);
+//            removeAllMen(menToDelete);
+//
+//            ArrayList<Lion> lionsToDelete = getLionsOnEdge(edge);
+//            removeAllLions(lionsToDelete);
+//        }
+//
+//        this.visualCoreController.removeEdge(edge);
+//
+//        this.graph.changeEdgeWeight(vertex1, vertex2, weight);
+//
+//        this.visualCoreController.createEdge(edge);
+//
+//        relocateAllLions();
+//        relocateAllMen();
     }
 
-    public BigVertex getBigVertexByCoordinate(Point coordinate) {
+    protected BigVertex getBigVertexByCoordinate(Point coordinate) {
         return this.graph.getBigVertexByCoordinate(coordinate);
     }
 
@@ -179,15 +170,15 @@ public class CoreController {
 //        return this.graph.getSmallVertexByCoordinate(coordinate);
 //    }
 
-    public Vertex getVertexByCoordinate(Point coordinate) {
+    protected Vertex getVertexByCoordinate(Point coordinate) {
         return this.graph.getVertexByCoordinate(coordinate);
     }
 
-    public Edge getEdgeByVertices(BigVertex vertex1, BigVertex vertex2) {
+    protected Edge getEdgeByVertices(BigVertex vertex1, BigVertex vertex2) {
         return this.graph.getEdgeByVertices(vertex1, vertex2);
     }
 
-    public GraphController getGraph() {
+    protected GraphController getGraph() {
         return graph;
     }
 
@@ -244,8 +235,6 @@ public class CoreController {
         Man man = new Man(vertex, this);
         men.add(man);
         setManStrategy(man.getCoordinates(), Man.getDefaultStrategy());
-        visualCoreController.createMan(man);
-        this.visualCoreController.updateStepPreviewsAndChoicePoints();
     }
 
 //    public void setNextManStep(Point manCoordinates, Point nextStepCoordinates) {
@@ -313,8 +302,6 @@ public class CoreController {
         Lion lion = new Lion(vertex, this);
         lions.add(lion);
         setLionStrategy(lion.getCoordinates(), Lion.getDefaultStrategy());
-        visualCoreController.createLion(lion);
-        this.visualCoreController.updateStepPreviewsAndChoicePoints();
     }
 
 //    public void setNextLionStep(Point lionCoordinates, Point nextStepCoordinates) {
@@ -396,9 +383,8 @@ public class CoreController {
             return;
         }
 
-        visualCoreController.removeMan(man);
         men.remove(man);
-        this.visualCoreController.updateStepPreviewsAndChoicePoints();
+
     }
 
     private void removeAllMen(ArrayList<Man> menToDelete) {
@@ -416,9 +402,8 @@ public class CoreController {
             return;
         }
 
-        visualCoreController.removeLion(lion);
         lions.remove(lion);
-        this.visualCoreController.updateStepPreviewsAndChoicePoints();
+
     }
 
     private void removeAllLions(ArrayList<Lion> lionsToDelete) {
@@ -438,15 +423,13 @@ public class CoreController {
         }
 
         man.setCurrentPosition(vertex);
-        visualCoreController.relocateMan(man);
-        this.visualCoreController.updateStepPreviewsAndChoicePoints();
     }
 
-    private void relocateAllMen() {
-        for (Man man : men) {
-            visualCoreController.relocateMan(man);
-        }
-    }
+//    private void relocateAllMen() {
+//        for (Man man : men) {
+//            visualCoreController.relocateMan(man);
+//        }
+//    }
 
     public void relocateLion(Point lionCoordinate, Point vertexCoordinate) {
         if (lionCoordinate == null || vertexCoordinate == null) {
@@ -459,15 +442,14 @@ public class CoreController {
         }
 
         lion.setCurrentPosition(vertex);
-        visualCoreController.relocateLion(lion);
-        this.visualCoreController.updateStepPreviewsAndChoicePoints();
+
     }
 
-    private void relocateAllLions() {
-        for (Lion lion : lions) {
-            visualCoreController.relocateLion(lion);
-        }
-    }
+//    private void relocateAllLions() {
+//        for (Lion lion : lions) {
+//            visualCoreController.relocateLion(lion);
+//        }
+//    }
 
     public ArrayList<Man> getMen() {
         return men;
@@ -487,7 +469,7 @@ public class CoreController {
         }
 
         man.setStrategy(strategy.getStrategy(this));
-        visualCoreController.updateStepPreviewsAndChoicePoints();
+
     }
 
     public void setLionStrategy(Point lionCoordinate, LionStrategy strategy) {
@@ -500,7 +482,7 @@ public class CoreController {
         }
 
         lion.setStrategy(strategy.getStrategy(this));
-        visualCoreController.updateStepPreviewsAndChoicePoints();
+
     }
 
     public void setAllManStrategy(ManStrategy strategy) {
@@ -511,7 +493,7 @@ public class CoreController {
         for (Man man : men) {
             setManStrategy(man.getCoordinates(), strategy);
         }
-        visualCoreController.updateStepPreviewsAndChoicePoints();
+
     }
 
     public void setAllLionStrategy(LionStrategy strategy) {
@@ -522,7 +504,7 @@ public class CoreController {
         for (Lion lion : lions) {
             setLionStrategy(lion.getCoordinates(), strategy);
         }
-        visualCoreController.updateStepPreviewsAndChoicePoints();
+
     }
 
     public ArrayList<Man> getMenWithManualInput() {
@@ -637,7 +619,7 @@ public class CoreController {
         }
 
         lion.setRange(range);
-        visualCoreController.updateLionRange(lion);
+
     }
 
     public void setAllLionRange(int range) {
@@ -685,7 +667,7 @@ public class CoreController {
         }
 
         man.setRange(range);
-        visualCoreController.updateManRange(man);
+
     }
 
     public void setAllManRange(int range) {
@@ -735,8 +717,8 @@ public class CoreController {
 
     public void setEmptyGraph() {
         this.graph = new GraphController();
-        this.visualCoreController.removeAllShapes();
-        this.visualCoreController = new VisualCoreController(this);
+//        this.visualCoreController.removeAllShapes();
+//        this.visualCoreController = new VisualCoreController(this);
         this.men = new ArrayList<>();
         this.lions = new ArrayList<>();
     }
@@ -1052,13 +1034,10 @@ public class CoreController {
 
         for (Man man : this.getMen()) {
             man.goToNextPosition();
-            visualCoreController.relocateMan(man);
         }
         for (Lion lion : this.getLions()) {
             lion.goToNextPosition();
-            visualCoreController.relocateLion(lion);
         }
-        this.visualCoreController.updateStepPreviewsAndChoicePoints();
 
         if (lionsHaveWon()) {
             removeDeadMan();

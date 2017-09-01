@@ -125,8 +125,8 @@ public class CoreController {
                 switch (lineElements[0]) {
                     case "M":
                         createMan(pos);
-                        setManStrategy(pos, StrategyEnumMan.valueOf(lineElements[3]));
-                        setManEpsilon(pos, Double.parseDouble(lineElements[4]));
+                        setManStrategy(StrategyEnumMan.valueOf(lineElements[3]));
+                        setManEpsilon(Double.parseDouble(lineElements[4]));
 
                         // System.out.println("" + new Point(Double.parseDouble(lineElements[1]), Double.parseDouble(lineElements[2])) + " ## " + Double.parseDouble(lineElements[4]));
                         break;
@@ -312,8 +312,8 @@ public class CoreController {
         calcMaxLionSpeed();
     }
 
-    public void relocateMan(Point from, Point to) {
-        plane.getManByCoordinate(from).setPosition(to);
+    public void relocateMan(Point to) {
+        plane.getMan().setPosition(to);
     }
 
     public void relocateLion(Point from, Point to) {
@@ -324,8 +324,8 @@ public class CoreController {
         plane.getLionByCoordinate(coordinates).setRange(range);
     }
 
-    public void setManEpsilon(Point coordinates, double epsilon) {
-        plane.getManByCoordinate(coordinates).setEpsilon(epsilon);
+    public void setManEpsilon(double epsilon) {
+        plane.getMan().setEpsilon(epsilon);
     }
 
     public void setLionSpeed(Point coordinates, double speed) {
@@ -337,13 +337,12 @@ public class CoreController {
         plane.shuffleLionOrder();
     }
 
-    public void setManStrategy(Point coordinates, StrategyEnumMan strategyEnum) {
-        plane.setManStrategy(coordinates, strategyEnum);
+    public void setManStrategy(StrategyEnumMan strategyEnum) {
+        plane.setManStrategy(strategyEnum);
     }
 
     public void setAllManStrategy(StrategyEnumMan strategyEnum) {
-        Man man = plane.getMan();
-        plane.setManStrategy(man.getPosition(), strategyEnum);
+        plane.setManStrategy(strategyEnum);
 
     }
 

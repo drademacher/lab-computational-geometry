@@ -22,7 +22,7 @@ public class Plane {
 
     public void addMan(Point pos, double speed, double epsilon) {
         man = new Man(pos, speed, epsilon);
-        setManStrategy(pos, StrategyEnumMan.Paper);
+        setManStrategy(StrategyEnumMan.Paper);
 //        System.out.println(man.getStrategy());
 //        System.out.println("man position @ " + pos);
     }
@@ -34,7 +34,7 @@ public class Plane {
     public void addLion(Point pos, double speed, double range) {
         Lion lion = new Lion(pos, speed, range);
         lions.add(lion);
-        setLionStrategy(pos, StrategyEnumLion.Greedy);
+        setLionStrategy(lion, StrategyEnumLion.Greedy);
 //        System.out.println(pos + " # " + lion.getStrategy());
     }
 
@@ -42,9 +42,8 @@ public class Plane {
         lions.removeIf(lion -> lion.getPosition().equals(coordinates));
     }
 
-    public void setManStrategy(Point coordinates, StrategyEnumMan strategyEnum) {
-        Man man = getManByCoordinate(coordinates);
-        if (man == null) {
+    public void setManStrategy(StrategyEnumMan strategyEnum) {
+        if(man == null){
             return;
         }
         man.setStrategy(strategyEnum.getStrategy());
@@ -53,8 +52,15 @@ public class Plane {
     public void setLionStrategy(Point coordinates, StrategyEnumLion strategyEnum) {
 //        System.out.println(coordinates.toString());
 
-
         Lion lion = getLionByCoordinate(coordinates);
+        if (Objects.equals(coordinates.toString(), "(295.0, 50.0)")) {
+            System.out.println("wow");
+//            System.out.println(lion.getStrategy());
+        }
+        setLionStrategy(lion, strategyEnum);
+    }
+
+    public void setLionStrategy(Lion lion, StrategyEnumLion strategyEnum) {
         if (lion == null) {
             System.out.println("no lion, no strategy");
             return;
@@ -64,25 +70,10 @@ public class Plane {
         }
         Strategy strat = strategyEnum.getStrategy();
         lion.setStrategy(strat);
-
-        if (Objects.equals(coordinates.toString(), "(295.0, 50.0)")) {
-            System.out.println("wow");
-//            System.out.println(lion.getStrategy());
-        }
     }
 
     public void shuffleLionOrder(){
         Collections.shuffle(lions, Random.getRANDOM());
-    }
-
-    public Man getManByCoordinate(Point coordinates) {
-        if (coordinates == null) {
-            return null;
-        }
-        if (man.getPosition().equals(coordinates)) {
-            return man;
-        }
-        return null;
     }
 
     public Lion getLionByCoordinate(Point coordinates) {

@@ -138,8 +138,8 @@ public class VisualizedCoreController extends CoreController {
     }
 
     @Override
-    public void relocateMan(Point from, Point to) {
-        super.relocateMan(from, to);
+    public void relocateMan(Point to) {
+        super.relocateMan(to);
         manPoint.setPosition(to);
     }
 

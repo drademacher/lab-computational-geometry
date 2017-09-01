@@ -224,6 +224,9 @@ public class CoreController {
     }
 
     public void createMan(Point coordinates) {
+        if(this. plane.getMan() != null){
+            return;
+        }
         plane.addMan(coordinates, maxLionSpeed, defaultMenEpsilon);
     }
 

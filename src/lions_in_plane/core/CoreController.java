@@ -21,16 +21,19 @@ public class CoreController {
 
     private boolean editMode = true;
 
-    private final int STEPS_TO_GO_AFTER_ESCAPE = 50;
     private double defaultMenEpsilon = 0.1;
     private double defaultLionsSpeed = 1;
     private double defaultLionsRange = 5;
     private double maxLionSpeed = defaultLionsSpeed;
 
-    private AllPaths allPaths = new AllPaths();
-    private int maxInductionsStep = 0;
+    private ArrayList<AllPaths> allPathsList = new ArrayList<>();
 
     protected Plane plane = new Plane();
+    private int maxInductionsStep = 0;
+    protected double maxX = 0;
+    protected double maxY = 0;
+    protected double minX = 0;
+    protected double minY = 0;
 
     public void setEmptyGraph() {
         plane = new Plane();
@@ -143,7 +146,6 @@ public class CoreController {
             }
         } catch (Exception e) {
             e.fillInStackTrace();
-            System.out.println(e);
         }
     }
 
@@ -214,24 +216,36 @@ public class CoreController {
         }
     }
 
+
+
+
+
     private void resetInductionsStep(){
-        maxInductionsStep = 1;
-        allPaths = new AllPaths();
+        maxInductionsStep = 0;
+        calcAllPaths();
     }
 
     public AllPaths simulateStep() {
 
-        if(allPaths.finished){
-            maxInductionsStep = 1;
-        }else{
-            maxInductionsStep++;
+        if(maxInductionsStep >= allPathsList.size() || maxInductionsStep < 0){
+            maxInductionsStep = 0;
         }
+
+        AllPaths curAllPathObject = allPathsList.get(maxInductionsStep);
+        maxInductionsStep++;
+        return curAllPathObject;
+
+    }
+
+    private void calcAllPaths(){
+
+        allPathsList.clear();
 
         ArrayList<Point> resultPath = new ArrayList<>();
         ArrayList<Point> inductionPath;
         Map<Integer, ArrayList<Point>> lionPaths = new HashMap<>();
 
-        for (int k = 0; k < Math.min(this.plane.getLionsSize(), maxInductionsStep); k++) {
+        for (int k = 0; k < this.plane.getLionsSize(); k++) {
 
             // calculate the ch from the active lions
             ArrayList<Lion> allLions = this.plane.getLions();
@@ -246,6 +260,7 @@ public class CoreController {
             lionPaths.clear();
             this.plane.resetManPath();
 
+            int STEPS_TO_GO_AFTER_ESCAPE = 50;
             int stepsToGo = STEPS_TO_GO_AFTER_ESCAPE;
             while(stepsToGo > 0){
 
@@ -278,15 +293,31 @@ public class CoreController {
                     }
                 }
             }
+
+            ArrayList<ArrayList<Point>> lionPathList = new ArrayList<>();
+            lionPaths.forEach((key, value) -> lionPathList.add(value));
+            AllPaths allPaths = new AllPaths(resultPath, lionPathList, (k == plane.getLionsSize() - 1));
+            allPathsList.add(allPaths);
         }
 
-        ArrayList<ArrayList<Point>> lionPathList = new ArrayList<>();
-        lionPaths.forEach((k, v) -> {
-            lionPathList.add(v);
-        });
-        allPaths = new AllPaths(resultPath, lionPathList, (maxInductionsStep == plane.getLionsSize()));
 
-        return allPaths;
+        //calc bounding box greedy
+        for (AllPaths allPaths : allPathsList) {
+            for (Point point : allPaths.manPath) {
+                maxX = Math.max(maxX, point.getX());
+                minX = Math.min(minX, point.getX());
+                maxY = Math.max(maxY, point.getY());
+                minY = Math.min(minY, point.getY());
+            }
+            for (ArrayList<Point> lionPath : allPaths.lionPaths) {
+                for (Point point : lionPath) {
+                    maxX = Math.max(maxX, point.getX());
+                    minX = Math.min(minX, point.getX());
+                    maxY = Math.max(maxY, point.getY());
+                    minY = Math.min(minY, point.getY());
+                }
+            }
+        }
     }
 
     public boolean isEditMode() {
@@ -331,11 +362,11 @@ public class CoreController {
         plane.getLionByCoordinate(coordinates).setRange(range);
     }
 
-    public void setManEpsilon(double epsilon) {
+    private void setManEpsilon(double epsilon) {
         plane.getMan().setEpsilon(epsilon);
     }
 
-    public void setLionSpeed(Point coordinates, double speed) {
+    private void setLionSpeed(Point coordinates, double speed) {
         plane.getLionByCoordinate(coordinates).setSpeed(speed);
         setMaxLionSpeed(speed);
     }
@@ -344,7 +375,7 @@ public class CoreController {
         plane.shuffleLionOrder();
     }
 
-    public void setManStrategy(StrategyEnumMan strategyEnum) {
+    private void setManStrategy(StrategyEnumMan strategyEnum) {
         plane.setManStrategy(strategyEnum);
     }
 
@@ -353,7 +384,7 @@ public class CoreController {
 
     }
 
-    public void setLionStrategy(Point coordinates, StrategyEnumLion strategyEnum) {
+    private void setLionStrategy(Point coordinates, StrategyEnumLion strategyEnum) {
         plane.setLionStrategy(coordinates, strategyEnum);
     }
 

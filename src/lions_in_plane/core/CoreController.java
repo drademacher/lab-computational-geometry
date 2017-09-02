@@ -214,6 +214,11 @@ public class CoreController {
         }
     }
 
+    private void resetInductionsStep(){
+        maxInductionsStep = 1;
+        allPaths = new AllPaths();
+    }
+
     public AllPaths simulateStep() {
 
         if(allPaths.finished){
@@ -289,6 +294,7 @@ public class CoreController {
     }
 
     public void setEditMode(boolean editMode) {
+        resetInductionsStep();
         this.editMode = editMode;
     }
 

@@ -51,7 +51,7 @@ public class VisualizedCoreController extends CoreController {
 
     public void freshInitialization() {
         if (this.lions != null) {
-//            this.lions.forEach(Lion::clear);
+            this.lions.forEach(Lion::clear);
         }
 
         this.lions = new ArrayList<>();
@@ -202,7 +202,7 @@ public class VisualizedCoreController extends CoreController {
             return null;
         }
 
-         allPaths = super.simulateStep();
+        allPaths = super.simulateStep();
 
         if (allPaths.finished) {
             freshInitialization();
@@ -275,8 +275,6 @@ public class VisualizedCoreController extends CoreController {
         if (pathStoneCount == 0) {
             update(lions.subList(0, pathCount + 1));
         }
-
-
 
 
         pathCount++;

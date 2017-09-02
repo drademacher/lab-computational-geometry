@@ -39,12 +39,15 @@ public class VisualizedCoreController extends CoreController {
         super.setEditMode(editMode);
 
         if (!editMode) {
+            new InvisiblePoints(new Point(minX, minY));
+            new InvisiblePoints(new Point(minX, maxY));
+            new InvisiblePoints(new Point(maxX, minY));
+            new InvisiblePoints(new Point(maxX, maxY));
+
             for (Lion lion : lions) {
-                new InvisiblePoints(lion.getPosition());
                 lion.getShape().setVisible(false);
             }
         } else {
-            System.out.println("WTF");
             freshInitialization();
         }
     }
@@ -221,10 +224,10 @@ public class VisualizedCoreController extends CoreController {
         ManPath.transfer();
         LionPath.clear();
         InvisiblePath.clear();
-        new InvisiblePath(allPaths.manPath);
+
         new ManPath(allPaths.manPath);
         for (int i = 0; i <= pathCount; i++) {
-            new InvisiblePath(allPaths.lionPaths.get(i));
+
             new LionPath(allPaths.lionPaths.get(i));
         }
 

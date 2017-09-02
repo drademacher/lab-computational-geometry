@@ -19,7 +19,7 @@ public class Main extends Application {
     }
 
     public void setScene(Scene scene) {
-        this.scene = scene;
+        Main.scene = scene;
     }
 
     @Override

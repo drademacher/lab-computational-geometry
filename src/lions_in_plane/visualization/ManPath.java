@@ -36,6 +36,7 @@ public class ManPath extends Shape {
     public static void clear() {
         group1.getChildren().clear();
         group2.getChildren().clear();
+        currentShape = null;
     }
 
     public static void transfer() {

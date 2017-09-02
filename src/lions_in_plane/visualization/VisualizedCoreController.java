@@ -27,6 +27,7 @@ public class VisualizedCoreController extends CoreController {
     private AllPaths allPaths;
     private int pathCount;
     private int pathStoneCount;
+    private int minimumPathSize;
 
     public VisualizedCoreController() {
         reset();
@@ -66,6 +67,7 @@ public class VisualizedCoreController extends CoreController {
 
         this.pathCount = 0;
         this.pathStoneCount = 0;
+        this.minimumPathSize = 0;
         update(lions);
     }
 
@@ -184,10 +186,17 @@ public class VisualizedCoreController extends CoreController {
 
         if (allPaths.finished) {
             reset();
+            for (Lion lion : lions) {
+                lion.getShape().setVisible(false);
+            }
             return allPaths;
         }
 
         // draw path stuff
+        if (pathCount == 0) {
+            System.out.println("fresh");
+            ManPath.clear();
+        }
         ManPath.transfer();
         LionPath.clear();
         InvisiblePath.clear();

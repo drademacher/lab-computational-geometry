@@ -163,7 +163,7 @@ public class CoreController {
         return this.graph.getEdgeByVertices(vertex1, vertex2);
     }
 
-    protected Edge getEdgeByPoints(Point point1, Point point2){
+    protected Edge getEdgeByPoints(Point point1, Point point2) {
         return getEdgeByVertices(getBigVertexByCoordinate(point1), getBigVertexByCoordinate(point2));
     }
 
@@ -618,7 +618,7 @@ public class CoreController {
      *
      * ****************************/
 
-    public void cleanUp(){
+    public void cleanUp() {
 
     }
 
@@ -820,7 +820,7 @@ public class CoreController {
             }
 
             // valid version, read file
-            while((currentLine = br.readLine()) != null) { //Read in MapRow
+            while ((currentLine = br.readLine()) != null) { //Read in MapRow
 //                System.out.println(currentLine);
 
                 lineElements = currentLine.split("##");
@@ -937,9 +937,9 @@ public class CoreController {
                 if (man.getCurrentPosition().equals(lion.getCurrentPosition())) {
                     return true;
                 }
-                for(Vertex manRangeVertex : man.getRangeVertices()){
+                for (Vertex manRangeVertex : man.getRangeVertices()) {
                     ///lion and man range
-                    if(manRangeVertex.equals(lion.getCurrentPosition())){
+                    if (manRangeVertex.equals(lion.getCurrentPosition())) {
                         return true;
                     }
                 }
@@ -950,9 +950,9 @@ public class CoreController {
                     if (man.getCurrentPosition().equals(lionRangeVertex)) {
                         return true;
                     }
-                    for(Vertex manRangeVertex : man.getRangeVertices()){
+                    for (Vertex manRangeVertex : man.getRangeVertices()) {
                         //lion range and man range
-                        if(manRangeVertex.equals(lionRangeVertex)){
+                        if (manRangeVertex.equals(lionRangeVertex)) {
                             return true;
                         }
                     }

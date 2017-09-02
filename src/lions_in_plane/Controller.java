@@ -308,7 +308,8 @@ class Controller {
 
         stepAnimationButton.setOnAction(event -> {
             activePlaying.set(false);
-            /*boolean gameOver = */coreController.simulateStep();
+            /*boolean gameOver = */
+            coreController.simulateStep();
 //            if (gameOver) {
 //                gameOverAlert.show();
 //            }
@@ -323,7 +324,8 @@ class Controller {
                     @Override
                     public void run() {
                         Platform.runLater(() -> {
-                            /*boolean gameOver = */coreController.simulateStep();
+                            /*boolean gameOver = */
+                            coreController.simulateStep();
 //                            if (gameOver) {
 //                                gameOverAlert.show();
 //                                activePlaying.set(false);

@@ -237,6 +237,7 @@ public class GraphHelper {
     public ArrayList<Vertex> getNeighborBigVertices(Vertex vertex) {
         return getNeighborBigVertices(vertex, null);
     }
+
     public ArrayList<Vertex> getNeighborBigVertices(Vertex vertex, Vertex directionVertex) {
 
         ArrayList<Vertex> result = new ArrayList<>();

@@ -178,7 +178,7 @@ public class VisualizedCoreController extends CoreController {
 
     @Override
     public AllPaths simulateStep() {
-         allPaths = super.simulateStep();
+        allPaths = super.simulateStep();
 
         if (allPaths.finished) {
             reset();
@@ -243,8 +243,6 @@ public class VisualizedCoreController extends CoreController {
         if (pathStoneCount == 0) {
             update(lions.subList(0, pathCount + 1));
         }
-
-
 
 
         pathCount++;

@@ -22,14 +22,15 @@ public class Range implements Vertex {
     public Range(VisualCoreController coreController, Point startCoordinates) {
         this(coreController, startCoordinates, false);
     }
+
     public Range(VisualCoreController coreController, Point startCoordinates, boolean manRange) {
 
         this.coreController = coreController;
         this.coordinates = startCoordinates;
 
-        if(manRange){
+        if (manRange) {
             shape = new Circle(coordinates.getX(), coordinates.getY(), RANGE_RADIUS, COLOR_MAN_RANGE);
-        }else{
+        } else {
             shape = new Circle(coordinates.getX(), coordinates.getY(), RANGE_RADIUS, COLOR_LION_RANGE);
         }
         shapeGroup.getChildren().add(shape);

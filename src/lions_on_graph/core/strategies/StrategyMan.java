@@ -61,9 +61,9 @@ public abstract class StrategyMan implements Strategy {
         for (Man otherMan : coreController.getMen()) {
             if (!otherMan.equals(man)) {
 
-                    if (Man.getMinimumDistance() >= helper.getDistanceBetween(vertex, otherMan.getCurrentPosition())) {
-                        isValidVertex = false;
-                    }
+                if (Man.getMinimumDistance() >= helper.getDistanceBetween(vertex, otherMan.getCurrentPosition())) {
+                    isValidVertex = false;
+                }
             }
         }
 

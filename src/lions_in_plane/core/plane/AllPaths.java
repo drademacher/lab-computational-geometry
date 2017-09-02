@@ -14,7 +14,7 @@ public class AllPaths {
     public final int pathSize;
     public final boolean finished;
 
-    public AllPaths(){
+    public AllPaths() {
         this.manPath = new ArrayList<>();
         this.lionPaths = new ArrayList<>();
         this.pathSize = 0;

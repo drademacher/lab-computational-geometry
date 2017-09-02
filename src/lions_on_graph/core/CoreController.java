@@ -1074,9 +1074,9 @@ public class CoreController {
                 if (man.getCurrentPosition().equals(lion.getCurrentPosition())) {
                     return true;
                 }
-                for(Vertex manRangeVertex : man.getRangeVertices()){
+                for (Vertex manRangeVertex : man.getRangeVertices()) {
                     ///lion and man range
-                    if(manRangeVertex.equals(lion.getCurrentPosition())){
+                    if (manRangeVertex.equals(lion.getCurrentPosition())) {
                         return true;
                     }
                 }
@@ -1087,9 +1087,9 @@ public class CoreController {
                     if (man.getCurrentPosition().equals(lionRangeVertex)) {
                         return true;
                     }
-                    for(Vertex manRangeVertex : man.getRangeVertices()){
+                    for (Vertex manRangeVertex : man.getRangeVertices()) {
                         //lion range and man range
-                        if(manRangeVertex.equals(lionRangeVertex)){
+                        if (manRangeVertex.equals(lionRangeVertex)) {
                             return true;
                         }
                     }

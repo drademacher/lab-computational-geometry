@@ -43,7 +43,7 @@ public class Plane {
     }
 
     public void setManStrategy(StrategyEnumMan strategyEnum) {
-        if(man == null){
+        if (man == null) {
             return;
         }
         man.setStrategy(strategyEnum.getStrategy());
@@ -72,7 +72,7 @@ public class Plane {
         lion.setStrategy(strat);
     }
 
-    public void shuffleLionOrder(){
+    public void shuffleLionOrder() {
         Collections.shuffle(lions, Random.getRANDOM());
     }
 
@@ -99,7 +99,7 @@ public class Plane {
     }
 
     public void resetManPath() {
-        if(man == null){
+        if (man == null) {
             return;
         }
         man.resetPath();

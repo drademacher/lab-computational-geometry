@@ -380,8 +380,6 @@ class Controller {
 //        playerTask = ;
 
 
-
-
         // TickTimer.getInstance().addTicker(animation);
     }
 

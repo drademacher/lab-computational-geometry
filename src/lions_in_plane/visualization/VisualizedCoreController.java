@@ -110,7 +110,7 @@ public class VisualizedCoreController extends CoreController {
     public void createMan(Point coordinates) {
         super.createMan(coordinates);
 
-        if(manPoint != null){
+        if (manPoint != null) {
             return;
         }
         manPoint = new Man(coordinates);
@@ -188,7 +188,7 @@ public class VisualizedCoreController extends CoreController {
             return null;
         }
 
-         allPaths = super.simulateStep();
+        allPaths = super.simulateStep();
 
         if (allPaths.finished) {
             reset();
@@ -261,8 +261,6 @@ public class VisualizedCoreController extends CoreController {
         if (pathStoneCount == 0) {
             update(lions.subList(0, pathCount + 1));
         }
-
-
 
 
         pathCount++;

@@ -1,7 +1,7 @@
 package util;
 
 
-import lions_in_plane.visualization.Lion;
+import applet_two.visualization.Lion;
 
 import java.util.Arrays;
 import java.util.List;

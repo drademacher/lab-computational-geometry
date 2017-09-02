@@ -1,0 +1,393 @@
+package applet_two.core;
+
+import applet_two.core.plane.AllPaths;
+import applet_two.core.plane.Lion;
+import applet_two.core.plane.Man;
+import applet_two.core.plane.Plane;
+import applet_two.core.strategies.lion.StrategyEnumLion;
+import applet_two.core.strategies.man.StrategyEnumMan;
+import util.Global;
+import util.ConvexHull;
+import util.Point;
+import util.Random;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+
+public class CoreController {
+
+    private boolean editMode = true;
+
+    private double defaultMenEpsilon = 0.1;
+    private double defaultLionsSpeed = 1;
+    private double defaultLionsRange = 5;
+    private double maxLionSpeed = defaultLionsSpeed;
+
+    private ArrayList<AllPaths> allPathsList = new ArrayList<>();
+
+    protected Plane plane = new Plane();
+    private int maxInductionsStep = 0;
+    protected double maxX = 0;
+    protected double maxY = 0;
+    protected double minX = 0;
+    protected double minY = 0;
+
+    public void setEmptyGraph() {
+        plane = new Plane();
+    }
+
+    public void setDefaultGraph1() {
+        setEmptyGraph();
+
+        createLion(new Point(50, 20));
+        createLion(new Point(190, 20));
+        createLion(new Point(220, 140));
+        createLion(new Point(120, 220));
+        createLion(new Point(20, 140));
+
+        createLion(new Point(120, 40));
+        createLion(new Point(160, 50));
+        createLion(new Point(190, 90));
+        createLion(new Point(190, 130));
+        createLion(new Point(160, 170));
+        createLion(new Point(120, 180));
+        createLion(new Point(80, 170));
+        createLion(new Point(50, 130));
+        createLion(new Point(50, 90));
+        createLion(new Point(80, 50));
+
+        createLion(new Point(120, 70));
+        createLion(new Point(150, 100));
+        createLion(new Point(140, 140));
+        createLion(new Point(100, 140));
+
+
+        createMan(new Point(161, 113));
+
+
+    }
+
+    public void setDefaultGraph2() {
+        setEmptyGraph();
+
+        Point[] lions = new Point[]{new Point(470.0, 485.0), new Point(385.0, 115.0), new Point(170.0, 90.0), new Point(225.0, 455.0), new Point(295.0, 50.0), new Point(415.0, 290.0), new Point(95.0, 220.0), new Point(155.0, 495.0), new Point(225.0, 360.0), new Point(280.0, 355.0), new Point(270.0, 80.0), new Point(185.0, 55.0), new Point(20.0, 265.0), new Point(40.0, 445.0), new Point(210.0, 245.0)};
+
+        for (Point p : lions) {
+            createLion(new Point(p.getX(), p.getY()));
+        }
+
+        createMan(new Point(171, 337));
+    }
+
+    public void setDefaultGraph3() {
+        setEmptyGraph();
+
+        Point[] lions = new Point[]{new Point(405.0, 165.0), new Point(75.0, 175.0), new Point(275.0, 235.0), new Point(435.0, 290.0), new Point(295.0, 150.0), new Point(20.0, 10.0), new Point(175.0, 255.0), new Point(480.0, 410.0), new Point(20.0, 425.0), new Point(190.0, 65.0), new Point(315.0, 0.0), new Point(235.0, 255.0), new Point(150.0, 260.0), new Point(440.0, 140.0), new Point(70.0, 170.0), new Point(310.0, 415.0),};
+
+        for (Point p : lions) {
+            createLion(new Point(p.getX(), p.getY()));
+        }
+        createMan(new Point(193, 101));
+    }
+
+    public void setRandomConfiguration() {
+        setEmptyGraph();
+        createMan(new Point(Random.getRandomInteger(100) * 5, Random.getRandomInteger(100) * 5));
+        for (int i = 0; i < 16; i++) {
+            createLion(new Point(Random.getRandomInteger(100) * 5, Random.getRandomInteger(100) * 5));
+        }
+    }
+
+    public void setGraphFromFile(File graphFromFile) {
+        setEmptyGraph();
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(graphFromFile));
+
+            String currentLine;
+
+            //config line
+            currentLine = br.readLine();
+            if (currentLine == null) {
+                throw new Error("wrong file input version: " + Global.API_VERSION + " expected");
+            }
+            String[] lineElements = currentLine.split("##");
+            if (!lineElements[2].equals(Global.API_VERSION)) {
+                throw new Error("wrong file  input version: " + Global.API_VERSION + " expected");
+            }
+
+            // valid version, read file
+            while ((currentLine = br.readLine()) != null) { //Read in MapRow
+//                System.out.println(currentLine);
+
+                lineElements = currentLine.split("##");
+
+                Point pos = new Point(Double.parseDouble(lineElements[1]), Double.parseDouble(lineElements[2]));
+
+                switch (lineElements[0]) {
+                    case "M":
+                        createMan(pos);
+                        setManStrategy(StrategyEnumMan.valueOf(lineElements[3]));
+                        setManEpsilon(Double.parseDouble(lineElements[4]));
+
+                        // System.out.println("" + new Point(Double.parseDouble(lineElements[1]), Double.parseDouble(lineElements[2])) + " ## " + Double.parseDouble(lineElements[4]));
+                        break;
+                    case "L":
+                        createLion(pos);
+                        setLionStrategy(pos, StrategyEnumLion.valueOf(lineElements[3]));
+                        setLionSpeed(pos, Double.parseDouble(lineElements[4]));
+                        setLionRange(pos, Double.parseDouble(lineElements[5]));
+                        break;
+                    default:
+                        throw new IllegalArgumentException("invalid input: " + lineElements[0]);
+                }
+            }
+        } catch (Exception e) {
+            e.fillInStackTrace();
+        }
+    }
+
+    public void saveGraphToFile(File selectedFile) {
+        try {
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(selectedFile));
+
+            bufferedWriter.write("C##>>>>>Configuration for LionsInPlane Applet<<<<<##" + Global.API_VERSION);
+            bufferedWriter.newLine();
+            bufferedWriter.flush();
+
+            Man man = plane.getMan();
+//                System.out.println("M##" + man.getPosition().getX() + "##" + man.getPosition().getY() + "##" + man.getStrategy().toString() + "##" + man.getSpeed());
+            bufferedWriter.write("M##" + man.getPosition().getX() + "##" + man.getPosition().getY() + "##" + man.getStrategy().getName() + "##" + man.getEpsilon());
+            bufferedWriter.newLine();
+            bufferedWriter.flush();
+
+            for (Lion lion : plane.getLions()) {
+                System.out.println(lion.getStrategy());
+                bufferedWriter.write("L##" + lion.getPosition().getX() + "##" + lion.getPosition().getY() + "##" + lion.getStrategy().getName() + "##" + lion.getSpeed() + "##" + lion.getRange());
+                bufferedWriter.newLine();
+                bufferedWriter.flush();
+            }
+
+            bufferedWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public double getDefaultLionsRange() {
+        return defaultLionsRange;
+    }
+
+    public void setDefaultLionsRange(double defaultLionsRange) {
+        this.defaultLionsRange = defaultLionsRange;
+    }
+
+    public double getDefaultMenEpsilon() {
+        return defaultMenEpsilon;
+    }
+
+    public void setDefaultMenEpsilon(double defaultMenEpsilon) {
+        this.defaultMenEpsilon = defaultMenEpsilon;
+    }
+
+    public double getDefaultLionsSpeed() {
+        return defaultLionsSpeed;
+    }
+
+    public void setDefaultLionsSpeed(double defaultLionsSpeed) {
+        this.defaultLionsSpeed = defaultLionsSpeed;
+    }
+
+    private void calcMaxLionSpeed() {
+        maxLionSpeed = 0;
+        for (Lion lion : plane.getLions()) {
+            setMaxLionSpeed(lion.getSpeed());
+        }
+    }
+
+    private void setMaxLionSpeed(double speed) {
+        if (speed > maxLionSpeed) {
+            maxLionSpeed = speed;
+            Man man = plane.getMan();
+            man.setSpeed(maxLionSpeed);
+
+        }
+    }
+
+
+    private void resetInductionsStep() {
+        maxInductionsStep = 0;
+        calcAllPaths();
+    }
+
+    public AllPaths simulateStep() {
+
+        if (maxInductionsStep >= allPathsList.size() || maxInductionsStep < 0) {
+            maxInductionsStep = 0;
+        }
+
+        AllPaths curAllPathObject = allPathsList.get(maxInductionsStep);
+        maxInductionsStep++;
+        return curAllPathObject;
+
+    }
+
+    private void calcAllPaths() {
+
+        allPathsList.clear();
+
+        ArrayList<Point> resultPath = new ArrayList<>();
+        ArrayList<Point> inductionPath;
+        Map<Integer, ArrayList<Point>> lionPaths = new HashMap<>();
+
+        for (int k = 0; k < this.plane.getLionsSize(); k++) {
+
+            // calculate the ch from the active lions
+            ArrayList<Lion> allLions = this.plane.getLions();
+            Point[] lionPoints = new Point[k + 1];
+            for (int i = 0; i <= k; i++) {
+                lionPoints[i] = allLions.get(i).getPosition();
+            }
+            ConvexHull allLionsHull = new ConvexHull(lionPoints);
+
+            inductionPath = resultPath;
+            resultPath = new ArrayList<>();
+            lionPaths.clear();
+            this.plane.resetManPath();
+
+            int STEPS_TO_GO_AFTER_ESCAPE = 50;
+            int stepsToGo = STEPS_TO_GO_AFTER_ESCAPE;
+            while (stepsToGo > 0) {
+
+                resultPath = this.plane.calcManPath(k, inductionPath);
+
+                for (int j = 0; j <= k; j++) {
+                    lionPaths.put(j, this.plane.calcLionPath(j, lionPaths.get(j), resultPath));
+//                    this.plane.setCalculatedLionPath(lionPaths.get(j), j);
+                }
+
+
+                //check if the lion escaped the ch
+                if (resultPath.size() > 10 && !allLionsHull.insideHull(resultPath.get(resultPath.size() - 1))) {
+                    stepsToGo--;
+
+                    //we escaped the origin ch and did the extra steps (stepsToGo)
+                    if (stepsToGo == 0) {
+
+                        //calculate a new ch from the current positions of all active lions
+                        lionPoints = new Point[k + 1];
+                        for (int i = 0; i <= k; i++) {
+                            lionPoints[i] = lionPaths.get(i).get(lionPaths.get(i).size() - 1);
+                        }
+                        allLionsHull = new ConvexHull(lionPoints);
+
+                        //check if we escaped this new ch, if not -> do more steps (reset the stepsToGo counter)
+                        if (allLionsHull.insideHull(resultPath.get(resultPath.size() - 1))) {
+                            stepsToGo = STEPS_TO_GO_AFTER_ESCAPE;
+                        }
+                    }
+                }
+            }
+
+            ArrayList<ArrayList<Point>> lionPathList = new ArrayList<>();
+            lionPaths.forEach((key, value) -> lionPathList.add(value));
+            AllPaths allPaths = new AllPaths(resultPath, lionPathList, (k == plane.getLionsSize() - 1));
+            allPathsList.add(allPaths);
+        }
+
+
+        //calc bounding box greedy
+        for (AllPaths allPaths : allPathsList) {
+            for (Point point : allPaths.manPath) {
+                maxX = Math.max(maxX, point.getX());
+                minX = Math.min(minX, point.getX());
+                maxY = Math.max(maxY, point.getY());
+                minY = Math.min(minY, point.getY());
+            }
+            for (ArrayList<Point> lionPath : allPaths.lionPaths) {
+                for (Point point : lionPath) {
+                    maxX = Math.max(maxX, point.getX());
+                    minX = Math.min(minX, point.getX());
+                    maxY = Math.max(maxY, point.getY());
+                    minY = Math.min(minY, point.getY());
+                }
+            }
+        }
+    }
+
+    public boolean isEditMode() {
+        return editMode;
+    }
+
+    public void setEditMode(boolean editMode) {
+        resetInductionsStep();
+        this.editMode = editMode;
+    }
+
+    public void createMan(Point coordinates) {
+        if (this.plane.getMan() != null) {
+            return;
+        }
+        plane.addMan(coordinates, maxLionSpeed, defaultMenEpsilon);
+    }
+
+    public void createLion(Point coordinates) {
+        plane.addLion(coordinates, defaultLionsSpeed, defaultLionsRange);
+        setMaxLionSpeed(defaultLionsSpeed);
+    }
+
+    public void removeMan(Point coordinates) {
+        plane.removeMan(coordinates);
+    }
+
+    public void removeLion(Point coordinates) {
+        plane.removeLion(coordinates);
+        calcMaxLionSpeed();
+    }
+
+    public void relocateMan(Point to) {
+        plane.getMan().setPosition(to);
+    }
+
+    public void relocateLion(Point from, Point to) {
+        plane.getLionByCoordinate(from).setPosition(to);
+    }
+
+    public void setLionRange(Point coordinates, double range) {
+        plane.getLionByCoordinate(coordinates).setRange(range);
+    }
+
+    private void setManEpsilon(double epsilon) {
+        plane.getMan().setEpsilon(epsilon);
+    }
+
+    private void setLionSpeed(Point coordinates, double speed) {
+        plane.getLionByCoordinate(coordinates).setSpeed(speed);
+        setMaxLionSpeed(speed);
+    }
+
+    public void shuffleLionOrder() {
+        plane.shuffleLionOrder();
+    }
+
+    private void setManStrategy(StrategyEnumMan strategyEnum) {
+        plane.setManStrategy(strategyEnum);
+    }
+
+    public void setAllManStrategy(StrategyEnumMan strategyEnum) {
+        plane.setManStrategy(strategyEnum);
+
+    }
+
+    private void setLionStrategy(Point coordinates, StrategyEnumLion strategyEnum) {
+        plane.setLionStrategy(coordinates, strategyEnum);
+    }
+
+    public void setAllLionStrategy(StrategyEnumLion strategyEnum) {
+        for (Lion lion : plane.getLions()) {
+            plane.setLionStrategy(lion.getPosition(), strategyEnum);
+        }
+    }
+}

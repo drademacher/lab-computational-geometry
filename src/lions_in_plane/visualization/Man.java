@@ -72,7 +72,7 @@ public class Man extends Shape {
     }
 
     void clear() {
-        group.getChildren().remove(shape);
+        group.getChildren().clear();
     }
 
     public Circle getShape() {

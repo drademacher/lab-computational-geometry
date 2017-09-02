@@ -28,6 +28,7 @@ public class Lion extends Shape {
         update();
 
         group.getChildren().add(shape);
+
         shape.setOnContextMenuRequested(event1 -> {
             event1.consume();
 

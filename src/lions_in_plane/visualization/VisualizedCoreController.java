@@ -31,7 +31,7 @@ public class VisualizedCoreController extends CoreController {
     private boolean onGoingAnimationBlockNew;
 
     public VisualizedCoreController() {
-        reset();
+        freshInitialization();
     }
 
     @Override
@@ -39,28 +39,31 @@ public class VisualizedCoreController extends CoreController {
         super.setEditMode(editMode);
 
         if (!editMode) {
-//            calcAllPaths(1);
             for (Lion lion : lions) {
                 new InvisiblePoints(lion.getPosition());
                 lion.getShape().setVisible(false);
             }
         } else {
-            for (Lion lion : lions) {
-                lion.getShape().setVisible(true);
-            }
+            System.out.println("WTF");
+            freshInitialization();
         }
     }
 
-    public void reset() {
+    public void freshInitialization() {
         if (this.lions != null) {
-            this.lions.forEach(Lion::clear);
+//            this.lions.forEach(Lion::clear);
         }
+
         this.lions = new ArrayList<>();
-        for (lions_in_plane.core.plane.Lion lion : plane.getLions()) {
-            this.lions.add(new Lion(lion.getPosition()));
+
+        for (lions_in_plane.core.plane.Lion elem : plane.getLions()) {
+            Lion lion = new Lion(elem.getPosition());
+            this.lions.add(lion);
         }
+
         if (this.manPoint != null) {
             this.manPoint.clear();
+            manPoint = null;
         }
         if (plane.getMan() != null) {
             this.manPoint = new Man(plane.getMan().getPosition());
@@ -76,7 +79,8 @@ public class VisualizedCoreController extends CoreController {
 
     @Override
     public void setEmptyGraph() {
-        reset();
+        super.setEmptyGraph();
+        freshInitialization();
     }
 
     @Override
@@ -110,10 +114,12 @@ public class VisualizedCoreController extends CoreController {
     public void createMan(Point coordinates) {
         super.createMan(coordinates);
 
-        if(manPoint != null){
-            return;
-        }
-        manPoint = new Man(coordinates);
+//        if(manPoint != null){
+//            return;
+//        }
+//        manPoint = new Man(coordinates);
+
+        freshInitialization();
     }
 
     @Override
@@ -127,11 +133,13 @@ public class VisualizedCoreController extends CoreController {
     @Override
     public void createLion(Point coordinates) {
         super.createLion(coordinates);
-        lions.add(new Lion(coordinates));
+//        lions.add(new Lion(coordinates));
+//
+//        if (hull == null || !hull.insideHull(coordinates)) {
+//            update(lions);
+//        }
 
-        if (hull == null || !hull.insideHull(coordinates)) {
-            update(lions);
-        }
+        freshInitialization();
     }
 
     @Override
@@ -181,6 +189,12 @@ public class VisualizedCoreController extends CoreController {
         // TODO: IMPLEMENT THIS
     }
 
+    @Override
+    public void shuffleLionOrder(){
+        super.shuffleLionOrder();
+        freshInitialization();
+    }
+
 
     @Override
     public AllPaths simulateStep() {
@@ -191,7 +205,7 @@ public class VisualizedCoreController extends CoreController {
          allPaths = super.simulateStep();
 
         if (allPaths.finished) {
-            reset();
+            freshInitialization();
             for (Lion lion : lions) {
                 lion.getShape().setVisible(false);
             }

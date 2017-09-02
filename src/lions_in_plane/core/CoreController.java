@@ -271,7 +271,7 @@ public class CoreController {
                         }
                         allLionsHull = new ConvexHull(lionPoints);
 
-                        //check if we escaped this new ch, if not -> do more steps (reset the stepsToGo counter)
+                        //check if we escaped this new ch, if not -> do more steps (freshInitialization the stepsToGo counter)
                         if(allLionsHull.insideHull(resultPath.get(resultPath.size()-1))){
                             stepsToGo = STEPS_TO_GO_AFTER_ESCAPE;
                         }
@@ -299,7 +299,7 @@ public class CoreController {
     }
 
     public void createMan(Point coordinates) {
-        if(this. plane.getMan() != null){
+        if(this.plane.getMan() != null){
             return;
         }
         plane.addMan(coordinates, maxLionSpeed, defaultMenEpsilon);

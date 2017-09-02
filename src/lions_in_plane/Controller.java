@@ -83,6 +83,8 @@ class Controller {
                 modeToggleButton.setText("Edit Mode");
                 buttonBar.getChildren().addAll(modeToggleButton, playAnimationButton, stopAnimationButton, stepAnimationButton, setViewMenu);
             } else {
+                clearAnimationShapes();
+
                 editMode.set(true);
                 activePlaying.set(false);
 
@@ -90,7 +92,6 @@ class Controller {
                 buttonBar.getChildren().addAll(modeToggleButton, setGraphButton, setParameterButton, newPermutationButton, setViewMenu);
                 oldLionsPathShapes.getChildren().clear();
 
-                clearAnimationShapes();
                 zoomScrollPane.autoZoom();
             }
         });
@@ -411,13 +412,11 @@ class Controller {
     private void clearAnimationShapes() {
         convexHullShapes.getChildren().clear();
         oldLionsPathShapes.getChildren().clear();
-
+        currentLionsPathShapes.getChildren().clear();
         oldManPathShapes.getChildren().clear();
         currentManPathShapes.getChildren().clear();
         boundingPathShapes.getChildren().clear();
         boundingPointsShapes.getChildren().clear();
-
-        coreController.reset();
     }
 
     private void initGameOverAlert() {

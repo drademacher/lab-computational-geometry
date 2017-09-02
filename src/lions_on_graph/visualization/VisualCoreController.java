@@ -195,7 +195,7 @@ public class VisualCoreController extends CoreController {
 
         super.relocateMan(manCoordinate, vertexCoordinate);
 
-
+        mapEntities.stream().filter(entity -> entity.getPosition().equals(manCoordinate)).forEach(entity -> entity.relocate(vertexCoordinate));
         updateManRanges();
 
 

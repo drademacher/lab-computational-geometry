@@ -194,7 +194,7 @@ public class VisualizedCoreController extends CoreController {
 
         // draw path stuff
         if (pathCount == 0) {
-            System.out.println("fresh");
+            minimumPathSize = allPaths.pathSize;
             ManPath.clear();
         }
         ManPath.transfer();
@@ -227,7 +227,7 @@ public class VisualizedCoreController extends CoreController {
         }
 
         PathTransition manTransition = new PathTransition();
-        manTransition.setDuration(Duration.millis(ANIMATION_DURATION));
+        manTransition.setDuration(Duration.millis(ANIMATION_DURATION * allPaths.pathSize / minimumPathSize));
         manTransition.setPath(manPath);
         manTransition.setNode(manPoint.getShape());
         allPathTransition.getChildren().add(manTransition);
@@ -242,7 +242,7 @@ public class VisualizedCoreController extends CoreController {
             }
 
             PathTransition lionTransition = new PathTransition();
-            lionTransition.setDuration(Duration.millis(ANIMATION_DURATION));
+            lionTransition.setDuration(Duration.millis(ANIMATION_DURATION * allPaths.pathSize / minimumPathSize));
             lionTransition.setPath(lionPath);
             lionTransition.setNode(lions.get(i).getShape());
             allPathTransition.getChildren().add(lionTransition);

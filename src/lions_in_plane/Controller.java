@@ -277,7 +277,7 @@ class Controller {
         lionRangeShapes.visibleProperty().bind(viewLionRanges.selectedProperty());
         viewLionRanges.setSelected(true);
 
-        CheckMenuItem viewConvexHull = new CheckMenuItem("View Convex Hull");
+        CheckMenuItem viewConvexHull = new CheckMenuItem("View Lion Bounding");
         convexHullShapes.visibleProperty().bind(viewConvexHull.selectedProperty().or(editMode));
         viewConvexHull.setSelected(false);
 
@@ -323,11 +323,10 @@ class Controller {
                     @Override
                     public void run() {
                         Platform.runLater(() -> {
-                            /*boolean gameOver = */coreController.simulateStep();
-//                            if (gameOver) {
-//                                gameOverAlert.show();
-//                                activePlaying.set(false);
-//                            }
+                            boolean animationFinished = coreController.simulateStep().finished;
+                            if (animationFinished) {
+                                activePlaying.set(false);
+                            }
                         });
                     }
                 }, 0, SINGLE_STEP_DURATION);

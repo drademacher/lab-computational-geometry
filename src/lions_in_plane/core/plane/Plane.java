@@ -99,6 +99,9 @@ public class Plane {
     }
 
     public void resetManPath() {
+        if(man == null){
+            return;
+        }
         man.resetPath();
     }
 

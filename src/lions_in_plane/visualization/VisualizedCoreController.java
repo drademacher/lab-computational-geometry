@@ -104,6 +104,7 @@ public class VisualizedCoreController extends CoreController {
 
     @Override
     public void createMan(Point coordinates) {
+        System.out.println("create Man - visual");
         super.createMan(coordinates);
 
         manPoint = new Man(coordinates);

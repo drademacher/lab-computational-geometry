@@ -38,4 +38,6 @@ public class ChoicePoint {
     public static void clear() {
         shapeGroup.getChildren().clear();
     }
+
+
 }

@@ -61,7 +61,6 @@ public class CoreController {
         createLion(new Point(140, 140));
         createLion(new Point(100, 140));
 
-
         createMan(new Point(161, 113));
 
 
@@ -292,6 +291,7 @@ public class CoreController {
     }
 
     public void createMan(Point coordinates) {
+        System.out.println("create Man - core");
         if(this. plane.getMan() != null){
             return;
         }

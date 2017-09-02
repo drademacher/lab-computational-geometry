@@ -98,4 +98,12 @@ public class Edge {
     public void delete() {
         shapeGroup.getChildren().remove(shape);
     }
+
+    public Point getPositionTo() {
+        return to;
+    }
+
+    public Point getPositionFrom() {
+        return from;
+    }
 }

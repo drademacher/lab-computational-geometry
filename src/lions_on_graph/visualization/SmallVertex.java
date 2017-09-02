@@ -15,11 +15,13 @@ public class SmallVertex implements Vertex {
     private Circle shape;
     private CoreController coreController;
     private Point coordinates;
+    private Edge edge;
 
-    public SmallVertex(CoreController coreController, Point startCoordinates) {
+    public SmallVertex(CoreController coreController, Point startCoordinates, Edge edge) {
 
         this.coreController = coreController;
         this.coordinates = startCoordinates;
+        this.edge = edge;
 
         shape = new Circle(coordinates.getX(), coordinates.getY(), Constants.SMALL_VERTEX_RADIUS);
         shape.setStrokeWidth(Constants.SMALL_VERTEX_RADIUS / 5);
@@ -67,5 +69,13 @@ public class SmallVertex implements Vertex {
 
     public void delete() {
         shapeGroup.getChildren().remove(shape);
+    }
+
+    public Point getPosition() {
+        return coordinates;
+    }
+
+    public Edge getEdge() {
+        return edge;
     }
 }

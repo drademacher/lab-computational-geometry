@@ -39,5 +39,9 @@ public class StepPreview implements Vertex {
     public void delete() {
         shapeGroup.getChildren().remove(shape);
     }
+
+    public Point getPosition() {
+        return coordinates;
+    }
 }
 

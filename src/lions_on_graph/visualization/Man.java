@@ -166,4 +166,9 @@ public class Man implements Entity {
     public void delete() {
         shapeGroup.getChildren().remove(shape);
     }
+
+    @Override
+    public Point getPosition() {
+        return coordinates;
+    }
 }

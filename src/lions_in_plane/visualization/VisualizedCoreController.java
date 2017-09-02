@@ -28,6 +28,7 @@ public class VisualizedCoreController extends CoreController {
     private int pathCount;
     private int pathStoneCount;
     private int minimumPathSize;
+    private boolean onGoingAnimationBlockNew;
 
     public VisualizedCoreController() {
         reset();
@@ -68,6 +69,7 @@ public class VisualizedCoreController extends CoreController {
         this.pathCount = 0;
         this.pathStoneCount = 0;
         this.minimumPathSize = 0;
+        this.onGoingAnimationBlockNew = false;
         update(lions);
     }
 
@@ -182,6 +184,10 @@ public class VisualizedCoreController extends CoreController {
 
     @Override
     public AllPaths simulateStep() {
+        if (onGoingAnimationBlockNew) {
+            return null;
+        }
+
          allPaths = super.simulateStep();
 
         if (allPaths.finished) {
@@ -197,6 +203,7 @@ public class VisualizedCoreController extends CoreController {
             minimumPathSize = allPaths.pathSize;
             ManPath.clear();
         }
+        onGoingAnimationBlockNew = true;
         ManPath.transfer();
         LionPath.clear();
         InvisiblePath.clear();
@@ -264,6 +271,7 @@ public class VisualizedCoreController extends CoreController {
         SequentialTransition fullTransition = new SequentialTransition();
         fullTransition.getChildren().addAll(fadeIn, allPathTransition);
         fullTransition.play();
+        fullTransition.setOnFinished(event -> onGoingAnimationBlockNew = false);
 
         return allPaths;
     }

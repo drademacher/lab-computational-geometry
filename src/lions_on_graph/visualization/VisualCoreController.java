@@ -22,7 +22,7 @@ public class VisualCoreController extends CoreController {
         super();
     }
 
-    public void removeAllShapes() {
+    public void cleanUp() {
         mapVertices.forEach(Vertex::delete);
         mapVertices.clear();
 
@@ -40,8 +40,6 @@ public class VisualCoreController extends CoreController {
 
         mapStepPreviews.forEach(Vertex::delete);
         mapStepPreviews.clear();
-
-
     }
 
     /* ****************************
@@ -84,7 +82,7 @@ public class VisualCoreController extends CoreController {
 
     public void deleteVertex(Point vertexCoordinates) {
 
-        mapVertices.stream().filter(vertex -> vertex.getPosition().equals(vertexCoordinates)).forEach(vertex -> vertex.delete());
+        mapVertices.stream().filter(vertex -> vertex.getPosition().equals(vertexCoordinates)).forEach(Vertex::delete);
         mapVertices.removeIf(vertex -> vertex.getPosition().equals(vertexCoordinates));
 
         mapEdges.stream().filter(edge -> (edge.getPositionTo().equals(vertexCoordinates)

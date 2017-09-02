@@ -8,7 +8,6 @@ import lions_on_graph.core.strategies.ManStrategies.*;
 import lions_on_graph.core.strategies.StrategyLion;
 import lions_on_graph.core.strategies.StrategyMan;
 import util.Global;
-import lions_on_graph.visualization.VisualCoreController;
 import util.Point;
 
 import java.io.*;
@@ -20,24 +19,16 @@ public class CoreController {
     private ArrayList<Lion> lions = new ArrayList<>();
     private ArrayList<Man> men = new ArrayList<>();
     private GraphController graph;
-//    private VisualCoreController visualCoreController;
 
     public CoreController() {
         this.graph = new GraphController();
-//        this.visualCoreController = new VisualCoreController(this);
     }
-
-//    public VisualCoreController getVisualCoreController() {
-//        return visualCoreController;
-//    }
 
     public void createVertex(Point coordinate) {
         if (coordinate == null) {
             return;
         }
         this.graph.createVertex(coordinate);
-
-//        this.visualCoreController.createVertex(coordinate);
     }
 
     public void relocateVertex(Point vertexCoordinates, Point newCoordinate) {
@@ -50,8 +41,6 @@ public class CoreController {
         }
 
         this.graph.relocateVertex(vertex, newCoordinate);
-
-//        this.visualCoreController.relocateVertex(vertex, newCoordinate);
     }
 
     /* ****************************
@@ -166,10 +155,6 @@ public class CoreController {
         return this.graph.getBigVertexByCoordinate(coordinate);
     }
 
-//    public SmallVertex getSmallVertexByCoordinate(Point coordinate) {
-//        return this.graph.getSmallVertexByCoordinate(coordinate);
-//    }
-
     public Vertex getVertexByCoordinate(Point coordinate) {
         return this.graph.getVertexByCoordinate(coordinate);
     }
@@ -186,22 +171,6 @@ public class CoreController {
         return graph;
     }
 
-//    public BigVertex getBigVertexById(int id) {
-//        return this.graph.getBigVertexById(id);
-//    }
-//
-//    public ArrayList<BigVertex> getBigVertices() {
-//        return this.graph.getBigVertices();
-//    }
-//
-//    public ArrayList<SmallVertex> getSmallVertices() {
-//        return this.graph.getSmallVertices();
-//    }
-//
-//    public ArrayList<Edge> getEdges() {
-//        return this.graph.getEdges();
-//    }
-
     public int getDefaultEdgeWeight() {
         return GraphController.getDefaultEdgeWeight();
     }
@@ -212,14 +181,6 @@ public class CoreController {
             changeEdgeWeight(edge.getStartCoordinates(), edge.getEndCoordinates(), weight);
         }
     }
-
-//    private boolean isEntityOnEdge(Edge edge) {
-//        return isManOnEdge(edge) || isLionOnEdge(edge);
-//    }
-//
-//    private boolean isEntityOnVertex(Point vertexCoordinate) {
-//        return isManOnVertex(vertexCoordinate) || isLionOnVertex(vertexCoordinate);
-//    }
 
     /* ****************************
      *
@@ -279,21 +240,6 @@ public class CoreController {
         return false;
     }
 
-//    private boolean isManOnEdge(Edge edge) {
-//        if (edge == null) {
-//            return false;
-//        }
-//
-//        for (Man man : men) {
-//            for (Vertex vertex : edge.getEdgeVertices()) {
-//                if (man.getCurrentPosition().equals(vertex)) {
-//                    return true;
-//                }
-//            }
-//        }
-//        return false;
-//    }
-
     public void setLion(Point vertexCoorinate) {
         if (vertexCoorinate == null) {
             return;
@@ -307,22 +253,6 @@ public class CoreController {
         lions.add(lion);
         setLionStrategy(lion.getCoordinates(), Lion.getDefaultStrategy());
     }
-
-//    public void setNextLionStep(Point lionCoordinates, Point nextStepCoordinates) {
-//        if (lionCoordinates == null || nextStepCoordinates == null) {
-//            return;
-//        }
-//        Vertex vertex = getVertexByCoordinate(nextStepCoordinates);
-//        if (vertex == null) {
-//            return;
-//        }
-//        Lion lion = getLionByCoordinate(lionCoordinates);
-//        if (lion == null) {
-//            return;
-//        }
-//        lion.setNextPosition(vertex);
-//        this.visualCoreController.updateStepPreviewsAndChoicePoints();
-//    }
 
     public boolean isLionOnVertex(Point vertexCoorinate) {
         if (vertexCoorinate == null) {
@@ -340,21 +270,6 @@ public class CoreController {
         }
         return false;
     }
-
-//    private boolean isLionOnEdge(Edge edge) {
-//        if (edge == null) {
-//            return false;
-//        }
-//
-//        for (Lion lion : lions) {
-//            for (Vertex vertex : edge.getEdgeVertices()) {
-//                if (lion.getCurrentPosition().equals(vertex)) {
-//                    return true;
-//                }
-//            }
-//        }
-//        return false;
-//    }
 
     public boolean isLionDangerOnVertex(Point vertexCoorinate) {
         if (vertexCoorinate == null) {
@@ -429,12 +344,6 @@ public class CoreController {
         man.setCurrentPosition(vertex);
     }
 
-//    private void relocateAllMen() {
-//        for (Man man : men) {
-//            visualCoreController.relocateMan(man);
-//        }
-//    }
-
     public void relocateLion(Point lionCoordinate, Point vertexCoordinate) {
         if (lionCoordinate == null || vertexCoordinate == null) {
             return;
@@ -448,12 +357,6 @@ public class CoreController {
         lion.setCurrentPosition(vertex);
 
     }
-
-//    private void relocateAllLions() {
-//        for (Lion lion : lions) {
-//            visualCoreController.relocateLion(lion);
-//        }
-//    }
 
     public ArrayList<Man> getMen() {
         return men;
@@ -696,10 +599,6 @@ public class CoreController {
         Man.setMinimumDistance(distance);
     }
 
-//    public void removeManDistance() {
-//        Man.removeDistance();
-//    }
-
     public boolean isEditMode() {
         return editMode;
     }
@@ -719,17 +618,19 @@ public class CoreController {
      *
      * ****************************/
 
+    public void cleanUp(){
+
+    }
+
     public void setEmptyGraph() {
         this.graph = new GraphController();
-//        this.visualCoreController.removeAllShapes();
-//        this.visualCoreController = new VisualCoreController(this);
+        cleanUp();
         this.men = new ArrayList<>();
         this.lions = new ArrayList<>();
     }
 
     public void setDefaultGraph1() {
         setEmptyGraph();
-
 
         this.createVertex(new Point(50, 20));
         this.createVertex(new Point(190, 20));
@@ -901,23 +802,6 @@ public class CoreController {
         this.setMan(new Point(0, 0));
     }
 
-//    public void setDefaultGraph4() {
-//        setEmptyGraph();
-//        this.setDefaultGraph1();
-//    }
-//
-//    public void setDefaultGraph5() {
-//        setEmptyGraph();
-//
-//        this.setDefaultGraph1();
-//    }
-//
-//    public void setRandomGraph() {
-//        setEmptyGraph();
-//        // TODO: implement random graph algorithm
-//        this.setDefaultGraph1();
-//    }
-
     public void setGraphFromFile(File file) throws Exception {
         setEmptyGraph();
         try {
@@ -936,7 +820,7 @@ public class CoreController {
             }
 
             // valid version, read file
-            for (int y = 0; (currentLine = br.readLine()) != null; y++) { //Read in MapRow
+            while((currentLine = br.readLine()) != null) { //Read in MapRow
 //                System.out.println(currentLine);
 
                 lineElements = currentLine.split("##");
@@ -980,17 +864,8 @@ public class CoreController {
     }
 
     public void saveGraphToFile(File file) {
-        ArrayList<Point> bigVertexCoordinates = new ArrayList<>();
-        for (BigVertex vertex : this.graph.getBigVertices()) {
-            bigVertexCoordinates.add(vertex.getCoordinates());
-        }
-        ArrayList<Point[]> edgesCoordinates = new ArrayList<>();
-        for (Edge edge : this.graph.getEdges()) {
-            edgesCoordinates.add(new Point[]{edge.getStartCoordinates(), edge.getEndCoordinates()});
-        }
 
-
-        BufferedWriter bufferedWriter = null;
+        BufferedWriter bufferedWriter;
         try {
 
             bufferedWriter = new BufferedWriter(new FileWriter(file));

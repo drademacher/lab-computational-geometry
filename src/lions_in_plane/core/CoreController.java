@@ -21,7 +21,6 @@ public class CoreController {
 
     private boolean editMode = true;
 
-    private final int STEPS_TO_GO_AFTER_ESCAPE = 50;
     private double defaultMenEpsilon = 0.1;
     private double defaultLionsSpeed = 1;
     private double defaultLionsRange = 5;
@@ -141,7 +140,6 @@ public class CoreController {
             }
         } catch (Exception e) {
             e.fillInStackTrace();
-            System.out.println(e);
         }
     }
 
@@ -239,6 +237,7 @@ public class CoreController {
             lionPaths.clear();
             this.plane.resetManPath();
 
+            int STEPS_TO_GO_AFTER_ESCAPE = 50;
             int stepsToGo = STEPS_TO_GO_AFTER_ESCAPE;
             while(stepsToGo > 0){
 
@@ -324,11 +323,11 @@ public class CoreController {
         plane.getLionByCoordinate(coordinates).setRange(range);
     }
 
-    public void setManEpsilon(double epsilon) {
+    private void setManEpsilon(double epsilon) {
         plane.getMan().setEpsilon(epsilon);
     }
 
-    public void setLionSpeed(Point coordinates, double speed) {
+    private void setLionSpeed(Point coordinates, double speed) {
         plane.getLionByCoordinate(coordinates).setSpeed(speed);
         setMaxLionSpeed(speed);
     }
@@ -337,7 +336,7 @@ public class CoreController {
         plane.shuffleLionOrder();
     }
 
-    public void setManStrategy(StrategyEnumMan strategyEnum) {
+    private void setManStrategy(StrategyEnumMan strategyEnum) {
         plane.setManStrategy(strategyEnum);
     }
 
@@ -346,7 +345,7 @@ public class CoreController {
 
     }
 
-    public void setLionStrategy(Point coordinates, StrategyEnumLion strategyEnum) {
+    private void setLionStrategy(Point coordinates, StrategyEnumLion strategyEnum) {
         plane.setLionStrategy(coordinates, strategyEnum);
     }
 

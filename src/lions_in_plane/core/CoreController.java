@@ -92,6 +92,7 @@ public class CoreController {
 
     public void setRandomConfiguration() {
         setEmptyGraph();
+        createMan(new Point(Random.getRandomInteger(100) * 5, Random.getRandomInteger(100) * 5));
         for (int i = 0; i < 16; i++) {
             createLion(new Point(Random.getRandomInteger(100) * 5, Random.getRandomInteger(100) * 5));
         }
@@ -213,6 +214,11 @@ public class CoreController {
         }
     }
 
+    private void resetInductionsStep(){
+        maxInductionsStep = 1;
+        allPaths = new AllPaths();
+    }
+
     public AllPaths simulateStep() {
 
         if(allPaths.finished){
@@ -288,6 +294,7 @@ public class CoreController {
     }
 
     public void setEditMode(boolean editMode) {
+        resetInductionsStep();
         this.editMode = editMode;
     }
 

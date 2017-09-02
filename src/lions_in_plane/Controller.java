@@ -10,6 +10,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import lions_in_plane.core.plane.AllPaths;
 import lions_in_plane.core.strategies.lion.StrategyEnumLion;
 import lions_in_plane.core.strategies.man.StrategyEnumMan;
 import lions_in_plane.visualization.*;
@@ -323,8 +324,8 @@ class Controller {
                     @Override
                     public void run() {
                         Platform.runLater(() -> {
-                            boolean animationFinished = coreController.simulateStep().finished;
-                            if (animationFinished) {
+                            AllPaths animation = coreController.simulateStep();
+                            if (animation != null && animation.finished) {
                                 activePlaying.set(false);
                             }
                         });

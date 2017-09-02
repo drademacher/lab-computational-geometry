@@ -5,7 +5,6 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.shape.Circle;
-import lions_on_graph.core.CoreController;
 import util.ContextMenuHolder;
 import util.Point;
 import util.ZoomScrollPane;
@@ -15,11 +14,11 @@ public class BigVertex implements Vertex {
     private static Group shapeGroup;
 
     private Circle shape;
-    private CoreController coreController;
+    private VisualCoreController coreController;
     private Point coordinates;
 
 
-    public BigVertex(CoreController coreController, Point startCoordinates) {
+    public BigVertex(VisualCoreController coreController, Point startCoordinates) {
         this.coreController = coreController;
         this.coordinates = startCoordinates;
 

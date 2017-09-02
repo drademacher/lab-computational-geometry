@@ -162,7 +162,7 @@ public class CoreController {
 //        relocateAllMen();
     }
 
-    protected BigVertex getBigVertexByCoordinate(Point coordinate) {
+    public BigVertex getBigVertexByCoordinate(Point coordinate) {
         return this.graph.getBigVertexByCoordinate(coordinate);
     }
 
@@ -170,12 +170,16 @@ public class CoreController {
 //        return this.graph.getSmallVertexByCoordinate(coordinate);
 //    }
 
-    protected Vertex getVertexByCoordinate(Point coordinate) {
+    public Vertex getVertexByCoordinate(Point coordinate) {
         return this.graph.getVertexByCoordinate(coordinate);
     }
 
-    protected Edge getEdgeByVertices(BigVertex vertex1, BigVertex vertex2) {
+    public Edge getEdgeByVertices(BigVertex vertex1, BigVertex vertex2) {
         return this.graph.getEdgeByVertices(vertex1, vertex2);
+    }
+
+    protected Edge getEdgeByPoints(Point point1, Point point2){
+        return getEdgeByVertices(getBigVertexByCoordinate(point1), getBigVertexByCoordinate(point2));
     }
 
     protected GraphController getGraph() {
@@ -1033,10 +1037,15 @@ public class CoreController {
     public boolean simulateStep() {
 
         for (Man man : this.getMen()) {
-            man.goToNextPosition();
+            Vertex oldPosition = man.getCurrentPosition();
+            Vertex newPosition = man.goToNextPosition();
+            relocateMan(oldPosition.getCoordinates(), newPosition.getCoordinates());
         }
         for (Lion lion : this.getLions()) {
-            lion.goToNextPosition();
+            Vertex oldPosition = lion.getCurrentPosition();
+            Vertex newPosition = lion.goToNextPosition();
+            relocateLion(oldPosition.getCoordinates(), newPosition.getCoordinates());
+
         }
 
         if (lionsHaveWon()) {

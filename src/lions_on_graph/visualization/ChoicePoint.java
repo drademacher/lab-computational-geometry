@@ -12,11 +12,11 @@ public class ChoicePoint {
     private static Group shapeGroup = new Group();
 
     private Circle shape;
-    private CoreController coreController;
+    private VisualCoreController coreController;
     private Point choice;
     private Entity entity;
 
-    public ChoicePoint(CoreController coreController, Entity entity, Point startCoordinates, Color color) {
+    public ChoicePoint(VisualCoreController coreController, Entity entity, Point startCoordinates, Color color) {
         this.coreController = coreController;
         this.entity = entity;
         this.choice = startCoordinates;
@@ -26,7 +26,6 @@ public class ChoicePoint {
 
         shape.setOnMouseClicked(event -> {
             entity.setNextPosition(coreController.getVertexByCoordinate(choice));
-            coreController.getVisualCoreController().updateStepPreviewsAndChoicePoints();
         });
     }
 

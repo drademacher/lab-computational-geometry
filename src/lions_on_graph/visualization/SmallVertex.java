@@ -13,11 +13,11 @@ public class SmallVertex implements Vertex {
     private static Group shapeGroup = new Group();
 
     private Circle shape;
-    private CoreController coreController;
+    private VisualCoreController coreController;
     private Point coordinates;
     private Edge edge;
 
-    public SmallVertex(CoreController coreController, Point startCoordinates, Edge edge) {
+    public SmallVertex(VisualCoreController coreController, Point startCoordinates, Edge edge) {
 
         this.coreController = coreController;
         this.coordinates = startCoordinates;

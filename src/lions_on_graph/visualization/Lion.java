@@ -27,10 +27,10 @@ public class Lion implements Entity {
     private static Group shapeGroup = new Group();
 
     private Circle shape;
-    private CoreController coreController;
+    private VisualCoreController coreController;
     private Point coordinates;
 
-    public Lion(CoreController coreController, Point startCcoordinates) {
+    public Lion(VisualCoreController coreController, Point startCcoordinates) {
 
         this.coreController = coreController;
         this.coordinates = startCcoordinates;
@@ -126,7 +126,6 @@ public class Lion implements Entity {
 
             manualStrategyButton.setOnAction(event2 -> {
                 coreController.setLionStrategy(coordinates, CoreController.LionStrategy.Manually);
-                coreController.getVisualCoreController().updateStepPreviewsAndChoicePoints();
             });
 
             contextMenu.getItems().addAll(item0, item1, strategyMenu, edgeMenu, new SeparatorMenuItem(), closeItem);

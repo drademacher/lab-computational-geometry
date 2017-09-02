@@ -15,12 +15,12 @@ import static lions_on_graph.visualization.Constants.COLOR_EDGE;
 public class Edge {
     private static Group shapeGroup = new Group();
 
-    private CoreController coreController;
+    private VisualCoreController coreController;
     private Line shape;
     private Point from;
     private Point to;
 
-    public Edge(CoreController coreController, Point startFrom, Point startTo) {
+    public Edge(VisualCoreController coreController, Point startFrom, Point startTo) {
 
         this.coreController = coreController;
         this.from = startFrom;

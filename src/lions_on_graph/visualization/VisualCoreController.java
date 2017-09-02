@@ -5,8 +5,6 @@ import lions_on_graph.core.graph.Connection;
 import util.Point;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import static lions_on_graph.visualization.Constants.*;
 
@@ -15,51 +13,32 @@ public class VisualCoreController extends CoreController {
     private ArrayList<Vertex> mapVertices = new ArrayList<>();
     private ArrayList<Entity> mapEntities = new ArrayList<>();
     private ArrayList<Edge> mapEdges = new ArrayList<>();
-    private Map<Man, ArrayList<Range>> mapManRange = new HashMap<>();
-    private Map<Lion, ArrayList<Range>> mapLionRange = new HashMap<>();
-    private Map<Entity, Vertex> mapStepPreviews = new HashMap<>();
-//    private CoreController coreController;
+    private ArrayList<Range> mapManRange = new ArrayList<>();
+    private ArrayList<Range> mapLionRange = new ArrayList<>();
+    private ArrayList<Vertex> mapStepPreviews = new ArrayList<>();
 
-    public VisualCoreController(/*CoreController coreController*/) {
+
+    public VisualCoreController() {
         super();
-//        this.coreController = coreController;
     }
 
     public void removeAllShapes() {
-        mapVertices.forEach(vertex -> vertex.delete());
+        mapVertices.forEach(Vertex::delete);
         mapVertices.clear();
 
-        mapEntities.forEach(entity -> entity.delete());
+        mapEntities.forEach(Entity::delete);
         mapEntities.clear();
 
-        mapEdges.forEach(edge -> edge.delete());
+        mapEdges.forEach(Edge::delete);
         mapEdges.clear();
 
-        for (Map.Entry<lions_on_graph.core.entities.Man, ArrayList<Range>> entry : mapManRange.entrySet()) {
-            ArrayList<Range> shapeList = entry.getValue();
-            if (shapeList == null) {
-                shapeList = new ArrayList<>();
-            }
-            for (Range shape : shapeList) {
-                shape.delete();
-            }
-        }
+        mapManRange.forEach(Range::delete);
+        mapManRange.clear();
+
+        mapLionRange.forEach(Range::delete);
         mapLionRange.clear();
 
-        for (Map.Entry<lions_on_graph.core.entities.Lion, ArrayList<Range>> entry : mapLionRange.entrySet()) {
-            ArrayList<Range> shapeList = entry.getValue();
-            if (shapeList == null) {
-                shapeList = new ArrayList<>();
-            }
-            for (Range shape : shapeList) {
-                shape.delete();
-            }
-        }
-        mapLionRange.clear();
-
-        for (Map.Entry<lions_on_graph.core.entities.Entity, Vertex> entry : mapStepPreviews.entrySet()) {
-            entry.getValue().delete();
-        }
+        mapStepPreviews.forEach(Vertex::delete);
         mapStepPreviews.clear();
 
 
@@ -85,11 +64,13 @@ public class VisualCoreController extends CoreController {
 //        for (lions_on_graph.core.graph.Edge edge : vertex.getEdges()) {
 //            Edge edgeShape = mapEdges.get(edge);
 //            edgeShape.relocate(edge.getVertices()[0].getCoordinates(), edge.getVertices()[1].getCoordinates());
+
+
 //TODO
-            for (lions_on_graph.core.graph.SmallVertex smallVertex : edge.getEdgeVertices()) {
-                Vertex smalLVertexShape = mapVertices.get(smallVertex);
-                smalLVertexShape.relocate(smallVertex.getCoordinates());
-            }
+//        for (lions_on_graph.core.graph.SmallVertex smallVertex : edge.getEdgeVertices()) {
+//            Vertex smalLVertexShape = mapVertices.get(smallVertex);
+//            smalLVertexShape.relocate(smallVertex.getCoordinates());
+//        }
 //        }
 
         mapEntities.stream().filter(entity -> entity.getPosition().equals(vertexCoordinates)).forEach(entity -> entity.relocate(newCoordinate));
@@ -106,24 +87,27 @@ public class VisualCoreController extends CoreController {
         mapVertices.stream().filter(vertex -> vertex.getPosition().equals(vertexCoordinates)).forEach(vertex -> vertex.delete());
         mapVertices.removeIf(vertex -> vertex.getPosition().equals(vertexCoordinates));
 
+        mapEdges.stream().filter(edge -> (edge.getPositionTo().equals(vertexCoordinates)
+                || edge.getPositionFrom().equals(vertexCoordinates))).forEach(Edge::delete);
+        mapEdges.removeIf(edge -> (edge.getPositionTo().equals(vertexCoordinates)
+                || edge.getPositionFrom().equals(vertexCoordinates)));
 
-        for (lions_on_graph.core.graph.Edge edge : vertex.getEdges()) {
-            Edge edgeShape = mapEdges.get(edge);
-            mapEdges.remove(edge);
-            edgeShape.delete();
 
+        for (lions_on_graph.core.graph.Edge edge : getBigVertexByCoordinate(vertexCoordinates).getEdges()) {
             for (lions_on_graph.core.graph.SmallVertex smallVertex : edge.getEdgeVertices()) {
-                Vertex smallVertexShape = mapVertices.get(smallVertex);
-                mapVertices.remove(smallVertex);
-                smallVertexShape.delete();
+
+
+                mapVertices.stream().filter(vertex -> vertex.equals(smallVertex)).forEach(Vertex::delete);
+                mapVertices.removeIf(vertex -> vertex.equals(smallVertex));
+
             }
         }
 
         super.deleteVertex(vertexCoordinates);
 
 
-        this.visualCoreController.updateAllLionRanges(lions);
-        this.visualCoreController.updateAllManRanges(men);
+        updateManRanges();
+        updateLionRanges();
     }
 
     public void createEdge(Point vertex1Coordinates, Point vertex2Coordinates) {
@@ -134,16 +118,14 @@ public class VisualCoreController extends CoreController {
 
         super.createEdge(vertex1Coordinates, vertex2Coordinates, weight);
 
-        mapEdges.add(new Edge(this, vertex1Coordinates, vertex2Coordinates));
+        Edge edge = new Edge(this, vertex1Coordinates, vertex2Coordinates);
+        mapEdges.add(edge);
 
-        //TODO
-        for (lions_on_graph.core.graph.SmallVertex smallVertex : edge.getEdgeVertices()) {
-            SmallVertex smallVertexShape = new SmallVertex(this, smallVertex.getCoordinates());
-            mapVertices.put(smallVertex, smallVertexShape);
-        }
+        getEdgeByPoints(vertex1Coordinates, vertex2Coordinates).getEdgeVertices().forEach(smallVertex -> mapVertices.add(new SmallVertex(this, smallVertex.getCoordinates(), edge)));
 
-        this.visualCoreController.updateAllLionRanges(lions);
-        this.visualCoreController.updateAllManRanges(men);
+
+        updateManRanges();
+        updateLionRanges();
     }
 
     public void removeEdge(Point vertex1Coordinates, Point vertex2Coordinates) {
@@ -153,23 +135,23 @@ public class VisualCoreController extends CoreController {
         mapEdges.stream().filter
                 (edge ->
                         ((edge.getPositionTo().equals(vertex1Coordinates) && edge.getPositionFrom().equals(vertex2Coordinates))
-                        || (edge.getPositionTo().equals(vertex2Coordinates) && edge.getPositionFrom().equals(vertex1Coordinates))))
-                .forEach(edge -> edge.delete());
+                                || (edge.getPositionTo().equals(vertex2Coordinates) && edge.getPositionFrom().equals(vertex1Coordinates))))
+                .forEach(Edge::delete);
 
         mapEdges.removeIf(edge ->
                 ((edge.getPositionTo().equals(vertex1Coordinates) && edge.getPositionFrom().equals(vertex2Coordinates))
-                || (edge.getPositionTo().equals(vertex2Coordinates) && edge.getPositionFrom().equals(vertex1Coordinates))));
+                        || (edge.getPositionTo().equals(vertex2Coordinates) && edge.getPositionFrom().equals(vertex1Coordinates))));
 
 
-        //TODO
-        for (lions_on_graph.core.graph.SmallVertex smallVertex : edge.getEdgeVertices()) {
-            Vertex smalLVertexShape = mapVertices.get(smallVertex);
-            mapVertices.remove(smallVertex);
-            smalLVertexShape.delete();
+        for (lions_on_graph.core.graph.SmallVertex smallVertex : getEdgeByPoints(vertex1Coordinates, vertex2Coordinates).getEdgeVertices()) {
+            mapVertices.stream().filter(vertex -> vertex.equals(smallVertex)).forEach(Vertex::delete);
+            mapVertices.removeIf(vertex -> vertex.equals(smallVertex));
+
         }
 
-        this.visualCoreController.updateAllLionRanges(lions);
-        this.visualCoreController.updateAllManRanges(men);
+
+        updateManRanges();
+        updateLionRanges();
     }
 
     @Override
@@ -179,8 +161,8 @@ public class VisualCoreController extends CoreController {
         createEdge(vertex1Coordinates, vertex2Coordinates, weight);
 //        super.changeEdgeWeight(vertex1Coordinates, vertex2Coordinates, weight);
 
-        this.visualCoreController.updateAllLionRanges(lions);
-        this.visualCoreController.updateAllManRanges(men);
+        updateManRanges();
+        updateLionRanges();
     }
 
     /* ****************************
@@ -193,20 +175,20 @@ public class VisualCoreController extends CoreController {
 
         super.setMan(vertexCoorinate);
 
-        mapEntities.add(new Man(this, vertexCoorinate);
-        updateManRange(man);
+        mapEntities.add(new Man(this, vertexCoorinate));
+        updateManRanges();
 
-        this.visualCoreController.updateStepPreviewsAndChoicePoints();
+        updateStepPreviewsAndChoicePoints();
     }
 
     public void setLion(Point vertexCoorinate) {
 
         super.setLion(vertexCoorinate);
 
-        mapEntities.add(new Lion(this, vertexCoorinate);
-        updateLionRange(lion);
+        mapEntities.add(new Lion(this, vertexCoorinate));
+        updateLionRanges();
 
-        this.visualCoreController.updateStepPreviewsAndChoicePoints();
+        updateStepPreviewsAndChoicePoints();
     }
 
     public void relocateMan(Point manCoordinate, Point vertexCoordinate) {
@@ -214,11 +196,10 @@ public class VisualCoreController extends CoreController {
         super.relocateMan(manCoordinate, vertexCoordinate);
 
 
+        updateManRanges();
 
-        updateManRange(man);
 
-
-        this.visualCoreController.updateStepPreviewsAndChoicePoints();
+        updateStepPreviewsAndChoicePoints();
     }
 
     public void relocateLion(Point lionCoordinate, Point vertexCoordinate) {
@@ -226,184 +207,114 @@ public class VisualCoreController extends CoreController {
         super.relocateLion(lionCoordinate, vertexCoordinate);
 
         mapEntities.stream().filter(entity -> entity.getPosition().equals(lionCoordinate)).forEach(entity -> entity.relocate(vertexCoordinate));
-        updateLionRange(lion);
-
-        this.visualCoreController.updateStepPreviewsAndChoicePoints();
+        updateLionRanges();
+        updateStepPreviewsAndChoicePoints();
     }
 
     public void removeMan(Point manCoordinate) {
 
-        mapEntities.stream().filter(entity -> entity.getPosition().equals(manCoordinate)).forEach(entity -> entity.delete());
+        mapEntities.stream().filter(entity -> entity.getPosition().equals(manCoordinate)).forEach(Entity::delete);
         mapEntities.removeIf(entity -> entity.getPosition().equals(manCoordinate));
 
         super.removeMan(manCoordinate);
-        this.visualCoreController.updateStepPreviewsAndChoicePoints();
+        updateStepPreviewsAndChoicePoints();
     }
 
     public void removeLion(Point lionCoordinate) {
 
-        mapEntities.stream().filter(entity -> entity.getPosition().equals(lionCoordinate)).forEach(entity -> entity.delete());
+        mapEntities.stream().filter(entity -> entity.getPosition().equals(lionCoordinate)).forEach(Entity::delete);
         mapEntities.removeIf(entity -> entity.getPosition().equals(lionCoordinate));
 
         super.removeLion(lionCoordinate);
-        this.visualCoreController.updateStepPreviewsAndChoicePoints();
+        updateStepPreviewsAndChoicePoints();
     }
 
     @Override
     public void setManStrategy(Point manCoordinate, ManStrategy strategy) {
         super.setManStrategy(manCoordinate, strategy);
 
-        visualCoreController.updateStepPreviewsAndChoicePoints();
+        updateStepPreviewsAndChoicePoints();
     }
 
     @Override
     public void setLionStrategy(Point lionCoordinate, LionStrategy strategy) {
         super.setLionStrategy(lionCoordinate, strategy);
 
-        visualCoreController.updateStepPreviewsAndChoicePoints();
+        updateStepPreviewsAndChoicePoints();
     }
 
     @Override
     public void setAllManStrategy(ManStrategy strategy) {
         super.setAllManStrategy(strategy);
 
-        visualCoreController.updateStepPreviewsAndChoicePoints();
+        updateStepPreviewsAndChoicePoints();
     }
 
     @Override
     public void setAllLionStrategy(LionStrategy strategy) {
         super.setAllLionStrategy(strategy);
 
-        visualCoreController.updateStepPreviewsAndChoicePoints();
+        updateStepPreviewsAndChoicePoints();
     }
 
     @Override
     public void setManRange(Point manCoordinate, int range) {
         super.setManRange(manCoordinate, range);
 
-        visualCoreController.updateManRange(man);
+        updateManRanges();
     }
 
-    public void updateManRange(Man man) {
-        ArrayList<Range> rangeVertices = mapManRange.get(man);
-        if (rangeVertices == null) {
-            rangeVertices = new ArrayList<>();
-        }
+    private void updateManRanges() {
 
-//        rangeVertices.clear();
-//        for(){
-//            rangeVertices.add(new Range(coreController, new Point(0, 0), true));
-//        }
+        mapManRange.forEach(Range::delete);
+        mapManRange.clear();
 
-        while (man.getRangeVertices().size() > rangeVertices.size()) {
-
-        }
-        while (man.getRangeVertices().size() < rangeVertices.size()) {
-            rangeVertices.get(0).delete();
-            rangeVertices.remove(0);
-        }
-
-        //update
-        for (int i = 0; i < rangeVertices.size(); i++) {
-            rangeVertices.get(i).relocate(man.getRangeVertices().get(i).getCoordinates());
-        }
-
-        mapManRange.put(man, rangeVertices);
-    }
-
-    public void updateAllManRanges(ArrayList<lions_on_graph.core.entities.Man> men) {
-        for (lions_on_graph.core.entities.Man man : men) {
-            updateManRange(man);
-        }
+        getMen().forEach(man -> man.getRangeVertices().forEach(vertex -> mapManRange.add(new Range(this, vertex.getCoordinates(), true))));
     }
 
     @Override
     public void setLionRange(Point lionCoordinate, int range) {
         super.setLionRange(lionCoordinate, range);
 
-        visualCoreController.updateLionRange(lion);
+        updateLionRanges();
     }
 
-    public void updateLionRange(lions_on_graph.core.entities.Lion lion) {
-        ArrayList<Range> rangeVertices = mapLionRange.get(lion);
-        if (rangeVertices == null) {
-            rangeVertices = new ArrayList<>();
-        }
+    private void updateLionRanges() {
 
-        while (lion.getRangeVertices().size() > rangeVertices.size()) {
-            rangeVertices.add(new Range(coreController, new Point(0, 0), false));
-        }
-        while (lion.getRangeVertices().size() < rangeVertices.size()) {
-            rangeVertices.get(0).delete();
-            rangeVertices.remove(0);
-        }
+        mapLionRange.forEach(Range::delete);
+        mapLionRange.clear();
 
-        //update
-        for (int i = 0; i < rangeVertices.size(); i++) {
-            rangeVertices.get(i).relocate(lion.getRangeVertices().get(i).getCoordinates());
-        }
-
-        mapLionRange.put(lion, rangeVertices);
+        getLions().forEach(lion -> lion.getRangeVertices().forEach(vertex -> mapLionRange.add(new Range(this, vertex.getCoordinates()))));
     }
 
-    public void updateAllLionRanges(ArrayList<lions_on_graph.core.entities.Lion> lions) {
-        for (lions_on_graph.core.entities.Lion lion : lions) {
-            updateLionRange(lion);
-        }
-    }
 
-    public void updateStepPreviewsAndChoicePoints() {
+    private void updateStepPreviewsAndChoicePoints() {
+
+        //TODO flush and create new....
         // step previews
-        for (Map.Entry<lions_on_graph.core.entities.Entity, Vertex> entry : mapStepPreviews.entrySet()) {
-            lions_on_graph.core.entities.Entity entity = entry.getKey();
-            Vertex shapedPreview = entry.getValue();
+        mapStepPreviews.forEach(Vertex::delete);
+        mapStepPreviews.clear();
 
-            shapedPreview.delete();
-        }
-        mapStepPreviews.clear();//TODO dont flush and create new
+        getMen().forEach(man -> mapStepPreviews.add(new StepPreview(this, man.getNextPosition().getCoordinates())));
+        getLions().forEach(lion -> mapStepPreviews.add(new StepPreview(this, lion.getNextPosition().getCoordinates())));
 
-        for (lions_on_graph.core.entities.Man man : this.coreController.getMen()) {
-            mapStepPreviews.put(man, new StepPreview(coreController, man.getNextPosition().getCoordinates()));
-        }
-
-        for (lions_on_graph.core.entities.Lion lion : this.coreController.getLions()) {
-            mapStepPreviews.put(lion, new StepPreview(coreController, lion.getNextPosition().getCoordinates()));
-        }
 
         // choice points
-        // TODO: jens, meinst du die API ist irgendwie schön designt ist?
-
-
         ChoicePoint.clear();
-        for (lions_on_graph.core.entities.Man man : coreController.getMenWithManualInput()) {
-            new ChoicePoint(coreController, man, man.getCoordinates(), COLOR_MAN);
+        for (lions_on_graph.core.entities.Man man : getMenWithManualInput()) {
+            new ChoicePoint(this, man, man.getCoordinates(), COLOR_MAN);
             for (Connection con : man.getCurrentPosition().getConnections()) {
                 lions_on_graph.core.graph.Vertex choicePoint = con.getNeighbor(man.getCurrentPosition());
-                new ChoicePoint(coreController, man, choicePoint.getCoordinates(), COLOR_CHOICEPOINT);
+                new ChoicePoint(this, man, choicePoint.getCoordinates(), COLOR_CHOICEPOINT);
             }
         }
 
-        for (lions_on_graph.core.entities.Lion lion : coreController.getLionsWithManualInput()) {
-            new ChoicePoint(coreController, lion, lion.getCoordinates(), COLOR_LION);
+        for (lions_on_graph.core.entities.Lion lion : getLionsWithManualInput()) {
+            new ChoicePoint(this, lion, lion.getCoordinates(), COLOR_LION);
             for (Connection con : lion.getCurrentPosition().getConnections()) {
                 lions_on_graph.core.graph.Vertex choicePoint = con.getNeighbor(lion.getCurrentPosition());
-                new ChoicePoint(coreController, lion, choicePoint.getCoordinates(), COLOR_CHOICEPOINT);
+                new ChoicePoint(this, lion, choicePoint.getCoordinates(), COLOR_CHOICEPOINT);
             }
         }
-    }
-
-    @Override
-    public boolean simulateStep() {
-        boolean lionsHaveWon = super.simulateStep();
-
-        for (Man man : this.getMen()) {
-            visualCoreController.relocateMan(man);
-        }
-        for (Lion lion : this.getLions()) {
-            visualCoreController.relocateLion(lion);
-        }
-        this.visualCoreController.updateStepPreviewsAndChoicePoints();
-
-        return lionsHaveWon;
     }
 }

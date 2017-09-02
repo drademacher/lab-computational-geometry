@@ -106,6 +106,9 @@ public class VisualizedCoreController extends CoreController {
     public void createMan(Point coordinates) {
         super.createMan(coordinates);
 
+        if(manPoint != null){
+            return;
+        }
         manPoint = new Man(coordinates);
     }
 

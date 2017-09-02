@@ -31,7 +31,7 @@ class Controller {
     private ZoomScrollPane zoomScrollPane;
     private HBox buttonBar;
     private Button modeToggleButton = new Button("Edit Mode");
-    private Group entityShapes = new Group(), lionRangeShapes = new Group(), convexHullShapes = new Group(), oldLionsPathShapes = new Group(), currentManPathShapes = new Group(), oldManPathShapes = new Group(), boundingPathShapes = new Group(), boundingPointsShapes = new Group();
+    private Group entityShapes = new Group(), lionRangeShapes = new Group(), convexHullShapes = new Group(), currentLionsPathShapes = new Group(), oldLionsPathShapes = new Group(), currentManPathShapes = new Group(), oldManPathShapes = new Group(), boundingPathShapes = new Group(), boundingPointsShapes = new Group();
     private Button playAnimationButton = new Button("Play");
     private Button stopAnimationButton = new Button("Stop");
     private Button stepAnimationButton = new Button("Single Step");
@@ -282,19 +282,23 @@ class Controller {
         convexHullShapes.visibleProperty().bind(viewConvexHull.selectedProperty().or(editMode));
         viewConvexHull.setSelected(false);
 
-        CheckMenuItem viewManPath = new CheckMenuItem("View Man Paths");
+        CheckMenuItem viewManPath = new CheckMenuItem("View Most Recent Man Paths");
         currentManPathShapes.visibleProperty().bind(viewManPath.selectedProperty());
         viewManPath.setSelected(true);
 
-        CheckMenuItem viewPreviousManPath = new CheckMenuItem("View Man Path Difference");
+        CheckMenuItem viewPreviousManPath = new CheckMenuItem("View Previous Man Path");
         oldManPathShapes.visibleProperty().bind(viewPreviousManPath.selectedProperty());
         viewPreviousManPath.setSelected(true);
 
-        CheckMenuItem viewLionPath = new CheckMenuItem("View Lion Paths");
+        CheckMenuItem viewLatestLionPath = new CheckMenuItem("View Most Recent Lion Paths");
+        currentLionsPathShapes.visibleProperty().bind(viewLatestLionPath.selectedProperty());
+        viewLatestLionPath.setSelected(true);
+
+        CheckMenuItem viewLionPath = new CheckMenuItem("View Old Lion Paths");
         oldLionsPathShapes.visibleProperty().bind(viewLionPath.selectedProperty());
         viewLionPath.setSelected(false);
 
-        setViewMenu.getItems().addAll(viewEntities, viewLionRanges, viewConvexHull, viewManPath, viewPreviousManPath, viewLionPath);
+        setViewMenu.getItems().addAll(viewEntities, viewLionRanges, viewConvexHull, viewManPath, viewPreviousManPath, viewLionPath, viewLatestLionPath);
     }
 
 
@@ -309,10 +313,7 @@ class Controller {
 
         stepAnimationButton.setOnAction(event -> {
             activePlaying.set(false);
-            /*boolean gameOver = */coreController.simulateStep();
-//            if (gameOver) {
-//                gameOverAlert.show();
-//            }
+            coreController.simulateStep();
         });
         playAnimationButton.setOnAction(event -> activePlaying.set(true));
         stopAnimationButton.setOnAction(event -> activePlaying.set(false));
@@ -382,7 +383,7 @@ class Controller {
         Shape.setPane(zoomScrollPane);
 
         zoomScrollPane.getNodesHolder().clear();
-        zoomScrollPane.getNodesHolder().addAll(lionRangeShapes, convexHullShapes, oldManPathShapes, currentManPathShapes, oldLionsPathShapes, entityShapes, boundingPathShapes, boundingPointsShapes);
+        zoomScrollPane.getNodesHolder().addAll(lionRangeShapes, convexHullShapes, oldManPathShapes, currentManPathShapes, currentLionsPathShapes, oldLionsPathShapes, entityShapes, boundingPathShapes, boundingPointsShapes);
 
 
         Man.setGroup(entityShapes);
@@ -392,7 +393,9 @@ class Controller {
         InvisiblePoints.setGroup(boundingPointsShapes);
         ManPath.setGroup1(currentManPathShapes);
         ManPath.setGroup2(oldManPathShapes);
-        LionPath.setGroup(oldLionsPathShapes);
+        LionPath.setGroup1(currentLionsPathShapes);
+        LionPath.setGroup2(oldLionsPathShapes);
+
     }
 
 

@@ -40,6 +40,7 @@ public class ManPath extends Shape {
     }
 
     public static void transfer() {
+        group1.getChildren().clear();
         group2.getChildren().clear();
 
         if (currentShape != null) {
@@ -47,7 +48,5 @@ public class ManPath extends Shape {
             group2.getChildren().add(currentShape);
             currentShape = null;
         }
-
-        group1.getChildren().clear();
     }
 }

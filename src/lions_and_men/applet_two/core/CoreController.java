@@ -230,6 +230,7 @@ public class CoreController {
 
     public void setDefaultMenEpsilon(double defaultMenEpsilon) {
         this.defaultMenEpsilon = defaultMenEpsilon;
+        setManEpsilon(defaultMenEpsilon);
     }
 
     public double getDefaultLionsSpeed() {
@@ -298,7 +299,7 @@ public class CoreController {
             lionPaths.clear();
             this.plane.resetManPath();
 
-            int STEPS_TO_GO_AFTER_ESCAPE = 50;
+            int STEPS_TO_GO_AFTER_ESCAPE = 100;
             int stepsToGo = STEPS_TO_GO_AFTER_ESCAPE;
             while (stepsToGo > 0) {
 

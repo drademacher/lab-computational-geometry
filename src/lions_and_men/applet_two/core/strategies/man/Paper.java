@@ -57,7 +57,8 @@ public class Paper extends Strategy {
         } else {
 
             Point cuPosition = curPath.get(curPath.size() - 1);
-            int indexGoal = (int) Math.floor(Math.floor((curPath.size() / lion.getSpeed()) + 1) * lion.getSpeed());
+//            int indexGoal = (int) Math.floor(Math.floor((curPath.size() / lion.getSpeed()) + 1) * lion.getSpeed());
+            int indexGoal = (int) (curPath.size() * this.radiusMan);
             while (indexGoal > 0.5 * inductionPath.size()) {
 
                 inductionPath = extendPath(inductionPath);

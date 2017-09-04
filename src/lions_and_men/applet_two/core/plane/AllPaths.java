@@ -22,7 +22,7 @@ public class AllPaths {
     }
 
     public AllPaths(ArrayList<Point> manPath, ArrayList<ArrayList<Point>> lionPaths, boolean finished) {
-        this.manPath = manPath;
+        this.manPath = (ArrayList<Point>) manPath.clone();
         this.lionPaths = lionPaths;
         this.pathSize = manPath.size();
         this.finished = finished;

@@ -107,7 +107,6 @@ public class Controller {
         speedSlider.setBlockIncrement(250);
         speedSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
             ANIMATION_DURATION = newValue.intValue();
-            System.out.println(ANIMATION_DURATION);
         });
     }
 

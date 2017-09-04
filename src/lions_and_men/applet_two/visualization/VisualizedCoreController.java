@@ -144,6 +144,8 @@ public class VisualizedCoreController extends CoreController {
 
         manPoint.clear();
         manPoint = null;
+
+        freshInitialization();
     }
 
     @Override
@@ -172,6 +174,7 @@ public class VisualizedCoreController extends CoreController {
     public void relocateMan(Point to) {
         super.relocateMan(to);
         manPoint.setPosition(to);
+        freshInitialization();
     }
 
     @Override

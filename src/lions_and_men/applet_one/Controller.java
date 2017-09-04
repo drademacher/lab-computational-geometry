@@ -86,7 +86,7 @@ public class Controller {
             if (editMode.getValue()) {
                 editMode.set(false);
 
-                modeToggleButton.setText("Edit Mode");
+                modeToggleButton.setText("Play Mode");
                 buttonBar.getChildren().addAll(appletToggleButton, helpToggleButton, modeToggleButton, playAnimationButton, stopAnimationButton, stepAnimationButton);
 
                 zoomScrollPane.autoZoom();
@@ -95,7 +95,7 @@ public class Controller {
                 editMode.set(true);
                 activePlaying.set(false);
 
-                modeToggleButton.setText("Play Mode");
+                modeToggleButton.setText("Edit Mode");
                 buttonBar.getChildren().addAll(appletToggleButton, helpToggleButton, modeToggleButton, setGraphButton, setParameterButton, setViewMenu);
             }
         });

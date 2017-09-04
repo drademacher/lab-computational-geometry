@@ -5,7 +5,6 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.shape.Circle;
-import lions_on_graph.core.CoreController;
 import util.ContextMenuHolder;
 import util.Point;
 
@@ -15,13 +14,11 @@ public class SmallVertex implements Vertex {
     private Circle shape;
     private VisualCoreController coreController;
     private Point coordinates;
-    private Edge edge;
 
-    public SmallVertex(VisualCoreController coreController, Point startCoordinates, Edge edge) {
+    public SmallVertex(VisualCoreController coreController, Point startCoordinates) {
 
         this.coreController = coreController;
         this.coordinates = startCoordinates;
-        this.edge = edge;
 
         shape = new Circle(coordinates.getX(), coordinates.getY(), Constants.SMALL_VERTEX_RADIUS);
         shape.setStrokeWidth(Constants.SMALL_VERTEX_RADIUS / 5);
@@ -75,7 +72,4 @@ public class SmallVertex implements Vertex {
         return coordinates;
     }
 
-    public Edge getEdge() {
-        return edge;
-    }
 }

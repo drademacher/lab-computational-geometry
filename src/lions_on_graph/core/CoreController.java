@@ -18,7 +18,7 @@ public class CoreController {
     private boolean editMode = true;
     private ArrayList<Lion> lions = new ArrayList<>();
     private ArrayList<Man> men = new ArrayList<>();
-    private GraphController graph;
+    protected GraphController graph;
 
     public CoreController() {
         this.graph = new GraphController();
@@ -119,34 +119,31 @@ public class CoreController {
     }
 
     public void changeEdgeWeight(Point vertex1Coordinates, Point vertex2Coordinates, int weight) {
-//
-//
-//
-//        if (vertex1Coordinates == null || vertex2Coordinates == null || weight < 1) {
-//            return;
-//        }
-//        BigVertex vertex1 = getBigVertexByCoordinate(vertex1Coordinates);
-//        BigVertex vertex2 = getBigVertexByCoordinate(vertex2Coordinates);
-//        if (vertex1 == null || vertex2 == null) {
-//            return;
-//        }
-//
-//        Edge edge = getEdgeByVertices(vertex1, vertex2);
-//
-//        if (edge.getEdgeWeight() > weight) {
-//            ArrayList<Man> menToDelete = getMenOnEdge(edge);
-//            removeAllMen(menToDelete);
-//
-//            ArrayList<Lion> lionsToDelete = getLionsOnEdge(edge);
-//            removeAllLions(lionsToDelete);
-//        }
-//
-//        this.visualCoreController.removeEdge(edge);
-//
-//        this.graph.changeEdgeWeight(vertex1, vertex2, weight);
-//
-//        this.visualCoreController.createEdge(edge);
-//
+
+
+
+        if (vertex1Coordinates == null || vertex2Coordinates == null || weight < 1) {
+            return;
+        }
+        BigVertex vertex1 = getBigVertexByCoordinate(vertex1Coordinates);
+        BigVertex vertex2 = getBigVertexByCoordinate(vertex2Coordinates);
+        if (vertex1 == null || vertex2 == null) {
+            return;
+        }
+
+        Edge edge = getEdgeByVertices(vertex1, vertex2);
+
+        if (edge.getEdgeWeight() > weight) {
+            ArrayList<Man> menToDelete = getMenOnEdge(edge);
+            removeAllMen(menToDelete);
+
+            ArrayList<Lion> lionsToDelete = getLionsOnEdge(edge);
+            removeAllLions(lionsToDelete);
+        }
+
+        this.graph.changeEdgeWeight(vertex1, vertex2, weight);
+
+        System.out.println("man size "+men.size() );
 //        relocateAllLions();
 //        relocateAllMen();
     }

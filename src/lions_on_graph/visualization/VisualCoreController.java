@@ -10,12 +10,13 @@ import static lions_on_graph.visualization.Constants.*;
 
 public class VisualCoreController extends CoreController {
 
-    private ArrayList<Vertex> mapVertices = new ArrayList<>();
-    private ArrayList<Entity> mapEntities = new ArrayList<>();
-    private ArrayList<Edge> mapEdges = new ArrayList<>();
-    private ArrayList<Range> mapManRange = new ArrayList<>();
-    private ArrayList<Range> mapLionRange = new ArrayList<>();
-    private ArrayList<Vertex> mapStepPreviews = new ArrayList<>();
+    private ArrayList<Vertex> verticesBig = new ArrayList<>();
+    private ArrayList<Vertex> verticesSmall = new ArrayList<>();
+    private ArrayList<Entity> entities = new ArrayList<>();
+    private ArrayList<Edge> edges = new ArrayList<>();
+    private ArrayList<Range> rangesMan = new ArrayList<>();
+    private ArrayList<Range> rangesLion = new ArrayList<>();
+    private ArrayList<Vertex> stepPreviews = new ArrayList<>();
 
 
     public VisualCoreController() {
@@ -23,23 +24,26 @@ public class VisualCoreController extends CoreController {
     }
 
     public void cleanUp() {
-        mapVertices.forEach(Vertex::delete);
-        mapVertices.clear();
+        verticesBig.forEach(Vertex::delete);
+        verticesBig.clear();
 
-        mapEntities.forEach(Entity::delete);
-        mapEntities.clear();
+        verticesSmall.forEach(Vertex::delete);
+        verticesSmall.clear();
 
-        mapEdges.forEach(Edge::delete);
-        mapEdges.clear();
+        entities.forEach(Entity::delete);
+        entities.clear();
 
-        mapManRange.forEach(Range::delete);
-        mapManRange.clear();
+        edges.forEach(Edge::delete);
+        edges.clear();
 
-        mapLionRange.forEach(Range::delete);
-        mapLionRange.clear();
+        rangesMan.forEach(Range::delete);
+        rangesMan.clear();
 
-        mapStepPreviews.forEach(Vertex::delete);
-        mapStepPreviews.clear();
+        rangesLion.forEach(Range::delete);
+        rangesLion.clear();
+
+        stepPreviews.forEach(Vertex::delete);
+        stepPreviews.clear();
     }
 
     /* ****************************
@@ -53,55 +57,44 @@ public class VisualCoreController extends CoreController {
 
         super.relocateVertex(vertexCoordinates, newCoordinate);
 
-        mapVertices.stream().filter(vertex -> vertex.getPosition().equals(vertexCoordinates)).forEach(vertex -> vertex.relocate(newCoordinate));
+        verticesBig.stream().filter(vertex -> vertex.getPosition().equals(vertexCoordinates)).forEach(vertex -> vertex.relocate(newCoordinate));
 
-        mapEdges.stream().filter(edge -> edge.getPositionFrom().equals(vertexCoordinates)).forEach(edge -> edge.relocate(newCoordinate, edge.getPositionTo()));
-        mapEdges.stream().filter(edge -> edge.getPositionTo().equals(vertexCoordinates)).forEach(edge -> edge.relocate(edge.getPositionFrom(), newCoordinate));
+        edges.stream().filter(edge -> edge.getPositionFrom().equals(vertexCoordinates)).forEach(edge -> edge.relocate(newCoordinate, edge.getPositionTo()));
+        edges.stream().filter(edge -> edge.getPositionTo().equals(vertexCoordinates)).forEach(edge -> edge.relocate(edge.getPositionFrom(), newCoordinate));
 
+        verticesSmall.forEach(vertex -> vertex.delete());
+        graph.getSmallVertices().forEach(smallVertex -> verticesSmall.add(new SmallVertex(this, smallVertex.getCoordinates())));
 
-//        for (lions_on_graph.core.graph.Edge edge : vertex.getEdges()) {
-//            Edge edgeShape = mapEdges.get(edge);
-//            edgeShape.relocate(edge.getVertices()[0].getCoordinates(), edge.getVertices()[1].getCoordinates());
+        entities.forEach(Entity::delete);
+        entities.clear();
+        getMen().forEach(man -> entities.add(new Man(this, man.getCoordinates())));
+        getLions().forEach(lion -> entities.add(new Lion(this, lion.getCoordinates())));
 
-
-//TODO
-//        for (lions_on_graph.core.graph.SmallVertex smallVertex : edge.getEdgeVertices()) {
-//            Vertex smalLVertexShape = mapVertices.get(smallVertex);
-//            smalLVertexShape.relocate(smallVertex.getCoordinates());
-//        }
-//        }
-
-        mapEntities.stream().filter(entity -> entity.getPosition().equals(vertexCoordinates)).forEach(entity -> entity.relocate(newCoordinate));
+        entities.stream().filter(entity -> entity.getPosition().equals(vertexCoordinates)).forEach(entity -> entity.relocate(newCoordinate));
     }
 
     public void createVertex(Point coordinate) {
         super.createVertex(coordinate);
 
-        mapVertices.add(new BigVertex(this, coordinate));
+        verticesBig.add(new BigVertex(this, coordinate));
     }
 
     public void deleteVertex(Point vertexCoordinates) {
 
-        mapVertices.stream().filter(vertex -> vertex.getPosition().equals(vertexCoordinates)).forEach(Vertex::delete);
-        mapVertices.removeIf(vertex -> vertex.getPosition().equals(vertexCoordinates));
 
-        mapEdges.stream().filter(edge -> (edge.getPositionTo().equals(vertexCoordinates)
+        super.deleteVertex(vertexCoordinates);
+
+        verticesBig.stream().filter(vertex -> vertex.getPosition().equals(vertexCoordinates)).forEach(Vertex::delete);
+        verticesBig.removeIf(vertex -> vertex.getPosition().equals(vertexCoordinates));
+
+        edges.stream().filter(edge -> (edge.getPositionTo().equals(vertexCoordinates)
                 || edge.getPositionFrom().equals(vertexCoordinates))).forEach(Edge::delete);
-        mapEdges.removeIf(edge -> (edge.getPositionTo().equals(vertexCoordinates)
+        edges.removeIf(edge -> (edge.getPositionTo().equals(vertexCoordinates)
                 || edge.getPositionFrom().equals(vertexCoordinates)));
 
 
-        for (lions_on_graph.core.graph.Edge edge : getBigVertexByCoordinate(vertexCoordinates).getEdges()) {
-            for (lions_on_graph.core.graph.SmallVertex smallVertex : edge.getEdgeVertices()) {
-
-
-                mapVertices.stream().filter(vertex -> vertex.equals(smallVertex)).forEach(Vertex::delete);
-                mapVertices.removeIf(vertex -> vertex.equals(smallVertex));
-
-            }
-        }
-
-        super.deleteVertex(vertexCoordinates);
+        verticesSmall.forEach(vertex -> vertex.delete());
+        graph.getSmallVertices().forEach(smallVertex -> verticesSmall.add(new SmallVertex(this, smallVertex.getCoordinates())));
 
 
         updateManRanges();
@@ -116,10 +109,9 @@ public class VisualCoreController extends CoreController {
 
         super.createEdge(vertex1Coordinates, vertex2Coordinates, weight);
 
-        Edge edge = new Edge(this, vertex1Coordinates, vertex2Coordinates);
-        mapEdges.add(edge);
-
-        getEdgeByPoints(vertex1Coordinates, vertex2Coordinates).getEdgeVertices().forEach(smallVertex -> mapVertices.add(new SmallVertex(this, smallVertex.getCoordinates(), edge)));
+        lions_on_graph.core.graph.Edge edge = getEdgeByPoints(vertex1Coordinates, vertex2Coordinates);
+        edges.add(new Edge(this, edge.getStartCoordinates(), edge.getEndCoordinates()));
+        edge.getEdgeVertices().forEach(smallVertex -> verticesSmall.add(new SmallVertex(this, smallVertex.getCoordinates())));
 
 
         updateManRanges();
@@ -130,20 +122,19 @@ public class VisualCoreController extends CoreController {
 
         super.removeEdge(vertex1Coordinates, vertex2Coordinates);
 
-        mapEdges.stream().filter
+        edges.stream().filter
                 (edge ->
                         ((edge.getPositionTo().equals(vertex1Coordinates) && edge.getPositionFrom().equals(vertex2Coordinates))
                                 || (edge.getPositionTo().equals(vertex2Coordinates) && edge.getPositionFrom().equals(vertex1Coordinates))))
                 .forEach(Edge::delete);
 
-        mapEdges.removeIf(edge ->
+        edges.removeIf(edge ->
                 ((edge.getPositionTo().equals(vertex1Coordinates) && edge.getPositionFrom().equals(vertex2Coordinates))
                         || (edge.getPositionTo().equals(vertex2Coordinates) && edge.getPositionFrom().equals(vertex1Coordinates))));
 
-
         for (lions_on_graph.core.graph.SmallVertex smallVertex : getEdgeByPoints(vertex1Coordinates, vertex2Coordinates).getEdgeVertices()) {
-            mapVertices.stream().filter(vertex -> vertex.equals(smallVertex)).forEach(Vertex::delete);
-            mapVertices.removeIf(vertex -> vertex.equals(smallVertex));
+            verticesSmall.stream().filter(vertex -> vertex.equals(smallVertex)).forEach(Vertex::delete);
+            verticesSmall.removeIf(vertex -> vertex.equals(smallVertex));
 
         }
 
@@ -155,9 +146,15 @@ public class VisualCoreController extends CoreController {
     @Override
     public void changeEdgeWeight(Point vertex1Coordinates, Point vertex2Coordinates, int weight) {
 
-        removeEdge(vertex1Coordinates, vertex2Coordinates);
-        createEdge(vertex1Coordinates, vertex2Coordinates, weight);
-//        super.changeEdgeWeight(vertex1Coordinates, vertex2Coordinates, weight);
+        super.changeEdgeWeight(vertex1Coordinates, vertex2Coordinates, weight);
+
+        verticesSmall.forEach(vertex -> vertex.delete());
+        graph.getSmallVertices().forEach(smallVertex -> verticesSmall.add(new SmallVertex(this, smallVertex.getCoordinates())));
+
+        entities.forEach(Entity::delete);
+        entities.clear();
+        getMen().forEach(man -> entities.add(new Man(this, man.getCoordinates())));
+        getLions().forEach(lion -> entities.add(new Lion(this, lion.getCoordinates())));
 
         updateManRanges();
         updateLionRanges();
@@ -173,7 +170,7 @@ public class VisualCoreController extends CoreController {
 
         super.setMan(vertexCoorinate);
 
-        mapEntities.add(new Man(this, vertexCoorinate));
+        entities.add(new Man(this, vertexCoorinate));
         updateManRanges();
 
         updateStepPreviewsAndChoicePoints();
@@ -183,7 +180,7 @@ public class VisualCoreController extends CoreController {
 
         super.setLion(vertexCoorinate);
 
-        mapEntities.add(new Lion(this, vertexCoorinate));
+        entities.add(new Lion(this, vertexCoorinate));
         updateLionRanges();
 
         updateStepPreviewsAndChoicePoints();
@@ -193,7 +190,7 @@ public class VisualCoreController extends CoreController {
 
         super.relocateMan(manCoordinate, vertexCoordinate);
 
-        mapEntities.stream().filter(entity -> entity.getPosition().equals(manCoordinate)).forEach(entity -> entity.relocate(vertexCoordinate));
+        entities.stream().filter(entity -> entity.getPosition().equals(manCoordinate)).forEach(entity -> entity.relocate(vertexCoordinate));
         updateManRanges();
 
 
@@ -204,15 +201,15 @@ public class VisualCoreController extends CoreController {
 
         super.relocateLion(lionCoordinate, vertexCoordinate);
 
-        mapEntities.stream().filter(entity -> entity.getPosition().equals(lionCoordinate)).forEach(entity -> entity.relocate(vertexCoordinate));
+        entities.stream().filter(entity -> entity.getPosition().equals(lionCoordinate)).forEach(entity -> entity.relocate(vertexCoordinate));
         updateLionRanges();
         updateStepPreviewsAndChoicePoints();
     }
 
     public void removeMan(Point manCoordinate) {
 
-        mapEntities.stream().filter(entity -> entity.getPosition().equals(manCoordinate)).forEach(Entity::delete);
-        mapEntities.removeIf(entity -> entity.getPosition().equals(manCoordinate));
+        entities.stream().filter(entity -> entity.getPosition().equals(manCoordinate)).forEach(Entity::delete);
+        entities.removeIf(entity -> entity.getPosition().equals(manCoordinate));
 
         super.removeMan(manCoordinate);
         updateStepPreviewsAndChoicePoints();
@@ -220,8 +217,8 @@ public class VisualCoreController extends CoreController {
 
     public void removeLion(Point lionCoordinate) {
 
-        mapEntities.stream().filter(entity -> entity.getPosition().equals(lionCoordinate)).forEach(Entity::delete);
-        mapEntities.removeIf(entity -> entity.getPosition().equals(lionCoordinate));
+        entities.stream().filter(entity -> entity.getPosition().equals(lionCoordinate)).forEach(Entity::delete);
+        entities.removeIf(entity -> entity.getPosition().equals(lionCoordinate));
 
         super.removeLion(lionCoordinate);
         updateStepPreviewsAndChoicePoints();
@@ -264,10 +261,10 @@ public class VisualCoreController extends CoreController {
 
     private void updateManRanges() {
 
-        mapManRange.forEach(Range::delete);
-        mapManRange.clear();
+        rangesMan.forEach(Range::delete);
+        rangesMan.clear();
 
-        getMen().forEach(man -> man.getRangeVertices().forEach(vertex -> mapManRange.add(new Range(this, vertex.getCoordinates(), true))));
+        getMen().forEach(man -> man.getRangeVertices().forEach(vertex -> rangesMan.add(new Range(this, vertex.getCoordinates(), true))));
     }
 
     @Override
@@ -279,10 +276,10 @@ public class VisualCoreController extends CoreController {
 
     private void updateLionRanges() {
 
-        mapLionRange.forEach(Range::delete);
-        mapLionRange.clear();
+        rangesLion.forEach(Range::delete);
+        rangesLion.clear();
 
-        getLions().forEach(lion -> lion.getRangeVertices().forEach(vertex -> mapLionRange.add(new Range(this, vertex.getCoordinates()))));
+        getLions().forEach(lion -> lion.getRangeVertices().forEach(vertex -> rangesLion.add(new Range(this, vertex.getCoordinates()))));
     }
 
 
@@ -290,11 +287,11 @@ public class VisualCoreController extends CoreController {
 
         //TODO flush and create new....
         // step previews
-        mapStepPreviews.forEach(Vertex::delete);
-        mapStepPreviews.clear();
+        stepPreviews.forEach(Vertex::delete);
+        stepPreviews.clear();
 
-        getMen().forEach(man -> mapStepPreviews.add(new StepPreview(this, man.getNextPosition().getCoordinates())));
-        getLions().forEach(lion -> mapStepPreviews.add(new StepPreview(this, lion.getNextPosition().getCoordinates())));
+        getMen().forEach(man -> stepPreviews.add(new StepPreview(this, man.getNextPosition().getCoordinates())));
+        getLions().forEach(lion -> stepPreviews.add(new StepPreview(this, lion.getNextPosition().getCoordinates())));
 
 
         // choice points

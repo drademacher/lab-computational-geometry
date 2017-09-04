@@ -343,6 +343,10 @@ public class CoreController {
 
 
         //calc bounding box greedy
+        maxX = Integer.MIN_VALUE;
+        minX = Integer.MAX_VALUE;
+        maxY = Integer.MIN_VALUE;
+        minY = Integer.MAX_VALUE;
         for (AllPaths allPaths : allPathsList) {
             for (Point point : allPaths.manPath) {
                 maxX = Math.max(maxX, point.getX());

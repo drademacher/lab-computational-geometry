@@ -105,6 +105,18 @@ public class VisualizedCoreController extends CoreController {
 //        calcAllPaths(1);
     }
 
+    @Override
+    public void setDefaultGraph4() {
+        super.setDefaultGraph4();
+//        calcAllPaths(1);
+    }
+
+    @Override
+    public void setDefaultGraph5() {
+        super.setDefaultGraph5();
+//        calcAllPaths(1);
+    }
+
     public void setRandomConfiguration() {
         super.setRandomConfiguration();
         lions.forEach(lion -> System.out.print(lion.getPosition() + ", "));

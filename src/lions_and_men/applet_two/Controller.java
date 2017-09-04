@@ -137,12 +137,14 @@ public class Controller {
                 graph1MenuItem = new MenuItem("Example 1"),
                 graph2MenuItem = new MenuItem("Example 2"),
                 graph3MenuItem = new MenuItem("Example 3"),
+                graph4MenuItem = new MenuItem("Example 4"),
+                graph5MenuItem = new MenuItem("Example 5"),
                 randomConfigurationButton = new MenuItem("Random"),
                 openMapMenuItem = new MenuItem("Open"),
                 saveMapMenuItem = new MenuItem("Save");
 
 
-        setGraphButton.getItems().addAll(emptyMapMenuItem, new SeparatorMenuItem(), graph1MenuItem, graph2MenuItem, graph3MenuItem, randomConfigurationButton, new SeparatorMenuItem(), openMapMenuItem, saveMapMenuItem);
+        setGraphButton.getItems().addAll(emptyMapMenuItem, new SeparatorMenuItem(), graph1MenuItem, graph2MenuItem, graph3MenuItem, graph4MenuItem, graph5MenuItem, randomConfigurationButton, new SeparatorMenuItem(), openMapMenuItem, saveMapMenuItem);
 
         buttonBar.getChildren().addAll(appletToggleButton, helpToggleButton, modeToggleButton, setGraphButton, setParameterButton, newPermutationButton, setViewMenu);
 
@@ -168,6 +170,19 @@ public class Controller {
             this.coreController.setDefaultGraph3();
             this.zoomScrollPane.autoZoom();
         });
+
+        graph4MenuItem.setOnAction(event -> {
+            clearGraphShapes();
+            this.coreController.setDefaultGraph4();
+            this.zoomScrollPane.autoZoom();
+        });
+
+        graph5MenuItem.setOnAction(event -> {
+            clearGraphShapes();
+            this.coreController.setDefaultGraph5();
+            this.zoomScrollPane.autoZoom();
+        });
+
 
         randomConfigurationButton.setOnAction(event -> {
             clearGraphShapes();

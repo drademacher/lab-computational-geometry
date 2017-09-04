@@ -93,6 +93,23 @@ public class CoreController {
         createMan(new Point(193, 101));
     }
 
+    public void setDefaultGraph4() {
+        setEmptyGraph();
+
+        createLion(new Point(50, 50));
+        createLion(new Point(200, 50));
+        createLion(new Point(110, 200));
+        createMan(new Point(110, 110));
+    }
+    public void setDefaultGraph5() {
+        setEmptyGraph();
+
+        createMan(new Point(110, 110));
+        createLion(new Point(50, 50));
+        createLion(new Point(200, 50));
+        createLion(new Point(110, 200));
+    }
+
     public void setRandomConfiguration() {
         setEmptyGraph();
         int NUMBER_OF_LIONS = 16;

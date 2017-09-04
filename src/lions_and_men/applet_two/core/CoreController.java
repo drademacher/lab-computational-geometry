@@ -6,8 +6,8 @@ import lions_and_men.applet_two.core.plane.Man;
 import lions_and_men.applet_two.core.plane.Plane;
 import lions_and_men.applet_two.core.strategies.lion.StrategyEnumLion;
 import lions_and_men.applet_two.core.strategies.man.StrategyEnumMan;
-import lions_and_men.util.Global;
 import lions_and_men.util.ConvexHull;
+import lions_and_men.util.Global;
 import lions_and_men.util.Point;
 import lions_and_men.util.Random;
 
@@ -95,9 +95,32 @@ public class CoreController {
 
     public void setRandomConfiguration() {
         setEmptyGraph();
-        createMan(new Point(Random.getRandomInteger(100) * 5, Random.getRandomInteger(100) * 5));
-        for (int i = 0; i < 16; i++) {
-            createLion(new Point(Random.getRandomInteger(100) * 5, Random.getRandomInteger(100) * 5));
+        int NUMBER_OF_LIONS = 16;
+
+        Point[] lionPoints = new Point[NUMBER_OF_LIONS];
+        Point manPoint = new Point(Random.getRandomInteger(100) * 5, Random.getRandomInteger(100) * 5);
+        createMan(manPoint);
+        for (int i = 0; i < NUMBER_OF_LIONS; i++) {
+            Point lionPoint = new Point(Random.getRandomInteger(100) * 5, Random.getRandomInteger(100) * 5);
+            createLion(lionPoint);
+            lionPoints[i] = lionPoint;
+        }
+
+        //after random generation the man is not in the ch -> generate 4 more lions to make sure the man is in the ch
+        if (!new ConvexHull(lionPoints).insideHull(manPoint)) {
+            Point point1 = new Point(0, Random.getRandomInteger(100 - (int) manPoint.getY() / 5) * 5 + 5);
+            createLion(manPoint.add(point1));
+
+            Point point2 = new Point(0, Random.getRandomInteger((int) manPoint.getY() / 5) * 5 + 5);
+            createLion(manPoint.sub(point2));
+
+            Point point3 = new Point(Random.getRandomInteger(100 - (int) manPoint.getX() / 5) * 5 + 5, 0);
+            createLion(manPoint.add(point3));
+
+            Point point4 = new Point(Random.getRandomInteger((int) manPoint.getX() / 5) * 5 + 5, 0);
+            createLion(manPoint.sub(point4));
+
+
         }
     }
 

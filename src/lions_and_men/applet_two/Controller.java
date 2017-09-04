@@ -31,7 +31,7 @@ public class Controller {
 
     private ZoomScrollPane zoomScrollPane;
     private Label helpText = new Label();
-    private HBox buttonBar;
+    private HBox buttonBarCenter;
     private Button helpToggleButton = new Button("Help");
     private Button appletToggleButton = new Button("Switch Application");
     private Button modeToggleButton = new Button("Edit Mode");
@@ -56,10 +56,24 @@ public class Controller {
         zoomScrollPane = new ZoomScrollPane();
         root.setCenter(zoomScrollPane);
 
-        buttonBar = new HBox();
-        root.setBottom(buttonBar);
-        buttonBar.setPadding(new Insets(10, 10, 10, 10));
-        buttonBar.setSpacing(25);
+        buttonBarCenter = new HBox();
+        buttonBarCenter.setPadding(new Insets(10, 10, 10, 10));
+        buttonBarCenter.setSpacing(25);
+
+        HBox buttonBarRight = new HBox(helpToggleButton, appletToggleButton);
+        buttonBarRight.setPadding(new Insets(10, 10, 10, 150));
+        buttonBarRight.setSpacing(25);
+
+        HBox buttonBarLeft = new HBox(modeToggleButton);
+        buttonBarLeft.setPadding(new Insets(10, 150, 10, 10));
+        buttonBarLeft.setSpacing(25);
+
+        BorderPane buttonPane = new BorderPane();
+        root.setBottom(buttonPane);
+        buttonPane.setLeft(buttonBarLeft);
+        buttonPane.setCenter(buttonBarCenter);
+        buttonPane.setRight(buttonBarRight);
+
 
         editMode = new SimpleBooleanProperty(true);
         activePlaying = new SimpleBooleanProperty(false);
@@ -106,13 +120,13 @@ public class Controller {
         });
 
         modeToggleButton.setOnAction(event -> {
-            buttonBar.getChildren().clear();
+            buttonBarCenter.getChildren().clear();
 
             if (editMode.getValue()) {
                 editMode.set(false);
 
                 modeToggleButton.setText("Edit Mode");
-                buttonBar.getChildren().addAll(appletToggleButton, helpToggleButton, modeToggleButton, playAnimationButton, stopAnimationButton, stepAnimationButton, setViewMenu);
+                buttonBarCenter.getChildren().addAll(playAnimationButton, stopAnimationButton, stepAnimationButton, setViewMenu);
             } else {
 //                clearAnimationShapes();
 
@@ -120,7 +134,7 @@ public class Controller {
                 activePlaying.set(false);
 
                 modeToggleButton.setText("Play Mode");
-                buttonBar.getChildren().addAll(appletToggleButton, helpToggleButton, modeToggleButton, setGraphButton, setParameterButton, newPermutationButton, setViewMenu);
+                buttonBarCenter.getChildren().addAll(setGraphButton, setParameterButton, newPermutationButton, setViewMenu);
                 oldLionsPathShapes.getChildren().clear();
 
                 zoomScrollPane.autoZoom();
@@ -147,7 +161,8 @@ public class Controller {
 
         setGraphButton.getItems().addAll(emptyMapMenuItem, new SeparatorMenuItem(), graph1MenuItem, graph2MenuItem, graph3MenuItem, graph4MenuItem, graph5MenuItem, randomConfigurationButton, new SeparatorMenuItem(), openMapMenuItem, saveMapMenuItem);
 
-        buttonBar.getChildren().addAll(appletToggleButton, helpToggleButton, modeToggleButton, setGraphButton, setParameterButton, newPermutationButton, setViewMenu);
+
+        buttonBarCenter.getChildren().addAll(setGraphButton, setParameterButton, newPermutationButton, setViewMenu);
 
         emptyMapMenuItem.setOnAction(event -> {
             clearGraphShapes();

@@ -234,8 +234,9 @@ public class CoreController {
         if (speed > maxLionSpeed) {
             maxLionSpeed = speed;
             Man man = plane.getMan();
-            man.setSpeed(maxLionSpeed);
-
+            if(man != null){
+                man.setSpeed(maxLionSpeed);
+            }
         }
     }
 

@@ -48,6 +48,7 @@ public class VisualizedCoreController extends CoreController {
                 lion.getShape().setVisible(false);
             }
         } else {
+            InvisiblePoints.clear();
             freshInitialization();
         }
     }
@@ -235,7 +236,7 @@ public class VisualizedCoreController extends CoreController {
         onGoingAnimationBlockNew = true;
         ManPath.transfer();
         LionPath.clear();
-        InvisiblePath.clear();
+
 
         new ManPath(allPaths.manPath);
         for (int i = 0; i <= pathCount; i++) {

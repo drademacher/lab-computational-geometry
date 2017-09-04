@@ -35,7 +35,7 @@ public class Controller {
     private Button helpToggleButton = new Button("Help");
     private Button appletToggleButton = new Button("Switch Application");
     private Button modeToggleButton = new Button("Edit Mode");
-    private Group entityShapes = new Group(), lionRangeShapes = new Group(), convexHullShapes = new Group(), currentLionsPathShapes = new Group(), oldLionsPathShapes = new Group(), currentManPathShapes = new Group(), oldManPathShapes = new Group(), boundingPathShapes = new Group(), boundingPointsShapes = new Group();
+    private Group entityShapes = new Group(), lionRangeShapes = new Group(), convexHullShapes = new Group(), currentLionsPathShapes = new Group(), oldLionsPathShapes = new Group(), currentManPathShapes = new Group(), oldManPathShapes = new Group(), boundingPointsShapes = new Group();
     private Button playAnimationButton = new Button("Play");
     private Button stopAnimationButton = new Button("Stop");
     private Button stepAnimationButton = new Button("Single Step");
@@ -65,6 +65,7 @@ public class Controller {
         activePlaying = new SimpleBooleanProperty(false);
         editMode.addListener((observable, oldValue, newValue) -> {
             this.coreController.setEditMode(newValue);
+            zoomScrollPane.autoZoom();
         });
 
         initEditButtons();
@@ -113,7 +114,7 @@ public class Controller {
                 modeToggleButton.setText("Edit Mode");
                 buttonBar.getChildren().addAll(appletToggleButton, helpToggleButton, modeToggleButton, playAnimationButton, stopAnimationButton, stepAnimationButton, setViewMenu);
             } else {
-                clearAnimationShapes();
+//                clearAnimationShapes();
 
                 editMode.set(true);
                 activePlaying.set(false);
@@ -429,13 +430,13 @@ public class Controller {
         Shape.setPane(zoomScrollPane);
 
         zoomScrollPane.getNodesHolder().clear();
-        zoomScrollPane.getNodesHolder().addAll(lionRangeShapes, convexHullShapes, oldManPathShapes, currentManPathShapes, currentLionsPathShapes, oldLionsPathShapes, entityShapes, boundingPathShapes, boundingPointsShapes);
+        zoomScrollPane.getNodesHolder().addAll(lionRangeShapes, convexHullShapes, oldManPathShapes, currentManPathShapes, currentLionsPathShapes, oldLionsPathShapes, entityShapes, boundingPointsShapes);
 
 
         Man.setGroup(entityShapes);
         Lion.setGroup(entityShapes);
         LionsPolygon.setGroup(convexHullShapes);
-        InvisiblePath.setGroup(boundingPathShapes);
+
         InvisiblePoints.setGroup(boundingPointsShapes);
         ManPath.setGroup1(currentManPathShapes);
         ManPath.setGroup2(oldManPathShapes);
@@ -460,8 +461,8 @@ public class Controller {
         currentLionsPathShapes.getChildren().clear();
         oldManPathShapes.getChildren().clear();
         currentManPathShapes.getChildren().clear();
-        boundingPathShapes.getChildren().clear();
-        boundingPointsShapes.getChildren().clear();
+//        boundingPathShapes.getChildren().clear();
+//        boundingPointsShapes.getChildren().clear();
     }
 
 //    private void initGameOverAlert() {

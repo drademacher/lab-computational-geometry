@@ -16,8 +16,8 @@ public class InvisiblePoints extends Shape {
     InvisiblePoints(Point position) {
         this.position = position;
         this.shape = new Circle(position.getX(), position.getY(), ENTITY_RADIUS, Color.TRANSPARENT);
+        group.getChildren().add(shape);
     }
-
 
     public static void setGroup(Group group) {
         InvisiblePoints.group = group;

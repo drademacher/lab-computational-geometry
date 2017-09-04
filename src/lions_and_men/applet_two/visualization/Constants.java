@@ -5,7 +5,7 @@ import javafx.scene.paint.Paint;
 
 
 public class Constants {
-//    public static final Color COLOR_BACKGROUND = (Color) ((Region) lions_and_men.Main.getSceneTwo().getRoot()).getBackground().getFills().get(0).getFill();
+    //    public static final Color COLOR_BACKGROUND = (Color) ((Region) lions_and_men.Main.getSceneTwo().getRoot()).getBackground().getFills().get(0).getFill();
     public static final Color COLOR_VERTEX = (Color) Paint.valueOf("#353535");
     public static final Color COLOR_SMALL_VERTEX = (Color) Paint.valueOf("#353535");
     public static final Color COLOR_EDGE = (Color) Paint.valueOf("#A1A1A1");
@@ -21,6 +21,7 @@ public class Constants {
     public static final double ENTITY_RADIUS = 1.5;
     public static final double CHOICEPOINT_RADIUS = 1.5;
     public static final double RANGE_RADIUS = 1.0;
+    public static int ANIMATION_DURATION = 250;
 
     public static String getHexString(Color color) {
         String hex = String.format("#%02X%02X%02X",
@@ -29,7 +30,4 @@ public class Constants {
                 (int) (color.getBlue() * 255));
         return hex;
     }
-
-
-    public static int ANIMATION_DURATION = 250;
 }

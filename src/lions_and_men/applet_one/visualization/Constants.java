@@ -23,6 +23,8 @@ public class Constants {
     public static final double ENTITY_RADIUS = 1.5;
     public static final double CHOICEPOINT_RADIUS = 1.5;
     public static final double RANGE_RADIUS = 1.0;
+    public static final int SINGLE_STEP_DURATION = 300;
+    public static final int ANIMATION_DURATION = 200;
 
     public static String getHexString(Color color) {
         String hex = String.format("#%02X%02X%02X",
@@ -31,7 +33,4 @@ public class Constants {
                 (int) (color.getBlue() * 255));
         return hex;
     }
-
-    public static final int SINGLE_STEP_DURATION = 300;
-    public static final int ANIMATION_DURATION = 200;
 }

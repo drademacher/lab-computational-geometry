@@ -5,9 +5,7 @@ import javafx.scene.shape.Circle;
 import lions_and_men.applet_one.core.CoreController;
 import lions_and_men.util.Point;
 
-import static lions_and_men.applet_one.visualization.Constants.COLOR_MAN_RANGE;
-import static lions_and_men.applet_one.visualization.Constants.COLOR_LION_RANGE;
-import static lions_and_men.applet_one.visualization.Constants.RANGE_RADIUS;
+import static lions_and_men.applet_one.visualization.Constants.*;
 
 /**
  * Created by Jens on 29.06.2017.

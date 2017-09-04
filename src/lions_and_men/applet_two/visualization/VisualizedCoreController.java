@@ -46,6 +46,7 @@ public class VisualizedCoreController extends CoreController {
             for (Lion lion : lions) {
                 lion.getShape().setVisible(false);
             }
+            pathCount = 0;
         } else {
             InvisiblePoints.clear();
             freshInitialization();
@@ -69,6 +70,7 @@ public class VisualizedCoreController extends CoreController {
             manPoint = null;
         }
         if (plane.getMan() != null) {
+            // TODO: einkommentieren
             this.manPoint = new Man(plane.getMan().getPosition());
         }
 
@@ -95,33 +97,27 @@ public class VisualizedCoreController extends CoreController {
     @Override
     public void setDefaultGraph2() {
         super.setDefaultGraph2();
-//        calcAllPaths(1);
-
     }
 
     @Override
     public void setDefaultGraph3() {
         super.setDefaultGraph3();
-//        calcAllPaths(1);
     }
 
     @Override
     public void setDefaultGraph4() {
         super.setDefaultGraph4();
-//        calcAllPaths(1);
     }
 
     @Override
     public void setDefaultGraph5() {
         super.setDefaultGraph5();
-//        calcAllPaths(1);
     }
 
     public void setRandomConfiguration() {
         super.setRandomConfiguration();
         lions.forEach(lion -> System.out.print(lion.getPosition() + ", "));
         System.out.println();
-//        calcAllPaths(1);
     }
 
 
@@ -203,12 +199,7 @@ public class VisualizedCoreController extends CoreController {
     }
 
     @Override
-    public void setLionRange(Point coordinates, double range) {
-        // TODO: IMPLEMENT THIS
-    }
-
-    @Override
-    public void shuffleLionOrder(){
+    public void shuffleLionOrder() {
         super.shuffleLionOrder();
         freshInitialization();
     }
@@ -253,7 +244,6 @@ public class VisualizedCoreController extends CoreController {
         fadeIn.setFromValue(0.0);
         fadeIn.setToValue(1.0);
         fadeIn.setDuration(Duration.millis(ANIMATION_DURATION * 0.2));
-        fadeIn.play();
 
 
         ParallelTransition allPathTransition = new ParallelTransition();

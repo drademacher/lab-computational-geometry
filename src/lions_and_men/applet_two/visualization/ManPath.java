@@ -9,9 +9,8 @@ import java.util.ArrayList;
 
 public class ManPath extends Shape {
     private static Group group1 = new Group(), group2 = new Group();
-
-    private ArrayList<Point> points;
     private static Polyline currentShape;
+    private ArrayList<Point> points;
 
     ManPath(ArrayList<Point> points) {
         this.points = points;

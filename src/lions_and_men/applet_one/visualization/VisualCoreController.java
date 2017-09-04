@@ -1,8 +1,8 @@
 package lions_and_men.applet_one.visualization;
 
-import lions_and_men.applet_two.visualization.VisualizedCoreController;
 import lions_and_men.applet_one.core.CoreController;
 import lions_and_men.applet_one.core.graph.Connection;
+import lions_and_men.applet_two.visualization.VisualizedCoreController;
 import lions_and_men.util.Point;
 
 import java.util.ArrayList;

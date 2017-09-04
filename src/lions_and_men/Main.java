@@ -12,6 +12,18 @@ public class Main extends Application {
     private static Stage stageTwo;
     private static boolean stageIsOne = false;
 
+    public static void switchStage() {
+        if (stageIsOne) {
+            stageOne.hide();
+            stageTwo.show();
+            stageIsOne = false;
+        } else {
+            stageTwo.hide();
+            stageOne.show();
+            stageIsOne = true;
+        }
+    }
+
     @Override
     public void start(Stage stageMain) throws Exception {
         // stage one
@@ -46,17 +58,5 @@ public class Main extends Application {
 
 //        stageOne.show();
         stageTwo.show();
-    }
-
-    public static void switchStage() {
-        if (stageIsOne) {
-            stageOne.hide();
-            stageTwo.show();
-            stageIsOne = false;
-        } else {
-            stageTwo.hide();
-            stageOne.show();
-            stageIsOne = true;
-        }
     }
 }

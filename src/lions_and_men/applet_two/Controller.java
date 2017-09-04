@@ -149,7 +149,7 @@ public class Controller {
                 modeToggleButton.setText("Edit Mode");
                 buttonBarCenter.getChildren().addAll(playAnimationButton, stopAnimationButton, stepAnimationButton, setViewMenu, speedSlider);
             } else {
-//                clearAnimationShapes();
+                clearAnimationShapes();
 
                 editMode.set(true);
                 activePlaying.set(false);
@@ -497,8 +497,7 @@ public class Controller {
         currentLionsPathShapes.getChildren().clear();
         oldManPathShapes.getChildren().clear();
         currentManPathShapes.getChildren().clear();
-//        boundingPathShapes.getChildren().clear();
-//        boundingPointsShapes.getChildren().clear();
+        boundingPointsShapes.getChildren().clear();
     }
 
 //    private void initGameOverAlert() {

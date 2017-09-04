@@ -28,13 +28,13 @@ public class Man extends Entity {
         this.strategy = strategy;
     }
 
+    public double getEpsilon() {
+        return epsilon;
+    }
+
     public void setEpsilon(double epsilon) {
         super.setSpeed(baseSpeed + epsilon);
         this.epsilon = epsilon;
-    }
-
-    public double getEpsilon() {
-        return epsilon;
     }
 
     public double getBaseSpeed() {

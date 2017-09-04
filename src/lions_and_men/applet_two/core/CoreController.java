@@ -19,21 +19,18 @@ import java.util.Map;
 
 public class CoreController {
 
-    private boolean editMode = true;
-
-    private double defaultMenEpsilon = 0.1;
-    private double defaultLionsSpeed = 1;
-    private double defaultLionsRange = 5;
-    private double maxLionSpeed = defaultLionsSpeed;
-
-    private ArrayList<AllPaths> allPathsList = new ArrayList<>();
-
     protected Plane plane = new Plane();
-    private int maxInductionsStep = 0;
     protected double maxX = 0;
     protected double maxY = 0;
     protected double minX = 0;
     protected double minY = 0;
+    private boolean editMode = true;
+    private double defaultMenEpsilon = 0.1;
+    private double defaultLionsSpeed = 1;
+    private double defaultLionsRange = 5;
+    private double maxLionSpeed = defaultLionsSpeed;
+    private ArrayList<AllPaths> allPathsList = new ArrayList<>();
+    private int maxInductionsStep = 0;
 
     public void setEmptyGraph() {
         plane = new Plane();
@@ -101,6 +98,7 @@ public class CoreController {
         createLion(new Point(110, 200));
         createMan(new Point(110, 110));
     }
+
     public void setDefaultGraph5() {
         setEmptyGraph();
 
@@ -252,7 +250,7 @@ public class CoreController {
         if (speed > maxLionSpeed) {
             maxLionSpeed = speed;
             Man man = plane.getMan();
-            if(man != null){
+            if (man != null) {
                 man.setSpeed(maxLionSpeed);
             }
         }

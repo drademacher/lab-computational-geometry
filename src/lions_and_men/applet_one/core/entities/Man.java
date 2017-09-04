@@ -13,9 +13,9 @@ public class Man extends Entity {
 
     private static int minimumDistance = 0;
     private static CoreController.ManStrategy defaultStrategy = CoreController.ManStrategy.Paper;
+    private static int defaultRange = 0;
     private StrategyMan strategy;
     private int range = defaultRange;
-    private static int defaultRange = 0;
 
 
     public Man(Vertex startPosition, CoreController coreController) {
@@ -40,6 +40,14 @@ public class Man extends Entity {
 
     public static void setDefaultStrategy(CoreController.ManStrategy defaultStrategy) {
         Man.defaultStrategy = defaultStrategy;
+    }
+
+    public static void setDefaultRange(int defaultRange) {
+        Man.defaultRange = defaultRange;
+    }
+
+    public static int getDefaultLionRange() {
+        return Man.defaultRange;
     }
 
     @Override
@@ -81,14 +89,6 @@ public class Man extends Entity {
 
     public void setRange(int range) {
         this.range = range;
-    }
-
-    public static void setDefaultRange(int defaultRange) {
-        Man.defaultRange = defaultRange;
-    }
-
-    public static int getDefaultLionRange() {
-        return Man.defaultRange;
     }
 
     public ArrayList<Vertex> getRangeVertices() {

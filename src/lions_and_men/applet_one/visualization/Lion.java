@@ -15,9 +15,7 @@ import lions_and_men.util.ZoomScrollPane;
 
 import java.util.Optional;
 
-import static lions_and_men.applet_one.visualization.Constants.ANIMATION_DURATION;
-import static lions_and_men.applet_one.visualization.Constants.COLOR_LION;
-import static lions_and_men.applet_one.visualization.Constants.ENTITY_RADIUS;
+import static lions_and_men.applet_one.visualization.Constants.*;
 
 /**
  * Created by Jens on 25.06.2017.

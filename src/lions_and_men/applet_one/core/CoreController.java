@@ -2,13 +2,16 @@ package lions_and_men.applet_one.core;
 
 import lions_and_men.applet_one.core.entities.Lion;
 import lions_and_men.applet_one.core.entities.Man;
-import lions_and_men.applet_one.core.graph.*;
+import lions_and_men.applet_one.core.graph.BigVertex;
+import lions_and_men.applet_one.core.graph.Edge;
+import lions_and_men.applet_one.core.graph.GraphController;
+import lions_and_men.applet_one.core.graph.Vertex;
 import lions_and_men.applet_one.core.strategies.LionStrategies.*;
 import lions_and_men.applet_one.core.strategies.ManStrategies.*;
 import lions_and_men.applet_one.core.strategies.StrategyLion;
 import lions_and_men.applet_one.core.strategies.StrategyMan;
-import lions_and_men.util.Global;
 import lions_and_men.applet_one.visualization.VisualCoreController;
+import lions_and_men.util.Global;
 import lions_and_men.util.Point;
 
 import java.io.*;

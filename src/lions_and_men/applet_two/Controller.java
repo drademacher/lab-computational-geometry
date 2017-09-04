@@ -23,13 +23,14 @@ import java.util.Optional;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import static lions_and_men.applet_two.visualization.Constants.SINGLE_STEP_DURATION;
+import static lions_and_men.applet_two.visualization.Constants.ANIMATION_DURATION;
 
 
 public class Controller {
     private Timer player;
 
     private ZoomScrollPane zoomScrollPane;
+    private Slider speedSlider;
     private Label helpText = new Label();
     private HBox buttonBarCenter;
     private Button helpToggleButton = new Button("Help");
@@ -82,12 +83,32 @@ public class Controller {
             zoomScrollPane.autoZoom();
         });
 
+        initSpeedSlider();
         initEditButtons();
         initPlayButtons();
         initModeButton();
         initContextMenu();
         initZoomScrollPane();
+
 //        initGameOverAlert();
+    }
+
+    private void initSpeedSlider() {
+        speedSlider = new Slider();
+        speedSlider.setPrefWidth(250);
+        speedSlider.setMin(10);
+        speedSlider.setMax(5000);
+        speedSlider.setValue(ANIMATION_DURATION);
+        speedSlider.setShowTickLabels(false);
+        speedSlider.setShowTickMarks(true);
+        speedSlider.setSnapToTicks(true);
+        speedSlider.setMajorTickUnit(250);
+        speedSlider.setMinorTickCount(0);
+        speedSlider.setBlockIncrement(250);
+        speedSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+            ANIMATION_DURATION = newValue.intValue();
+            System.out.println(ANIMATION_DURATION);
+        });
     }
 
     /**
@@ -126,7 +147,7 @@ public class Controller {
                 editMode.set(false);
 
                 modeToggleButton.setText("Edit Mode");
-                buttonBarCenter.getChildren().addAll(playAnimationButton, stopAnimationButton, stepAnimationButton, setViewMenu);
+                buttonBarCenter.getChildren().addAll(playAnimationButton, stopAnimationButton, stepAnimationButton, setViewMenu, speedSlider);
             } else {
 //                clearAnimationShapes();
 
@@ -134,7 +155,7 @@ public class Controller {
                 activePlaying.set(false);
 
                 modeToggleButton.setText("Play Mode");
-                buttonBarCenter.getChildren().addAll(setGraphButton, setParameterButton, newPermutationButton, setViewMenu);
+                buttonBarCenter.getChildren().addAll(setGraphButton, setParameterButton, newPermutationButton, setViewMenu, speedSlider);
                 oldLionsPathShapes.getChildren().clear();
 
                 zoomScrollPane.autoZoom();
@@ -162,7 +183,7 @@ public class Controller {
         setGraphButton.getItems().addAll(emptyMapMenuItem, new SeparatorMenuItem(), graph1MenuItem, graph2MenuItem, graph3MenuItem, graph4MenuItem, graph5MenuItem, randomConfigurationButton, new SeparatorMenuItem(), openMapMenuItem, saveMapMenuItem);
 
 
-        buttonBarCenter.getChildren().addAll(setGraphButton, setParameterButton, newPermutationButton, setViewMenu);
+        buttonBarCenter.getChildren().addAll(setGraphButton, setParameterButton, newPermutationButton, setViewMenu, speedSlider);
 
         emptyMapMenuItem.setOnAction(event -> {
             clearGraphShapes();
@@ -393,7 +414,7 @@ public class Controller {
                             }
                         });
                     }
-                }, 0, SINGLE_STEP_DURATION);
+                }, 0, (long) (ANIMATION_DURATION * 1.2));
             } else {
                 player.cancel();
             }

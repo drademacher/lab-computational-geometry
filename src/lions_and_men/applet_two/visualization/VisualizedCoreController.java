@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static lions_and_men.applet_two.visualization.Constants.ANIMATION_DURATION;
-import static lions_and_men.applet_two.visualization.Constants.FADE_IN_DURATION;
 
 
 public class VisualizedCoreController extends CoreController {
@@ -253,7 +252,7 @@ public class VisualizedCoreController extends CoreController {
         fadeIn.setNode(lions.get(pathCount).getShape());
         fadeIn.setFromValue(0.0);
         fadeIn.setToValue(1.0);
-        fadeIn.setDuration(Duration.millis(FADE_IN_DURATION));
+        fadeIn.setDuration(Duration.millis(ANIMATION_DURATION * 0.2));
         fadeIn.play();
 
 

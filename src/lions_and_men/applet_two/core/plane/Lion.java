@@ -7,17 +7,14 @@ public class Lion extends Entity {
     private double range;
     private Strategy strategy;
 
-    Lion(Point position, double speed, double range) {
-        super(position, speed);
-        this.range = range;
+    Lion(Point position) {
+        //speed default 1
+        super(position, 1);
+        this.range = 5;
     }
 
     public double getRange() {
         return range;
-    }
-
-    public void setRange(double range) {
-        this.range = range;
     }
 
     @Override

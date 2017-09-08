@@ -38,7 +38,7 @@ public class Main extends Application {
         stageOne.setWidth(1600);
         stageOne.setHeight(900);
         stageOne.setResizable(true);
-        new lions_and_men.applet_one.Controller(stageOne, rootOne);
+        new lions_and_men.applet_one_graph.Controller(stageOne, rootOne);
 
         // stage two
         stageTwo = new Stage();
@@ -53,7 +53,7 @@ public class Main extends Application {
         stageTwo.setWidth(1600);
         stageTwo.setHeight(900);
         stageTwo.setResizable(true);
-        new lions_and_men.applet_two.Controller(stageTwo, rootTwo);
+        new lions_and_men.applet_two_plane.Controller(stageTwo, rootTwo);
 
 
         stageChoose = new Stage();

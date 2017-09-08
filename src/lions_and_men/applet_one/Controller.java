@@ -77,7 +77,7 @@ public class Controller {
         appletToggleButton.setStyle("-fx-font-style: italic");
 
         appletToggleButton.setOnAction(event -> {
-            Main.switchStage();
+            Main.showChooser();
         });
 
         modeToggleButton.setOnMouseClicked(event -> {

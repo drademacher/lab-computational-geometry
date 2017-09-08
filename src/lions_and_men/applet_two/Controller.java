@@ -136,11 +136,11 @@ public class Controller {
 
         appletToggleButton.setStyle("-fx-font-style: italic");
         appletToggleButton.setOnAction(event -> {
-            Main.switchStage();
+            Main.showChooser();
         });
 
         modeToggleButton.setOnAction(event -> {
-            System.out.println("switch");
+            System.out.println("switch 1");
             buttonBarCenter.getChildren().clear();
 
             if (editMode.getValue()) {

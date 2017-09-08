@@ -366,7 +366,9 @@ public class CoreController {
     }
 
     public void setEditMode(boolean editMode) {
+        System.out.println("jens 1");
         resetInductionsStep();
+        System.out.println("jens 2");
         this.editMode = editMode;
     }
 

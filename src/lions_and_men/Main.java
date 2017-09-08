@@ -73,6 +73,7 @@ public class Main extends Application {
 
         // top text
         Label infobox = new Label("Choose one application to start.");
+        infobox.setStyle("-fx-font-size: 36; -fx-font-weight: bold;");
         rootChoose.setTop(infobox);
 
         // left
@@ -82,32 +83,38 @@ public class Main extends Application {
             stageOne.show();
         });
 
-        Label labelOne = new Label("a lot of text");
+        Label labelOne = new Label("Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et");
+        labelOne.setWrapText(true);
+        labelOne.setMaxWidth(400);
         labelOne.setPadding(new Insets(50, 10, 10, 10));
 
         VBox boxOne = new VBox(chooseOne, labelOne);
+        boxOne.setAlignment(Pos.CENTER);
         rootChoose.setLeft(boxOne);
 
         // right
         Button chooseTwo = new Button("Lions In Plane");
+
         chooseTwo.setOnAction(event -> {
             stageChoose.hide();
             stageTwo.show();
         });
 
-        Label labelTwo = new Label("a lot of text also");
+        Label labelTwo = new Label("Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et");
+        labelTwo.setWrapText(true);
+        labelTwo.setMaxWidth(400);
         labelTwo.setPadding(new Insets(50, 10, 10, 10));
 
         VBox boxTwo = new VBox(chooseTwo, labelTwo);
-
+        boxTwo.setAlignment(Pos.CENTER);
         rootChoose.setRight(boxTwo);
 
 
-        rootChoose.setStyle("-fx-font-size: 26;");
+        rootChoose.setStyle("-fx-font-size: 24;");
         rootChoose.setPadding(new Insets(150, 50, 150, 50));
         BorderPane.setAlignment(infobox, Pos.CENTER);
         BorderPane.setAlignment(boxOne, Pos.CENTER);
-        BorderPane.setAlignment(chooseTwo, Pos.CENTER);
+        BorderPane.setAlignment(boxTwo, Pos.CENTER);
 
         stageChoose.show();
     }

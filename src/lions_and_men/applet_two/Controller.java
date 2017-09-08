@@ -34,7 +34,7 @@ public class Controller {
     private Label helpText = new Label();
     private HBox buttonBarCenter;
     private Button helpToggleButton = new Button("Help");
-    private Button appletToggleButton = new Button("Switch Application");
+    private Button appletToggleButton = new Button("Choose App");
     private Button modeToggleButton = new Button("Edit Mode");
     private Group entityShapes = new Group(), lionRangeShapes = new Group(), convexHullShapes = new Group(), currentLionsPathShapes = new Group(), oldLionsPathShapes = new Group(), currentManPathShapes = new Group(), oldManPathShapes = new Group(), boundingPointsShapes = new Group();
     private Button playAnimationButton = new Button("Play");
@@ -105,9 +105,7 @@ public class Controller {
         speedSlider.setMajorTickUnit(250);
         speedSlider.setMinorTickCount(0);
         speedSlider.setBlockIncrement(250);
-        speedSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
-            ANIMATION_DURATION = newValue.intValue();
-        });
+        speedSlider.valueProperty().addListener((observable, oldValue, newValue) -> ANIMATION_DURATION = newValue.intValue());
     }
 
     /**
@@ -135,19 +133,16 @@ public class Controller {
                 "Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. ");
 
         appletToggleButton.setStyle("-fx-font-style: italic");
-        appletToggleButton.setOnAction(event -> {
-            Main.showChooser();
-        });
+        appletToggleButton.setOnAction(event -> Main.showChooser());
 
         modeToggleButton.setOnAction(event -> {
-            System.out.println("switch 1");
             buttonBarCenter.getChildren().clear();
 
             if (editMode.getValue()) {
                 editMode.set(false);
 
                 modeToggleButton.setText("Edit Mode");
-                buttonBarCenter.getChildren().addAll(playAnimationButton, stopAnimationButton, stepAnimationButton, setViewMenu, speedSlider);
+                buttonBarCenter.getChildren().addAll(playAnimationButton, speedSlider, stopAnimationButton, stepAnimationButton, setViewMenu);
             } else {
                 clearAnimationShapes();
 
@@ -155,7 +150,7 @@ public class Controller {
                 activePlaying.set(false);
 
                 modeToggleButton.setText("Play Mode");
-                buttonBarCenter.getChildren().addAll(setGraphButton, setParameterButton, newPermutationButton, setViewMenu, speedSlider);
+                buttonBarCenter.getChildren().addAll(setGraphButton, setParameterButton, newPermutationButton, setViewMenu);
                 oldLionsPathShapes.getChildren().clear();
 
                 zoomScrollPane.autoZoom();
@@ -183,7 +178,7 @@ public class Controller {
         setGraphButton.getItems().addAll(emptyMapMenuItem, new SeparatorMenuItem(), graph1MenuItem, graph2MenuItem, graph3MenuItem, graph4MenuItem, graph5MenuItem, randomConfigurationButton, new SeparatorMenuItem(), openMapMenuItem, saveMapMenuItem);
 
 
-        buttonBarCenter.getChildren().addAll(setGraphButton, setParameterButton, newPermutationButton, setViewMenu, speedSlider);
+        buttonBarCenter.getChildren().addAll(setGraphButton, setParameterButton, newPermutationButton, setViewMenu);
 
         emptyMapMenuItem.setOnAction(event -> {
             clearGraphShapes();
@@ -420,9 +415,7 @@ public class Controller {
             }
         });
 
-        newPermutationButton.setOnAction(event -> {
-            coreController.shuffleLionOrder();
-        });
+        newPermutationButton.setOnAction(event -> coreController.shuffleLionOrder());
     }
 
     /**
@@ -446,14 +439,6 @@ public class Controller {
             contextMenu.getItems().addAll(addManItem, addLionItem, closeItem);
             contextMenu.show(zoomScrollPane, event1.getScreenX(), event1.getScreenY());
         });
-    }
-
-    /**
-     * Initialize the animation timer which is used in the play mode.
-     * It works on a fixed amount of FPS (60 is the standard).
-     */
-    private void initAnimationTimer() {
-
     }
 
     /**

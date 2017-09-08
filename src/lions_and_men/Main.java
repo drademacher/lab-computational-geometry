@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -70,28 +71,42 @@ public class Main extends Application {
 
 
 
-
+        // top text
         Label infobox = new Label("Choose one application to start.");
-
         rootChoose.setTop(infobox);
+
+        // left
         Button chooseOne = new Button("Lions On Graph");
         chooseOne.setOnAction(event -> {
             stageChoose.hide();
             stageOne.show();
         });
-        rootChoose.setLeft(chooseOne);
+
+        Label labelOne = new Label("a lot of text");
+        labelOne.setPadding(new Insets(50, 10, 10, 10));
+
+        VBox boxOne = new VBox(chooseOne, labelOne);
+        rootChoose.setLeft(boxOne);
+
+        // right
         Button chooseTwo = new Button("Lions In Plane");
         chooseTwo.setOnAction(event -> {
             stageChoose.hide();
             stageTwo.show();
         });
-        rootChoose.setRight(chooseTwo);
+
+        Label labelTwo = new Label("a lot of text also");
+        labelTwo.setPadding(new Insets(50, 10, 10, 10));
+
+        VBox boxTwo = new VBox(chooseTwo, labelTwo);
+
+        rootChoose.setRight(boxTwo);
 
 
         rootChoose.setStyle("-fx-font-size: 26;");
         rootChoose.setPadding(new Insets(150, 50, 150, 50));
         BorderPane.setAlignment(infobox, Pos.CENTER);
-        BorderPane.setAlignment(chooseOne, Pos.CENTER);
+        BorderPane.setAlignment(boxOne, Pos.CENTER);
         BorderPane.setAlignment(chooseTwo, Pos.CENTER);
 
         stageChoose.show();

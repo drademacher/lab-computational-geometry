@@ -1,9 +1,7 @@
 package lions_and_men.applet_two.visualization;
 
-import javafx.animation.FadeTransition;
 import javafx.animation.ParallelTransition;
 import javafx.animation.PathTransition;
-import javafx.animation.SequentialTransition;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
@@ -213,18 +211,14 @@ public class VisualizedCoreController extends CoreController {
 
         allPaths = super.simulateStep();
 
-        if (allPaths.finished) {
-            freshInitialization();
-            for (Lion lion : lions) {
-                lion.getShape().setVisible(false);
-            }
-            return allPaths;
-        }
-
         // draw path stuff
         if (pathCount == 0) {
             minimumPathSize = allPaths.pathSize;
             ManPath.clear();
+//            freshInitialization();
+            for (Lion lion : lions) {
+                lion.getShape().setVisible(false);
+            }
         }
         onGoingAnimationBlockNew = true;
         ManPath.transfer();
@@ -239,14 +233,14 @@ public class VisualizedCoreController extends CoreController {
 
         // fade in next lion
         lions.get(pathCount).getShape().setVisible(true);
-        FadeTransition fadeIn = new FadeTransition();
-        fadeIn.setNode(lions.get(pathCount).getShape());
-        fadeIn.setFromValue(0.0);
-        fadeIn.setToValue(1.0);
-        fadeIn.setDuration(Duration.millis(ANIMATION_DURATION * 0.2));
+//        FadeTransition fadeIn = new FadeTransition();
+//        fadeIn.setNode(lions.get(pathCount).getShape());
+//        fadeIn.setFromValue(0.0);
+//        fadeIn.setToValue(1.0);
+//        fadeIn.setDuration(Duration.millis(ANIMATION_DURATION * 0.2));
 
 
-        ParallelTransition allPathTransition = new ParallelTransition();
+        ParallelTransition fullTransition = new ParallelTransition();
 
         // man transition
         Path manPath = new Path();
@@ -259,7 +253,7 @@ public class VisualizedCoreController extends CoreController {
         manTransition.setDuration(Duration.millis(ANIMATION_DURATION * allPaths.pathSize / minimumPathSize));
         manTransition.setPath(manPath);
         manTransition.setNode(manPoint.getShape());
-        allPathTransition.getChildren().add(manTransition);
+        fullTransition.getChildren().add(manTransition);
 
 
         // lions transitions
@@ -274,7 +268,7 @@ public class VisualizedCoreController extends CoreController {
             lionTransition.setDuration(Duration.millis(ANIMATION_DURATION * allPaths.pathSize / minimumPathSize));
             lionTransition.setPath(lionPath);
             lionTransition.setNode(lions.get(i).getShape());
-            allPathTransition.getChildren().add(lionTransition);
+            fullTransition.getChildren().add(lionTransition);
 
 
 //            lions.get(i).setPosition(allPaths.lionPaths.get(i).get(pathStoneCount));
@@ -288,10 +282,17 @@ public class VisualizedCoreController extends CoreController {
         pathCount++;
 //        allPaths = simulateStep();
 
-        SequentialTransition fullTransition = new SequentialTransition();
-        fullTransition.getChildren().addAll(fadeIn, allPathTransition);
         fullTransition.play();
         fullTransition.setOnFinished(event -> onGoingAnimationBlockNew = false);
+
+
+        if (allPaths.finished) {
+            fullTransition.setOnFinished(event -> {
+                onGoingAnimationBlockNew = false;
+                pathCount = 0;
+            });
+
+        }
 
         return allPaths;
     }

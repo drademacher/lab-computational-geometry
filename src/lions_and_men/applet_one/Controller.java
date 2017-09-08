@@ -10,6 +10,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
 import lions_and_men.Main;
 import lions_and_men.applet_one.core.CoreController;
 import lions_and_men.applet_one.visualization.*;
@@ -21,17 +22,18 @@ import java.util.Optional;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import static lions_and_men.applet_one.visualization.Constants.SINGLE_STEP_DURATION;
+import static lions_and_men.applet_one.visualization.Constants.ANIMATION_DURATION;
 
 
 public class Controller {
     private Timer player;
 
     private ZoomScrollPane zoomScrollPane;
-    private HBox buttonBar;
+    private Slider speedSlider;
+    private HBox buttonBarCenter;
     private Button modeToggleButton = new Button("Edit Mode");
     private Button helpToggleButton = new Button("Help");
-    private Button appletToggleButton = new Button("Switch Application");
+    private Button appletToggleButton = new Button("Choose App");
     private Group vertexShapes = new Group(), edgeShapes = new Group(), entityShapes = new Group(), lionRangeShapes = new Group(), stepPreviewShapes = new Group(), choisePointShapes = new Group();
     private Button playAnimationButton = new Button("Play");
     private Button stopAnimationButton = new Button("Stop");
@@ -51,15 +53,29 @@ public class Controller {
         zoomScrollPane = new ZoomScrollPane();
         root.setCenter(zoomScrollPane);
 
-        buttonBar = new HBox();
-        root.setBottom(buttonBar);
-        buttonBar.setPadding(new Insets(10, 10, 10, 10));
-        buttonBar.setSpacing(25);
+        buttonBarCenter = new HBox();
+        buttonBarCenter.setPadding(new Insets(10, 10, 10, 10));
+        buttonBarCenter.setSpacing(25);
+
+        HBox buttonBarRight = new HBox(helpToggleButton, appletToggleButton);
+        buttonBarRight.setPadding(new Insets(10, 10, 10, 150));
+        buttonBarRight.setSpacing(25);
+
+        HBox buttonBarLeft = new HBox(modeToggleButton);
+        buttonBarLeft.setPadding(new Insets(10, 150, 10, 10));
+        buttonBarLeft.setSpacing(25);
+
+        BorderPane buttonPane = new BorderPane();
+        root.setBottom(buttonPane);
+        buttonPane.setLeft(buttonBarLeft);
+        buttonPane.setCenter(buttonBarCenter);
+        buttonPane.setRight(buttonBarRight);
 
         editMode = new SimpleBooleanProperty(true);
         activePlaying = new SimpleBooleanProperty(false);
         editMode.addListener((observable, oldValue, newValue) -> this.coreController.setEditMode(newValue));
 
+        initSpeedSlider();
         initAnimationTimer();
         initEditButtons();
         initPlayButtons();
@@ -69,6 +85,46 @@ public class Controller {
         initGameOverAlert();
     }
 
+    private void initSpeedSlider() {
+        speedSlider = new Slider();
+        speedSlider.setPrefWidth(250);
+        speedSlider.setMin(10);
+        speedSlider.setMax(1000);
+        speedSlider.setValue(ANIMATION_DURATION);
+        speedSlider.setShowTickLabels(true);
+        speedSlider.setShowTickMarks(true);
+        speedSlider.setSnapToTicks(true);
+        speedSlider.setMajorTickUnit(50);
+        speedSlider.setMinorTickCount(0);
+        speedSlider.setBlockIncrement(50);
+        speedSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+            ANIMATION_DURATION = newValue.intValue();
+        });
+        speedSlider.disableProperty().bind(activePlaying);
+        speedSlider.setLabelFormatter(new StringConverter<Double>() {
+            @Override
+            public String toString(Double n) {
+                if (n <= 10) return "Fast";
+                if (n >= 1000) return "Slow";
+
+                return "";
+            }
+
+            @Override
+            public Double fromString(String string) {
+                switch (string) {
+                    case "Fast":
+                        return 10d;
+                    case "Slow":
+                        return 1000d;
+
+                    default:
+                        return 1000d;
+                }
+            }
+        });
+    }
+
     /**
      * Initialize the mode toggle button and add the button logic.
      */
@@ -76,18 +132,16 @@ public class Controller {
         helpToggleButton.setStyle("-fx-font-style: italic");
         appletToggleButton.setStyle("-fx-font-style: italic");
 
-        appletToggleButton.setOnAction(event -> {
-            Main.switchStage();
-        });
+        appletToggleButton.setOnAction(event -> Main.showChooser());
 
         modeToggleButton.setOnMouseClicked(event -> {
-            buttonBar.getChildren().clear();
+            buttonBarCenter.getChildren().clear();
 
             if (editMode.getValue()) {
                 editMode.set(false);
 
                 modeToggleButton.setText("Play Mode");
-                buttonBar.getChildren().addAll(appletToggleButton, helpToggleButton, modeToggleButton, playAnimationButton, stopAnimationButton, stepAnimationButton);
+                buttonBarCenter.getChildren().addAll(playAnimationButton, speedSlider, stopAnimationButton, stepAnimationButton, setViewMenu);
 
                 zoomScrollPane.autoZoom();
 
@@ -96,7 +150,7 @@ public class Controller {
                 activePlaying.set(false);
 
                 modeToggleButton.setText("Edit Mode");
-                buttonBar.getChildren().addAll(appletToggleButton, helpToggleButton, modeToggleButton, setGraphButton, setParameterButton, setViewMenu);
+                buttonBarCenter.getChildren().addAll(setGraphButton, setParameterButton, setViewMenu);
             }
         });
 
@@ -118,7 +172,7 @@ public class Controller {
 
         setGraphButton.getItems().addAll(emptyMapMenuItem, new SeparatorMenuItem(), graph2MenuItem, graph1MenuItem, graph3MenuItem, new SeparatorMenuItem(), openMapMenuItem, saveMapMenuItem);
 
-        buttonBar.getChildren().addAll(appletToggleButton, helpToggleButton, modeToggleButton, setGraphButton, setParameterButton, setViewMenu);
+        buttonBarCenter.getChildren().addAll(setGraphButton, setParameterButton, setViewMenu);
 
         emptyMapMenuItem.setOnAction(event -> {
             clearGraphShapes();
@@ -354,7 +408,7 @@ public class Controller {
                             }
                         });
                     }
-                }, 0, SINGLE_STEP_DURATION);
+                }, 0, (long) (ANIMATION_DURATION * 1.3));
             } else {
                 player.cancel();
             }

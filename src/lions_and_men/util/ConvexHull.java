@@ -115,9 +115,9 @@ public class ConvexHull {
                 return false;
             }
         }
-//        if (isRightOf(hull[hull.length-1], hull[0], p) < 0) {
-//            return false;
-//        }
+        if (isRightOf(hull[hull.length-1], hull[0], p) < 0) {
+            return false;
+        }
 
         return true;
     }

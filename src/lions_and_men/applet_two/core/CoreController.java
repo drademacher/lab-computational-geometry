@@ -333,12 +333,9 @@ public class CoreController {
 
             ArrayList<ArrayList<Point>> lionPathList = new ArrayList<>();
             lionPaths.forEach((key, value) -> lionPathList.add(value));
-            AllPaths allPaths = new AllPaths(resultPath, lionPathList);
+            AllPaths allPaths = new AllPaths(resultPath, lionPathList, (k == plane.getLionsSize() - 1));
             allPathsList.add(allPaths);
         }
-
-        AllPaths endPath = new AllPaths();
-        allPathsList.add(endPath);
 
 
         //calc bounding box greedy

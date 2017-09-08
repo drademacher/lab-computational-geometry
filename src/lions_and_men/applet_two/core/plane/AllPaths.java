@@ -21,11 +21,11 @@ public class AllPaths {
         this.finished = true;
     }
 
-    public AllPaths(ArrayList<Point> manPath, ArrayList<ArrayList<Point>> lionPaths) {
+    public AllPaths(ArrayList<Point> manPath, ArrayList<ArrayList<Point>> lionPaths, boolean finished) {
         this.manPath = (ArrayList<Point>) manPath.clone();
         this.lionPaths = lionPaths;
         this.pathSize = manPath.size();
-        this.finished = false;
+        this.finished = finished;
 
         //just check the sizes
         for (ArrayList<Point> lionPath : this.lionPaths) {

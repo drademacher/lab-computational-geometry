@@ -1,7 +1,7 @@
 package lions_and_men.util;
 
 
-public class Point {
+public class Point implements Comparable<Point>{
 
     private double x;
     private double y;
@@ -90,6 +90,15 @@ public class Point {
         result = 31 * result + y;
         return (int) result;
     }
+
+    public int compareTo(Point p) {
+        if (this.x == p.x) {
+            return (int) (this.getY() - p.getY());
+        } else {
+            return (int) (this.getX() - p.getX());
+        }
+    }
+
 
     @Override
     public String toString() {

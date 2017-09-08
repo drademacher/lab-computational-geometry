@@ -12,8 +12,7 @@ public class ConvexHull {
 
     public ConvexHull(Point[] points) {
         this.points = points.clone();
-        computeConvexHull();
-        trimConvexHull();
+        convex_hull();
     }
 
     public ConvexHull(List<Lion> lions) {
@@ -21,74 +20,41 @@ public class ConvexHull {
         for (int i = 0; i < lions.size(); i++) {
             points[i] = lions.get(i).getPosition();
         }
-        computeConvexHull();
-        trimConvexHull();
+        convex_hull();
     }
 
-    private void computeConvexHull() {
-        hull = new Point[points.length + 4]; // overflow where hull has temporarily more than n+2 points
-
-        int index = 0;
-
-        if (points.length < 3) {
-            return;
-        }
-
-        // Sort the points from left to right and bottom to top if same x value
-        Arrays.sort(points, (o1, o2) -> {
-            if (o1.getX() < o2.getX() || (o1.getX() == o2.getX() && o1.getY() > o2.getY()))
-                return -1;
-            else return 1;
-        });
-
-
-        // upper part of convex hull
-        for (int l = 0; l < points.length; l++) {
-            hull[index] = points[l];
-            index++;
-
-            Point q = hull[index - 1];
-            for (int j = index - 2; j > 0; j--) {
-                if (isRightOf(hull[j - 1], q, hull[j]) == 1) {
-                    hull[j] = q;
-                    index--;
-                } else {
-//                    break;
-                }
-            }
-        }
-
-        // lower part of convex hull
-        // point at lions.size() - 1 is already in convex hull (right outermost point!)
-        for (int l = points.length - 1; l >= 0; l--) {
-            hull[index] = points[l];
-            index++;
-
-            Point q = hull[index - 1];
-            for (int j = index - 2; j > 0; j--) {
-                Point p = hull[j - 1];
-                Point r = hull[j];
-                if (isRightOf(p, q, r) == 1) {
-                    hull[j] = q;
-                    index--;
-                } else {
-//                    break;
-                }
-            }
-        }
+    private double cross(Point O, Point A, Point B) {
+        return (A.getX() - O.getX()) * (B.getY() - O.getY()) - (A.getY() - O.getY()) * (B.getX() - O.getX());
     }
 
-    private void trimConvexHull() {
-        if (hull[0] == null) {
-            hull = new Point[0];
-            return;
-        }
+    private void convex_hull() {
 
-        for (int i = 0; i < hull.length; i++) {
-            if (hull[i] == null) {
-                hull = Arrays.copyOfRange(hull, 0, i - 1);
-                return;
+        if (this.points.length > 1) {
+            int n = this.points.length, k = 0;
+            this.hull = new Point[2 * n];
+
+            Arrays.sort(this.points);
+
+            // Build lower hull
+            for (int i = 0; i < n; ++i) {
+                while (k >= 2 && cross(this.hull[k - 2], this.hull[k - 1], this.points[i]) <= 0)
+                    k--;
+                this.hull[k++] = this.points[i];
             }
+
+            // Build upper hull
+            for (int i = n - 2, t = k + 1; i >= 0; i--) {
+                while (k >= t && cross(this.hull[k - 2], this.hull[k - 1], this.points[i]) <= 0)
+                    k--;
+                this.hull[k++] = this.points[i];
+            }
+            if (k > 1) {
+                this.hull = Arrays.copyOfRange(this.hull, 0, k - 1); // remove non-hull vertices after k; remove k - 1 which is a duplicate
+            }
+        } else if (this.points.length <= 1) {
+            this.hull =  this.points;
+        } else{
+//            return null;
         }
     }
 

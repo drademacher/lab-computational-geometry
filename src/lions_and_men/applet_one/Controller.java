@@ -10,6 +10,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
 import lions_and_men.Main;
 import lions_and_men.applet_one.core.CoreController;
 import lions_and_men.applet_one.visualization.*;
@@ -90,7 +91,7 @@ public class Controller {
         speedSlider.setMin(10);
         speedSlider.setMax(1000);
         speedSlider.setValue(ANIMATION_DURATION);
-        speedSlider.setShowTickLabels(false);
+        speedSlider.setShowTickLabels(true);
         speedSlider.setShowTickMarks(true);
         speedSlider.setSnapToTicks(true);
         speedSlider.setMajorTickUnit(50);
@@ -98,9 +99,30 @@ public class Controller {
         speedSlider.setBlockIncrement(50);
         speedSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
             ANIMATION_DURATION = newValue.intValue();
-            System.out.println(ANIMATION_DURATION);
         });
         speedSlider.disableProperty().bind(activePlaying);
+        speedSlider.setLabelFormatter(new StringConverter<Double>() {
+            @Override
+            public String toString(Double n) {
+                if (n <= 10) return "Fast";
+                if (n >= 1000) return "Slow";
+
+                return "";
+            }
+
+            @Override
+            public Double fromString(String string) {
+                switch (string) {
+                    case "Fast":
+                        return 10d;
+                    case "Slow":
+                        return 1000d;
+
+                    default:
+                        return 1000d;
+                }
+            }
+        });
     }
 
     /**

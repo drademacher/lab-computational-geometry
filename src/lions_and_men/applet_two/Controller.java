@@ -10,6 +10,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
 import lions_and_men.Main;
 import lions_and_men.applet_two.core.plane.AllPaths;
 import lions_and_men.applet_two.core.strategies.lion.StrategyEnumLion;
@@ -95,17 +96,40 @@ public class Controller {
 
     private void initSpeedSlider() {
         speedSlider = new Slider();
+        speedSlider.setAccessibleText("hi");
         speedSlider.setPrefWidth(250);
         speedSlider.setMin(10);
         speedSlider.setMax(5000);
         speedSlider.setValue(ANIMATION_DURATION);
-        speedSlider.setShowTickLabels(false);
+        speedSlider.setShowTickLabels(true);
         speedSlider.setShowTickMarks(true);
         speedSlider.setSnapToTicks(true);
         speedSlider.setMajorTickUnit(250);
         speedSlider.setMinorTickCount(0);
         speedSlider.setBlockIncrement(250);
         speedSlider.valueProperty().addListener((observable, oldValue, newValue) -> ANIMATION_DURATION = newValue.intValue());
+        speedSlider.setLabelFormatter(new StringConverter<Double>() {
+            @Override
+            public String toString(Double n) {
+                if (n <= 10) return "Fast";
+                if (n >= 5000) return "Slow";
+
+                return "";
+            }
+
+            @Override
+            public Double fromString(String string) {
+                switch (string) {
+                    case "Fast":
+                        return 10d;
+                    case "Slow":
+                        return 5000d;
+
+                    default:
+                        return 5000d;
+                }
+            }
+        });
     }
 
     /**

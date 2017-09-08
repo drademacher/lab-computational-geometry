@@ -43,10 +43,7 @@ public class Lion extends Shape {
             Menu strategyMenu = new Menu("Set Strategy");
             MenuItem waitStrategyButton = new MenuItem("Wait");
             MenuItem greedyStrategyButton = new MenuItem("Greedy");
-            MenuItem randomStrategyButton = new MenuItem("Random");
-            MenuItem manualStrategyButton = new MenuItem("Manual");
-            MenuItem paperStrategyButton = new MenuItem("Paper");
-            strategyMenu.getItems().addAll(waitStrategyButton, greedyStrategyButton, randomStrategyButton, manualStrategyButton, paperStrategyButton);
+            strategyMenu.getItems().addAll(waitStrategyButton, greedyStrategyButton);
 
 
             removeButton.setOnAction(event2 -> {

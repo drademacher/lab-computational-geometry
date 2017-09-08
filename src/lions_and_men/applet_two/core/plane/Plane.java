@@ -20,19 +20,19 @@ public class Plane {
         this.lions = new ArrayList<>();
     }
 
-    public void addMan(Point pos, double speed, double epsilon) {
-        man = new Man(pos, speed, epsilon);
+    public void addMan(Point pos, double epsilon) {
+        man = new Man(pos, epsilon);
         setManStrategy(StrategyEnumMan.Paper);
 //        System.out.println(man.getStrategy());
 //        System.out.println("man position @ " + pos);
     }
 
-    public void removeMan(Point coordinates) {
+    public void removeMan() {
         man = null;
     }
 
-    public void addLion(Point pos, double speed, double range) {
-        Lion lion = new Lion(pos, speed, range);
+    public void addLion(Point pos) {
+        Lion lion = new Lion(pos);
         lions.add(lion);
         setLionStrategy(lion, StrategyEnumLion.Greedy);
 //        System.out.println(pos + " # " + lion.getStrategy());

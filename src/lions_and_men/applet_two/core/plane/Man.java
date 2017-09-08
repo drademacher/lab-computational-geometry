@@ -7,12 +7,10 @@ public class Man extends Entity {
 
     private Strategy strategy;
     private double epsilon;
-    private double baseSpeed;
 
-    public Man(Point position, double baseSpeed, double epsilon) {
-        super(position, baseSpeed + epsilon);
+    public Man(Point position, double epsilon) {
+        super(position, 1 + epsilon);
         this.epsilon = epsilon;
-        this.baseSpeed = baseSpeed;
     }
 
     @Override
@@ -33,17 +31,7 @@ public class Man extends Entity {
     }
 
     public void setEpsilon(double epsilon) {
-        super.setSpeed(baseSpeed + epsilon);
+        super.setSpeed(1 + epsilon);
         this.epsilon = epsilon;
-    }
-
-    public double getBaseSpeed() {
-        return baseSpeed;
-    }
-
-    @Override
-    public void setSpeed(double baseSpeed) {
-        super.setSpeed(baseSpeed + epsilon);
-        this.baseSpeed = baseSpeed;
     }
 }

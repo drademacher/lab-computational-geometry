@@ -26,9 +26,6 @@ public class CoreController {
     protected double minY = 0;
     private boolean editMode = true;
     private double defaultMenEpsilon = 0.1;
-    private double defaultLionsSpeed = 1;
-    private double defaultLionsRange = 5;
-    private double maxLionSpeed = defaultLionsSpeed;
     private ArrayList<AllPaths> allPathsList = new ArrayList<>();
     private int maxInductionsStep = 0;
 
@@ -175,8 +172,6 @@ public class CoreController {
                     case "L":
                         createLion(pos);
                         setLionStrategy(pos, StrategyEnumLion.valueOf(lineElements[3]));
-                        setLionSpeed(pos, Double.parseDouble(lineElements[4]));
-                        setLionRange(pos, Double.parseDouble(lineElements[5]));
                         break;
                     default:
                         throw new IllegalArgumentException("invalid input: " + lineElements[0]);
@@ -203,7 +198,7 @@ public class CoreController {
 
             for (Lion lion : plane.getLions()) {
                 System.out.println(lion.getStrategy());
-                bufferedWriter.write("L##" + lion.getPosition().getX() + "##" + lion.getPosition().getY() + "##" + lion.getStrategy().getName() + "##" + lion.getSpeed() + "##" + lion.getRange());
+                bufferedWriter.write("L##" + lion.getPosition().getX() + "##" + lion.getPosition().getY() + "##" + lion.getStrategy().getName());
                 bufferedWriter.newLine();
                 bufferedWriter.flush();
             }
@@ -214,14 +209,6 @@ public class CoreController {
         }
     }
 
-    public double getDefaultLionsRange() {
-        return defaultLionsRange;
-    }
-
-    public void setDefaultLionsRange(double defaultLionsRange) {
-        this.defaultLionsRange = defaultLionsRange;
-    }
-
     public double getDefaultMenEpsilon() {
         return defaultMenEpsilon;
     }
@@ -229,31 +216,6 @@ public class CoreController {
     public void setDefaultMenEpsilon(double defaultMenEpsilon) {
         this.defaultMenEpsilon = defaultMenEpsilon;
         setManEpsilon(defaultMenEpsilon);
-    }
-
-    public double getDefaultLionsSpeed() {
-        return defaultLionsSpeed;
-    }
-
-    public void setDefaultLionsSpeed(double defaultLionsSpeed) {
-        this.defaultLionsSpeed = defaultLionsSpeed;
-    }
-
-    private void calcMaxLionSpeed() {
-        maxLionSpeed = 0;
-        for (Lion lion : plane.getLions()) {
-            setMaxLionSpeed(lion.getSpeed());
-        }
-    }
-
-    private void setMaxLionSpeed(double speed) {
-        if (speed > maxLionSpeed) {
-            maxLionSpeed = speed;
-            Man man = plane.getMan();
-            if (man != null) {
-                man.setSpeed(maxLionSpeed);
-            }
-        }
     }
 
 
@@ -374,21 +336,19 @@ public class CoreController {
         if (this.plane.getMan() != null) {
             return;
         }
-        plane.addMan(coordinates, maxLionSpeed, defaultMenEpsilon);
+        plane.addMan(coordinates, defaultMenEpsilon);
     }
 
     public void createLion(Point coordinates) {
-        plane.addLion(coordinates, defaultLionsSpeed, defaultLionsRange);
-        setMaxLionSpeed(defaultLionsSpeed);
+        plane.addLion(coordinates);
     }
 
     public void removeMan(Point coordinates) {
-        plane.removeMan(coordinates);
+        plane.removeMan();
     }
 
     public void removeLion(Point coordinates) {
         plane.removeLion(coordinates);
-        calcMaxLionSpeed();
     }
 
     public void relocateMan(Point to) {
@@ -399,17 +359,8 @@ public class CoreController {
         plane.getLionByCoordinate(from).setPosition(to);
     }
 
-    public void setLionRange(Point coordinates, double range) {
-        plane.getLionByCoordinate(coordinates).setRange(range);
-    }
-
     private void setManEpsilon(double epsilon) {
         plane.getMan().setEpsilon(epsilon);
-    }
-
-    private void setLionSpeed(Point coordinates, double speed) {
-        plane.getLionByCoordinate(coordinates).setSpeed(speed);
-        setMaxLionSpeed(speed);
     }
 
     public void shuffleLionOrder() {

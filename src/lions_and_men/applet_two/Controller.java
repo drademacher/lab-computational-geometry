@@ -257,9 +257,7 @@ public class Controller {
         });
 
 
-        MenuItem setGlobalManSpeed = new MenuItem("Set Man Speed");
-        MenuItem setGlobalLionSpeed = new MenuItem("Set Lion Speed");
-        MenuItem setGlobalLionRange = new MenuItem("Set Lion Range");
+        MenuItem setGlobalManSpeed = new MenuItem("Set Man Epsilon");
 
         Menu manMenu = new Menu("Set Man Strategy");
         MenuItem setManStrategyWait = new MenuItem("Wait");
@@ -276,7 +274,7 @@ public class Controller {
         lionMenu.getItems().addAll(setLionsStrategyWait, setLionsStrategyGreedy/*, setLionsStrategyRandom, setLionsStrategyManual*/);
 
 
-        setParameterButton.getItems().addAll(setGlobalManSpeed, setGlobalLionSpeed, setGlobalLionRange, new SeparatorMenuItem(), manMenu, lionMenu);
+        setParameterButton.getItems().addAll(setGlobalManSpeed, new SeparatorMenuItem(), manMenu, lionMenu);
 
         setGlobalManSpeed.setOnAction(event -> {
             double currentValue = this.coreController.getDefaultMenEpsilon();
@@ -303,54 +301,6 @@ public class Controller {
             }
         });
 
-        setGlobalLionSpeed.setOnAction(event -> {
-            double currentValue = this.coreController.getDefaultLionsSpeed();
-
-            TextInputDialog dialog = new TextInputDialog("" + currentValue);
-            dialog.setTitle("Set Lion Speed");
-            dialog.setHeaderText("----.");
-
-            Optional<String> result = dialog.showAndWait();
-
-            if (result.isPresent()) {
-                try {
-                    double inputValue = Double.parseDouble(result.get());
-                    this.coreController.setDefaultLionsSpeed(inputValue);
-                } catch (Exception ignore) {
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Error");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Input was not a number.");
-                    alert.showAndWait();
-                }
-            }
-        });
-
-
-        setGlobalLionRange.setOnAction(event -> {
-            double currentValue = this.coreController.getDefaultLionsRange();
-
-
-            TextInputDialog dialog = new TextInputDialog("" + currentValue);
-            dialog.setTitle("Set Lion Range");
-            dialog.setHeaderText("Enter the range in which a lion can catch a man.");
-            dialog.setContentText("0 means that the lions has to be on the same vertex. > 0 means that the lions can jump and catch a man slightly farther away.");
-
-            Optional<String> result = dialog.showAndWait();
-
-            if (result.isPresent()) {
-                try {
-                    double inputValue = Double.parseDouble(result.get());
-                    this.coreController.setDefaultLionsRange(inputValue);
-                } catch (Exception ignore) {
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Error");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Input was not a number.");
-                    alert.showAndWait();
-                }
-            }
-        });
 
         CheckMenuItem viewEntities = new CheckMenuItem("View Entities");
         entityShapes.visibleProperty().bind(viewEntities.selectedProperty());

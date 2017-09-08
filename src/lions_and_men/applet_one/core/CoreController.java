@@ -912,17 +912,18 @@ public class CoreController {
 
     public boolean simulateStep() {
 
-        for (Man man : this.getMen()) {
-            Vertex oldPosition = man.getCurrentPosition();
-            Vertex newPosition = man.goToNextPosition();
-            relocateMan(oldPosition.getCoordinates(), newPosition.getCoordinates());
-        }
         for (Lion lion : this.getLions()) {
             Vertex oldPosition = lion.getCurrentPosition();
             Vertex newPosition = lion.goToNextPosition();
             relocateLion(oldPosition.getCoordinates(), newPosition.getCoordinates());
 
         }
+        for (Man man : this.getMen()) {
+            Vertex oldPosition = man.getCurrentPosition();
+            Vertex newPosition = man.goToNextPosition();
+            relocateMan(oldPosition.getCoordinates(), newPosition.getCoordinates());
+        }
+
 
         if (lionsHaveWon()) {
             removeDeadMan();

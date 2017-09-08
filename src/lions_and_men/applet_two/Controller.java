@@ -140,6 +140,7 @@ public class Controller {
         });
 
         modeToggleButton.setOnAction(event -> {
+            System.out.println("switch");
             buttonBarCenter.getChildren().clear();
 
             if (editMode.getValue()) {

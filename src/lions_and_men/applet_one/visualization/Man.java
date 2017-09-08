@@ -25,10 +25,10 @@ public class Man implements Entity {
     private static Group shapeGroup = new Group();
 
     private Circle shape;
-    private CoreController coreController;
+    private VisualCoreController coreController;
     private Point coordinates;
 
-    public Man(CoreController coreController, Point startCoordinates) {
+    public Man(VisualCoreController coreController, Point startCoordinates) {
 
         this.coreController = coreController;
         this.coordinates = startCoordinates;
@@ -103,7 +103,6 @@ public class Man implements Entity {
 
             manualStrategyButton.setOnAction(event2 -> {
                 coreController.setManStrategy(coordinates, CoreController.ManStrategy.Manually);
-                coreController.getVisualCoreController().updateStepPreviewsAndChoicePoints();
             });
 
             paperStrategyButton.setOnAction(event2 -> {
@@ -165,5 +164,10 @@ public class Man implements Entity {
 
     public void delete() {
         shapeGroup.getChildren().remove(shape);
+    }
+
+    @Override
+    public Point getPosition() {
+        return coordinates;
     }
 }

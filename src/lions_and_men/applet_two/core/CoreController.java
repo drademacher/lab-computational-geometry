@@ -25,6 +25,7 @@ public class CoreController {
     protected double minX = 0;
     protected double minY = 0;
     private boolean editMode = true;
+
     private double defaultMenEpsilon = 0.1;
     private ArrayList<AllPaths> allPathsList = new ArrayList<>();
     private int maxInductionsStep = 0;
@@ -57,7 +58,6 @@ public class CoreController {
         createLion(new Point(150, 100));
         createLion(new Point(140, 140));
         createLion(new Point(100, 140));
-
 
         createMan(new Point(161, 113));
 

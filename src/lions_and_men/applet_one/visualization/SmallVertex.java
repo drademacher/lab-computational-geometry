@@ -13,10 +13,10 @@ public class SmallVertex implements Vertex {
     private static Group shapeGroup = new Group();
 
     private Circle shape;
-    private CoreController coreController;
+    private VisualCoreController coreController;
     private Point coordinates;
 
-    public SmallVertex(CoreController coreController, Point startCoordinates) {
+    public SmallVertex(VisualCoreController coreController, Point startCoordinates) {
 
         this.coreController = coreController;
         this.coordinates = startCoordinates;
@@ -68,4 +68,9 @@ public class SmallVertex implements Vertex {
     public void delete() {
         shapeGroup.getChildren().remove(shape);
     }
+
+    public Point getPosition() {
+        return coordinates;
+    }
+
 }

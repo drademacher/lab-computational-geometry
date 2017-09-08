@@ -15,12 +15,12 @@ import static lions_and_men.applet_one.visualization.Constants.COLOR_EDGE;
 public class Edge {
     private static Group shapeGroup = new Group();
 
-    private CoreController coreController;
+    private VisualCoreController coreController;
     private Line shape;
     private Point from;
     private Point to;
 
-    public Edge(CoreController coreController, Point startFrom, Point startTo) {
+    public Edge(VisualCoreController coreController, Point startFrom, Point startTo) {
 
         this.coreController = coreController;
         this.from = startFrom;
@@ -97,5 +97,13 @@ public class Edge {
 
     public void delete() {
         shapeGroup.getChildren().remove(shape);
+    }
+
+    public Point getPositionTo() {
+        return to;
+    }
+
+    public Point getPositionFrom() {
+        return from;
     }
 }

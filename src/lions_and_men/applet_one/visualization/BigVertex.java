@@ -5,7 +5,6 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.shape.Circle;
-import lions_and_men.applet_one.core.CoreController;
 import lions_and_men.util.ContextMenuHolder;
 import lions_and_men.util.Point;
 import lions_and_men.util.ZoomScrollPane;
@@ -15,11 +14,11 @@ public class BigVertex implements Vertex {
     private static Group shapeGroup;
 
     private Circle shape;
-    private CoreController coreController;
+    private VisualCoreController coreController;
     private Point coordinates;
 
 
-    public BigVertex(CoreController coreController, Point startCoordinates) {
+    public BigVertex(VisualCoreController coreController, Point startCoordinates) {
         this.coreController = coreController;
         this.coordinates = startCoordinates;
 
@@ -115,5 +114,9 @@ public class BigVertex implements Vertex {
 
     public void delete() {
         shapeGroup.getChildren().remove(shape);
+    }
+
+    public Point getPosition() {
+        return coordinates;
     }
 }

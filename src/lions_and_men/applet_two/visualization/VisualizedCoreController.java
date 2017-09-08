@@ -121,6 +121,7 @@ public class VisualizedCoreController extends CoreController {
 
     @Override
     public void createMan(Point coordinates) {
+        System.out.println("create Man - visual");
         super.createMan(coordinates);
 
 //        if(manPoint != null){
@@ -205,6 +206,7 @@ public class VisualizedCoreController extends CoreController {
 
     @Override
     public AllPaths simulateStep() {
+
         if (onGoingAnimationBlockNew) {
             return null;
         }

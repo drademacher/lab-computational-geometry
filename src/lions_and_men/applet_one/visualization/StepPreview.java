@@ -11,10 +11,10 @@ public class StepPreview implements Vertex {
     private static Group shapeGroup = new Group();
 
     private Circle shape;
-    private CoreController coreController;
+    private VisualCoreController coreController;
     private Point coordinates;
 
-    StepPreview(CoreController coreController, Point startCoordinates) {
+    StepPreview(VisualCoreController coreController, Point startCoordinates) {
         this.coreController = coreController;
         this.coordinates = startCoordinates;
 
@@ -38,6 +38,10 @@ public class StepPreview implements Vertex {
 
     public void delete() {
         shapeGroup.getChildren().remove(shape);
+    }
+
+    public Point getPosition() {
+        return coordinates;
     }
 }
 

@@ -10,4 +10,6 @@ public interface Vertex {
     void relocate(Point coordinates);
 
     void delete();
+
+    Point getPosition();
 }

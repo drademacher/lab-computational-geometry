@@ -14,14 +14,15 @@ public class Range implements Vertex {
     private static Group shapeGroup = new Group();
 
     private Circle shape;
-    private CoreController coreController;
+    private VisualCoreController coreController;
     private Point coordinates;
 
-    public Range(CoreController coreController, Point startCoordinates) {
+    public Range(VisualCoreController coreController, Point startCoordinates) {
         this(coreController, startCoordinates, false);
     }
 
-    public Range(CoreController coreController, Point startCoordinates, boolean manRange) {
+
+    public Range(VisualCoreController coreController, Point startCoordinates, boolean manRange) {
 
         this.coreController = coreController;
         this.coordinates = startCoordinates;
@@ -46,5 +47,9 @@ public class Range implements Vertex {
 
     public void delete() {
         shapeGroup.getChildren().remove(shape);
+    }
+
+    public Point getPosition() {
+        return coordinates;
     }
 }

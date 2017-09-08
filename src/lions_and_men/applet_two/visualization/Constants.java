@@ -30,4 +30,5 @@ public class Constants {
                 (int) (color.getBlue() * 255));
         return hex;
     }
+
 }

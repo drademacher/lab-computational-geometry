@@ -10,4 +10,6 @@ public interface Entity {
     void relocate(Point coordinates);
 
     void delete();
+
+    Point getPosition();
 }

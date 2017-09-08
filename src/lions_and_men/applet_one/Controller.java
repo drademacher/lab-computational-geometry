@@ -42,7 +42,7 @@ public class Controller {
     private Alert gameOverAlert;
     private BooleanProperty editMode, activePlaying;
 
-    private CoreController coreController = new CoreController();
+    private VisualCoreController coreController = new VisualCoreController();
 
     private Stage stage;
 

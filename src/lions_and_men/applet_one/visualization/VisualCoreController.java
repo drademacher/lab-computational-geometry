@@ -2,73 +2,47 @@ package lions_and_men.applet_one.visualization;
 
 import lions_and_men.applet_one.core.CoreController;
 import lions_and_men.applet_one.core.graph.Connection;
-import lions_and_men.applet_two.visualization.VisualizedCoreController;
 import lions_and_men.util.Point;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import static lions_and_men.applet_one.visualization.Constants.*;
 
-public class VisualCoreController extends VisualizedCoreController {
+public class VisualCoreController extends CoreController {
 
-    private Map<lions_and_men.applet_one.core.graph.Vertex, Vertex> mapVertices = new HashMap<>();
-    private Map<lions_and_men.applet_one.core.entities.Entity, Entity> mapEntities = new HashMap<>();
-    private Map<lions_and_men.applet_one.core.graph.Edge, Edge> mapEdges = new HashMap<>();
-    private Map<lions_and_men.applet_one.core.entities.Man, ArrayList<Range>> mapManRange = new HashMap<>();
-    private Map<lions_and_men.applet_one.core.entities.Lion, ArrayList<Range>> mapLionRange = new HashMap<>();
-    private Map<lions_and_men.applet_one.core.entities.Entity, Vertex> mapStepPreviews = new HashMap<>();
-    private CoreController coreController;
+    private ArrayList<Vertex> verticesBig = new ArrayList<>();
+    private ArrayList<Vertex> verticesSmall = new ArrayList<>();
+    private ArrayList<Entity> entities = new ArrayList<>();
+    private ArrayList<Edge> edges = new ArrayList<>();
+    private ArrayList<Range> rangesMan = new ArrayList<>();
+    private ArrayList<Range> rangesLion = new ArrayList<>();
+    private ArrayList<Vertex> stepPreviews = new ArrayList<>();
 
-    public VisualCoreController(CoreController coreController) {
-        this.coreController = coreController;
+    public VisualCoreController() {
+        super();
     }
 
-    public void removeAllShapes() {
-        for (Map.Entry<lions_and_men.applet_one.core.graph.Vertex, Vertex> entry : mapVertices.entrySet()) {
-            entry.getValue().delete();
-        }
-        mapVertices.clear();
+    public void cleanUp() {
+        verticesBig.forEach(Vertex::delete);
+        verticesBig.clear();
 
-        for (Map.Entry<lions_and_men.applet_one.core.entities.Entity, Entity> entry : mapEntities.entrySet()) {
-            entry.getValue().delete();
-        }
-        mapEntities.clear();
+        verticesSmall.forEach(Vertex::delete);
+        verticesSmall.clear();
 
-        for (Map.Entry<lions_and_men.applet_one.core.graph.Edge, Edge> entry : mapEdges.entrySet()) {
-            entry.getValue().delete();
-        }
-        mapEdges.clear();
+        entities.forEach(Entity::delete);
+        entities.clear();
 
-        for (Map.Entry<lions_and_men.applet_one.core.entities.Man, ArrayList<Range>> entry : mapManRange.entrySet()) {
-            ArrayList<Range> shapeList = entry.getValue();
-            if (shapeList == null) {
-                shapeList = new ArrayList<>();
-            }
-            for (Range shape : shapeList) {
-                shape.delete();
-            }
-        }
-        mapLionRange.clear();
+        edges.forEach(Edge::delete);
+        edges.clear();
 
-        for (Map.Entry<lions_and_men.applet_one.core.entities.Lion, ArrayList<Range>> entry : mapLionRange.entrySet()) {
-            ArrayList<Range> shapeList = entry.getValue();
-            if (shapeList == null) {
-                shapeList = new ArrayList<>();
-            }
-            for (Range shape : shapeList) {
-                shape.delete();
-            }
-        }
-        mapLionRange.clear();
+        rangesMan.forEach(Range::delete);
+        rangesMan.clear();
 
-        for (Map.Entry<lions_and_men.applet_one.core.entities.Entity, Vertex> entry : mapStepPreviews.entrySet()) {
-            entry.getValue().delete();
-        }
-        mapStepPreviews.clear();
+        rangesLion.forEach(Range::delete);
+        rangesLion.clear();
 
-
+        stepPreviews.forEach(Vertex::delete);
+        stepPreviews.clear();
     }
 
     /* ****************************
@@ -77,72 +51,114 @@ public class VisualCoreController extends VisualizedCoreController {
      *
      * ****************************/
 
+    public void relocateVertex(Point vertexCoordinates, Point newCoordinate) {
 
-    public void relocateVertex(lions_and_men.applet_one.core.graph.BigVertex vertex, Point newCoordinate) {
-        Vertex shape = mapVertices.get(vertex);
-        shape.relocate(newCoordinate);
+        super.relocateVertex(vertexCoordinates, newCoordinate);
 
-        for (lions_and_men.applet_one.core.graph.Edge edge : vertex.getEdges()) {
-            Edge edgeShape = mapEdges.get(edge);
-            edgeShape.relocate(edge.getVertices()[0].getCoordinates(), edge.getVertices()[1].getCoordinates());
+        verticesBig.stream().filter(vertex -> vertex.getPosition().equals(vertexCoordinates)).forEach(vertex -> vertex.relocate(newCoordinate));
 
-            for (lions_and_men.applet_one.core.graph.SmallVertex smallVertex : edge.getEdgeVertices()) {
-                Vertex smalLVertexShape = mapVertices.get(smallVertex);
-                smalLVertexShape.relocate(smallVertex.getCoordinates());
-            }
-        }
-        for (Map.Entry<lions_and_men.applet_one.core.entities.Entity, Entity> entry : mapEntities.entrySet()) {
-            lions_and_men.applet_one.core.entities.Entity entity = entry.getKey();
-            Entity shapedEntity = entry.getValue();
+        edges.stream().filter(edge -> edge.getPositionFrom().equals(vertexCoordinates)).forEach(edge -> edge.relocate(newCoordinate, edge.getPositionTo()));
+        edges.stream().filter(edge -> edge.getPositionTo().equals(vertexCoordinates)).forEach(edge -> edge.relocate(edge.getPositionFrom(), newCoordinate));
 
-            shapedEntity.relocate(entity.getCoordinates());
-        }
+        verticesSmall.forEach(Vertex::delete);
+        graph.getSmallVertices().forEach(smallVertex -> verticesSmall.add(new SmallVertex(this, smallVertex.getCoordinates())));
+
+        entities.forEach(Entity::delete);
+        entities.clear();
+        getMen().forEach(man -> entities.add(new Man(this, man.getCoordinates())));
+        getLions().forEach(lion -> entities.add(new Lion(this, lion.getCoordinates())));
+
+        entities.stream().filter(entity -> entity.getPosition().equals(vertexCoordinates)).forEach(entity -> entity.relocate(newCoordinate));
     }
 
     public void createVertex(Point coordinate) {
-        BigVertex shape = new BigVertex(coreController, coordinate);
-        mapVertices.put(coreController.getBigVertexByCoordinate(coordinate), shape);
+        super.createVertex(coordinate);
+
+        verticesBig.add(new BigVertex(this, coordinate));
     }
 
-    public void deleteVertex(lions_and_men.applet_one.core.graph.BigVertex vertex) {
-        Vertex shape = mapVertices.get(vertex);
-        shape.delete();
-        mapVertices.remove(vertex);
+    public void deleteVertex(Point vertexCoordinates) {
 
-        for (lions_and_men.applet_one.core.graph.Edge edge : vertex.getEdges()) {
-            Edge edgeShape = mapEdges.get(edge);
-            mapEdges.remove(edge);
-            edgeShape.delete();
 
-            for (lions_and_men.applet_one.core.graph.SmallVertex smallVertex : edge.getEdgeVertices()) {
-                Vertex smallVertexShape = mapVertices.get(smallVertex);
-                mapVertices.remove(smallVertex);
-                smallVertexShape.delete();
-            }
+        super.deleteVertex(vertexCoordinates);
+
+        verticesBig.stream().filter(vertex -> vertex.getPosition().equals(vertexCoordinates)).forEach(Vertex::delete);
+        verticesBig.removeIf(vertex -> vertex.getPosition().equals(vertexCoordinates));
+
+        edges.stream().filter(edge -> (edge.getPositionTo().equals(vertexCoordinates)
+                || edge.getPositionFrom().equals(vertexCoordinates))).forEach(Edge::delete);
+        edges.removeIf(edge -> (edge.getPositionTo().equals(vertexCoordinates)
+                || edge.getPositionFrom().equals(vertexCoordinates)));
+
+
+        verticesSmall.forEach(Vertex::delete);
+        graph.getSmallVertices().forEach(smallVertex -> verticesSmall.add(new SmallVertex(this, smallVertex.getCoordinates())));
+
+
+        updateManRanges();
+        updateLionRanges();
+    }
+
+    public void createEdge(Point vertex1Coordinates, Point vertex2Coordinates) {
+        createEdge(vertex1Coordinates, vertex2Coordinates, getDefaultEdgeWeight());
+    }
+
+    public void createEdge(Point vertex1Coordinates, Point vertex2Coordinates, int weight) {
+
+        super.createEdge(vertex1Coordinates, vertex2Coordinates, weight);
+
+        lions_and_men.applet_one.core.graph.Edge edge = getEdgeByPoints(vertex1Coordinates, vertex2Coordinates);
+        if (edge == null) {
+            return;
         }
+        edges.add(new Edge(this, edge.getStartCoordinates(), edge.getEndCoordinates()));
+        edge.getEdgeVertices().forEach(smallVertex -> verticesSmall.add(new SmallVertex(this, smallVertex.getCoordinates())));
+
+
+        updateManRanges();
+        updateLionRanges();
     }
 
-    public void createEdge(lions_and_men.applet_one.core.graph.Edge edge) {
-        Edge shape = new Edge(coreController, edge.getStartCoordinates(), edge.getEndCoordinates());
-        mapEdges.put(edge, shape);
+    public void removeEdge(Point vertex1Coordinates, Point vertex2Coordinates) {
 
-        for (lions_and_men.applet_one.core.graph.SmallVertex smallVertex : edge.getEdgeVertices()) {
-            SmallVertex smallVertexShape = new SmallVertex(coreController, smallVertex.getCoordinates());
-            mapVertices.put(smallVertex, smallVertexShape);
+        super.removeEdge(vertex1Coordinates, vertex2Coordinates);
+
+        edges.stream().filter
+                (edge ->
+                        ((edge.getPositionTo().equals(vertex1Coordinates) && edge.getPositionFrom().equals(vertex2Coordinates))
+                                || (edge.getPositionTo().equals(vertex2Coordinates) && edge.getPositionFrom().equals(vertex1Coordinates))))
+                .forEach(Edge::delete);
+
+        edges.removeIf(edge ->
+                ((edge.getPositionTo().equals(vertex1Coordinates) && edge.getPositionFrom().equals(vertex2Coordinates))
+                        || (edge.getPositionTo().equals(vertex2Coordinates) && edge.getPositionFrom().equals(vertex1Coordinates))));
+
+        for (lions_and_men.applet_one.core.graph.SmallVertex smallVertex : getEdgeByPoints(vertex1Coordinates, vertex2Coordinates).getEdgeVertices()) {
+            verticesSmall.stream().filter(vertex -> vertex.equals(smallVertex)).forEach(Vertex::delete);
+            verticesSmall.removeIf(vertex -> vertex.equals(smallVertex));
         }
+
+
+        updateManRanges();
+        updateLionRanges();
     }
 
-    public void removeEdge(lions_and_men.applet_one.core.graph.Edge edge) {
-        Edge shape = mapEdges.get(edge);
-        shape.delete();
-        mapEdges.remove(edge);
-        for (lions_and_men.applet_one.core.graph.SmallVertex smallVertex : edge.getEdgeVertices()) {
-            Vertex smalLVertexShape = mapVertices.get(smallVertex);
-            mapVertices.remove(smallVertex);
-            smalLVertexShape.delete();
-        }
-    }
+    @Override
+    public void changeEdgeWeight(Point vertex1Coordinates, Point vertex2Coordinates, int weight) {
 
+        super.changeEdgeWeight(vertex1Coordinates, vertex2Coordinates, weight);
+
+        verticesSmall.forEach(Vertex::delete);
+        graph.getSmallVertices().forEach(smallVertex -> verticesSmall.add(new SmallVertex(this, smallVertex.getCoordinates())));
+
+        entities.forEach(Entity::delete);
+        entities.clear();
+        getMen().forEach(man -> entities.add(new Man(this, man.getCoordinates())));
+        getLions().forEach(lion -> entities.add(new Lion(this, lion.getCoordinates())));
+
+        updateManRanges();
+        updateLionRanges();
+    }
 
     /* ****************************
      *
@@ -150,134 +166,150 @@ public class VisualCoreController extends VisualizedCoreController {
      *
      * ****************************/
 
-    public void createMan(lions_and_men.applet_one.core.entities.Man man) {
-        Man shape = new Man(coreController, man.getCoordinates());
-        mapEntities.put(man, shape);
-        updateManRange(man);
+    public void setMan(Point vertexCoorinate) {
+
+        super.setMan(vertexCoorinate);
+
+        entities.add(new Man(this, vertexCoorinate));
+        updateManRanges();
+
+        updateStepPreviewsAndChoicePoints();
     }
 
-    public void createLion(lions_and_men.applet_one.core.entities.Lion lion) {
-        Lion shape = new Lion(coreController, lion.getCoordinates());
-        mapEntities.put(lion, shape);
-        updateLionRange(lion);
+    public void setLion(Point vertexCoorinate) {
+
+        super.setLion(vertexCoorinate);
+
+        entities.add(new Lion(this, vertexCoorinate));
+        updateLionRanges();
+
+        updateStepPreviewsAndChoicePoints();
     }
 
-    public void relocateMan(lions_and_men.applet_one.core.entities.Man man) {
-        Entity shape = mapEntities.get(man);
-        shape.relocate(man.getCoordinates());
-        updateManRange(man);
+    public void relocateMan(Point manCoordinate, Point vertexCoordinate) {
+
+        super.relocateMan(manCoordinate, vertexCoordinate);
+
+        entities.stream().filter(entity -> entity.getPosition().equals(manCoordinate)).forEach(entity -> entity.relocate(vertexCoordinate));
+        updateManRanges();
+
+
+        updateStepPreviewsAndChoicePoints();
     }
 
-    public void relocateLion(lions_and_men.applet_one.core.entities.Lion lion) {
-        Entity shape = mapEntities.get(lion);
-        shape.relocate(lion.getCoordinates());
-        updateLionRange(lion);
+    public void relocateLion(Point lionCoordinate, Point vertexCoordinate) {
+
+        super.relocateLion(lionCoordinate, vertexCoordinate);
+
+        entities.stream().filter(entity -> entity.getPosition().equals(lionCoordinate)).forEach(entity -> entity.relocate(vertexCoordinate));
+        updateLionRanges();
+        updateStepPreviewsAndChoicePoints();
     }
 
-    public void removeMan(lions_and_men.applet_one.core.entities.Man man) {
-        Entity shape = mapEntities.get(man);
-        shape.delete();
+    public void removeMan(Point manCoordinate) {
+
+        entities.stream().filter(entity -> entity.getPosition().equals(manCoordinate)).forEach(Entity::delete);
+        entities.removeIf(entity -> entity.getPosition().equals(manCoordinate));
+
+        super.removeMan(manCoordinate);
+        updateStepPreviewsAndChoicePoints();
     }
 
-    public void removeLion(lions_and_men.applet_one.core.entities.Lion lion) {
-        Entity shape = mapEntities.get(lion);
-        shape.delete();
+    public void removeLion(Point lionCoordinate) {
+
+        entities.stream().filter(entity -> entity.getPosition().equals(lionCoordinate)).forEach(Entity::delete);
+        entities.removeIf(entity -> entity.getPosition().equals(lionCoordinate));
+
+        super.removeLion(lionCoordinate);
+        updateStepPreviewsAndChoicePoints();
     }
 
-    public void updateManRange(lions_and_men.applet_one.core.entities.Man man) {
-        ArrayList<Range> rangeVertices = mapManRange.get(man);
-        if (rangeVertices == null) {
-            rangeVertices = new ArrayList<>();
-        }
+    @Override
+    public void setManStrategy(Point manCoordinate, ManStrategy strategy) {
+        super.setManStrategy(manCoordinate, strategy);
 
-        while (man.getRangeVertices().size() > rangeVertices.size()) {
-            rangeVertices.add(new Range(coreController, new Point(0, 0), true));
-        }
-        while (man.getRangeVertices().size() < rangeVertices.size()) {
-            rangeVertices.get(0).delete();
-            rangeVertices.remove(0);
-        }
-
-        //update
-        for (int i = 0; i < rangeVertices.size(); i++) {
-            rangeVertices.get(i).relocate(man.getRangeVertices().get(i).getCoordinates());
-        }
-
-        mapManRange.put(man, rangeVertices);
+        updateStepPreviewsAndChoicePoints();
     }
 
-    public void updateAllManRanges(ArrayList<lions_and_men.applet_one.core.entities.Man> men) {
-        for (lions_and_men.applet_one.core.entities.Man man : men) {
-            updateManRange(man);
-        }
+    @Override
+    public void setLionStrategy(Point lionCoordinate, LionStrategy strategy) {
+        super.setLionStrategy(lionCoordinate, strategy);
+
+        updateStepPreviewsAndChoicePoints();
     }
 
-    public void updateLionRange(lions_and_men.applet_one.core.entities.Lion lion) {
-        ArrayList<Range> rangeVertices = mapLionRange.get(lion);
-        if (rangeVertices == null) {
-            rangeVertices = new ArrayList<>();
-        }
+    @Override
+    public void setAllManStrategy(ManStrategy strategy) {
+        super.setAllManStrategy(strategy);
 
-        while (lion.getRangeVertices().size() > rangeVertices.size()) {
-            rangeVertices.add(new Range(coreController, new Point(0, 0), false));
-        }
-        while (lion.getRangeVertices().size() < rangeVertices.size()) {
-            rangeVertices.get(0).delete();
-            rangeVertices.remove(0);
-        }
-
-        //update
-        for (int i = 0; i < rangeVertices.size(); i++) {
-            rangeVertices.get(i).relocate(lion.getRangeVertices().get(i).getCoordinates());
-        }
-
-        mapLionRange.put(lion, rangeVertices);
+        updateStepPreviewsAndChoicePoints();
     }
 
-    public void updateAllLionRanges(ArrayList<lions_and_men.applet_one.core.entities.Lion> lions) {
-        for (lions_and_men.applet_one.core.entities.Lion lion : lions) {
-            updateLionRange(lion);
-        }
+    @Override
+    public void setAllLionStrategy(LionStrategy strategy) {
+        super.setAllLionStrategy(strategy);
+
+        updateStepPreviewsAndChoicePoints();
     }
 
-    public void updateStepPreviewsAndChoicePoints() {
+    @Override
+    public void setManRange(Point manCoordinate, int range) {
+        super.setManRange(manCoordinate, range);
+
+        updateManRanges();
+    }
+
+    private void updateManRanges() {
+
+        rangesMan.forEach(Range::delete);
+        rangesMan.clear();
+
+        getMen().forEach(man -> man.getRangeVertices().forEach(vertex -> rangesMan.add(new Range(this, vertex.getCoordinates(), true))));
+    }
+
+    @Override
+    public void setLionRange(Point lionCoordinate, int range) {
+        super.setLionRange(lionCoordinate, range);
+
+        updateLionRanges();
+    }
+
+    private void updateLionRanges() {
+
+        rangesLion.forEach(Range::delete);
+        rangesLion.clear();
+
+        getLions().forEach(lion -> lion.getRangeVertices().forEach(vertex -> rangesLion.add(new Range(this, vertex.getCoordinates()))));
+    }
+
+
+    private void updateStepPreviewsAndChoicePoints() {
+
+        //TODO flush and create new....
         // step previews
-        for (Map.Entry<lions_and_men.applet_one.core.entities.Entity, Vertex> entry : mapStepPreviews.entrySet()) {
-            lions_and_men.applet_one.core.entities.Entity entity = entry.getKey();
-            Vertex shapedPreview = entry.getValue();
+        stepPreviews.forEach(Vertex::delete);
+        stepPreviews.clear();
 
-            shapedPreview.delete();
-        }
-        mapStepPreviews.clear();//TODO dont flush and create new
+        getMen().forEach(man -> stepPreviews.add(new StepPreview(this, man.getNextPosition().getCoordinates())));
+        getLions().forEach(lion -> stepPreviews.add(new StepPreview(this, lion.getNextPosition().getCoordinates())));
 
-        for (lions_and_men.applet_one.core.entities.Man man : this.coreController.getMen()) {
-            mapStepPreviews.put(man, new StepPreview(coreController, man.getNextPosition().getCoordinates()));
-        }
-
-        for (lions_and_men.applet_one.core.entities.Lion lion : this.coreController.getLions()) {
-            mapStepPreviews.put(lion, new StepPreview(coreController, lion.getNextPosition().getCoordinates()));
-        }
 
         // choice points
-        // TODO: jens, meinst du die API ist irgendwie schön designt ist?
-
-
         ChoicePoint.clear();
-        for (lions_and_men.applet_one.core.entities.Man man : coreController.getMenWithManualInput()) {
-            new ChoicePoint(coreController, man, man.getCoordinates(), COLOR_MAN);
+        for (lions_and_men.applet_one.core.entities.Man man : getMenWithManualInput()) {
+            new ChoicePoint(this, man, man.getCoordinates(), COLOR_MAN);
             for (Connection con : man.getCurrentPosition().getConnections()) {
                 lions_and_men.applet_one.core.graph.Vertex choicePoint = con.getNeighbor(man.getCurrentPosition());
-                new ChoicePoint(coreController, man, choicePoint.getCoordinates(), COLOR_CHOICEPOINT);
+                new ChoicePoint(this, man, choicePoint.getCoordinates(), COLOR_CHOICEPOINT);
             }
         }
 
-        for (lions_and_men.applet_one.core.entities.Lion lion : coreController.getLionsWithManualInput()) {
-            new ChoicePoint(coreController, lion, lion.getCoordinates(), COLOR_LION);
+        for (lions_and_men.applet_one.core.entities.Lion lion : getLionsWithManualInput()) {
+            new ChoicePoint(this, lion, lion.getCoordinates(), COLOR_LION);
             for (Connection con : lion.getCurrentPosition().getConnections()) {
                 lions_and_men.applet_one.core.graph.Vertex choicePoint = con.getNeighbor(lion.getCurrentPosition());
-                new ChoicePoint(coreController, lion, choicePoint.getCoordinates(), COLOR_CHOICEPOINT);
+                new ChoicePoint(this, lion, choicePoint.getCoordinates(), COLOR_CHOICEPOINT);
             }
         }
     }
-
 }

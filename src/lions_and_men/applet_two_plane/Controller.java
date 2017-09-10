@@ -32,7 +32,7 @@ public class Controller {
 
     private ZoomScrollPane zoomScrollPane;
     private Slider speedSlider;
-    private Label helpText = new Label();
+    private ScrollPane helpPane;
     private HBox buttonBarCenter;
     private Button helpToggleButton = new Button("Help");
     private Button appletToggleButton = new Button("Choose App");
@@ -136,12 +136,15 @@ public class Controller {
      * Initialize the mode toggle button and add the button logic.
      */
     private void initModeButton() {
+        Label helpText = new Label();
+        helpPane = new ScrollPane(helpText);
+        helpPane.setFitToWidth(true);
         helpToggleButton.setStyle("-fx-font-style: italic");
         helpToggleButton.setOnAction(event -> {
-            if (root.getCenter() == helpText) {
+            if (root.getCenter() == helpPane) {
                 root.setCenter(zoomScrollPane);
             } else {
-                root.setCenter(helpText);
+                root.setCenter(helpPane);
             }
         });
         helpText.setWrapText(true);

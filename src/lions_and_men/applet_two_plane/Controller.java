@@ -41,7 +41,7 @@ public class Controller {
     private Button playAnimationButton = new Button("Play");
     private Button stopAnimationButton = new Button("Stop");
     private Button stepAnimationButton = new Button("Single Step");
-    private MenuButton setGraphButton = new MenuButton("Set Graph"), setParameterButton = new MenuButton("Set Parameter"), setViewMenu = new MenuButton("View");
+    private MenuButton setGraphButton = new MenuButton("Set Entities"), setParameterButton = new MenuButton("Set Parameter"), setViewMenu = new MenuButton("View");
     private Button newPermutationButton = new Button("Permute Lion Insertion Order");
     private BooleanProperty editMode, activePlaying;
 

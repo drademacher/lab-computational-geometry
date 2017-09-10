@@ -83,7 +83,7 @@ public class Main extends Application {
             stageOne.show();
         });
 
-        Label labelOne = new Label("Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et");
+        Label labelOne = new Label("App visualizes algorithms of the 'Lions And Men' problem on arbitrary graphs with discrete time steps and equal speed of lions and men. The proposed algorithm helps the man escaping from two lions.");
         labelOne.setWrapText(true);
         labelOne.setMaxWidth(400);
         labelOne.setPadding(new Insets(50, 10, 10, 10));
@@ -100,7 +100,7 @@ public class Main extends Application {
             stageTwo.show();
         });
 
-        Label labelTwo = new Label("Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et");
+        Label labelTwo = new Label("App visualizes algorithms of the 'Lions And Men' problem in the infinite plane. The proposed algorithm works for one man and an arbitrary amount of lions. The man is faster than the lions.");
         labelTwo.setWrapText(true);
         labelTwo.setMaxWidth(400);
         labelTwo.setPadding(new Insets(50, 10, 10, 10));

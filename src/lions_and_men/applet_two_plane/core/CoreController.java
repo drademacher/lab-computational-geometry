@@ -24,7 +24,7 @@ public class CoreController {
     protected double maxY = 0;
     protected double minX = 0;
     protected double minY = 0;
-    private boolean editMode = true;
+    protected boolean editMode = true;
 
     private double defaultMenEpsilon = 0.1;
     private ArrayList<AllPaths> allPathsList = new ArrayList<>();
@@ -238,6 +238,10 @@ public class CoreController {
 
     private void calcAllPaths() {
 
+        if(this.plane.getMan() == null || this.plane.getLions() == null || this.plane.getLions().size() < 1){
+            return;
+        }
+
         allPathsList.clear();
 
         ArrayList<Point> resultPath = new ArrayList<>();
@@ -328,10 +332,11 @@ public class CoreController {
     }
 
     public void setEditMode(boolean editMode) {
-        System.out.println("jens 1");
         resetInductionsStep();
-        System.out.println("jens 2");
         this.editMode = editMode;
+        if(this.plane.getMan() == null || this.plane.getLions() == null || this.plane.getLions().size() < 1){
+            this.editMode = true;
+        }
     }
 
     public void createMan(Point coordinates) {

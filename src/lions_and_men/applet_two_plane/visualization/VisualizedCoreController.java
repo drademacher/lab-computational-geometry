@@ -133,6 +133,13 @@ public class VisualizedCoreController extends CoreController {
     }
 
     @Override
+    public void relocateMan(Point to) {
+        super.relocateMan(to);
+        manPoint.setPosition(to);
+//        freshInitialization();
+    }
+
+    @Override
     public void removeMan(Point coordinates) {
         super.removeMan(coordinates);
 
@@ -145,13 +152,20 @@ public class VisualizedCoreController extends CoreController {
     @Override
     public void createLion(Point coordinates) {
         super.createLion(coordinates);
-//        lions.add(new Lion(coordinates));
-//
-//        if (hull == null || !hull.insideHull(coordinates)) {
-//            update(lions);
-//        }
 
-        freshInitialization();
+        lions.add(new Lion(coordinates));
+
+        update(lions);
+    }
+
+    @Override
+    public void relocateLion(Point from, Point to) {
+        super.relocateLion(from, to);
+
+        lions.stream().filter(e -> e.getPosition().equals(from)).forEach(e -> e.setPosition(to));
+
+        update(lions);
+
     }
 
     @Override
@@ -161,25 +175,9 @@ public class VisualizedCoreController extends CoreController {
         lions.stream().filter(lion -> lion.getPosition().equals(coordinates)).forEach(Lion::clear);
         lions.removeIf(lion -> lion.getPosition().equals(coordinates));
 
-//        update();
-    }
-
-    @Override
-    public void relocateMan(Point to) {
-        super.relocateMan(to);
-        manPoint.setPosition(to);
         freshInitialization();
     }
 
-    @Override
-    public void relocateLion(Point from, Point to) {
-        super.relocateLion(from, to);
-
-        lions.stream().filter(e -> e.getPosition().equals(from)).forEach(e -> e.setPosition(to));
-
-//        update();
-
-    }
 
     private void update(List<Lion> lions) {
         hull = new ConvexHull(lions);

@@ -283,7 +283,7 @@ public class VisualCoreController extends CoreController {
     }
 
 
-    private void updateStepPreviewsAndChoicePoints() {
+    void updateStepPreviewsAndChoicePoints() {
 
         //TODO flush and create new....
         // step previews

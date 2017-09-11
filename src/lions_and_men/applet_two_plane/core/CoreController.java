@@ -328,7 +328,7 @@ public class CoreController {
         return editMode;
     }
 
-    public void setEditMode(boolean editMode) throws Exception {
+    public void setEditMode(boolean editMode) throws WrongConfigurationException {
         if(this.plane.getMan() == null || this.plane.getLions() == null || this.plane.getLions().size() < 1){
             throw new WrongConfigurationException();
         }

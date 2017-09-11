@@ -2,6 +2,7 @@ package lions_and_men.applet_two_plane.visualization;
 
 import javafx.animation.ParallelTransition;
 import javafx.animation.PathTransition;
+import javafx.scene.control.Alert;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
@@ -10,6 +11,7 @@ import lions_and_men.applet_two_plane.core.CoreController;
 import lions_and_men.applet_two_plane.core.plane.AllPaths;
 import lions_and_men.util.ConvexHull;
 import lions_and_men.util.Point;
+import lions_and_men.util.WrongConfigurationException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +35,16 @@ public class VisualizedCoreController extends CoreController {
 
     @Override
     public void setEditMode(boolean editMode) {
-        super.setEditMode(editMode);
+        try {
+            super.setEditMode(editMode);
+        } catch (WrongConfigurationException e) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Your configuration is missing either a man or a set of lions.");
+            alert.showAndWait();
+            return;
+        }
 
         if (!editMode) {
             new InvisiblePoints(new Point(minX, minY));

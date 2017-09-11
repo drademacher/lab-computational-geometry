@@ -17,6 +17,7 @@ import lions_and_men.applet_two_plane.core.strategies.lion.StrategyEnumLion;
 import lions_and_men.applet_two_plane.core.strategies.man.StrategyEnumMan;
 import lions_and_men.applet_two_plane.visualization.*;
 import lions_and_men.util.ContextMenuHolder;
+import lions_and_men.util.WrongConfigurationException;
 import lions_and_men.util.ZoomScrollPane;
 
 import java.io.File;
@@ -80,8 +81,30 @@ public class Controller {
         editMode = new SimpleBooleanProperty(true);
         activePlaying = new SimpleBooleanProperty(false);
         editMode.addListener((observable, oldValue, newValue) -> {
-            this.coreController.setEditMode(newValue);
-            zoomScrollPane.autoZoom();
+            try {
+                this.coreController.setEditMode(newValue);
+                zoomScrollPane.autoZoom();
+
+                buttonBarCenter.getChildren().clear();
+
+                if (newValue) {
+                    modeToggleButton.setText("Edit Mode");
+                    buttonBarCenter.getChildren().addAll(playAnimationButton, speedSlider, stopAnimationButton, stepAnimationButton, setViewMenu);
+                } else {
+                    clearAnimationShapes();
+
+                    activePlaying.set(false);
+
+                    modeToggleButton.setText("Play Mode");
+                    buttonBarCenter.getChildren().addAll(setGraphButton, setParameterButton, newPermutationButton, setViewMenu);
+                    oldLionsPathShapes.getChildren().clear();
+
+                    zoomScrollPane.autoZoom();
+                }
+            } catch (WrongConfigurationException e) {
+                editMode.set(oldValue);
+            }
+
         });
 
         initSpeedSlider();
@@ -163,25 +186,7 @@ public class Controller {
         appletToggleButton.setOnAction(event -> Main.showChooser());
 
         modeToggleButton.setOnAction(event -> {
-            buttonBarCenter.getChildren().clear();
-
-            if (editMode.getValue()) {
-                editMode.set(false);
-
-                modeToggleButton.setText("Edit Mode");
-                buttonBarCenter.getChildren().addAll(playAnimationButton, speedSlider, stopAnimationButton, stepAnimationButton, setViewMenu);
-            } else {
-                clearAnimationShapes();
-
-                editMode.set(true);
-                activePlaying.set(false);
-
-                modeToggleButton.setText("Play Mode");
-                buttonBarCenter.getChildren().addAll(setGraphButton, setParameterButton, newPermutationButton, setViewMenu);
-                oldLionsPathShapes.getChildren().clear();
-
-                zoomScrollPane.autoZoom();
-            }
+            editMode.set(!editMode.get());
         });
 
     }

@@ -6,10 +6,7 @@ import lions_and_men.applet_two_plane.core.plane.Man;
 import lions_and_men.applet_two_plane.core.plane.Plane;
 import lions_and_men.applet_two_plane.core.strategies.lion.StrategyEnumLion;
 import lions_and_men.applet_two_plane.core.strategies.man.StrategyEnumMan;
-import lions_and_men.util.ConvexHull;
-import lions_and_men.util.Global;
-import lions_and_men.util.Point;
-import lions_and_men.util.Random;
+import lions_and_men.util.*;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -331,12 +328,12 @@ public class CoreController {
         return editMode;
     }
 
-    public void setEditMode(boolean editMode) {
+    public void setEditMode(boolean editMode) throws Exception {
+        if(this.plane.getMan() == null || this.plane.getLions() == null || this.plane.getLions().size() < 1){
+            throw new WrongConfigurationException();
+        }
         resetInductionsStep();
         this.editMode = editMode;
-        if(this.plane.getMan() == null || this.plane.getLions() == null || this.plane.getLions().size() < 1){
-            this.editMode = true;
-        }
     }
 
     public void createMan(Point coordinates) {

@@ -259,6 +259,14 @@ public class VisualCoreController extends CoreController {
         updateManRanges();
     }
 
+    @Override
+    public void setNextEntityStep(Point entityCoordinates, Point nextStepCoordinates) {
+
+        super.setNextEntityStep(entityCoordinates, nextStepCoordinates);
+
+        updateStepPreviewsAndChoicePoints();
+    }
+
     private void updateManRanges() {
 
         rangesMan.forEach(Range::delete);
@@ -283,7 +291,7 @@ public class VisualCoreController extends CoreController {
     }
 
 
-    void updateStepPreviewsAndChoicePoints() {
+    private void updateStepPreviewsAndChoicePoints() {
 
         //TODO flush and create new....
         // step previews
@@ -296,19 +304,19 @@ public class VisualCoreController extends CoreController {
 
         // choice points
         ChoicePoint.clear();
-        for (lions_and_men.applet_one_graph.core.entities.Man man : getMenWithManualInput()) {
-            new ChoicePoint(this, man, man.getCoordinates(), COLOR_MAN);
-            for (Connection con : man.getCurrentPosition().getConnections()) {
-                lions_and_men.applet_one_graph.core.graph.Vertex choicePoint = con.getNeighbor(man.getCurrentPosition());
-                new ChoicePoint(this, man, choicePoint.getCoordinates(), COLOR_CHOICEPOINT);
+        for (lions_and_men.applet_one_graph.core.graph.Vertex vertex: getMenWithManualInput()) {
+            new ChoicePoint(this, vertex.getCoordinates(), vertex.getCoordinates(), COLOR_MAN);
+            for (Connection con : vertex.getConnections()) {
+                lions_and_men.applet_one_graph.core.graph.Vertex choicePoint = con.getNeighbor(vertex);
+                new ChoicePoint(this, vertex.getCoordinates(), choicePoint.getCoordinates(), COLOR_CHOICEPOINT);
             }
         }
 
-        for (lions_and_men.applet_one_graph.core.entities.Lion lion : getLionsWithManualInput()) {
-            new ChoicePoint(this, lion, lion.getCoordinates(), COLOR_LION);
-            for (Connection con : lion.getCurrentPosition().getConnections()) {
-                lions_and_men.applet_one_graph.core.graph.Vertex choicePoint = con.getNeighbor(lion.getCurrentPosition());
-                new ChoicePoint(this, lion, choicePoint.getCoordinates(), COLOR_CHOICEPOINT);
+        for (lions_and_men.applet_one_graph.core.graph.Vertex vertex : getLionsWithManualInput()) {
+            new ChoicePoint(this, vertex.getCoordinates(), vertex.getCoordinates(), COLOR_LION);
+            for (Connection con : vertex.getConnections()) {
+                lions_and_men.applet_one_graph.core.graph.Vertex choicePoint = con.getNeighbor(vertex);
+                new ChoicePoint(this, vertex.getCoordinates(), choicePoint.getCoordinates(), COLOR_CHOICEPOINT);
             }
         }
     }

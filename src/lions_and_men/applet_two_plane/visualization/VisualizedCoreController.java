@@ -33,7 +33,11 @@ public class VisualizedCoreController extends CoreController {
 
     @Override
     public void setEditMode(boolean editMode) {
-        super.setEditMode(editMode);
+        try {
+            super.setEditMode(editMode);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         if (!editMode) {
             new InvisiblePoints(new Point(minX, minY));
@@ -177,6 +181,7 @@ public class VisualizedCoreController extends CoreController {
 
         freshInitialization();
     }
+
 
 
     private void update(List<Lion> lions) {

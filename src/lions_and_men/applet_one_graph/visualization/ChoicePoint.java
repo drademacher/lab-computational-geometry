@@ -13,9 +13,9 @@ public class ChoicePoint {
     private Circle shape;
     private VisualCoreController coreController;
     private Point choice;
-    private Entity entity;
+    private Point entity;
 
-    public ChoicePoint(VisualCoreController coreController, Entity entity, Point startCoordinates, Color color) {
+    public ChoicePoint(VisualCoreController coreController, Point entity, Point startCoordinates, Color color) {
         this.coreController = coreController;
         this.entity = entity;
         this.choice = startCoordinates;
@@ -24,8 +24,7 @@ public class ChoicePoint {
         shapeGroup.getChildren().add(shape);
 
         shape.setOnMouseClicked(event -> {
-            entity.setNextPosition(coreController.getVertexByCoordinate(choice));
-            coreController.updateStepPreviewsAndChoicePoints();
+            coreController.setNextEntityStep(entity, choice);
         });
     }
 

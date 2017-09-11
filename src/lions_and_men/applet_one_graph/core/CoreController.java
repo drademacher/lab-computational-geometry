@@ -1,5 +1,6 @@
 package lions_and_men.applet_one_graph.core;
 
+import lions_and_men.applet_one_graph.core.entities.Entity;
 import lions_and_men.applet_one_graph.core.entities.Lion;
 import lions_and_men.applet_one_graph.core.entities.Man;
 import lions_and_men.applet_one_graph.core.graph.BigVertex;
@@ -202,21 +203,28 @@ public class CoreController {
         setManStrategy(man.getCoordinates(), Man.getDefaultStrategy());
     }
 
-//    public void setNextManStep(Point manCoordinates, Point nextStepCoordinates) {
-//        if (manCoordinates == null || nextStepCoordinates == null) {
-//            return;
-//        }
-//        Vertex vertex = getVertexByCoordinate(nextStepCoordinates);
-//        if (vertex == null) {
-//            return;
-//        }
-//        Man man = getManByCoordinate(manCoordinates);
-//        if (man == null) {
-//            return;
-//        }
-//        man.setNextPosition(vertex);
-//        this.visualCoreController.updateStepPreviewsAndChoicePoints();
-//    }
+    public void setNextEntityStep(Point entityCoordinates, Point nextStepCoordinates) {
+        if (entityCoordinates == null || nextStepCoordinates == null) {
+            return;
+        }
+        Vertex vertex = getVertexByCoordinate(nextStepCoordinates);
+        if (vertex == null) {
+            return;
+        }
+        Entity entity = null;
+        Man man = getManByCoordinate(entityCoordinates);
+        if (man != null) {
+            entity = man;
+        }
+        Lion lion = getLionByCoordinate(entityCoordinates);
+        if (lion != null) {
+            entity = lion;
+        }
+        if(entity == null){
+            return;
+        }
+        entity.setNextPosition(vertex);
+    }
 
     public boolean isManRangeOnVertex(Point vertexCoorinate) {
         if (vertexCoorinate == null) {
@@ -414,21 +422,21 @@ public class CoreController {
 
     }
 
-    public ArrayList<Man> getMenWithManualInput() {
-        ArrayList<Man> result = new ArrayList<>();
+    public ArrayList<Vertex> getMenWithManualInput() {
+        ArrayList<Vertex> result = new ArrayList<>();
         for (Man man : men) {
             if (man.needManualStepInput()) {
-                result.add(man);
+                result.add(man.getCurrentPosition());
             }
         }
         return result;
     }
 
-    public ArrayList<Lion> getLionsWithManualInput() {
-        ArrayList<Lion> result = new ArrayList<>();
+    public ArrayList<Vertex> getLionsWithManualInput() {
+        ArrayList<Vertex> result = new ArrayList<>();
         for (Lion lion : lions) {
             if (lion.needManualStepInput()) {
-                result.add(lion);
+                result.add(lion.getCurrentPosition());
             }
         }
         return result;

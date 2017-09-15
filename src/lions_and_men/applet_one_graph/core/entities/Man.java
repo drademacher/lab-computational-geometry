@@ -79,7 +79,7 @@ public class Man extends Entity {
     }
 
     public void setStrategy(StrategyMan strategy) {
-        strategy.setMan(this);
+        strategy.setEntity(this);
         this.strategy = strategy;
     }
 

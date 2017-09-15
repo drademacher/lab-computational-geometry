@@ -15,7 +15,7 @@ public class ManStrategyRunAwayGreedy extends StrategyMan {
 
     @Override
     public ArrayList<Vertex> calculatePossibleSteps() {
-        Vertex currentPosition = man.getCurrentPosition();
+        Vertex currentPosition = entity.getCurrentPosition();
 
         int steps = 0;
         ArrayList<Vertex> result = new ArrayList<>();

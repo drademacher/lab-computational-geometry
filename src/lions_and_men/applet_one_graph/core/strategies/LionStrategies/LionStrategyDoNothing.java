@@ -18,7 +18,7 @@ public class LionStrategyDoNothing extends StrategyLion {
     @Override
     public ArrayList<Vertex> calculatePossibleSteps() {
         ArrayList<Vertex> result = new ArrayList<>();
-        result.add(lion.getCurrentPosition());
+        result.add(entity.getCurrentPosition());
         return result;
     }
 }

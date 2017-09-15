@@ -15,7 +15,7 @@ public class LionStrategyAggroGreedy extends StrategyLion {
 
     @Override
     protected ArrayList<Vertex> calculatePossibleSteps() {
-        Vertex currentPosition = lion.getCurrentPosition();
+        Vertex currentPosition = entity.getCurrentPosition();
         int steps = Integer.MAX_VALUE;
         ArrayList<Vertex> result = new ArrayList<>();
         for (Connection connection : currentPosition.getConnections()) {

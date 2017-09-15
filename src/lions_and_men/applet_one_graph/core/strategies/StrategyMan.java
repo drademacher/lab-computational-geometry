@@ -3,39 +3,42 @@ package lions_and_men.applet_one_graph.core.strategies;
 import lions_and_men.applet_one_graph.core.CoreController;
 import lions_and_men.applet_one_graph.core.entities.Man;
 import lions_and_men.applet_one_graph.core.graph.Connection;
-import lions_and_men.applet_one_graph.core.graph.GraphHelper;
 import lions_and_men.applet_one_graph.core.graph.Vertex;
-
-import java.util.ArrayList;
 
 /**
  * Created by Jens on 01.07.2017.
  */
-public abstract class StrategyMan implements Strategy {
+public abstract class StrategyMan extends Strategy<Man> {
 
-    protected CoreController coreController;
-    protected Man man;
-    protected GraphHelper helper;
+//    protected CoreController coreController;
+//    protected Man man;
+//    protected GraphHelper helper;
     protected CoreController.ManStrategy strategyEnum;
+//
+//    public StrategyMan(CoreController coreController, CoreController.ManStrategy strategyEnum) {
+//        this.coreController = coreController;
+//        this.helper = GraphHelper.createGraphHelper(coreController);
+//        this.strategyEnum = strategyEnum;
+//    }
 
     public StrategyMan(CoreController coreController, CoreController.ManStrategy strategyEnum) {
-        this.coreController = coreController;
-        this.helper = GraphHelper.createGraphHelper(coreController);
+        super(coreController);
         this.strategyEnum = strategyEnum;
     }
 
-    @Override
-    public Vertex getNextPosition() {
 
-        for (Vertex vertex : calculatePossibleSteps()) {
-            if (vertexIsValidStep(vertex)) {
-                return vertex;
-            }
-        }
-
-        //fallback
-        return man.getCurrentPosition();
-    }
+//    @Override
+//    public Vertex getNextPosition() {
+//
+//        for (Vertex vertex : calculatePossibleSteps()) {
+//            if (vertexIsValidStep(vertex)) {
+//                return vertex;
+//            }
+//        }
+//
+//        //fallback
+//        return man.getCurrentPosition();
+//    }
 
     public boolean vertexIsValidStep(Vertex vertex) {
 
@@ -44,12 +47,12 @@ public abstract class StrategyMan implements Strategy {
         }
 
         boolean isValidVertex = false;
-        if (man.getCurrentPosition().equals(vertex)) {
+        if (entity.getCurrentPosition().equals(vertex)) {
             isValidVertex = true;
         }
 
-        for (Connection neighborConnection : man.getCurrentPosition().getConnections())
-            if (neighborConnection.getNeighbor(man.getCurrentPosition()).equals(vertex)) {
+        for (Connection neighborConnection : entity.getCurrentPosition().getConnections())
+            if (neighborConnection.getNeighbor(entity.getCurrentPosition()).equals(vertex)) {
                 isValidVertex = true;
             }
 
@@ -59,7 +62,7 @@ public abstract class StrategyMan implements Strategy {
 
 
         for (Man otherMan : coreController.getMen()) {
-            if (!otherMan.equals(man)) {
+            if (!otherMan.equals(entity)) {
 
                 if (Man.getMinimumDistance() >= helper.getDistanceBetween(vertex, otherMan.getCurrentPosition())) {
                     isValidVertex = false;
@@ -72,13 +75,13 @@ public abstract class StrategyMan implements Strategy {
         }
         return isValidVertex;
     }
-
-    protected abstract ArrayList<Vertex> calculatePossibleSteps();
-
-    public void setMan(Man man) {
-        this.man = man;
-    }
-
+//
+//    protected abstract ArrayList<Vertex> calculatePossibleSteps();
+//
+//    public void setMan(Man man) {
+//        this.man = man;
+//    }
+//
     public String getName() {
         return strategyEnum.name();
     }

@@ -18,10 +18,10 @@ public class ManStrategyRandom extends StrategyMan {
     @Override
     protected ArrayList<Vertex> calculatePossibleSteps() {
         ArrayList<Vertex> result = new ArrayList<>();
-        ArrayList<Connection> connections = man.getCurrentPosition().getConnections();
+        ArrayList<Connection> connections = entity.getCurrentPosition().getConnections();
         if (connections.size() > 0) {
             int rndInt = Random.getRandomInteger(connections.size());
-            result.add(connections.get(rndInt).getNeighbor(man.getCurrentPosition()));
+            result.add(connections.get(rndInt).getNeighbor(entity.getCurrentPosition()));
         }
         return result;
     }

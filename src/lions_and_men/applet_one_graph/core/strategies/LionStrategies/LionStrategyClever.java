@@ -20,7 +20,7 @@ public class LionStrategyClever extends StrategyLion {
     @Override
     protected ArrayList<Vertex> calculatePossibleSteps() {
         //System.out.println("### " + lion);
-        Vertex currentPosition = lion.getCurrentPosition();
+        Vertex currentPosition = entity.getCurrentPosition();
         int steps = Integer.MAX_VALUE;
         int stepsToBigVertex = Integer.MAX_VALUE;
         ArrayList<Vertex> result = new ArrayList<>();
@@ -30,7 +30,7 @@ public class LionStrategyClever extends StrategyLion {
                 boolean checkLions = true;
                 for (Lion otherLion : coreController.getLions()) {
                     //other lion
-                    if (!lion.equals(otherLion)) {
+                    if (!entity.equals(otherLion)) {
                         if (helper.getDistanceBetween(possibleTarget, otherLion.getCurrentPosition()) < helper.getDistanceBetween(currentPosition, possibleTarget)) {
                             checkLions = false;
                         } else if (helper.getDistanceBetween(possibleTarget, otherLion.getCurrentPosition()) == helper.getDistanceBetween(currentPosition, possibleTarget)) {

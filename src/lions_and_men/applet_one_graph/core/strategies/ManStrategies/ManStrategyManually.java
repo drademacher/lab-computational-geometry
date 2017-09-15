@@ -15,7 +15,7 @@ public class ManStrategyManually extends StrategyMan {
     @Override
     public ArrayList<Vertex> calculatePossibleSteps() {
         ArrayList<Vertex> result = new ArrayList<>();
-        result.add(man.getCurrentPosition());
+        result.add(entity.getCurrentPosition());
         return result;
     }
 }

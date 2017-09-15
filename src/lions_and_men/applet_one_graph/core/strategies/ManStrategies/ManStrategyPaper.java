@@ -24,7 +24,7 @@ public class ManStrategyPaper extends StrategyMan {
     protected ArrayList<Vertex> calculatePossibleSteps() {
         ArrayList<Vertex> result = new ArrayList<>();
 
-        Vertex currentPosition = man.getCurrentPosition();
+        Vertex currentPosition = entity.getCurrentPosition();
 
         if (target == null || target.equals(currentPosition)) {
 

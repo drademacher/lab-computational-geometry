@@ -83,7 +83,7 @@ public class Lion extends Entity {
     }
 
     public void setStrategy(StrategyLion strategy) {
-        strategy.setLion(this);
+        strategy.setEntity(this);
         this.strategy = strategy;
     }
 }

@@ -21,10 +21,10 @@ public class LionStrategyRandom extends StrategyLion {
     @Override
     protected ArrayList<Vertex> calculatePossibleSteps() {
         ArrayList<Vertex> result = new ArrayList<>();
-        ArrayList<Connection> connections = lion.getCurrentPosition().getConnections();
+        ArrayList<Connection> connections = entity.getCurrentPosition().getConnections();
         if (connections.size() > 0) {
             int rndInt = Random.getRandomInteger(connections.size());
-            result.add(connections.get(rndInt).getNeighbor(lion.getCurrentPosition()));
+            result.add(connections.get(rndInt).getNeighbor(entity.getCurrentPosition()));
         }
         return result;
     }

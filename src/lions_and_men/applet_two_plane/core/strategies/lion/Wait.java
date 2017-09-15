@@ -14,10 +14,15 @@ public class Wait extends Strategy {
 
     @Override
     public ArrayList<Point> getPath(Lion lion, Man man, ArrayList<Point> manPath, ArrayList<Point> prevPath) {
-        ArrayList<Point> path = new ArrayList<>();
-        for (int i = 0; i < 200; i++) {
-            path.add(lion.getPosition());
+
+        if (prevPath != null && prevPath.size() > 0) {
+            prevPath.add(lion.getPosition());
+        } else {
+            prevPath = new ArrayList<>();
+            prevPath.add(lion.getPosition());
+            prevPath.add(lion.getPosition());
         }
-        return path;
+
+        return prevPath;
     }
 }

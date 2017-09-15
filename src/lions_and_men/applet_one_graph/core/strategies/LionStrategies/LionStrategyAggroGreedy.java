@@ -1,16 +1,17 @@
 package lions_and_men.applet_one_graph.core.strategies.LionStrategies;
 
 import lions_and_men.applet_one_graph.core.CoreController;
+import lions_and_men.applet_one_graph.core.entities.Entity;
 import lions_and_men.applet_one_graph.core.graph.Connection;
 import lions_and_men.applet_one_graph.core.graph.Vertex;
-import lions_and_men.applet_one_graph.core.strategies.StrategyLion;
+import lions_and_men.applet_one_graph.core.strategies.Strategy;
 
 import java.util.ArrayList;
 
-public class LionStrategyAggroGreedy extends StrategyLion {
+public class LionStrategyAggroGreedy<T extends Entity> extends Strategy<T> {
 
     public LionStrategyAggroGreedy(CoreController coreController, CoreController.LionStrategy strategyEnum) {
-        super(coreController, strategyEnum);
+        super(coreController);
     }
 
     @Override
@@ -31,5 +32,4 @@ public class LionStrategyAggroGreedy extends StrategyLion {
         }
         return result;
     }
-
 }

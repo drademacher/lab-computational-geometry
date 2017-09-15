@@ -62,4 +62,6 @@ public abstract class Entity {
     }
 
     public abstract boolean needManualStepInput();
+
+    public abstract boolean vertexIsValidStep(Vertex vertex);
 }

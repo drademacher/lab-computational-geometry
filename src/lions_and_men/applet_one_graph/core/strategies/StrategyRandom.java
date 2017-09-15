@@ -25,10 +25,4 @@ public class StrategyRandom<T extends Entity> extends Strategy<T> {
         }
         return result;
     }
-
-    @Override
-    public String getName() {
-        // TODO: CURIAL ERROR
-        return "FIX THIS";
-    }
 }

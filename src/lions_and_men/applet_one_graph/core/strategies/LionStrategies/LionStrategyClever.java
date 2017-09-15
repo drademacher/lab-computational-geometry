@@ -1,20 +1,21 @@
 package lions_and_men.applet_one_graph.core.strategies.LionStrategies;
 
 import lions_and_men.applet_one_graph.core.CoreController;
+import lions_and_men.applet_one_graph.core.entities.Entity;
 import lions_and_men.applet_one_graph.core.entities.Lion;
 import lions_and_men.applet_one_graph.core.entities.Man;
 import lions_and_men.applet_one_graph.core.graph.Vertex;
-import lions_and_men.applet_one_graph.core.strategies.StrategyLion;
+import lions_and_men.applet_one_graph.core.strategies.Strategy;
 
 import java.util.ArrayList;
 
 /**
  * Created by Jens on 18.07.2017.
  */
-public class LionStrategyClever extends StrategyLion {
+public class LionStrategyClever<T extends Entity> extends Strategy<T> {
 
     public LionStrategyClever(CoreController coreController, CoreController.LionStrategy strategyEnum) {
-        super(coreController, strategyEnum);
+        super(coreController);
     }
 
     @Override

@@ -18,9 +18,4 @@ public class StrategyManually<T extends Entity> extends Strategy<T> {
         result.add(entity.getCurrentPosition());
         return result;
     }
-
-    @Override
-    public String getName() {
-        return "TODO: CRUCIAL ERROR";
-    }
 }

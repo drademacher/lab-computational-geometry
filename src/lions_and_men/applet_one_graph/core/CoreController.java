@@ -3,16 +3,15 @@ package lions_and_men.applet_one_graph.core;
 import lions_and_men.applet_one_graph.core.entities.Entity;
 import lions_and_men.applet_one_graph.core.entities.Lion;
 import lions_and_men.applet_one_graph.core.entities.Man;
-import lions_and_men.applet_one_graph.core.graph.BigVertex;
-import lions_and_men.applet_one_graph.core.graph.Edge;
-import lions_and_men.applet_one_graph.core.graph.GraphController;
-import lions_and_men.applet_one_graph.core.graph.Vertex;
-import lions_and_men.applet_one_graph.core.strategies.LionStrategies.*;
-import lions_and_men.applet_one_graph.core.strategies.ManStrategies.*;
-import lions_and_men.applet_one_graph.core.strategies.StrategyRandom;
-import lions_and_men.applet_one_graph.core.strategies.StrategyManually;
-import lions_and_men.applet_one_graph.core.strategies.StrategyDoNothing;
+import lions_and_men.applet_one_graph.core.graph.*;
+import lions_and_men.applet_one_graph.core.strategies.LionStrategies.LionStrategyAggroGreedy;
+import lions_and_men.applet_one_graph.core.strategies.LionStrategies.LionStrategyClever;
+import lions_and_men.applet_one_graph.core.strategies.ManStrategies.ManStrategyPaper;
+import lions_and_men.applet_one_graph.core.strategies.ManStrategies.ManStrategyRunAwayGreedy;
 import lions_and_men.applet_one_graph.core.strategies.Strategy;
+import lions_and_men.applet_one_graph.core.strategies.StrategyDoNothing;
+import lions_and_men.applet_one_graph.core.strategies.StrategyManually;
+import lions_and_men.applet_one_graph.core.strategies.StrategyRandom;
 import lions_and_men.util.Global;
 import lions_and_men.util.Point;
 
@@ -1043,4 +1042,11 @@ public class CoreController {
         }
     }
 
+
+
+
+    // TODO: THIS IS NEW
+    public int getDistanceBetween(Vertex vertex1, Vertex vertex2) {
+        return GraphHelper.createGraphHelper(this).getDistanceBetween(vertex1, vertex2);
+    }
 }

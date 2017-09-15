@@ -190,7 +190,8 @@ public class VisualCoreController extends CoreController {
 
         super.relocateMan(manCoordinate, vertexCoordinate);
 
-        entities.stream().filter(entity -> entity.getPosition().equals(manCoordinate)).forEach(entity -> entity.relocate(vertexCoordinate));
+        Point realVertexCoordinate = graph.getVertexByCoordinate(vertexCoordinate).getCoordinates();
+        entities.stream().filter(entity -> entity.getPosition().equals(manCoordinate)).forEach(entity -> entity.relocate(realVertexCoordinate));
         updateManRanges();
 
 
@@ -201,7 +202,8 @@ public class VisualCoreController extends CoreController {
 
         super.relocateLion(lionCoordinate, vertexCoordinate);
 
-        entities.stream().filter(entity -> entity.getPosition().equals(lionCoordinate)).forEach(entity -> entity.relocate(vertexCoordinate));
+        Point realVertexCoordinate = graph.getVertexByCoordinate(vertexCoordinate).getCoordinates();
+        entities.stream().filter(entity -> entity.getPosition().equals(lionCoordinate)).forEach(entity -> entity.relocate(realVertexCoordinate));
         updateLionRanges();
         updateStepPreviewsAndChoicePoints();
     }

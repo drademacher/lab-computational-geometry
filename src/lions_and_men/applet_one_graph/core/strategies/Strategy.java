@@ -30,7 +30,9 @@ public abstract class Strategy<T extends Entity> implements Cloneable {
         return entity.getCurrentPosition();
     }
 
-    abstract boolean vertexIsValidStep(Vertex vertex);
+    public boolean vertexIsValidStep(Vertex vertex) {
+        return false;
+    }
 
     protected abstract ArrayList<Vertex> calculatePossibleSteps();
 

@@ -3,8 +3,8 @@ package lions_and_men.applet_one_graph.core.entities;
 import lions_and_men.applet_one_graph.core.CoreController;
 import lions_and_men.applet_one_graph.core.graph.GraphHelper;
 import lions_and_men.applet_one_graph.core.graph.Vertex;
-import lions_and_men.applet_one_graph.core.strategies.ManStrategies.ManStrategyManually;
-import lions_and_men.applet_one_graph.core.strategies.StrategyMan;
+import lions_and_men.applet_one_graph.core.strategies.StrategyManually;
+import lions_and_men.applet_one_graph.core.strategies.Strategy;
 
 import java.util.ArrayList;
 
@@ -14,7 +14,7 @@ public class Man extends Entity {
     private static int minimumDistance = 0;
     private static CoreController.ManStrategy defaultStrategy = CoreController.ManStrategy.Paper;
     private static int defaultRange = 0;
-    private StrategyMan strategy;
+    private Strategy strategy;
     private int range = defaultRange;
 
 
@@ -71,14 +71,14 @@ public class Man extends Entity {
 
     @Override
     public boolean needManualStepInput() {
-        return (strategy.getClass() == ManStrategyManually.class) && !didManualStep;
+        return (strategy.getClass() == StrategyManually.class) && !didManualStep;
     }
 
-    public StrategyMan getStrategy() {
+    public Strategy getStrategy() {
         return strategy;
     }
 
-    public void setStrategy(StrategyMan strategy) {
+    public void setStrategy(Strategy strategy) {
         strategy.setEntity(this);
         this.strategy = strategy;
     }

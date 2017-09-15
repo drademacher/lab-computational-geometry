@@ -12,4 +12,6 @@ public interface Entity {
     void delete();
 
     Point getPosition();
+
+
 }

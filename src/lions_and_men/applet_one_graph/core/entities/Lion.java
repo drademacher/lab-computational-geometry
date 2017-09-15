@@ -4,8 +4,8 @@ package lions_and_men.applet_one_graph.core.entities;
 import lions_and_men.applet_one_graph.core.CoreController;
 import lions_and_men.applet_one_graph.core.graph.GraphHelper;
 import lions_and_men.applet_one_graph.core.graph.Vertex;
-import lions_and_men.applet_one_graph.core.strategies.LionStrategies.LionStrategyManually;
-import lions_and_men.applet_one_graph.core.strategies.StrategyLion;
+import lions_and_men.applet_one_graph.core.strategies.Strategy;
+import lions_and_men.applet_one_graph.core.strategies.StrategyManually;
 
 import java.util.ArrayList;
 
@@ -13,7 +13,7 @@ public class Lion extends Entity {
     private static int defaultRange = 0;
     private static CoreController.LionStrategy defaultStrategy = CoreController.LionStrategy.Clever;
     private int range = Lion.defaultRange;
-    private StrategyLion strategy;
+    private Strategy strategy;
 
 
     public Lion(Vertex startPosition, CoreController coreController) {
@@ -62,7 +62,7 @@ public class Lion extends Entity {
 
     @Override
     public boolean needManualStepInput() {
-        return (strategy.getClass() == LionStrategyManually.class) && !didManualStep;
+        return (strategy.getClass() == StrategyManually.class) && !didManualStep;
     }
 
     public int getRange() {
@@ -78,11 +78,11 @@ public class Lion extends Entity {
         return graphHelper.BFSgetAllVerticesTill(position, getRange());
     }
 
-    public StrategyLion getStrategy() {
+    public Strategy getStrategy() {
         return strategy;
     }
 
-    public void setStrategy(StrategyLion strategy) {
+    public void setStrategy(Strategy strategy) {
         strategy.setEntity(this);
         this.strategy = strategy;
     }

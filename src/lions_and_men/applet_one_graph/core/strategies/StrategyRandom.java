@@ -1,21 +1,18 @@
-package lions_and_men.applet_one_graph.core.strategies.LionStrategies;
+package lions_and_men.applet_one_graph.core.strategies;
 
 import lions_and_men.applet_one_graph.core.CoreController;
+import lions_and_men.applet_one_graph.core.entities.Entity;
 import lions_and_men.applet_one_graph.core.graph.Connection;
 import lions_and_men.applet_one_graph.core.graph.Vertex;
-import lions_and_men.applet_one_graph.core.strategies.StrategyLion;
 import lions_and_men.util.Random;
 
 import java.util.ArrayList;
 
-/**
- * Created by Jens on 01.07.2017.
- */
-public class LionStrategyRandom extends StrategyLion {
+public class StrategyRandom<T extends Entity> extends Strategy<T> {
 
 
-    public LionStrategyRandom(CoreController coreController, CoreController.LionStrategy strategyEnum) {
-        super(coreController, strategyEnum);
+    public StrategyRandom(CoreController coreController) {
+        super(coreController);
     }
 
     @Override
@@ -27,5 +24,11 @@ public class LionStrategyRandom extends StrategyLion {
             result.add(connections.get(rndInt).getNeighbor(entity.getCurrentPosition()));
         }
         return result;
+    }
+
+    @Override
+    public String getName() {
+        // TODO: CURIAL ERROR
+        return "FIX THIS";
     }
 }

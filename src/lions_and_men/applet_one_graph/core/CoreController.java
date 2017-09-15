@@ -9,8 +9,10 @@ import lions_and_men.applet_one_graph.core.graph.GraphController;
 import lions_and_men.applet_one_graph.core.graph.Vertex;
 import lions_and_men.applet_one_graph.core.strategies.LionStrategies.*;
 import lions_and_men.applet_one_graph.core.strategies.ManStrategies.*;
-import lions_and_men.applet_one_graph.core.strategies.StrategyLion;
-import lions_and_men.applet_one_graph.core.strategies.StrategyMan;
+import lions_and_men.applet_one_graph.core.strategies.StrategyRandom;
+import lions_and_men.applet_one_graph.core.strategies.StrategyManually;
+import lions_and_men.applet_one_graph.core.strategies.StrategyDoNothing;
+import lions_and_men.applet_one_graph.core.strategies.Strategy;
 import lions_and_men.util.Global;
 import lions_and_men.util.Point;
 
@@ -1002,16 +1004,16 @@ public class CoreController {
     public enum ManStrategy {
         DoNothing, Manually, Paper, Random, RunAwayGreedy;
 
-        public StrategyMan getStrategy(CoreController coreController) {
+        public Strategy getStrategy(CoreController coreController) {
             switch (this) {
                 case DoNothing:
-                    return new ManStrategyDoNothing(coreController, this);
+                    return new StrategyDoNothing(coreController);
                 case Paper:
                     return new ManStrategyPaper(coreController, this);
                 case Random:
-                    return new ManStrategyRandom(coreController, this);
+                    return new StrategyRandom(coreController);
                 case Manually:
-                    return new ManStrategyManually(coreController, this);
+                    return new StrategyManually(coreController);
                 case RunAwayGreedy:
                     return new ManStrategyRunAwayGreedy(coreController, this);
                 default:
@@ -1023,14 +1025,14 @@ public class CoreController {
     public enum LionStrategy {
         DoNothing, Manually, Random, AggroGreedy, Clever;
 
-        public StrategyLion getStrategy(CoreController coreController) {
+        public Strategy getStrategy(CoreController coreController) {
             switch (this) {
                 case Random:
-                    return new LionStrategyRandom(coreController, this);
+                    return new StrategyRandom(coreController);
                 case Manually:
-                    return new LionStrategyManually(coreController, this);
+                    return new StrategyManually(coreController);
                 case DoNothing:
-                    return new LionStrategyDoNothing(coreController, this);
+                    return new StrategyDoNothing(coreController);
                 case AggroGreedy:
                     return new LionStrategyAggroGreedy(coreController, this);
                 case Clever:

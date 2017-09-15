@@ -82,9 +82,6 @@ public class Controller {
         activePlaying = new SimpleBooleanProperty(false);
         editMode.addListener((observable, oldValue, newValue) -> {
             try {
-                this.coreController.setEditMode(newValue);
-                zoomScrollPane.autoZoom();
-
                 buttonBarCenter.getChildren().clear();
 
                 if (!newValue) {
@@ -98,12 +95,12 @@ public class Controller {
                     modeToggleButton.setText("Play Mode");
                     buttonBarCenter.getChildren().addAll(setGraphButton, setParameterButton, newPermutationButton, setViewMenu);
                     oldLionsPathShapes.getChildren().clear();
-
-                    zoomScrollPane.autoZoom();
                 }
+
+                this.coreController.setEditMode(newValue);
+                zoomScrollPane.autoZoom();
             } catch (WrongConfigurationException e) {
                 editMode.set(oldValue);
-                // coreController.freshInitialization();
             }
 
         });

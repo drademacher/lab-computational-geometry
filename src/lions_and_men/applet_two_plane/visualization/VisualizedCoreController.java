@@ -42,8 +42,7 @@ public class VisualizedCoreController extends CoreController {
             alert.setTitle("Error");
             alert.setHeaderText(null);
             alert.setContentText("Your configuration is missing either a man or a set of lions.");
-            alert.showAndWait();
-            freshInitialization();
+            alert.show();
             throw e;
         }
 

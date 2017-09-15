@@ -34,7 +34,7 @@ public class VisualizedCoreController extends CoreController {
     }
 
     @Override
-    public void setEditMode(boolean editMode) {
+    public void setEditMode(boolean editMode) throws WrongConfigurationException {
         try {
             super.setEditMode(editMode);
         } catch (WrongConfigurationException e) {
@@ -42,8 +42,8 @@ public class VisualizedCoreController extends CoreController {
             alert.setTitle("Error");
             alert.setHeaderText(null);
             alert.setContentText("Your configuration is missing either a man or a set of lions.");
-            alert.showAndWait();
-            return;
+            alert.show();
+            throw e;
         }
 
         if (!editMode) {
@@ -79,7 +79,6 @@ public class VisualizedCoreController extends CoreController {
             manPoint = null;
         }
         if (plane.getMan() != null) {
-            // TODO: einkommentieren
             this.manPoint = new Man(plane.getMan().getPosition());
         }
 

@@ -19,7 +19,7 @@ public class LionStrategyClever extends StrategyLion {
 
     @Override
     protected ArrayList<Vertex> calculatePossibleSteps() {
-        System.out.println("### " + lion);
+        //System.out.println("### " + lion);
         Vertex currentPosition = lion.getCurrentPosition();
         int steps = Integer.MAX_VALUE;
         int stepsToBigVertex = Integer.MAX_VALUE;

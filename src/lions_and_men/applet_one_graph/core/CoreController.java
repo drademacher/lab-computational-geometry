@@ -147,7 +147,7 @@ public class CoreController {
 
         this.graph.changeEdgeWeight(vertex1, vertex2, weight);
 
-        System.out.println("man size "+men.size() );
+//        System.out.println("man size "+men.size() );
 //        relocateAllLions();
 //        relocateAllMen();
     }
@@ -917,18 +917,29 @@ public class CoreController {
         }
     }
 
+    protected Point manGoToNextPosition(Point oldPoint){
+        Man man = getManByCoordinate(oldPoint);
+        if(man == null){
+            return null;
+        }
+        return man.goToNextPosition().getCoordinates();
+    }
+
+    protected Point lionGoToNextPosition(Point oldPoint){
+        Lion lion = getLionByCoordinate(oldPoint);
+        if(lion == null){
+            return null;
+        }
+        return lion.goToNextPosition().getCoordinates();
+    }
+
     public boolean simulateStep() {
 
-        for (Lion lion : this.getLions()) {
-            Vertex oldPosition = lion.getCurrentPosition();
-            Vertex newPosition = lion.goToNextPosition();
-            relocateLion(oldPosition.getCoordinates(), newPosition.getCoordinates());
-
-        }
         for (Man man : this.getMen()) {
-            Vertex oldPosition = man.getCurrentPosition();
-            Vertex newPosition = man.goToNextPosition();
-            relocateMan(oldPosition.getCoordinates(), newPosition.getCoordinates());
+            manGoToNextPosition(man.getCoordinates());
+        }
+        for (Lion lion : this.getLions()) {
+            lionGoToNextPosition(lion.getCoordinates());
         }
 
 

@@ -225,6 +225,22 @@ public class VisualCoreController extends CoreController {
     }
 
     @Override
+    protected Point manGoToNextPosition(Point oldPoint) {
+        Point newPoint = super.manGoToNextPosition(oldPoint);
+        entities.stream().filter(entity -> entity.getPosition().equals(oldPoint)).forEach(entity -> entity.relocate(newPoint));
+
+        return newPoint;
+    }
+
+    @Override
+    protected Point lionGoToNextPosition(Point oldPoint) {
+        Point newPoint = super.lionGoToNextPosition(oldPoint);
+        entities.stream().filter(entity -> entity.getPosition().equals(oldPoint)).forEach(entity -> entity.relocate(newPoint));
+
+        return newPoint;
+    }
+
+    @Override
     public void setManStrategy(Point manCoordinate, ManStrategy strategy) {
         super.setManStrategy(manCoordinate, strategy);
 
@@ -319,5 +335,16 @@ public class VisualCoreController extends CoreController {
                 new ChoicePoint(this, vertex.getCoordinates(), choicePoint.getCoordinates(), COLOR_CHOICEPOINT);
             }
         }
+    }
+
+    @Override
+    public boolean simulateStep() {
+        boolean bool = super.simulateStep();
+
+        updateStepPreviewsAndChoicePoints();
+        updateManRanges();
+        updateLionRanges();
+
+        return bool;
     }
 }

@@ -43,6 +43,7 @@ public class VisualizedCoreController extends CoreController {
             alert.setHeaderText(null);
             alert.setContentText("Your configuration is missing either a man or a set of lions.");
             alert.showAndWait();
+            freshInitialization();
             throw e;
         }
 
@@ -79,7 +80,6 @@ public class VisualizedCoreController extends CoreController {
             manPoint = null;
         }
         if (plane.getMan() != null) {
-            // TODO: einkommentieren
             this.manPoint = new Man(plane.getMan().getPosition());
         }
 

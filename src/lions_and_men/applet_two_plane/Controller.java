@@ -87,7 +87,7 @@ public class Controller {
 
                 buttonBarCenter.getChildren().clear();
 
-                if (newValue) {
+                if (!newValue) {
                     modeToggleButton.setText("Edit Mode");
                     buttonBarCenter.getChildren().addAll(playAnimationButton, speedSlider, stopAnimationButton, stepAnimationButton, setViewMenu);
                 } else {
@@ -103,6 +103,7 @@ public class Controller {
                 }
             } catch (WrongConfigurationException e) {
                 editMode.set(oldValue);
+                // coreController.freshInitialization();
             }
 
         });

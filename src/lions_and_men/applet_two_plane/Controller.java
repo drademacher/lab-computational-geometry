@@ -85,14 +85,14 @@ public class Controller {
                 buttonBarCenter.getChildren().clear();
 
                 if (!newValue) {
-                    modeToggleButton.setText("Edit Mode");
+                    modeToggleButton.setText("Play Mode");
                     buttonBarCenter.getChildren().addAll(playAnimationButton, speedSlider, stopAnimationButton, stepAnimationButton, setViewMenu);
                 } else {
                     clearAnimationShapes();
 
                     activePlaying.set(false);
 
-                    modeToggleButton.setText("Play Mode");
+                    modeToggleButton.setText("Edit Mode");
                     buttonBarCenter.getChildren().addAll(setGraphButton, setParameterButton, newPermutationButton, setViewMenu);
                     oldLionsPathShapes.getChildren().clear();
                 }

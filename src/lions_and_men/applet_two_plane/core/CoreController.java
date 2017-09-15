@@ -117,19 +117,17 @@ public class CoreController {
 
         //after random generation the man is not in the ch -> generate 4 more lions to make sure the man is in the ch
         if (!new ConvexHull(lionPoints).insideHull(manPoint)) {
-            Point point1 = new Point(0, Random.getRandomInteger(100 - (int) manPoint.getY() / 5) * 5 + 5);
+            Point point1 = new Point(0, Random.getRandomInteger(100 - (int) (manPoint.getY() + 1) / 5) * 5 + 5);
             createLion(manPoint.add(point1));
 
-            Point point2 = new Point(0, Random.getRandomInteger((int) manPoint.getY() / 5) * 5 + 5);
+            Point point2 = new Point(0, Random.getRandomInteger((int) (manPoint.getY() + 1) / 5) * 5 + 5);
             createLion(manPoint.sub(point2));
 
-            Point point3 = new Point(Random.getRandomInteger(100 - (int) manPoint.getX() / 5) * 5 + 5, 0);
+            Point point3 = new Point(Random.getRandomInteger(100 - (int) (manPoint.getX() + 1) / 5) * 5 + 5, 0);
             createLion(manPoint.add(point3));
 
-            Point point4 = new Point(Random.getRandomInteger((int) manPoint.getX() / 5) * 5 + 5, 0);
+            Point point4 = new Point(Random.getRandomInteger((int) (manPoint.getX() + 1) / 5) * 5 + 5, 0);
             createLion(manPoint.sub(point4));
-
-
         }
     }
 

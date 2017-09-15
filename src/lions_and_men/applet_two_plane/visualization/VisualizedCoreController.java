@@ -190,7 +190,6 @@ public class VisualizedCoreController extends CoreController {
     }
 
 
-
     private void update(List<Lion> lions) {
         hull = new ConvexHull(lions);
         Lion[] lionsInHull = new Lion[hull.getPoints().length];

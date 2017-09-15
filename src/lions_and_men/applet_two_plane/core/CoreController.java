@@ -235,7 +235,7 @@ public class CoreController {
 
     private void calcAllPaths() {
 
-        if(this.plane.getMan() == null || this.plane.getLions() == null || this.plane.getLions().size() < 1){
+        if (this.plane.getMan() == null || this.plane.getLions() == null || this.plane.getLions().size() < 1) {
             return;
         }
 
@@ -329,7 +329,7 @@ public class CoreController {
     }
 
     public void setEditMode(boolean editMode) throws WrongConfigurationException {
-        if(this.plane.getMan() == null || this.plane.getLions() == null || this.plane.getLions().size() < 1){
+        if (this.plane.getMan() == null || this.plane.getLions() == null || this.plane.getLions().size() < 1) {
             throw new WrongConfigurationException();
         }
         resetInductionsStep();

@@ -19,10 +19,10 @@ import java.util.ArrayList;
 
 public class CoreController {
 
+    protected GraphController graph;
     private boolean editMode = true;
     private ArrayList<Lion> lions = new ArrayList<>();
     private ArrayList<Man> men = new ArrayList<>();
-    protected GraphController graph;
 
     public CoreController() {
         this.graph = new GraphController();
@@ -125,7 +125,6 @@ public class CoreController {
     public void changeEdgeWeight(Point vertex1Coordinates, Point vertex2Coordinates, int weight) {
 
 
-
         if (vertex1Coordinates == null || vertex2Coordinates == null || weight < 1) {
             return;
         }
@@ -220,7 +219,7 @@ public class CoreController {
         if (lion != null) {
             entity = lion;
         }
-        if(entity == null){
+        if (entity == null) {
             return;
         }
         entity.setNextPosition(vertex);
@@ -917,17 +916,17 @@ public class CoreController {
         }
     }
 
-    protected Point manGoToNextPosition(Point oldPoint){
+    protected Point manGoToNextPosition(Point oldPoint) {
         Man man = getManByCoordinate(oldPoint);
-        if(man == null){
+        if (man == null) {
             return null;
         }
         return man.goToNextPosition().getCoordinates();
     }
 
-    protected Point lionGoToNextPosition(Point oldPoint){
+    protected Point lionGoToNextPosition(Point oldPoint) {
         Lion lion = getLionByCoordinate(oldPoint);
-        if(lion == null){
+        if (lion == null) {
             return null;
         }
         return lion.goToNextPosition().getCoordinates();

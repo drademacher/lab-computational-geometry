@@ -320,7 +320,7 @@ public class VisualCoreController extends CoreController {
 
         // choice points
         ChoicePoint.clear();
-        for (lions_and_men.applet_one_graph.core.graph.Vertex vertex: getMenWithManualInput()) {
+        for (lions_and_men.applet_one_graph.core.graph.Vertex vertex : getMenWithManualInput()) {
             new ChoicePoint(this, vertex.getCoordinates(), vertex.getCoordinates(), COLOR_MAN);
             for (Connection con : vertex.getConnections()) {
                 lions_and_men.applet_one_graph.core.graph.Vertex choicePoint = con.getNeighbor(vertex);

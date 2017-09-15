@@ -52,8 +52,8 @@ public class ConvexHull {
                 this.hull = Arrays.copyOfRange(this.hull, 0, k - 1); // remove non-hull vertices after k; remove k - 1 which is a duplicate
             }
         } else if (this.points.length <= 1) {
-            this.hull =  this.points;
-        } else{
+            this.hull = this.points;
+        } else {
 //            return null;
         }
     }
@@ -81,7 +81,7 @@ public class ConvexHull {
                 return false;
             }
         }
-        if (isRightOf(hull[hull.length-1], hull[0], p) < 0) {
+        if (isRightOf(hull[hull.length - 1], hull[0], p) < 0) {
             return false;
         }
 

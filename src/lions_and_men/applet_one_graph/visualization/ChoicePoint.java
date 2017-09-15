@@ -4,7 +4,6 @@ package lions_and_men.applet_one_graph.visualization;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import lions_and_men.applet_one_graph.core.entities.Entity;
 import lions_and_men.util.Point;
 
 public class ChoicePoint {

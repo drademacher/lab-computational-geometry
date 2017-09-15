@@ -70,7 +70,6 @@ public class Main extends Application {
         stageChoose.setResizable(true);
 
 
-
         // top text
         Label infobox = new Label("Choose one application to start.");
         infobox.setStyle("-fx-font-size: 36; -fx-font-weight: bold;");

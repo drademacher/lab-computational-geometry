@@ -1,7 +1,7 @@
 package lions_and_men.util;
 
 
-public class Point implements Comparable<Point>{
+public class Point implements Comparable<Point> {
 
     private double x;
     private double y;

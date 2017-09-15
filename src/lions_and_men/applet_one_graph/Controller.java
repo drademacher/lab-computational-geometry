@@ -264,7 +264,7 @@ public class Controller {
         setManStrategyWait.setOnAction(event -> coreController.setAllManStrategy(CoreController.ManStrategy.DoNothing));
         MenuItem setManStrategyGreedy = new MenuItem("Greedy");
         setManStrategyGreedy.setOnAction(event -> coreController.setAllManStrategy(CoreController.ManStrategy.RunAwayGreedy));
-        MenuItem setManStrategyRandom = new MenuItem("Random");
+        MenuItem setManStrategyRandom = new MenuItem("RandomChoice");
         setManStrategyRandom.setOnAction(event -> coreController.setAllManStrategy(CoreController.ManStrategy.Random));
         MenuItem setManStrategyManual = new MenuItem("Manual");
         setManStrategyManual.setOnAction(event -> coreController.setAllManStrategy(CoreController.ManStrategy.Manually));
@@ -279,7 +279,7 @@ public class Controller {
         setLionsStrategyGreedy.setOnAction(event -> coreController.setAllLionStrategy(CoreController.LionStrategy.AggroGreedy));
         MenuItem setLionsStrategyClever = new MenuItem("Clever");
         setLionsStrategyClever.setOnAction(event -> coreController.setAllLionStrategy(CoreController.LionStrategy.Clever));
-        MenuItem setLionsStrategyRandom = new MenuItem("Random");
+        MenuItem setLionsStrategyRandom = new MenuItem("RandomChoice");
         setLionsStrategyRandom.setOnAction(event -> coreController.setAllLionStrategy(CoreController.LionStrategy.Random));
         MenuItem setLionsStrategyManual = new MenuItem("Manual");
         setLionsStrategyManual.setOnAction(event -> coreController.setAllLionStrategy(CoreController.LionStrategy.Manually));

@@ -8,17 +8,13 @@ import lions_and_men.applet_one_graph.core.graph.Vertex;
 import java.util.ArrayList;
 
 public abstract class Strategy<T extends Entity> implements Cloneable {
-    private Class<T> tClass;
-
-    protected CoreController coreController;
+        protected CoreController coreController;
     protected T entity;
-    protected GraphHelper helper;
-//    protected CoreController.LionStrategy strategyEnum;
+    GraphHelper helper;
 
     public Strategy(CoreController coreController) {
         this.coreController = coreController;
         this.helper = GraphHelper.createGraphHelper(coreController);
-//        this.strategyEnum = strategyEnum;
     }
 
     public Vertex getNextPosition() {
@@ -32,11 +28,6 @@ public abstract class Strategy<T extends Entity> implements Cloneable {
         return entity.getCurrentPosition();
     }
 
-//    public boolean vertexIsValidStep(Vertex vertex) {
-//
-//        return false;
-//    }
-
     protected abstract ArrayList<Vertex> calculatePossibleSteps();
 
     public void setEntity(T entity) {
@@ -44,11 +35,7 @@ public abstract class Strategy<T extends Entity> implements Cloneable {
     }
 
     public String getName() {
-        return this.getClass().getName();
+        int lastOccurrenceOfPoint = this.getClass().getName().lastIndexOf(".");
+        return this.getClass().getName().substring(lastOccurrenceOfPoint + 1);
     }
-
-//    public String getName() {
-//        return strategyEnum.name();
-//    }
-
 }

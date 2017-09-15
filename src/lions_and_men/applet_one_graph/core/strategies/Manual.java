@@ -6,9 +6,9 @@ import lions_and_men.applet_one_graph.core.graph.Vertex;
 
 import java.util.ArrayList;
 
-public class StrategyManually<T extends Entity> extends Strategy<T> {
+public class Manual<T extends Entity> extends Strategy<T> {
 
-    public StrategyManually(CoreController coreController) {
+    public Manual(CoreController coreController) {
         super(coreController);
     }
 

@@ -6,9 +6,9 @@ import lions_and_men.applet_one_graph.core.graph.Vertex;
 
 import java.util.ArrayList;
 
-public class StrategyDoNothing<T extends Entity> extends Strategy<T> {
+public class DoNothing<T extends Entity> extends Strategy<T> {
 
-    public StrategyDoNothing(CoreController coreController) {
+    public DoNothing(CoreController coreController) {
         super(coreController);
     }
 

@@ -1,16 +1,15 @@
-package lions_and_men.applet_one_graph.core.strategies.ManStrategies;
+package lions_and_men.applet_one_graph.core.strategies;
 
 import lions_and_men.applet_one_graph.core.CoreController;
 import lions_and_men.applet_one_graph.core.entities.Entity;
 import lions_and_men.applet_one_graph.core.graph.Connection;
 import lions_and_men.applet_one_graph.core.graph.Vertex;
-import lions_and_men.applet_one_graph.core.strategies.Strategy;
 
 import java.util.ArrayList;
 
-public class ManStrategyRunAwayGreedy<T extends Entity> extends Strategy<T> {
+public class RunAwayGreedyMan<T extends Entity> extends Strategy<T> {
 
-    public ManStrategyRunAwayGreedy(CoreController coreController, CoreController.ManStrategy strategyEnum) {
+    public RunAwayGreedyMan(CoreController coreController) {
         super(coreController);
     }
 

@@ -6,7 +6,7 @@ import lions_and_men.applet_one_graph.core.graph.Connection;
 import lions_and_men.applet_one_graph.core.graph.GraphHelper;
 import lions_and_men.applet_one_graph.core.graph.Vertex;
 import lions_and_men.applet_one_graph.core.strategies.Strategy;
-import lions_and_men.applet_one_graph.core.strategies.StrategyManually;
+import lions_and_men.applet_one_graph.core.strategies.Manual;
 
 import java.util.ArrayList;
 
@@ -63,7 +63,7 @@ public class Lion extends Entity {
 
     @Override
     public boolean needManualStepInput() {
-        return (strategy.getClass() == StrategyManually.class) && !didManualStep;
+        return (strategy.getClass() == Manual.class) && !didManualStep;
     }
 
     public int getRange() {

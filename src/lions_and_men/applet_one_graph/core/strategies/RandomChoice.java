@@ -4,14 +4,13 @@ import lions_and_men.applet_one_graph.core.CoreController;
 import lions_and_men.applet_one_graph.core.entities.Entity;
 import lions_and_men.applet_one_graph.core.graph.Connection;
 import lions_and_men.applet_one_graph.core.graph.Vertex;
-import lions_and_men.util.Random;
 
 import java.util.ArrayList;
 
-public class StrategyRandom<T extends Entity> extends Strategy<T> {
+public class RandomChoice<T extends Entity> extends Strategy<T> {
 
 
-    public StrategyRandom(CoreController coreController) {
+    public RandomChoice(CoreController coreController) {
         super(coreController);
     }
 
@@ -20,7 +19,7 @@ public class StrategyRandom<T extends Entity> extends Strategy<T> {
         ArrayList<Vertex> result = new ArrayList<>();
         ArrayList<Connection> connections = entity.getCurrentPosition().getConnections();
         if (connections.size() > 0) {
-            int rndInt = Random.getRandomInteger(connections.size());
+            int rndInt = lions_and_men.util.Random.getRandomInteger(connections.size());
             result.add(connections.get(rndInt).getNeighbor(entity.getCurrentPosition()));
         }
         return result;

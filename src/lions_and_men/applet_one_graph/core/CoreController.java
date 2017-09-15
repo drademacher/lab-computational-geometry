@@ -4,14 +4,14 @@ import lions_and_men.applet_one_graph.core.entities.Entity;
 import lions_and_men.applet_one_graph.core.entities.Lion;
 import lions_and_men.applet_one_graph.core.entities.Man;
 import lions_and_men.applet_one_graph.core.graph.*;
-import lions_and_men.applet_one_graph.core.strategies.LionStrategies.LionStrategyAggroGreedy;
-import lions_and_men.applet_one_graph.core.strategies.LionStrategies.LionStrategyClever;
-import lions_and_men.applet_one_graph.core.strategies.ManStrategies.ManStrategyPaper;
-import lions_and_men.applet_one_graph.core.strategies.ManStrategies.ManStrategyRunAwayGreedy;
+import lions_and_men.applet_one_graph.core.strategies.AggroGreedyLion;
+import lions_and_men.applet_one_graph.core.strategies.CleverLion;
+import lions_and_men.applet_one_graph.core.strategies.PaperMan;
+import lions_and_men.applet_one_graph.core.strategies.RunAwayGreedyMan;
 import lions_and_men.applet_one_graph.core.strategies.Strategy;
-import lions_and_men.applet_one_graph.core.strategies.StrategyDoNothing;
-import lions_and_men.applet_one_graph.core.strategies.StrategyManually;
-import lions_and_men.applet_one_graph.core.strategies.StrategyRandom;
+import lions_and_men.applet_one_graph.core.strategies.DoNothing;
+import lions_and_men.applet_one_graph.core.strategies.Manual;
+import lions_and_men.applet_one_graph.core.strategies.RandomChoice;
 import lions_and_men.util.Global;
 import lions_and_men.util.Point;
 
@@ -1006,15 +1006,15 @@ public class CoreController {
         public Strategy getStrategy(CoreController coreController) {
             switch (this) {
                 case DoNothing:
-                    return new StrategyDoNothing(coreController);
+                    return new DoNothing(coreController);
                 case Paper:
-                    return new ManStrategyPaper(coreController, this);
+                    return new PaperMan(coreController);
                 case Random:
-                    return new StrategyRandom(coreController);
+                    return new RandomChoice(coreController);
                 case Manually:
-                    return new StrategyManually(coreController);
+                    return new Manual(coreController);
                 case RunAwayGreedy:
-                    return new ManStrategyRunAwayGreedy(coreController, this);
+                    return new RunAwayGreedyMan(coreController);
                 default:
                     throw new IllegalArgumentException("invalid input: " + this);
             }
@@ -1027,15 +1027,15 @@ public class CoreController {
         public Strategy getStrategy(CoreController coreController) {
             switch (this) {
                 case Random:
-                    return new StrategyRandom(coreController);
+                    return new RandomChoice(coreController);
                 case Manually:
-                    return new StrategyManually(coreController);
+                    return new Manual(coreController);
                 case DoNothing:
-                    return new StrategyDoNothing(coreController);
+                    return new DoNothing(coreController);
                 case AggroGreedy:
-                    return new LionStrategyAggroGreedy(coreController, this);
+                    return new AggroGreedyLion(coreController);
                 case Clever:
-                    return new LionStrategyClever(coreController, this);
+                    return new CleverLion(coreController);
                 default:
                     throw new IllegalArgumentException("invalid input: " + this);
             }

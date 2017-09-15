@@ -51,7 +51,7 @@ public class Lion implements Entity {
             MenuItem waitStrategyButton = new MenuItem("Wait");
             MenuItem greedyStrategyButton = new MenuItem("Greedy");
             MenuItem cleverStrategyButton = new MenuItem("Clever");
-            MenuItem randomStrategyButton = new MenuItem("Random");
+            MenuItem randomStrategyButton = new MenuItem("RandomChoice");
             MenuItem manualStrategyButton = new MenuItem("Manual");
             strategyMenu.getItems().addAll(waitStrategyButton, greedyStrategyButton, cleverStrategyButton, randomStrategyButton, manualStrategyButton);
 

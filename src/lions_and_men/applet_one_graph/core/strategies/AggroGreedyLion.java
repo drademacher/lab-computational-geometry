@@ -1,4 +1,4 @@
-package lions_and_men.applet_one_graph.core.strategies.LionStrategies;
+package lions_and_men.applet_one_graph.core.strategies;
 
 import lions_and_men.applet_one_graph.core.CoreController;
 import lions_and_men.applet_one_graph.core.entities.Entity;
@@ -8,9 +8,9 @@ import lions_and_men.applet_one_graph.core.strategies.Strategy;
 
 import java.util.ArrayList;
 
-public class LionStrategyAggroGreedy<T extends Entity> extends Strategy<T> {
+public class AggroGreedyLion<T extends Entity> extends Strategy<T> {
 
-    public LionStrategyAggroGreedy(CoreController coreController, CoreController.LionStrategy strategyEnum) {
+    public AggroGreedyLion(CoreController coreController) {
         super(coreController);
     }
 

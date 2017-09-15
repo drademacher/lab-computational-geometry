@@ -197,7 +197,7 @@ public class Controller {
                 graph3MenuItem = new MenuItem("Example 3"),
                 graph4MenuItem = new MenuItem("Example 4"),
                 graph5MenuItem = new MenuItem("Example 5"),
-                randomConfigurationButton = new MenuItem("Random"),
+                randomConfigurationButton = new MenuItem("RandomChoice"),
                 openMapMenuItem = new MenuItem("Open"),
                 saveMapMenuItem = new MenuItem("Save");
 

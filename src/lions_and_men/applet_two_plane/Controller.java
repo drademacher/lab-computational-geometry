@@ -295,9 +295,6 @@ public class Controller {
         setLionsStrategyGreedy.setOnAction(event -> coreController.setAllLionStrategy(StrategyEnumLion.Greedy));
         lionMenu.getItems().addAll(setLionsStrategyGreedy/*, setLionsStrategyRandom, setLionsStrategyManual*/);
 
-
-        setParameterButton.getItems().addAll(setGlobalManSpeed, new SeparatorMenuItem(), manMenu, lionMenu);
-
         setGlobalManSpeed.setOnAction(event -> {
             double currentValue = this.coreController.getDefaultMenEpsilon();
 
@@ -310,10 +307,9 @@ public class Controller {
 
             if (result.isPresent()) {
                 try {
-
                     double inputValue = Double.parseDouble(result.get());
                     this.coreController.setDefaultMenEpsilon(inputValue);
-                } catch (Exception ignore) {
+                } catch (NumberFormatException ignore) {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Error");
                     alert.setHeaderText(null);
@@ -326,7 +322,7 @@ public class Controller {
         MenuItem setMinPathLength = new MenuItem("Set Minimum Path Length");
 
         setMinPathLength.setOnAction(event -> {
-            double currentValue = this.coreController.getStepsToGoAfterEscape();
+            int currentValue = this.coreController.getStepsToGoAfterEscape();
 
 
             TextInputDialog dialog = new TextInputDialog("" + currentValue);
@@ -337,10 +333,9 @@ public class Controller {
 
             if (result.isPresent()) {
                 try {
-
                     int inputValue = Integer.parseInt(result.get());
                     this.coreController.setStepsToGoAfterEscape(inputValue);
-                } catch (Exception ignore) {
+                } catch (NumberFormatException ignore) {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Error");
                     alert.setHeaderText(null);
@@ -349,6 +344,8 @@ public class Controller {
                 }
             }
         });
+
+        setParameterButton.getItems().addAll(setGlobalManSpeed, setMinPathLength, new SeparatorMenuItem(), manMenu, lionMenu);
 
         CheckMenuItem viewEntities = new CheckMenuItem("View Entities");
         entityShapes.visibleProperty().bind(viewEntities.selectedProperty());
@@ -378,7 +375,7 @@ public class Controller {
         oldLionsPathShapes.visibleProperty().bind(viewLionPath.selectedProperty());
         viewLionPath.setSelected(false);
 
-        setViewMenu.getItems().addAll(setMinPathLength, viewEntities, viewLionRanges, viewConvexHull, viewManPath, viewPreviousManPath, viewLionPath, viewLatestLionPath);
+        setViewMenu.getItems().addAll(viewEntities, viewLionRanges, viewConvexHull, viewManPath, viewPreviousManPath, viewLionPath, viewLatestLionPath);
     }
 
 

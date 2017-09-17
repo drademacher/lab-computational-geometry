@@ -301,7 +301,7 @@ public class Controller {
                 try {
                     int inputValue = Integer.parseInt(result.get());
                     this.coreController.setAllEdgeWeight(inputValue);
-                } catch (Exception ignore) {
+                } catch (NumberFormatException ignore) {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Error");
                     alert.setHeaderText(null);
@@ -324,7 +324,7 @@ public class Controller {
                 try {
                     int inputValue = Integer.parseInt(result.get());
                     this.coreController.setMinimumManDistance(inputValue);
-                } catch (Exception ignore) {
+                } catch (NumberFormatException ignore) {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Error");
                     alert.setHeaderText(null);
@@ -348,7 +348,7 @@ public class Controller {
                 try {
                     int inputValue = Integer.parseInt(result.get());
                     this.coreController.setAllManRange(inputValue);
-                } catch (Exception ignore) {
+                } catch (NumberFormatException ignore) {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Error");
                     alert.setHeaderText(null);
@@ -372,7 +372,7 @@ public class Controller {
                 try {
                     int inputValue = Integer.parseInt(result.get());
                     this.coreController.setAllLionRange(inputValue);
-                } catch (Exception ignore) {
+                } catch (NumberFormatException ignore) {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Error");
                     alert.setHeaderText(null);

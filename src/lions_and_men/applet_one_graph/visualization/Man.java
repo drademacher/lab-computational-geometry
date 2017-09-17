@@ -94,19 +94,19 @@ public class Man implements Entity {
             });
 
             greedyStrategyButton.setOnAction(event2 -> {
-                coreController.setManStrategy(coordinates, CoreController.ManStrategy.RunAwayGreedy);
+                coreController.setManStrategy(coordinates, CoreController.ManStrategy.RunAwayGreedyMan);
             });
 
             randomStrategyButton.setOnAction(event2 -> {
-                coreController.setManStrategy(coordinates, CoreController.ManStrategy.Random);
+                coreController.setManStrategy(coordinates, CoreController.ManStrategy.RandomChoice);
             });
 
             manualStrategyButton.setOnAction(event2 -> {
-                coreController.setManStrategy(coordinates, CoreController.ManStrategy.Manually);
+                coreController.setManStrategy(coordinates, CoreController.ManStrategy.Manual);
             });
 
             paperStrategyButton.setOnAction(event2 -> {
-                coreController.setManStrategy(coordinates, CoreController.ManStrategy.Paper);
+                coreController.setManStrategy(coordinates, CoreController.ManStrategy.PaperMan);
             });
 
             item0.setOnAction(event2 -> {

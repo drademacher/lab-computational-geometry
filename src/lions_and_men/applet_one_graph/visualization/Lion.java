@@ -111,19 +111,19 @@ public class Lion implements Entity {
             });
 
             greedyStrategyButton.setOnAction(event2 -> {
-                coreController.setLionStrategy(coordinates, CoreController.LionStrategy.AggroGreedy);
+                coreController.setLionStrategy(coordinates, CoreController.LionStrategy.AggroGreedyLion);
             });
 
             cleverStrategyButton.setOnAction(event2 -> {
-                coreController.setLionStrategy(coordinates, CoreController.LionStrategy.Clever);
+                coreController.setLionStrategy(coordinates, CoreController.LionStrategy.CleverLion);
             });
 
             randomStrategyButton.setOnAction(event2 -> {
-                coreController.setLionStrategy(coordinates, CoreController.LionStrategy.Random);
+                coreController.setLionStrategy(coordinates, CoreController.LionStrategy.RandomChoice);
             });
 
             manualStrategyButton.setOnAction(event2 -> {
-                coreController.setLionStrategy(coordinates, CoreController.LionStrategy.Manually);
+                coreController.setLionStrategy(coordinates, CoreController.LionStrategy.Manual);
             });
 
             contextMenu.getItems().addAll(item0, item1, strategyMenu, edgeMenu, new SeparatorMenuItem(), closeItem);

@@ -388,6 +388,7 @@ public class CoreController {
     }
 
     public void setLionStrategy(Point lionCoordinate, LionStrategy strategy) {
+        System.out.println("set lion strategy");
         if (lionCoordinate == null || strategy == null) {
             return;
         }
@@ -395,7 +396,8 @@ public class CoreController {
         if (lion == null) {
             return;
         }
-
+        System.out.println(strategy);
+        System.out.println(strategy.getStrategy(this));
         lion.setStrategy(strategy.getStrategy(this));
 
     }
@@ -702,14 +704,14 @@ public class CoreController {
         Point lion2 = new Point(100, 140);
         Point lion3 = new Point(50, 90);
         this.setLion(lion1);
-        this.setLionStrategy(lion1, LionStrategy.Clever);
+        this.setLionStrategy(lion1, LionStrategy.CleverLion);
         this.setLion(lion2);
-        this.setLionStrategy(lion2, LionStrategy.Clever);
+        this.setLionStrategy(lion2, LionStrategy.CleverLion);
         this.setLion(lion3);
-        this.setLionStrategy(lion3, LionStrategy.Clever);
+        this.setLionStrategy(lion3, LionStrategy.CleverLion);
 
         this.setMan(this.graph.getSmallVertices().get(0).getCoordinates());
-        this.setManStrategy(this.graph.getSmallVertices().get(0).getCoordinates(), ManStrategy.Paper);
+        this.setManStrategy(this.graph.getSmallVertices().get(0).getCoordinates(), ManStrategy.PaperMan);
 
     }
 
@@ -788,8 +790,8 @@ public class CoreController {
         this.setLion(this.graph.getSmallVertices().get(17).getCoordinates());
         this.setMan(this.graph.getSmallVertices().get(0).getCoordinates());
 
-        this.setAllManStrategy(ManStrategy.Paper);
-        this.setAllLionStrategy(LionStrategy.AggroGreedy);
+        this.setAllManStrategy(ManStrategy.PaperMan);
+        this.setAllLionStrategy(LionStrategy.AggroGreedyLion);
     }
 
     public void setDefaultGraph3() {
@@ -852,6 +854,8 @@ public class CoreController {
                         break;
                     case "M":
                         this.setMan(new Point(Double.parseDouble(lineElements[1]), Double.parseDouble(lineElements[2])));
+                        System.out.println(".."+lineElements[3]);
+                        System.out.println(".."+ManStrategy.valueOf(lineElements[3]));
                         this.setManStrategy(new Point(Double.parseDouble(lineElements[1]), Double.parseDouble(lineElements[2])), ManStrategy.valueOf(lineElements[3]));
                         break;
                     case "L":
@@ -864,6 +868,7 @@ public class CoreController {
                 }
             }
         } catch (Exception e) {
+            e.printStackTrace();
             throw new Exception("test");
         }
 
@@ -936,9 +941,11 @@ public class CoreController {
     public boolean simulateStep() {
 
         for (Man man : this.getMen()) {
+            System.out.println("man "+man);
             manGoToNextPosition(man.getCoordinates());
         }
         for (Lion lion : this.getLions()) {
+            System.out.println("lion +"+lion);
             lionGoToNextPosition(lion.getCoordinates());
         }
 
@@ -1000,19 +1007,19 @@ public class CoreController {
     }
 
     public enum ManStrategy {
-        DoNothing, Manually, Paper, Random, RunAwayGreedy;
+        DoNothing, Manual, PaperMan, RandomChoice, RunAwayGreedyMan;
 
         public Strategy getStrategy(CoreController coreController) {
             switch (this) {
                 case DoNothing:
                     return new DoNothing(coreController);
-                case Paper:
+                case PaperMan:
                     return new PaperMan(coreController);
-                case Random:
+                case RandomChoice:
                     return new RandomChoice(coreController);
-                case Manually:
+                case Manual:
                     return new Manual(coreController);
-                case RunAwayGreedy:
+                case RunAwayGreedyMan:
                     return new RunAwayGreedyMan(coreController);
                 default:
                     throw new IllegalArgumentException("invalid input: " + this);
@@ -1021,19 +1028,19 @@ public class CoreController {
     }
 
     public enum LionStrategy {
-        DoNothing, Manually, Random, AggroGreedy, Clever;
+        DoNothing, Manual, RandomChoice, AggroGreedyLion, CleverLion;
 
         public Strategy getStrategy(CoreController coreController) {
             switch (this) {
-                case Random:
+                case RandomChoice:
                     return new RandomChoice(coreController);
-                case Manually:
+                case Manual:
                     return new Manual(coreController);
                 case DoNothing:
                     return new DoNothing(coreController);
-                case AggroGreedy:
+                case AggroGreedyLion:
                     return new AggroGreedyLion(coreController);
-                case Clever:
+                case CleverLion:
                     return new CleverLion(coreController);
                 default:
                     throw new IllegalArgumentException("invalid input: " + this);

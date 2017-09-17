@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class Lion extends Entity {
     private static int defaultRange = 0;
-    private static CoreController.LionStrategy defaultStrategy = CoreController.LionStrategy.Clever;
+    private static CoreController.LionStrategy defaultStrategy = CoreController.LionStrategy.CleverLion;
     private int range = Lion.defaultRange;
     private Strategy strategy;
 
@@ -89,17 +89,17 @@ public class Lion extends Entity {
     }
 
     public boolean vertexIsValidStep(Vertex vertex) {
-        if (this.coreController.isLionOnVertex(vertex.getCoordinates())) {
-            return false;
-        }
         if (getCurrentPosition().equals(vertex)) {
             return true;
         }
-        for (Connection neighborConnection : getCurrentPosition().getConnections())
+        if (this.coreController.isLionOnVertex(vertex.getCoordinates())) {
+            return false;
+        }
+        for (Connection neighborConnection : getCurrentPosition().getConnections()) {
             if (neighborConnection.getNeighbor(getCurrentPosition()).equals(vertex)) {
                 return true;
             }
-
+        }
         return false;//TODO
     }
 }

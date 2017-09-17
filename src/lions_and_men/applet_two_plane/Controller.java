@@ -323,6 +323,32 @@ public class Controller {
             }
         });
 
+        MenuItem setMinPathLength = new MenuItem("Set Minimum Path Length");
+
+        setMinPathLength.setOnAction(event -> {
+            double currentValue = this.coreController.getStepsToGoAfterEscape();
+
+
+            TextInputDialog dialog = new TextInputDialog("" + currentValue);
+            dialog.setTitle("Set Minimum Path Length");
+            dialog.setHeaderText("-----.");
+
+            Optional<String> result = dialog.showAndWait();
+
+            if (result.isPresent()) {
+                try {
+
+                    int inputValue = Integer.parseInt(result.get());
+                    this.coreController.setStepsToGoAfterEscape(inputValue);
+                } catch (Exception ignore) {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Error");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Input was not a number.");
+                    alert.showAndWait();
+                }
+            }
+        });
 
         CheckMenuItem viewEntities = new CheckMenuItem("View Entities");
         entityShapes.visibleProperty().bind(viewEntities.selectedProperty());
@@ -352,7 +378,7 @@ public class Controller {
         oldLionsPathShapes.visibleProperty().bind(viewLionPath.selectedProperty());
         viewLionPath.setSelected(false);
 
-        setViewMenu.getItems().addAll(viewEntities, viewLionRanges, viewConvexHull, viewManPath, viewPreviousManPath, viewLionPath, viewLatestLionPath);
+        setViewMenu.getItems().addAll(setMinPathLength, viewEntities, viewLionRanges, viewConvexHull, viewManPath, viewPreviousManPath, viewLionPath, viewLatestLionPath);
     }
 
 

@@ -23,6 +23,8 @@ public class CoreController {
     protected double minY = 0;
     protected boolean editMode = true;
 
+    private int stepsToGoAfterEscape = 100;
+
     private double defaultMenEpsilon = 0.1;
     private ArrayList<AllPaths> allPathsList = new ArrayList<>();
     private int maxInductionsStep = 0;
@@ -260,8 +262,7 @@ public class CoreController {
             lionPaths.clear();
             this.plane.resetManPath();
 
-            int STEPS_TO_GO_AFTER_ESCAPE = 100;
-            int stepsToGo = STEPS_TO_GO_AFTER_ESCAPE;
+            int stepsToGo = stepsToGoAfterEscape;
             while (stepsToGo > 0) {
 
                 resultPath = this.plane.calcManPath(k, inductionPath);
@@ -288,7 +289,7 @@ public class CoreController {
 
                         //check if we escaped this new ch, if not -> do more steps (reset the stepsToGo counter)
                         if (allLionsHull.insideHull(resultPath.get(resultPath.size() - 1))) {
-                            stepsToGo = STEPS_TO_GO_AFTER_ESCAPE;
+                            stepsToGo = stepsToGoAfterEscape;
                         }
                     }
                 }
@@ -390,5 +391,15 @@ public class CoreController {
         for (Lion lion : plane.getLions()) {
             plane.setLionStrategy(lion.getPosition(), strategyEnum);
         }
+    }
+
+    public void setStepsToGoAfterEscape(int stepsToGoAfterEscape) {
+        if(stepsToGoAfterEscape > 0){
+            this.stepsToGoAfterEscape = stepsToGoAfterEscape;
+        }
+    }
+
+    public int getStepsToGoAfterEscape() {
+        return stepsToGoAfterEscape;
     }
 }

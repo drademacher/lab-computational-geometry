@@ -41,9 +41,8 @@ public class Lion extends Shape {
             MenuItem closeButton = new MenuItem("Close");
 
             Menu strategyMenu = new Menu("Set Strategy");
-            MenuItem waitStrategyButton = new MenuItem("Wait");
             MenuItem greedyStrategyButton = new MenuItem("Greedy");
-            strategyMenu.getItems().addAll(waitStrategyButton, greedyStrategyButton);
+            strategyMenu.getItems().addAll(greedyStrategyButton);
 
 
             removeButton.setOnAction(event2 -> {

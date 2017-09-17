@@ -35,9 +35,8 @@ public class Man extends Shape {
             MenuItem closeButton = new MenuItem("Close");
 
             Menu strategyMenu = new Menu("Set Strategy");
-            MenuItem waitStrategyButton = new MenuItem("Wait");
             MenuItem paperStrategyButton = new MenuItem("Paper");
-            strategyMenu.getItems().addAll(waitStrategyButton, paperStrategyButton);
+            strategyMenu.getItems().addAll(paperStrategyButton);
 
 
             removeButton.setOnAction(event2 -> coreController.removeMan(this.position));

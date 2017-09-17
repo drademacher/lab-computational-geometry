@@ -286,18 +286,14 @@ public class Controller {
         MenuItem setGlobalManSpeed = new MenuItem("Set Man Epsilon");
 
         Menu manMenu = new Menu("Set Man Strategy");
-        MenuItem setManStrategyWait = new MenuItem("Wait");
-        setManStrategyWait.setOnAction(event -> coreController.setAllManStrategy(StrategyEnumMan.Wait));
         MenuItem setManStrategyPaper = new MenuItem("Paper");
         setManStrategyPaper.setOnAction(event -> coreController.setAllManStrategy(StrategyEnumMan.Paper));
-        manMenu.getItems().addAll(setManStrategyWait, setManStrategyPaper/*, setManStrategyRandom, setManStrategyGreedy, setManStrategyManual*/);
+        manMenu.getItems().addAll(setManStrategyPaper/*, setManStrategyRandom, setManStrategyGreedy, setManStrategyManual*/);
 
         Menu lionMenu = new Menu("Set Lion Strategy");
-        MenuItem setLionsStrategyWait = new MenuItem("Wait");
-        setLionsStrategyWait.setOnAction(event -> coreController.setAllLionStrategy(StrategyEnumLion.Wait));
         MenuItem setLionsStrategyGreedy = new MenuItem("Greedy");
         setLionsStrategyGreedy.setOnAction(event -> coreController.setAllLionStrategy(StrategyEnumLion.Greedy));
-        lionMenu.getItems().addAll(setLionsStrategyWait, setLionsStrategyGreedy/*, setLionsStrategyRandom, setLionsStrategyManual*/);
+        lionMenu.getItems().addAll(setLionsStrategyGreedy/*, setLionsStrategyRandom, setLionsStrategyManual*/);
 
 
         setParameterButton.getItems().addAll(setGlobalManSpeed, new SeparatorMenuItem(), manMenu, lionMenu);

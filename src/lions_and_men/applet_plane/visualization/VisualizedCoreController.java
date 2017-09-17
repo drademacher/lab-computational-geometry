@@ -7,8 +7,8 @@ import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.util.Duration;
-import lions_and_men.applet_plane.core.CoreController;
-import lions_and_men.applet_plane.core.plane.AllPaths;
+import lions_and_men.applet_plane.algorithm.CoreController;
+import lions_and_men.applet_plane.algorithm.plane.AllPaths;
 import lions_and_men.util.ConvexHull;
 import lions_and_men.util.Point;
 import lions_and_men.exceptions.WrongConfigurationException;
@@ -69,7 +69,7 @@ public class VisualizedCoreController extends CoreController {
 
         this.lions = new ArrayList<>();
 
-        for (lions_and_men.applet_plane.core.plane.Lion elem : plane.getLions()) {
+        for (lions_and_men.applet_plane.algorithm.plane.Lion elem : plane.getLions()) {
             Lion lion = new Lion(elem.getPosition());
             this.lions.add(lion);
         }

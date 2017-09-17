@@ -11,6 +11,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import lions_and_men.applet_graph.UserInterface;
 
 public class Main extends Application {
     private static Stage stageChoose;
@@ -38,7 +39,7 @@ public class Main extends Application {
         stageOne.setWidth(1600);
         stageOne.setHeight(900);
         stageOne.setResizable(true);
-        new lions_and_men.applet_graph.Controller(stageOne, rootOne);
+        new UserInterface(stageOne, rootOne);
 
         // stage two
         stageTwo = new Stage();
@@ -53,7 +54,7 @@ public class Main extends Application {
         stageTwo.setWidth(1600);
         stageTwo.setHeight(900);
         stageTwo.setResizable(true);
-        new lions_and_men.applet_plane.Controller(stageTwo, rootTwo);
+        new lions_and_men.applet_plane.UserInterface(stageTwo, rootTwo);
 
 
         stageChoose = new Stage();

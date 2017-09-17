@@ -1,7 +1,7 @@
 package lions_and_men.applet_graph.visualization;
 
-import lions_and_men.applet_graph.core.CoreController;
-import lions_and_men.applet_graph.core.graph.Connection;
+import lions_and_men.applet_graph.algorithm.CoreController;
+import lions_and_men.applet_graph.algorithm.graph.Connection;
 import lions_and_men.util.Point;
 
 import java.util.ArrayList;
@@ -107,7 +107,7 @@ public class VisualizedCoreController extends CoreController {
 
         super.createEdge(vertex1Coordinates, vertex2Coordinates, weight);
 
-        lions_and_men.applet_graph.core.graph.Edge edge = getEdgeByPoints(vertex1Coordinates, vertex2Coordinates);
+        lions_and_men.applet_graph.algorithm.graph.Edge edge = getEdgeByPoints(vertex1Coordinates, vertex2Coordinates);
         if (edge == null) {
             return;
         }
@@ -133,7 +133,7 @@ public class VisualizedCoreController extends CoreController {
                 ((edge.getPositionTo().equals(vertex1Coordinates) && edge.getPositionFrom().equals(vertex2Coordinates))
                         || (edge.getPositionTo().equals(vertex2Coordinates) && edge.getPositionFrom().equals(vertex1Coordinates))));
 
-        for (lions_and_men.applet_graph.core.graph.SmallVertex smallVertex : getEdgeByPoints(vertex1Coordinates, vertex2Coordinates).getEdgeVertices()) {
+        for (lions_and_men.applet_graph.algorithm.graph.SmallVertex smallVertex : getEdgeByPoints(vertex1Coordinates, vertex2Coordinates).getEdgeVertices()) {
             verticesSmall.stream().filter(vertex -> vertex.equals(smallVertex)).forEach(Vertex::delete);
             verticesSmall.removeIf(vertex -> vertex.equals(smallVertex));
         }
@@ -322,18 +322,18 @@ public class VisualizedCoreController extends CoreController {
 
         // choice points
         ChoicePoint.clear();
-        for (lions_and_men.applet_graph.core.graph.Vertex vertex : getMenWithManualInput()) {
+        for (lions_and_men.applet_graph.algorithm.graph.Vertex vertex : getMenWithManualInput()) {
             new ChoicePoint(this, vertex.getCoordinates(), vertex.getCoordinates(), COLOR_MAN);
             for (Connection con : vertex.getConnections()) {
-                lions_and_men.applet_graph.core.graph.Vertex choicePoint = con.getNeighbor(vertex);
+                lions_and_men.applet_graph.algorithm.graph.Vertex choicePoint = con.getNeighbor(vertex);
                 new ChoicePoint(this, vertex.getCoordinates(), choicePoint.getCoordinates(), COLOR_CHOICEPOINT);
             }
         }
 
-        for (lions_and_men.applet_graph.core.graph.Vertex vertex : getLionsWithManualInput()) {
+        for (lions_and_men.applet_graph.algorithm.graph.Vertex vertex : getLionsWithManualInput()) {
             new ChoicePoint(this, vertex.getCoordinates(), vertex.getCoordinates(), COLOR_LION);
             for (Connection con : vertex.getConnections()) {
-                lions_and_men.applet_graph.core.graph.Vertex choicePoint = con.getNeighbor(vertex);
+                lions_and_men.applet_graph.algorithm.graph.Vertex choicePoint = con.getNeighbor(vertex);
                 new ChoicePoint(this, vertex.getCoordinates(), choicePoint.getCoordinates(), COLOR_CHOICEPOINT);
             }
         }

@@ -8,7 +8,7 @@ import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.util.Duration;
-import lions_and_men.applet_graph.core.CoreController;
+import lions_and_men.applet_graph.algorithm.CoreController;
 import lions_and_men.util.ContextMenuHolder;
 import lions_and_men.util.Point;
 import lions_and_men.util.ZoomScrollPane;
@@ -63,17 +63,17 @@ public class Man implements Entity {
 
 
             iteme1.setOnAction(event2 -> {
-                lions_and_men.applet_graph.core.entities.Man man = coreController.getManByCoordinate(coordinates);
+                lions_and_men.applet_graph.algorithm.entities.Man man = coreController.getManByCoordinate(coordinates);
                 coreController.incrementManRange(coordinates);
             });
 
             iteme2.setOnAction(event2 -> {
-                lions_and_men.applet_graph.core.entities.Man man = coreController.getManByCoordinate(coordinates);
+                lions_and_men.applet_graph.algorithm.entities.Man man = coreController.getManByCoordinate(coordinates);
                 coreController.decrementManRange(coordinates);
             });
 
             iteme3.setOnAction(event2 -> {
-                lions_and_men.applet_graph.core.entities.Man man = coreController.getManByCoordinate(coordinates);
+                lions_and_men.applet_graph.algorithm.entities.Man man = coreController.getManByCoordinate(coordinates);
 
                 TextInputDialog dialog = new TextInputDialog("" + man.getRange());
                 dialog.setTitle("Set Man Range");

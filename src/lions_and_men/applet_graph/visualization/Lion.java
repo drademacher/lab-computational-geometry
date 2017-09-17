@@ -8,7 +8,7 @@ import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.util.Duration;
-import lions_and_men.applet_graph.core.CoreController;
+import lions_and_men.applet_graph.algorithm.CoreController;
 import lions_and_men.util.ContextMenuHolder;
 import lions_and_men.util.Point;
 import lions_and_men.util.ZoomScrollPane;
@@ -64,17 +64,17 @@ public class Lion implements Entity {
 
 
             iteme1.setOnAction(event2 -> {
-                lions_and_men.applet_graph.core.entities.Lion lion = coreController.getLionByCoordinate(coordinates);
+                lions_and_men.applet_graph.algorithm.entities.Lion lion = coreController.getLionByCoordinate(coordinates);
                 coreController.incrementLionRange(coordinates);
             });
 
             iteme2.setOnAction(event2 -> {
-                lions_and_men.applet_graph.core.entities.Lion lion = coreController.getLionByCoordinate(coordinates);
+                lions_and_men.applet_graph.algorithm.entities.Lion lion = coreController.getLionByCoordinate(coordinates);
                 coreController.decrementLionRange(coordinates);
             });
 
             iteme3.setOnAction(event2 -> {
-                lions_and_men.applet_graph.core.entities.Lion lion = coreController.getLionByCoordinate(coordinates);
+                lions_and_men.applet_graph.algorithm.entities.Lion lion = coreController.getLionByCoordinate(coordinates);
 
                 TextInputDialog dialog = new TextInputDialog("" + lion.getRange());
                 dialog.setTitle("Set Lion Range");

@@ -1,7 +1,7 @@
 package lions_and_men.applet_plane.visualization;
 
 
-import lions_and_men.applet_plane.core.CoreController;
+import lions_and_men.applet_plane.algorithm.CoreController;
 import lions_and_men.util.ZoomScrollPane;
 
 public abstract class Shape {

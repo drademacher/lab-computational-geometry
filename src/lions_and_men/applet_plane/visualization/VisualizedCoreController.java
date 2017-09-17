@@ -30,7 +30,7 @@ public class VisualizedCoreController extends CoreController {
     private boolean onGoingAnimationBlockNew;
 
     public VisualizedCoreController() {
-        freshInitialization();
+        clean();
     }
 
     @Override
@@ -58,11 +58,11 @@ public class VisualizedCoreController extends CoreController {
             pathCount = 0;
         } else {
             InvisiblePoints.clear();
-            freshInitialization();
+            clean();
         }
     }
 
-    public void freshInitialization() {
+    public void clean() {
         if (this.lions != null) {
             this.lions.forEach(Lion::clear);
         }
@@ -86,14 +86,14 @@ public class VisualizedCoreController extends CoreController {
         this.pathStoneCount = 0;
         this.minimumPathSize = 0;
         this.onGoingAnimationBlockNew = false;
-        update(lions);
+        updateConvexHull(lions);
     }
 
 
     @Override
     public void setEmptyGraph() {
         super.setEmptyGraph();
-        freshInitialization();
+        clean();
     }
 
     @Override
@@ -131,32 +131,24 @@ public class VisualizedCoreController extends CoreController {
 
     @Override
     public void createMan(Point coordinates) {
-        System.out.println("create Man - visual");
         super.createMan(coordinates);
 
-//        if(manPoint != null){
-//            return;
-//        }
-//        manPoint = new Man(coordinates);
-
-        freshInitialization();
+        if(manPoint != null){
+            return;
+        }
+        manPoint = new Man(coordinates);
     }
 
     @Override
     public void relocateMan(Point to) {
         super.relocateMan(to);
-        manPoint.setPosition(to);
-//        freshInitialization();
+        clean();
     }
 
     @Override
     public void removeMan(Point coordinates) {
         super.removeMan(coordinates);
-
-        manPoint.clear();
-        manPoint = null;
-
-        freshInitialization();
+        clean();
     }
 
     @Override
@@ -165,31 +157,24 @@ public class VisualizedCoreController extends CoreController {
 
         lions.add(new Lion(coordinates));
 
-        update(lions);
+        updateConvexHull(lions);
     }
 
     @Override
     public void relocateLion(Point from, Point to) {
         super.relocateLion(from, to);
-
-        lions.stream().filter(e -> e.getPosition().equals(from)).forEach(e -> e.setPosition(to));
-
-        update(lions);
+        clean();
 
     }
 
     @Override
     public void removeLion(Point coordinates) {
         super.removeLion(coordinates);
-
-        lions.stream().filter(lion -> lion.getPosition().equals(coordinates)).forEach(Lion::clear);
-        lions.removeIf(lion -> lion.getPosition().equals(coordinates));
-
-        freshInitialization();
+        clean();
     }
 
 
-    private void update(List<Lion> lions) {
+    private void updateConvexHull(List<Lion> lions) {
         hull = new ConvexHull(lions);
         Lion[] lionsInHull = new Lion[hull.getPoints().length];
         for (int i = 0; i < lionsInHull.length; i++) {
@@ -199,7 +184,6 @@ public class VisualizedCoreController extends CoreController {
                     break;
                 }
             }
-            // System.out.println(lionsInHull[i]);
         }
         LionsPolygon.clear();
         new LionsPolygon(lionsInHull);
@@ -208,7 +192,7 @@ public class VisualizedCoreController extends CoreController {
     @Override
     public void shuffleLionOrder() {
         super.shuffleLionOrder();
-        freshInitialization();
+        clean();
     }
 
 
@@ -225,7 +209,7 @@ public class VisualizedCoreController extends CoreController {
         if (pathCount == 0) {
             minimumPathSize = allPaths.pathSize;
             ManPath.clear();
-//            freshInitialization();
+//            clean();
             for (Lion lion : lions) {
                 lion.getShape().setVisible(false);
             }
@@ -285,7 +269,7 @@ public class VisualizedCoreController extends CoreController {
         }
 
         if (pathStoneCount == 0) {
-            update(lions.subList(0, pathCount + 1));
+            updateConvexHull(lions.subList(0, pathCount + 1));
         }
 
 

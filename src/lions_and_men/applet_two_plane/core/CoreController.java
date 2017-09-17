@@ -238,6 +238,8 @@ public class CoreController {
         }
 
         allPathsList.clear();
+        this.plane.getMan().resetPath();
+        this.plane.getLions().forEach(lion -> lion.resetPath());
 
         ArrayList<Point> resultPath = new ArrayList<>();
         ArrayList<Point> inductionPath;
@@ -330,7 +332,9 @@ public class CoreController {
         if ( !editMode && (this.plane.getMan() == null || this.plane.getLions() == null || this.plane.getLions().size() < 1)) {
             throw new WrongConfigurationException();
         }
-        resetInductionsStep();
+        if(!editMode){
+            resetInductionsStep();
+        }
         this.editMode = editMode;
     }
 

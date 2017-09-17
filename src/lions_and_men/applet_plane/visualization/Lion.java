@@ -98,8 +98,7 @@ public class Lion extends Shape {
         group.getChildren().remove(shape);
     }
 
-    public Circle getShape() {
-        // TODO: REMOVE GETTER
+    Circle getShape() {
         return shape;
     }
 }

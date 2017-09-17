@@ -78,18 +78,13 @@ public class BigVertex implements Vertex {
 
             item5.setOnAction(event2 -> {
                 coreController.deleteVertex(coordinates);
-//                shapeGroup.getChildren().remove(shape);
             });
 
             item3.setOnAction(event2 -> {
-                System.out.println("Add Man");
-                // TODO: something like new Man(vertex.getCoordinates());
                 coreController.setMan(coordinates);
             });
 
             item4.setOnAction(event2 -> {
-                System.out.println("Add Lion");
-                // TODO: something like new Lion(vertex.getCoordinates());
                 coreController.setLion(coordinates);
             });
 

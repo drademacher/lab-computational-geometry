@@ -39,14 +39,10 @@ public class SmallVertex implements Vertex {
 
 
             item0.setOnAction(event2 -> {
-                System.out.println("Add Man");
-                // TODO: something like new Man(vertex.getCoordinates());
                 coreController.setMan(coordinates);
             });
 
             item1.setOnAction(event2 -> {
-                System.out.println("Add Lion");
-                // TODO: something like new Lion(vertex.getCoordinates());
                 coreController.setLion(coordinates);
             });
 

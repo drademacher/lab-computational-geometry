@@ -425,7 +425,6 @@ public class UserInterface {
             if (!this.coreController.isEditMode())
                 return;
 
-            // TODO: IMPLEMENT THIS
             ContextMenu contextMenu = ContextMenuHolder.getFreshContextMenu();
             MenuItem addManItem = new MenuItem("Add Man");
             addManItem.setOnAction(event2 -> coreController.createMan(zoomScrollPane.getLocalCoordinates(event1.getX(), event1.getY())));

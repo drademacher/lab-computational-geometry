@@ -2,18 +2,19 @@ package lions_and_men.applet_one_graph.core.entities;
 
 
 import lions_and_men.applet_one_graph.core.CoreController;
+import lions_and_men.applet_one_graph.core.graph.Connection;
 import lions_and_men.applet_one_graph.core.graph.GraphHelper;
 import lions_and_men.applet_one_graph.core.graph.Vertex;
-import lions_and_men.applet_one_graph.core.strategies.LionStrategies.LionStrategyManually;
-import lions_and_men.applet_one_graph.core.strategies.StrategyLion;
+import lions_and_men.applet_one_graph.core.strategies.Strategy;
+import lions_and_men.applet_one_graph.core.strategies.Manual;
 
 import java.util.ArrayList;
 
 public class Lion extends Entity {
     private static int defaultRange = 0;
-    private static CoreController.LionStrategy defaultStrategy = CoreController.LionStrategy.Clever;
+    private static CoreController.LionStrategy defaultStrategy = CoreController.LionStrategy.CleverLion;
     private int range = Lion.defaultRange;
-    private StrategyLion strategy;
+    private Strategy strategy;
 
 
     public Lion(Vertex startPosition, CoreController coreController) {
@@ -49,7 +50,7 @@ public class Lion extends Entity {
 
     @Override
     public void setNextPosition(Vertex nextPosition) {
-        if (strategy.vertexIsValidStep(nextPosition)) {
+        if (vertexIsValidStep(nextPosition)) {
             this.nextPosition = nextPosition;
             this.didManualStep = true;
         }
@@ -62,7 +63,7 @@ public class Lion extends Entity {
 
     @Override
     public boolean needManualStepInput() {
-        return (strategy.getClass() == LionStrategyManually.class) && !didManualStep;
+        return (strategy.getClass() == Manual.class) && !didManualStep;
     }
 
     public int getRange() {
@@ -78,12 +79,27 @@ public class Lion extends Entity {
         return graphHelper.BFSgetAllVerticesTill(position, getRange());
     }
 
-    public StrategyLion getStrategy() {
+    public Strategy getStrategy() {
         return strategy;
     }
 
-    public void setStrategy(StrategyLion strategy) {
-        strategy.setLion(this);
+    public void setStrategy(Strategy strategy) {
+        strategy.setEntity(this);
         this.strategy = strategy;
+    }
+
+    public boolean vertexIsValidStep(Vertex vertex) {
+        if (getCurrentPosition().equals(vertex)) {
+            return true;
+        }
+        if (this.coreController.isLionOnVertex(vertex.getCoordinates())) {
+            return false;
+        }
+        for (Connection neighborConnection : getCurrentPosition().getConnections()) {
+            if (neighborConnection.getNeighbor(getCurrentPosition()).equals(vertex)) {
+                return true;
+            }
+        }
+        return false;//TODO
     }
 }

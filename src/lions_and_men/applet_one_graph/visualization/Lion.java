@@ -51,7 +51,7 @@ public class Lion implements Entity {
             MenuItem waitStrategyButton = new MenuItem("Wait");
             MenuItem greedyStrategyButton = new MenuItem("Greedy");
             MenuItem cleverStrategyButton = new MenuItem("Clever");
-            MenuItem randomStrategyButton = new MenuItem("Random");
+            MenuItem randomStrategyButton = new MenuItem("RandomChoice");
             MenuItem manualStrategyButton = new MenuItem("Manual");
             strategyMenu.getItems().addAll(waitStrategyButton, greedyStrategyButton, cleverStrategyButton, randomStrategyButton, manualStrategyButton);
 
@@ -111,19 +111,19 @@ public class Lion implements Entity {
             });
 
             greedyStrategyButton.setOnAction(event2 -> {
-                coreController.setLionStrategy(coordinates, CoreController.LionStrategy.AggroGreedy);
+                coreController.setLionStrategy(coordinates, CoreController.LionStrategy.AggroGreedyLion);
             });
 
             cleverStrategyButton.setOnAction(event2 -> {
-                coreController.setLionStrategy(coordinates, CoreController.LionStrategy.Clever);
+                coreController.setLionStrategy(coordinates, CoreController.LionStrategy.CleverLion);
             });
 
             randomStrategyButton.setOnAction(event2 -> {
-                coreController.setLionStrategy(coordinates, CoreController.LionStrategy.Random);
+                coreController.setLionStrategy(coordinates, CoreController.LionStrategy.RandomChoice);
             });
 
             manualStrategyButton.setOnAction(event2 -> {
-                coreController.setLionStrategy(coordinates, CoreController.LionStrategy.Manually);
+                coreController.setLionStrategy(coordinates, CoreController.LionStrategy.Manual);
             });
 
             contextMenu.getItems().addAll(item0, item1, strategyMenu, edgeMenu, new SeparatorMenuItem(), closeItem);

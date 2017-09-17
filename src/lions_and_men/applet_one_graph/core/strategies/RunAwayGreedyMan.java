@@ -1,21 +1,21 @@
-package lions_and_men.applet_one_graph.core.strategies.ManStrategies;
+package lions_and_men.applet_one_graph.core.strategies;
 
 import lions_and_men.applet_one_graph.core.CoreController;
+import lions_and_men.applet_one_graph.core.entities.Man;
 import lions_and_men.applet_one_graph.core.graph.Connection;
 import lions_and_men.applet_one_graph.core.graph.Vertex;
-import lions_and_men.applet_one_graph.core.strategies.StrategyMan;
 
 import java.util.ArrayList;
 
-public class ManStrategyRunAwayGreedy extends StrategyMan {
+public class RunAwayGreedyMan extends Strategy<Man> {
 
-    public ManStrategyRunAwayGreedy(CoreController coreController, CoreController.ManStrategy strategyEnum) {
-        super(coreController, strategyEnum);
+    public RunAwayGreedyMan(CoreController coreController) {
+        super(coreController);
     }
 
     @Override
     public ArrayList<Vertex> calculatePossibleSteps() {
-        Vertex currentPosition = man.getCurrentPosition();
+        Vertex currentPosition = entity.getCurrentPosition();
 
         int steps = 0;
         ArrayList<Vertex> result = new ArrayList<>();

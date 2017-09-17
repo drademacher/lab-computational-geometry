@@ -1,30 +1,30 @@
-package lions_and_men.applet_one_graph.core.strategies.ManStrategies;
+package lions_and_men.applet_one_graph.core.strategies;
 
 import lions_and_men.applet_one_graph.core.CoreController;
 import lions_and_men.applet_one_graph.core.entities.Lion;
+import lions_and_men.applet_one_graph.core.entities.Man;
 import lions_and_men.applet_one_graph.core.graph.Connection;
 import lions_and_men.applet_one_graph.core.graph.SmallVertex;
 import lions_and_men.applet_one_graph.core.graph.Vertex;
-import lions_and_men.applet_one_graph.core.strategies.StrategyMan;
 
 import java.util.ArrayList;
 
 /**
  * Created by Jens on 11.07.2017.
  */
-public class ManStrategyPaper extends StrategyMan {
+public class PaperMan extends Strategy<Man> {
 
     Vertex target = null;
 
-    public ManStrategyPaper(CoreController coreController, CoreController.ManStrategy strategyEnum) {
-        super(coreController, strategyEnum);
+    public PaperMan(CoreController coreController) {
+        super(coreController);
     }
 
     @Override
     protected ArrayList<Vertex> calculatePossibleSteps() {
         ArrayList<Vertex> result = new ArrayList<>();
 
-        Vertex currentPosition = man.getCurrentPosition();
+        Vertex currentPosition = entity.getCurrentPosition();
 
         if (target == null || target.equals(currentPosition)) {
 

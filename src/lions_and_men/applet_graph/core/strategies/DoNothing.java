@@ -1,0 +1,21 @@
+package lions_and_men.applet_graph.core.strategies;
+
+import lions_and_men.applet_graph.core.CoreController;
+import lions_and_men.applet_graph.core.entities.Entity;
+import lions_and_men.applet_graph.core.graph.Vertex;
+
+import java.util.ArrayList;
+
+public class DoNothing<T extends Entity> extends Strategy<T> {
+
+    public DoNothing(CoreController coreController) {
+        super(coreController);
+    }
+
+    @Override
+    public ArrayList<Vertex> calculatePossibleSteps() {
+        ArrayList<Vertex> result = new ArrayList<>();
+        result.add(entity.getCurrentPosition());
+        return result;
+    }
+}

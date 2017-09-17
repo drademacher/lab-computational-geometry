@@ -1,7 +1,7 @@
 package lions_and_men.util;
 
 
-import lions_and_men.applet_two_plane.visualization.Lion;
+import lions_and_men.applet_plane.visualization.Lion;
 
 import java.util.Arrays;
 import java.util.List;

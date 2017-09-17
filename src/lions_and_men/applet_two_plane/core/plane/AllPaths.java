@@ -35,4 +35,20 @@ public class AllPaths {
             }
         }
     }
+
+    @Override
+    public String toString() {
+        String debugString = "#####";
+        debugString += "\nman: ";
+        for(Point point : manPath){
+            debugString += point + " ";
+        }
+        for(ArrayList<Point> lionPath: lionPaths){
+            debugString += "\nlion: ";
+            for(Point point : lionPath){
+                debugString += point + " ";
+            }
+        }
+        return debugString;
+    }
 }

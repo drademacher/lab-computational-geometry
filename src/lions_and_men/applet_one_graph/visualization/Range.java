@@ -13,15 +13,15 @@ public class Range implements Vertex {
     private static Group shapeGroup = new Group();
 
     private Circle shape;
-    private VisualCoreController coreController;
+    private VisualizedCoreController coreController;
     private Point coordinates;
 
-    public Range(VisualCoreController coreController, Point startCoordinates) {
+    public Range(VisualizedCoreController coreController, Point startCoordinates) {
         this(coreController, startCoordinates, false);
     }
 
 
-    public Range(VisualCoreController coreController, Point startCoordinates, boolean manRange) {
+    public Range(VisualizedCoreController coreController, Point startCoordinates, boolean manRange) {
 
         this.coreController = coreController;
         this.coordinates = startCoordinates;

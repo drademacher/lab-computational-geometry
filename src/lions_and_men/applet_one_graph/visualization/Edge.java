@@ -14,12 +14,12 @@ import static lions_and_men.applet_one_graph.visualization.Constants.COLOR_EDGE;
 public class Edge {
     private static Group shapeGroup = new Group();
 
-    private VisualCoreController coreController;
+    private VisualizedCoreController coreController;
     private Line shape;
     private Point from;
     private Point to;
 
-    public Edge(VisualCoreController coreController, Point startFrom, Point startTo) {
+    public Edge(VisualizedCoreController coreController, Point startFrom, Point startTo) {
 
         this.coreController = coreController;
         this.from = startFrom;

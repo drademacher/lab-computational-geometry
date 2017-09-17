@@ -14,11 +14,11 @@ public class BigVertex implements Vertex {
     private static Group shapeGroup;
 
     private Circle shape;
-    private VisualCoreController coreController;
+    private VisualizedCoreController coreController;
     private Point coordinates;
 
 
-    public BigVertex(VisualCoreController coreController, Point startCoordinates) {
+    public BigVertex(VisualizedCoreController coreController, Point startCoordinates) {
         this.coreController = coreController;
         this.coordinates = startCoordinates;
 

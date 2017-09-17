@@ -43,7 +43,7 @@ public class Controller {
     private Alert gameOverAlert;
     private BooleanProperty editMode, activePlaying;
 
-    private VisualCoreController coreController = new VisualCoreController();
+    private VisualizedCoreController coreController = new VisualizedCoreController();
 
     private Stage stage;
     private BorderPane root;

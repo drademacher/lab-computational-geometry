@@ -25,10 +25,10 @@ public class Man implements Entity {
     private static Group shapeGroup = new Group();
 
     private Circle shape;
-    private VisualCoreController coreController;
+    private VisualizedCoreController coreController;
     private Point coordinates;
 
-    public Man(VisualCoreController coreController, Point startCoordinates) {
+    public Man(VisualizedCoreController coreController, Point startCoordinates) {
 
         this.coreController = coreController;
         this.coordinates = startCoordinates;

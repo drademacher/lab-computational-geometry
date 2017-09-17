@@ -10,11 +10,11 @@ public class ChoicePoint {
     private static Group shapeGroup = new Group();
 
     private Circle shape;
-    private VisualCoreController coreController;
+    private VisualizedCoreController coreController;
     private Point choice;
     private Point entity;
 
-    public ChoicePoint(VisualCoreController coreController, Point entity, Point startCoordinates, Color color) {
+    public ChoicePoint(VisualizedCoreController coreController, Point entity, Point startCoordinates, Color color) {
         this.coreController = coreController;
         this.entity = entity;
         this.choice = startCoordinates;

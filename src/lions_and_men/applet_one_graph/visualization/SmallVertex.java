@@ -12,10 +12,10 @@ public class SmallVertex implements Vertex {
     private static Group shapeGroup = new Group();
 
     private Circle shape;
-    private VisualCoreController coreController;
+    private VisualizedCoreController coreController;
     private Point coordinates;
 
-    public SmallVertex(VisualCoreController coreController, Point startCoordinates) {
+    public SmallVertex(VisualizedCoreController coreController, Point startCoordinates) {
 
         this.coreController = coreController;
         this.coordinates = startCoordinates;

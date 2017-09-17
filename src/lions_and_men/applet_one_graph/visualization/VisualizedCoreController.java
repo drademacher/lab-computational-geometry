@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 import static lions_and_men.applet_one_graph.visualization.Constants.*;
 
-public class VisualCoreController extends CoreController {
+public class VisualizedCoreController extends CoreController {
 
     private ArrayList<Vertex> verticesBig = new ArrayList<>();
     private ArrayList<Vertex> verticesSmall = new ArrayList<>();
@@ -18,7 +18,7 @@ public class VisualCoreController extends CoreController {
     private ArrayList<Range> rangesLion = new ArrayList<>();
     private ArrayList<Vertex> stepPreviews = new ArrayList<>();
 
-    public VisualCoreController() {
+    public VisualizedCoreController() {
         super();
     }
 

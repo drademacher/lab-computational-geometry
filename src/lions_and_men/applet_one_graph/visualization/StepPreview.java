@@ -10,10 +10,10 @@ public class StepPreview implements Vertex {
     private static Group shapeGroup = new Group();
 
     private Circle shape;
-    private VisualCoreController coreController;
+    private VisualizedCoreController coreController;
     private Point coordinates;
 
-    StepPreview(VisualCoreController coreController, Point startCoordinates) {
+    StepPreview(VisualizedCoreController coreController, Point startCoordinates) {
         this.coreController = coreController;
         this.coordinates = startCoordinates;
 

@@ -25,10 +25,10 @@ public class Lion implements Entity {
     private static Group shapeGroup = new Group();
 
     private Circle shape;
-    private VisualCoreController coreController;
+    private VisualizedCoreController coreController;
     private Point coordinates;
 
-    public Lion(VisualCoreController coreController, Point startCcoordinates) {
+    public Lion(VisualizedCoreController coreController, Point startCcoordinates) {
 
         this.coreController = coreController;
         this.coordinates = startCcoordinates;

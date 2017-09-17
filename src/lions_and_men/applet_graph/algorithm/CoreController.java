@@ -30,6 +30,7 @@ public class CoreController {
     }
 
     public void createVertex(Point coordinate) {
+        System.out.println("create vertex " + coordinate);
         if (coordinate == null) {
             return;
         }
@@ -88,7 +89,7 @@ public class CoreController {
     }
 
     protected void createEdge(Point vertex1Coordinates, Point vertex2Coordinates, int weight) {
-
+        System.out.println("create edge " + vertex1Coordinates + ", " + vertex2Coordinates + ", " + weight);
         if (vertex1Coordinates == null || vertex2Coordinates == null || weight < 0) {
             return;
         }
@@ -190,6 +191,7 @@ public class CoreController {
      * ****************************/
 
     public void setMan(Point vertexCoorinate) {
+        System.out.println("set man " + vertexCoorinate);
         if (vertexCoorinate == null) {
             return;
         }
@@ -249,6 +251,7 @@ public class CoreController {
     }
 
     public void setLion(Point vertexCoorinate) {
+        System.out.println("set lion " + vertexCoorinate);
         if (vertexCoorinate == null) {
             return;
         }
@@ -375,6 +378,7 @@ public class CoreController {
     }
 
     public void setManStrategy(Point manCoordinate, ManStrategy strategy) {
+        System.out.println("set man " + manCoordinate + ", " + strategy);
         if (manCoordinate == null || strategy == null) {
             return;
         }
@@ -388,7 +392,7 @@ public class CoreController {
     }
 
     public void setLionStrategy(Point lionCoordinate, LionStrategy strategy) {
-        System.out.println("set lion strategy");
+        System.out.println("set lion strategy " + lionCoordinate + ", " + strategy);
         if (lionCoordinate == null || strategy == null) {
             return;
         }
@@ -396,8 +400,8 @@ public class CoreController {
         if (lion == null) {
             return;
         }
-        System.out.println(strategy);
-        System.out.println(strategy.getStrategy(this));
+//        System.out.println(strategy);
+//        System.out.println(strategy.getStrategy(this));
         lion.setStrategy(strategy.getStrategy(this));
 
     }
@@ -665,6 +669,7 @@ public class CoreController {
         this.createVertex(new Point(100, 140));
         this.createVertex(new Point(90, 100));
 
+        System.out.println("WTF");
         this.createEdge(new Point(50, 20), new Point(190, 20));
         this.createEdge(new Point(190, 20), new Point(220, 140));
         this.createEdge(new Point(220, 140), new Point(120, 220));
@@ -910,6 +915,7 @@ public class CoreController {
             }
 
             for (Lion lion : lions) {
+                System.out.println(lion.getCoordinates());
                 bufferedWriter.write("L##" + lion.getCoordinates().getX() + "##" + lion.getCoordinates().getY() + "##" + lion.getRange() + "##" + lion.getStrategy().getName());
                 bufferedWriter.newLine();
                 bufferedWriter.flush();

@@ -1,21 +1,22 @@
-package lions_and_men.applet_one_graph.core.strategies.LionStrategies;
+package lions_and_men.applet_one_graph.core.strategies;
 
 import lions_and_men.applet_one_graph.core.CoreController;
+import lions_and_men.applet_one_graph.core.entities.Entity;
 import lions_and_men.applet_one_graph.core.graph.Connection;
 import lions_and_men.applet_one_graph.core.graph.Vertex;
-import lions_and_men.applet_one_graph.core.strategies.StrategyLion;
+import lions_and_men.applet_one_graph.core.strategies.Strategy;
 
 import java.util.ArrayList;
 
-public class LionStrategyAggroGreedy extends StrategyLion {
+public class AggroGreedyLion<T extends Entity> extends Strategy<T> {
 
-    public LionStrategyAggroGreedy(CoreController coreController, CoreController.LionStrategy strategyEnum) {
-        super(coreController, strategyEnum);
+    public AggroGreedyLion(CoreController coreController) {
+        super(coreController);
     }
 
     @Override
     protected ArrayList<Vertex> calculatePossibleSteps() {
-        Vertex currentPosition = lion.getCurrentPosition();
+        Vertex currentPosition = entity.getCurrentPosition();
         int steps = Integer.MAX_VALUE;
         ArrayList<Vertex> result = new ArrayList<>();
         for (Connection connection : currentPosition.getConnections()) {
@@ -31,5 +32,4 @@ public class LionStrategyAggroGreedy extends StrategyLion {
         }
         return result;
     }
-
 }

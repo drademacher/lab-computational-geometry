@@ -36,9 +36,9 @@ public class Random {
     }
 
     /**
-     * Provides the Random instance.
+     * Provides the RandomChoice instance.
      *
-     * @return the Random instance.
+     * @return the RandomChoice instance.
      */
     public static java.util.Random getRANDOM() {
         if (RANDOM == null) RANDOM = new java.util.Random();

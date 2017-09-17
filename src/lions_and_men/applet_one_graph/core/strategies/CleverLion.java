@@ -1,26 +1,26 @@
-package lions_and_men.applet_one_graph.core.strategies.LionStrategies;
+package lions_and_men.applet_one_graph.core.strategies;
 
 import lions_and_men.applet_one_graph.core.CoreController;
+import lions_and_men.applet_one_graph.core.entities.Entity;
 import lions_and_men.applet_one_graph.core.entities.Lion;
 import lions_and_men.applet_one_graph.core.entities.Man;
 import lions_and_men.applet_one_graph.core.graph.Vertex;
-import lions_and_men.applet_one_graph.core.strategies.StrategyLion;
 
 import java.util.ArrayList;
 
 /**
  * Created by Jens on 18.07.2017.
  */
-public class LionStrategyClever extends StrategyLion {
+public class CleverLion<T extends Entity> extends Strategy<T> {
 
-    public LionStrategyClever(CoreController coreController, CoreController.LionStrategy strategyEnum) {
-        super(coreController, strategyEnum);
+    public CleverLion(CoreController coreController) {
+        super(coreController);
     }
 
     @Override
     protected ArrayList<Vertex> calculatePossibleSteps() {
         //System.out.println("### " + lion);
-        Vertex currentPosition = lion.getCurrentPosition();
+        Vertex currentPosition = entity.getCurrentPosition();
         int steps = Integer.MAX_VALUE;
         int stepsToBigVertex = Integer.MAX_VALUE;
         ArrayList<Vertex> result = new ArrayList<>();
@@ -30,7 +30,7 @@ public class LionStrategyClever extends StrategyLion {
                 boolean checkLions = true;
                 for (Lion otherLion : coreController.getLions()) {
                     //other lion
-                    if (!lion.equals(otherLion)) {
+                    if (!entity.equals(otherLion)) {
                         if (helper.getDistanceBetween(possibleTarget, otherLion.getCurrentPosition()) < helper.getDistanceBetween(currentPosition, possibleTarget)) {
                             checkLions = false;
                         } else if (helper.getDistanceBetween(possibleTarget, otherLion.getCurrentPosition()) == helper.getDistanceBetween(currentPosition, possibleTarget)) {

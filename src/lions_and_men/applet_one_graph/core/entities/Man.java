@@ -1,10 +1,11 @@
 package lions_and_men.applet_one_graph.core.entities;
 
 import lions_and_men.applet_one_graph.core.CoreController;
+import lions_and_men.applet_one_graph.core.graph.Connection;
 import lions_and_men.applet_one_graph.core.graph.GraphHelper;
 import lions_and_men.applet_one_graph.core.graph.Vertex;
-import lions_and_men.applet_one_graph.core.strategies.ManStrategies.ManStrategyManually;
-import lions_and_men.applet_one_graph.core.strategies.StrategyMan;
+import lions_and_men.applet_one_graph.core.strategies.Manual;
+import lions_and_men.applet_one_graph.core.strategies.Strategy;
 
 import java.util.ArrayList;
 
@@ -14,7 +15,7 @@ public class Man extends Entity {
     private static int minimumDistance = 0;
     private static CoreController.ManStrategy defaultStrategy = CoreController.ManStrategy.Paper;
     private static int defaultRange = 0;
-    private StrategyMan strategy;
+    private Strategy strategy;
     private int range = defaultRange;
 
 
@@ -58,7 +59,7 @@ public class Man extends Entity {
 
     @Override
     public void setNextPosition(Vertex nextPosition) {
-        if (strategy.vertexIsValidStep(nextPosition)) {
+        if (vertexIsValidStep(nextPosition)) {
             this.nextPosition = nextPosition;
             this.didManualStep = true;
         }
@@ -71,15 +72,15 @@ public class Man extends Entity {
 
     @Override
     public boolean needManualStepInput() {
-        return (strategy.getClass() == ManStrategyManually.class) && !didManualStep;
+        return (strategy.getClass() == Manual.class) && !didManualStep;
     }
 
-    public StrategyMan getStrategy() {
+    public Strategy getStrategy() {
         return strategy;
     }
 
-    public void setStrategy(StrategyMan strategy) {
-        strategy.setMan(this);
+    public void setStrategy(Strategy strategy) {
+        strategy.setEntity(this);
         this.strategy = strategy;
     }
 
@@ -94,5 +95,41 @@ public class Man extends Entity {
     public ArrayList<Vertex> getRangeVertices() {
         GraphHelper graphHelper = GraphHelper.createGraphHelper(coreController);
         return graphHelper.BFSgetAllVerticesTill(position, getRange());
+    }
+
+    public boolean vertexIsValidStep(Vertex vertex) {
+
+        if (this.coreController.isLionDangerOnVertex(vertex.getCoordinates())) {
+            return false;
+        }
+
+        boolean isValidVertex = false;
+        if (getCurrentPosition().equals(vertex)) {
+            isValidVertex = true;
+        }
+
+        for (Connection neighborConnection : getCurrentPosition().getConnections())
+            if (neighborConnection.getNeighbor(getCurrentPosition()).equals(vertex)) {
+                isValidVertex = true;
+            }
+
+        if (!isValidVertex) {
+            return false;
+        }
+
+
+        for (Man otherMan : coreController.getMen()) {
+            if (!otherMan.equals(this)) {
+
+                if (Man.getMinimumDistance() >= coreController.getDistanceBetween(vertex, otherMan.getCurrentPosition())) {
+                    isValidVertex = false;
+                }
+            }
+        }
+
+        if (coreController.getMen().size() < 2) {
+            return true;
+        }
+        return isValidVertex;
     }
 }

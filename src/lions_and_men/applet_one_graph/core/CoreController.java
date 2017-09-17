@@ -3,14 +3,15 @@ package lions_and_men.applet_one_graph.core;
 import lions_and_men.applet_one_graph.core.entities.Entity;
 import lions_and_men.applet_one_graph.core.entities.Lion;
 import lions_and_men.applet_one_graph.core.entities.Man;
-import lions_and_men.applet_one_graph.core.graph.BigVertex;
-import lions_and_men.applet_one_graph.core.graph.Edge;
-import lions_and_men.applet_one_graph.core.graph.GraphController;
-import lions_and_men.applet_one_graph.core.graph.Vertex;
-import lions_and_men.applet_one_graph.core.strategies.LionStrategies.*;
-import lions_and_men.applet_one_graph.core.strategies.ManStrategies.*;
-import lions_and_men.applet_one_graph.core.strategies.StrategyLion;
-import lions_and_men.applet_one_graph.core.strategies.StrategyMan;
+import lions_and_men.applet_one_graph.core.graph.*;
+import lions_and_men.applet_one_graph.core.strategies.AggroGreedyLion;
+import lions_and_men.applet_one_graph.core.strategies.CleverLion;
+import lions_and_men.applet_one_graph.core.strategies.PaperMan;
+import lions_and_men.applet_one_graph.core.strategies.RunAwayGreedyMan;
+import lions_and_men.applet_one_graph.core.strategies.Strategy;
+import lions_and_men.applet_one_graph.core.strategies.DoNothing;
+import lions_and_men.applet_one_graph.core.strategies.Manual;
+import lions_and_men.applet_one_graph.core.strategies.RandomChoice;
 import lions_and_men.util.Global;
 import lions_and_men.util.Point;
 
@@ -1001,18 +1002,18 @@ public class CoreController {
     public enum ManStrategy {
         DoNothing, Manually, Paper, Random, RunAwayGreedy;
 
-        public StrategyMan getStrategy(CoreController coreController) {
+        public Strategy getStrategy(CoreController coreController) {
             switch (this) {
                 case DoNothing:
-                    return new ManStrategyDoNothing(coreController, this);
+                    return new DoNothing(coreController);
                 case Paper:
-                    return new ManStrategyPaper(coreController, this);
+                    return new PaperMan(coreController);
                 case Random:
-                    return new ManStrategyRandom(coreController, this);
+                    return new RandomChoice(coreController);
                 case Manually:
-                    return new ManStrategyManually(coreController, this);
+                    return new Manual(coreController);
                 case RunAwayGreedy:
-                    return new ManStrategyRunAwayGreedy(coreController, this);
+                    return new RunAwayGreedyMan(coreController);
                 default:
                     throw new IllegalArgumentException("invalid input: " + this);
             }
@@ -1022,22 +1023,29 @@ public class CoreController {
     public enum LionStrategy {
         DoNothing, Manually, Random, AggroGreedy, Clever;
 
-        public StrategyLion getStrategy(CoreController coreController) {
+        public Strategy getStrategy(CoreController coreController) {
             switch (this) {
                 case Random:
-                    return new LionStrategyRandom(coreController, this);
+                    return new RandomChoice(coreController);
                 case Manually:
-                    return new LionStrategyManually(coreController, this);
+                    return new Manual(coreController);
                 case DoNothing:
-                    return new LionStrategyDoNothing(coreController, this);
+                    return new DoNothing(coreController);
                 case AggroGreedy:
-                    return new LionStrategyAggroGreedy(coreController, this);
+                    return new AggroGreedyLion(coreController);
                 case Clever:
-                    return new LionStrategyClever(coreController, this);
+                    return new CleverLion(coreController);
                 default:
                     throw new IllegalArgumentException("invalid input: " + this);
             }
         }
     }
 
+
+
+
+    // TODO: THIS IS NEW
+    public int getDistanceBetween(Vertex vertex1, Vertex vertex2) {
+        return GraphHelper.createGraphHelper(this).getDistanceBetween(vertex1, vertex2);
+    }
 }

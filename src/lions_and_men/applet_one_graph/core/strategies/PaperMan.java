@@ -1,8 +1,8 @@
 package lions_and_men.applet_one_graph.core.strategies;
 
 import lions_and_men.applet_one_graph.core.CoreController;
-import lions_and_men.applet_one_graph.core.entities.Entity;
 import lions_and_men.applet_one_graph.core.entities.Lion;
+import lions_and_men.applet_one_graph.core.entities.Man;
 import lions_and_men.applet_one_graph.core.graph.Connection;
 import lions_and_men.applet_one_graph.core.graph.SmallVertex;
 import lions_and_men.applet_one_graph.core.graph.Vertex;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 /**
  * Created by Jens on 11.07.2017.
  */
-public class PaperMan<T extends Entity> extends Strategy<T> {
+public class PaperMan extends Strategy<Man> {
 
     Vertex target = null;
 

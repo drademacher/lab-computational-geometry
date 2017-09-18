@@ -368,7 +368,9 @@ public class CoreController {
     }
 
     private void setManEpsilon(double epsilon) {
-        plane.getMan().setEpsilon(epsilon);
+        if(plane.getMan() != null){
+            plane.getMan().setEpsilon(epsilon);
+        }
     }
 
     public void shuffleLionOrder() {

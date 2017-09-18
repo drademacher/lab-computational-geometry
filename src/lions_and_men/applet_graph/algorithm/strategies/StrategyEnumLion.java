@@ -2,7 +2,7 @@ package lions_and_men.applet_graph.algorithm.strategies;
 
 import lions_and_men.applet_graph.algorithm.CoreController;
 
-public enum LionStrategyEnum {
+public enum StrategyEnumLion {
     DoNothing, Manual, RandomChoice, AggroGreedyLion, CleverLion;
 
     public Strategy getStrategy(CoreController coreController) {

@@ -5,7 +5,7 @@ import lions_and_men.applet_graph.algorithm.CoreController;
 import lions_and_men.applet_graph.algorithm.graph.Connection;
 import lions_and_men.applet_graph.algorithm.graph.GraphHelper;
 import lions_and_men.applet_graph.algorithm.graph.Vertex;
-import lions_and_men.applet_graph.algorithm.strategies.LionStrategyEnum;
+import lions_and_men.applet_graph.algorithm.strategies.StrategyEnumLion;
 import lions_and_men.applet_graph.algorithm.strategies.Strategy;
 import lions_and_men.applet_graph.algorithm.strategies.Manual;
 
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class Lion extends Entity {
     private static int defaultRange = 0;
-    private static LionStrategyEnum defaultStrategy = LionStrategyEnum.CleverLion;
+    private static StrategyEnumLion defaultStrategy = StrategyEnumLion.CleverLion;
     private int range = Lion.defaultRange;
 
 
@@ -34,11 +34,11 @@ public class Lion extends Entity {
         return Lion.defaultRange;
     }
 
-    public static LionStrategyEnum getDefaultStrategy() {
+    public static StrategyEnumLion getDefaultStrategy() {
         return Lion.defaultStrategy;
     }
 
-    public static void setDefaultStrategy(LionStrategyEnum defaultStrategy) {
+    public static void setDefaultStrategy(StrategyEnumLion defaultStrategy) {
         Lion.defaultStrategy = defaultStrategy;
     }
 

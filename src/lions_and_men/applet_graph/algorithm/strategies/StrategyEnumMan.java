@@ -2,7 +2,7 @@ package lions_and_men.applet_graph.algorithm.strategies;
 
 import lions_and_men.applet_graph.algorithm.CoreController;
 
-public enum ManStrategyEnum {
+public enum StrategyEnumMan {
     DoNothing, Manual, PaperMan, RandomChoice, RunAwayGreedyMan;
 
     public Strategy getStrategy(CoreController coreController) {

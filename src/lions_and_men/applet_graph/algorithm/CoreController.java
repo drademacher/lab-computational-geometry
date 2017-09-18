@@ -377,7 +377,7 @@ public class CoreController {
         return lions;
     }
 
-    public void setManStrategy(Point manCoordinate, ManStrategyEnum strategy) {
+    public void setManStrategy(Point manCoordinate, StrategyEnumMan strategy) {
         System.out.println("set man " + manCoordinate + ", " + strategy);
         if (manCoordinate == null || strategy == null) {
             return;
@@ -391,7 +391,7 @@ public class CoreController {
         resetAllCalculatedPoint();
     }
 
-    public void setLionStrategy(Point lionCoordinate, LionStrategyEnum strategy) {
+    public void setLionStrategy(Point lionCoordinate, StrategyEnumLion strategy) {
         System.out.println("set lion strategy " + lionCoordinate + ", " + strategy);
         if (lionCoordinate == null || strategy == null) {
             return;
@@ -406,7 +406,7 @@ public class CoreController {
         resetAllCalculatedPoint();
     }
 
-    public void setAllManStrategy(ManStrategyEnum strategy) {
+    public void setAllManStrategy(StrategyEnumMan strategy) {
         if (strategy == null) {
             return;
         }
@@ -417,7 +417,7 @@ public class CoreController {
 
     }
 
-    public void setAllLionStrategy(LionStrategyEnum strategy) {
+    public void setAllLionStrategy(StrategyEnumLion strategy) {
         if (strategy == null) {
             return;
         }
@@ -725,14 +725,14 @@ public class CoreController {
         Point lion2 = new Point(100, 140);
         Point lion3 = new Point(50, 90);
         this.setLion(lion1);
-        this.setLionStrategy(lion1, LionStrategyEnum.CleverLion);
+        this.setLionStrategy(lion1, StrategyEnumLion.CleverLion);
         this.setLion(lion2);
-        this.setLionStrategy(lion2, LionStrategyEnum.CleverLion);
+        this.setLionStrategy(lion2, StrategyEnumLion.CleverLion);
         this.setLion(lion3);
-        this.setLionStrategy(lion3, LionStrategyEnum.CleverLion);
+        this.setLionStrategy(lion3, StrategyEnumLion.CleverLion);
 
         this.setMan(this.graph.getSmallVertices().get(0).getCoordinates());
-        this.setManStrategy(this.graph.getSmallVertices().get(0).getCoordinates(), ManStrategyEnum.PaperMan);
+        this.setManStrategy(this.graph.getSmallVertices().get(0).getCoordinates(), StrategyEnumMan.PaperMan);
 
     }
 
@@ -811,8 +811,8 @@ public class CoreController {
         this.setLion(this.graph.getSmallVertices().get(17).getCoordinates());
         this.setMan(this.graph.getSmallVertices().get(0).getCoordinates());
 
-        this.setAllManStrategy(ManStrategyEnum.PaperMan);
-        this.setAllLionStrategy(LionStrategyEnum.AggroGreedyLion);
+        this.setAllManStrategy(StrategyEnumMan.PaperMan);
+        this.setAllLionStrategy(StrategyEnumLion.AggroGreedyLion);
     }
 
     public void setDefaultGraph3() {
@@ -881,8 +881,8 @@ public class CoreController {
         this.setLion(this.graph.getSmallVertices().get(15).getCoordinates());
         this.setMan(this.graph.getSmallVertices().get(0).getCoordinates());
 
-        this.setAllManStrategy(ManStrategyEnum.PaperMan);
-        this.setAllLionStrategy(LionStrategyEnum.AggroGreedyLion);
+        this.setAllManStrategy(StrategyEnumMan.PaperMan);
+        this.setAllLionStrategy(StrategyEnumLion.AggroGreedyLion);
     }
 
     public void setGraphFromFile(File file) throws Exception {
@@ -917,9 +917,9 @@ public class CoreController {
                     case "S":
                         Man.setMinimumDistance(Integer.parseInt(lineElements[1]));
 //                        Man.setKeepDistanceExact(Boolean.parseBoolean(lineElements[2]));
-                        Man.setDefaultStrategy(ManStrategyEnum.valueOf(lineElements[2]));
+                        Man.setDefaultStrategy(StrategyEnumMan.valueOf(lineElements[2]));
                         Lion.setDefaultRange(Integer.parseInt((lineElements[3])));
-                        Lion.setDefaultStrategy(LionStrategyEnum.valueOf(lineElements[4]));
+                        Lion.setDefaultStrategy(StrategyEnumLion.valueOf(lineElements[4]));
                         GraphController.setDefaultEdgeWeight(Integer.parseInt((lineElements[5])));
                         break;
                     case "V":
@@ -933,12 +933,12 @@ public class CoreController {
                     case "M":
                         this.setMan(new Point(Double.parseDouble(lineElements[1]), Double.parseDouble(lineElements[2])));
                         System.out.println(".."+lineElements[3]);
-                        System.out.println(".."+ManStrategyEnum.valueOf(lineElements[3]));
-                        this.setManStrategy(new Point(Double.parseDouble(lineElements[1]), Double.parseDouble(lineElements[2])), ManStrategyEnum.valueOf(lineElements[3]));
+                        System.out.println(".."+ StrategyEnumMan.valueOf(lineElements[3]));
+                        this.setManStrategy(new Point(Double.parseDouble(lineElements[1]), Double.parseDouble(lineElements[2])), StrategyEnumMan.valueOf(lineElements[3]));
                         break;
                     case "L":
                         this.setLion(new Point(Double.parseDouble(lineElements[1]), Double.parseDouble(lineElements[2])));
-                        this.setLionStrategy(new Point(Double.parseDouble(lineElements[1]), Double.parseDouble(lineElements[2])), LionStrategyEnum.valueOf(lineElements[4]));
+                        this.setLionStrategy(new Point(Double.parseDouble(lineElements[1]), Double.parseDouble(lineElements[2])), StrategyEnumLion.valueOf(lineElements[4]));
                         this.setLionRange(new Point(Double.parseDouble(lineElements[1]), Double.parseDouble(lineElements[2])), Integer.parseInt(lineElements[3]));
                         break;
                     default:

@@ -8,8 +8,7 @@ import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.util.Duration;
-import lions_and_men.applet_graph.algorithm.CoreController;
-import lions_and_men.applet_graph.algorithm.strategies.LionStrategyEnum;
+import lions_and_men.applet_graph.algorithm.strategies.StrategyEnumLion;
 import lions_and_men.util.ContextMenuHolder;
 import lions_and_men.util.Point;
 import lions_and_men.util.ZoomScrollPane;
@@ -108,23 +107,23 @@ public class Lion implements Entity {
             });
 
             waitStrategyButton.setOnAction(event2 -> {
-                coreController.setLionStrategy(coordinates, LionStrategyEnum.DoNothing);
+                coreController.setLionStrategy(coordinates, StrategyEnumLion.DoNothing);
             });
 
             greedyStrategyButton.setOnAction(event2 -> {
-                coreController.setLionStrategy(coordinates, LionStrategyEnum.AggroGreedyLion);
+                coreController.setLionStrategy(coordinates, StrategyEnumLion.AggroGreedyLion);
             });
 
             cleverStrategyButton.setOnAction(event2 -> {
-                coreController.setLionStrategy(coordinates, LionStrategyEnum.CleverLion);
+                coreController.setLionStrategy(coordinates, StrategyEnumLion.CleverLion);
             });
 
             randomStrategyButton.setOnAction(event2 -> {
-                coreController.setLionStrategy(coordinates, LionStrategyEnum.RandomChoice);
+                coreController.setLionStrategy(coordinates, StrategyEnumLion.RandomChoice);
             });
 
             manualStrategyButton.setOnAction(event2 -> {
-                coreController.setLionStrategy(coordinates, LionStrategyEnum.Manual);
+                coreController.setLionStrategy(coordinates, StrategyEnumLion.Manual);
             });
 
             contextMenu.getItems().addAll(item0, item1, strategyMenu, edgeMenu, new SeparatorMenuItem(), closeItem);

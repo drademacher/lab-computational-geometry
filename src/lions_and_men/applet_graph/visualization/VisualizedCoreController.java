@@ -2,8 +2,8 @@ package lions_and_men.applet_graph.visualization;
 
 import lions_and_men.applet_graph.algorithm.CoreController;
 import lions_and_men.applet_graph.algorithm.graph.Connection;
-import lions_and_men.applet_graph.algorithm.strategies.LionStrategyEnum;
-import lions_and_men.applet_graph.algorithm.strategies.ManStrategyEnum;
+import lions_and_men.applet_graph.algorithm.strategies.StrategyEnumLion;
+import lions_and_men.applet_graph.algorithm.strategies.StrategyEnumMan;
 import lions_and_men.util.Point;
 
 import java.util.ArrayList;
@@ -242,28 +242,28 @@ public class VisualizedCoreController extends CoreController {
     }
 
     @Override
-    public void setManStrategy(Point manCoordinate, ManStrategyEnum strategy) {
+    public void setManStrategy(Point manCoordinate, StrategyEnumMan strategy) {
         super.setManStrategy(manCoordinate, strategy);
 
         updateStepPreviewsAndChoicePoints();
     }
 
     @Override
-    public void setLionStrategy(Point lionCoordinate, LionStrategyEnum strategy) {
+    public void setLionStrategy(Point lionCoordinate, StrategyEnumLion strategy) {
         super.setLionStrategy(lionCoordinate, strategy);
 
         updateStepPreviewsAndChoicePoints();
     }
 
     @Override
-    public void setAllManStrategy(ManStrategyEnum strategy) {
+    public void setAllManStrategy(StrategyEnumMan strategy) {
         super.setAllManStrategy(strategy);
 
         updateStepPreviewsAndChoicePoints();
     }
 
     @Override
-    public void setAllLionStrategy(LionStrategyEnum strategy) {
+    public void setAllLionStrategy(StrategyEnumLion strategy) {
         super.setAllLionStrategy(strategy);
 
         updateStepPreviewsAndChoicePoints();

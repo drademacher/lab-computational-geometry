@@ -4,7 +4,7 @@ import lions_and_men.applet_graph.algorithm.CoreController;
 import lions_and_men.applet_graph.algorithm.graph.Connection;
 import lions_and_men.applet_graph.algorithm.graph.GraphHelper;
 import lions_and_men.applet_graph.algorithm.graph.Vertex;
-import lions_and_men.applet_graph.algorithm.strategies.ManStrategyEnum;
+import lions_and_men.applet_graph.algorithm.strategies.StrategyEnumMan;
 import lions_and_men.applet_graph.algorithm.strategies.Manual;
 import lions_and_men.applet_graph.algorithm.strategies.Strategy;
 
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class Man extends Entity {
 
     private static int minimumDistance = 0;
-    private static ManStrategyEnum defaultStrategy = ManStrategyEnum.PaperMan;
+    private static StrategyEnumMan defaultStrategy = StrategyEnumMan.PaperMan;
     private static int defaultRange = 0;
     private int range = defaultRange;
 
@@ -35,11 +35,11 @@ public class Man extends Entity {
         Man.minimumDistance = 0;
     }
 
-    public static ManStrategyEnum getDefaultStrategy() {
+    public static StrategyEnumMan getDefaultStrategy() {
         return Man.defaultStrategy;
     }
 
-    public static void setDefaultStrategy(ManStrategyEnum defaultStrategy) {
+    public static void setDefaultStrategy(StrategyEnumMan defaultStrategy) {
         Man.defaultStrategy = defaultStrategy;
     }
 

@@ -141,7 +141,7 @@ public class Lion implements Entity {
 
     @Override
     public void relocate(Point coordinates) {
-        if (this.coordinates == coordinates) return;
+        if (this.coordinates.equals(coordinates)) return;
 
         Path path = new Path();
         path.getElements().add(new MoveTo(this.coordinates.getX(), this.coordinates.getY()));

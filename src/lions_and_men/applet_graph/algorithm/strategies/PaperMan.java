@@ -133,4 +133,8 @@ public class PaperMan extends Strategy<Man> {
         return d_far >= 7 || d_near >= 3;
     }
 
+    @Override
+    public void reset() {
+        target = null;
+    }
 }

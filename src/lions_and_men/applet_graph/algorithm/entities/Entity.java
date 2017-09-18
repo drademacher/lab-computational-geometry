@@ -2,6 +2,7 @@ package lions_and_men.applet_graph.algorithm.entities;
 
 import lions_and_men.applet_graph.algorithm.CoreController;
 import lions_and_men.applet_graph.algorithm.graph.Vertex;
+import lions_and_men.applet_graph.algorithm.strategies.Strategy;
 import lions_and_men.util.Point;
 
 public abstract class Entity {
@@ -11,6 +12,7 @@ public abstract class Entity {
     protected CoreController coreController;
     protected Vertex nextPosition;
     protected boolean didManualStep = false;
+    protected Strategy strategy;
 
     public Entity(Vertex startPosition, CoreController coreController) {
         this.position = startPosition;
@@ -46,6 +48,11 @@ public abstract class Entity {
 
     public Vertex getCalculatedPosition() {
         return nextPosition;
+    }
+
+    public void resetCalculatedPosition(){
+        nextPosition = null;
+        strategy.reset();
     }
 
     public Point getCoordinates() {

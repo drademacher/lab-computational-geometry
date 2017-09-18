@@ -194,7 +194,6 @@ public class VisualizedCoreController extends CoreController {
         entities.stream().filter(entity -> entity.getPosition().equals(manCoordinate)).forEach(entity -> entity.relocate(realVertexCoordinate));
         updateManRanges();
 
-
         updateStepPreviewsAndChoicePoints();
     }
 

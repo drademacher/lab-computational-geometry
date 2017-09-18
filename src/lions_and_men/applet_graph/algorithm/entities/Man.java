@@ -15,7 +15,6 @@ public class Man extends Entity {
     private static int minimumDistance = 0;
     private static CoreController.ManStrategy defaultStrategy = CoreController.ManStrategy.PaperMan;
     private static int defaultRange = 0;
-    private Strategy strategy;
     private int range = defaultRange;
 
 

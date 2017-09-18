@@ -14,7 +14,6 @@ public class Lion extends Entity {
     private static int defaultRange = 0;
     private static CoreController.LionStrategy defaultStrategy = CoreController.LionStrategy.CleverLion;
     private int range = Lion.defaultRange;
-    private Strategy strategy;
 
 
     public Lion(Vertex startPosition, CoreController coreController) {

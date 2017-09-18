@@ -38,4 +38,8 @@ public abstract class Strategy<T extends Entity> implements Cloneable {
         int lastOccurrenceOfPoint = this.getClass().getName().lastIndexOf(".");
         return this.getClass().getName().substring(lastOccurrenceOfPoint + 1);
     }
+
+    public void reset(){
+
+    }
 }

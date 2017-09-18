@@ -91,10 +91,12 @@ public class CoreController {
     public void setDefaultGraph4() {
         setEmptyGraph();
 
-        createLion(new Point(50, 50));
-        createLion(new Point(200, 50));
-        createLion(new Point(110, 200));
-        createMan(new Point(110, 110));
+        createLion(new Point(-170, -100));
+        createLion(new Point(-12, -50));
+        createLion(new Point(-45, -35));
+        createLion(new Point(-90, 10));
+
+        createMan(new Point(-125, -80));
     }
 
     public void setDefaultGraph5() {

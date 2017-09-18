@@ -619,7 +619,15 @@ public class CoreController {
     }
 
     public void setEditMode(boolean editMode) {
-        this.editMode = editMode;
+        if(men == null || men.size() < 1 || lions == null || lions.size() < 1){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Your configuration is missing either a man or a lion on a the graph.");
+            alert.show();
+        } else {
+            this.editMode = editMode;
+        }
     }
 
 

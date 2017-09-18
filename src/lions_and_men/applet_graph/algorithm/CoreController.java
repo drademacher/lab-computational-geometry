@@ -1,5 +1,6 @@
 package lions_and_men.applet_graph.algorithm;
 
+import javafx.scene.control.Alert;
 import lions_and_men.applet_graph.algorithm.entities.Entity;
 import lions_and_men.applet_graph.algorithm.entities.Lion;
 import lions_and_men.applet_graph.algorithm.entities.Man;
@@ -831,6 +832,11 @@ public class CoreController {
             }
             String[] lineElements = currentLine.split("##");
             if (!lineElements[2].equals(Global.API_VERSION)) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Wrong file version.");
+                alert.showAndWait();
                 throw new Error("wrong file  input version: " + Global.API_VERSION + " expected");
             }
 
@@ -873,6 +879,11 @@ public class CoreController {
                 }
             }
         } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Could not read file.");
+            alert.showAndWait();
             e.printStackTrace();
             throw new Exception("test");
         }

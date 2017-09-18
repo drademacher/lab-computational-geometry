@@ -191,7 +191,7 @@ public class UserInterface {
         MenuItem emptyMapMenuItem = new MenuItem("Empty Graph"),
                 graph1MenuItem = new MenuItem("Paper Graph, 3 Lions catch man"),
                 graph2MenuItem = new MenuItem("Paper Graph, Paper Strategy"),
-                graph3MenuItem = new MenuItem("Test Graph"),
+                graph3MenuItem = new MenuItem("Paper Graph, Invariant not fulfilled"),
                 openMapMenuItem = new MenuItem("Open"),
                 saveMapMenuItem = new MenuItem("Save");
 

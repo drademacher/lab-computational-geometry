@@ -36,7 +36,7 @@ public class CoreController {
             return;
         }
         this.graph.createVertex(coordinate);
-        resetAllCalculatedpoints();
+        resetAllCalculatedPoint();
     }
 
     public void relocateVertex(Point vertexCoordinates, Point newCoordinate) {
@@ -83,7 +83,7 @@ public class CoreController {
 
         //delete Vertex
         this.graph.deleteVertex(vertex);
-        resetAllCalculatedpoints();
+        resetAllCalculatedPoint();
     }
 
     public void createEdge(Point vertex1Coordinates, Point vertex2Coordinates) {
@@ -103,7 +103,7 @@ public class CoreController {
 
 
         this.graph.createEdge(vertex1, vertex2, weight);
-        resetAllCalculatedpoints();
+        resetAllCalculatedPoint();
     }
 
     public void removeEdge(Point vertex1Coordinates, Point vertex2Coordinates) {
@@ -124,7 +124,7 @@ public class CoreController {
 
         ArrayList<Lion> lionsToDelete = getLionsOnEdge(edge);
         removeAllLions(lionsToDelete);
-        resetAllCalculatedpoints();
+        resetAllCalculatedPoint();
     }
 
     public void changeEdgeWeight(Point vertex1Coordinates, Point vertex2Coordinates, int weight) {
@@ -154,7 +154,7 @@ public class CoreController {
 //        System.out.println("man size "+men.size() );
 //        relocateAllLions();
 //        relocateAllMen();
-        resetAllCalculatedpoints();
+        resetAllCalculatedPoint();
     }
 
     public BigVertex getBigVertexByCoordinate(Point coordinate) {
@@ -207,7 +207,7 @@ public class CoreController {
         Man man = new Man(vertex, this);
         men.add(man);
         setManStrategy(man.getCoordinates(), Man.getDefaultStrategy());
-        resetAllCalculatedpoints();
+        resetAllCalculatedPoint();
     }
 
     public void setNextEntityStep(Point entityCoordinates, Point nextStepCoordinates) {
@@ -268,7 +268,7 @@ public class CoreController {
         Lion lion = new Lion(vertex, this);
         lions.add(lion);
         setLionStrategy(lion.getCoordinates(), Lion.getDefaultStrategy());
-        resetAllCalculatedpoints();
+        resetAllCalculatedPoint();
     }
 
     public boolean isLionOnVertex(Point vertexCoorinate) {
@@ -320,7 +320,7 @@ public class CoreController {
         }
 
         men.remove(man);
-        resetAllCalculatedpoints();
+        resetAllCalculatedPoint();
     }
 
     private void removeAllMen(ArrayList<Man> menToDelete) {
@@ -339,7 +339,7 @@ public class CoreController {
         }
 
         lions.remove(lion);
-        resetAllCalculatedpoints();
+        resetAllCalculatedPoint();
     }
 
     private void removeAllLions(ArrayList<Lion> lionsToDelete) {
@@ -359,7 +359,7 @@ public class CoreController {
         }
 
         man.setCurrentPosition(vertex);
-        resetAllCalculatedpoints();
+        resetAllCalculatedPoint();
     }
 
     public void relocateLion(Point lionCoordinate, Point vertexCoordinate) {
@@ -373,7 +373,7 @@ public class CoreController {
         }
 
         lion.setCurrentPosition(vertex);
-        resetAllCalculatedpoints();
+        resetAllCalculatedPoint();
     }
 
     public ArrayList<Man> getMen() {
@@ -395,7 +395,7 @@ public class CoreController {
         }
 
         man.setStrategy(strategy.getStrategy(this));
-        resetAllCalculatedpoints();
+        resetAllCalculatedPoint();
     }
 
     public void setLionStrategy(Point lionCoordinate, LionStrategy strategy) {
@@ -410,7 +410,7 @@ public class CoreController {
 //        System.out.println(strategy);
 //        System.out.println(strategy.getStrategy(this));
         lion.setStrategy(strategy.getStrategy(this));
-        resetAllCalculatedpoints();
+        resetAllCalculatedPoint();
     }
 
     public void setAllManStrategy(ManStrategy strategy) {
@@ -434,12 +434,12 @@ public class CoreController {
         }
     }
 
-    protected void resetAllCalculatedpoints(){
+    private void resetAllCalculatedPoint(){
         if(lions != null && lions.size() > 0){
-            lions.forEach(lion -> lion.resetCalculatedPosition());
+            lions.forEach(Entity::resetCalculatedPosition);
         }
         if(men != null && men.size() > 0){
-            men.forEach(man -> man.resetCalculatedPosition());
+            men.forEach(Entity::resetCalculatedPosition);
         }
     }
 
@@ -555,7 +555,7 @@ public class CoreController {
         }
 
         lion.setRange(range);
-        resetAllCalculatedpoints();
+        resetAllCalculatedPoint();
     }
 
     public void setAllLionRange(int range) {
@@ -603,7 +603,7 @@ public class CoreController {
         }
 
         man.setRange(range);
-        resetAllCalculatedpoints();
+        resetAllCalculatedPoint();
     }
 
     public void setAllManRange(int range) {

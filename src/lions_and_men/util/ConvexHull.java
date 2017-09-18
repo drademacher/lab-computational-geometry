@@ -59,33 +59,17 @@ public class ConvexHull {
     }
 
 
-    /**
-     * Is r right of line segment pq
-     */
-    private int isRightOf(Point p, Point q, Point r) {
-        double d = (r.getX() - p.getX()) * (q.getY() - p.getY()) - (r.getY() - p.getY()) * (q.getX() - p.getX());
-//        double determinant = p.getX() * q.getY() - p.getX() * r.getY() - p.getY() * q.getX() + p.getY() * r.getX() + q.getX() * r.getY() - q.getY() * r.getX();
-//        System.out.println(Math.signum(d));
-        return (int) Math.signum(d);
-    }
-
-
-    public boolean insideHull(Point p) {
-        if (hull.length < 3) {
-//            System.out.println("hull to small");
-            return false;
-        }
-
-        for (int i = 0; i < hull.length - 1; i++) {
-            if (isRightOf(hull[i], hull[i + 1], p) < 0) {
-                return false;
+    public boolean insideHull(Point test) {
+        int i;
+        int j;
+        boolean result = false;
+        for (i = 0, j = hull.length - 1; i < hull.length; j = i++) {
+            if ((hull[i].getY() > test.getY()) != (hull[j].getY() > test.getY()) &&
+                    (test.getX() < (hull[j].getX() - hull[i].getX()) * (test.getY() - hull[i].getY()) / (hull[j].getY()-hull[i].getY()) + hull[i].getX())) {
+                result = !result;
             }
         }
-        if (isRightOf(hull[hull.length - 1], hull[0], p) < 0) {
-            return false;
-        }
-
-        return true;
+        return result;
     }
 
     public Point[] getPoints() {

@@ -5,14 +5,7 @@ import lions_and_men.applet_graph.algorithm.entities.Entity;
 import lions_and_men.applet_graph.algorithm.entities.Lion;
 import lions_and_men.applet_graph.algorithm.entities.Man;
 import lions_and_men.applet_graph.algorithm.graph.*;
-import lions_and_men.applet_graph.algorithm.strategies.AggroGreedyLion;
-import lions_and_men.applet_graph.algorithm.strategies.CleverLion;
-import lions_and_men.applet_graph.algorithm.strategies.PaperMan;
-import lions_and_men.applet_graph.algorithm.strategies.RunAwayGreedyMan;
-import lions_and_men.applet_graph.algorithm.strategies.Strategy;
-import lions_and_men.applet_graph.algorithm.strategies.DoNothing;
-import lions_and_men.applet_graph.algorithm.strategies.Manual;
-import lions_and_men.applet_graph.algorithm.strategies.RandomChoice;
+import lions_and_men.applet_graph.algorithm.strategies.*;
 import lions_and_men.util.Global;
 import lions_and_men.util.Point;
 
@@ -384,7 +377,7 @@ public class CoreController {
         return lions;
     }
 
-    public void setManStrategy(Point manCoordinate, ManStrategy strategy) {
+    public void setManStrategy(Point manCoordinate, ManStrategyEnum strategy) {
         System.out.println("set man " + manCoordinate + ", " + strategy);
         if (manCoordinate == null || strategy == null) {
             return;
@@ -398,7 +391,7 @@ public class CoreController {
         resetAllCalculatedPoint();
     }
 
-    public void setLionStrategy(Point lionCoordinate, LionStrategy strategy) {
+    public void setLionStrategy(Point lionCoordinate, LionStrategyEnum strategy) {
         System.out.println("set lion strategy " + lionCoordinate + ", " + strategy);
         if (lionCoordinate == null || strategy == null) {
             return;
@@ -413,7 +406,7 @@ public class CoreController {
         resetAllCalculatedPoint();
     }
 
-    public void setAllManStrategy(ManStrategy strategy) {
+    public void setAllManStrategy(ManStrategyEnum strategy) {
         if (strategy == null) {
             return;
         }
@@ -424,7 +417,7 @@ public class CoreController {
 
     }
 
-    public void setAllLionStrategy(LionStrategy strategy) {
+    public void setAllLionStrategy(LionStrategyEnum strategy) {
         if (strategy == null) {
             return;
         }
@@ -732,14 +725,14 @@ public class CoreController {
         Point lion2 = new Point(100, 140);
         Point lion3 = new Point(50, 90);
         this.setLion(lion1);
-        this.setLionStrategy(lion1, LionStrategy.CleverLion);
+        this.setLionStrategy(lion1, LionStrategyEnum.CleverLion);
         this.setLion(lion2);
-        this.setLionStrategy(lion2, LionStrategy.CleverLion);
+        this.setLionStrategy(lion2, LionStrategyEnum.CleverLion);
         this.setLion(lion3);
-        this.setLionStrategy(lion3, LionStrategy.CleverLion);
+        this.setLionStrategy(lion3, LionStrategyEnum.CleverLion);
 
         this.setMan(this.graph.getSmallVertices().get(0).getCoordinates());
-        this.setManStrategy(this.graph.getSmallVertices().get(0).getCoordinates(), ManStrategy.PaperMan);
+        this.setManStrategy(this.graph.getSmallVertices().get(0).getCoordinates(), ManStrategyEnum.PaperMan);
 
     }
 
@@ -818,8 +811,8 @@ public class CoreController {
         this.setLion(this.graph.getSmallVertices().get(17).getCoordinates());
         this.setMan(this.graph.getSmallVertices().get(0).getCoordinates());
 
-        this.setAllManStrategy(ManStrategy.PaperMan);
-        this.setAllLionStrategy(LionStrategy.AggroGreedyLion);
+        this.setAllManStrategy(ManStrategyEnum.PaperMan);
+        this.setAllLionStrategy(LionStrategyEnum.AggroGreedyLion);
     }
 
     public void setDefaultGraph3() {
@@ -888,8 +881,8 @@ public class CoreController {
         this.setLion(this.graph.getSmallVertices().get(15).getCoordinates());
         this.setMan(this.graph.getSmallVertices().get(0).getCoordinates());
 
-        this.setAllManStrategy(ManStrategy.PaperMan);
-        this.setAllLionStrategy(LionStrategy.AggroGreedyLion);
+        this.setAllManStrategy(ManStrategyEnum.PaperMan);
+        this.setAllLionStrategy(LionStrategyEnum.AggroGreedyLion);
     }
 
     public void setGraphFromFile(File file) throws Exception {
@@ -924,9 +917,9 @@ public class CoreController {
                     case "S":
                         Man.setMinimumDistance(Integer.parseInt(lineElements[1]));
 //                        Man.setKeepDistanceExact(Boolean.parseBoolean(lineElements[2]));
-                        Man.setDefaultStrategy(ManStrategy.valueOf(lineElements[2]));
+                        Man.setDefaultStrategy(ManStrategyEnum.valueOf(lineElements[2]));
                         Lion.setDefaultRange(Integer.parseInt((lineElements[3])));
-                        Lion.setDefaultStrategy(LionStrategy.valueOf(lineElements[4]));
+                        Lion.setDefaultStrategy(LionStrategyEnum.valueOf(lineElements[4]));
                         GraphController.setDefaultEdgeWeight(Integer.parseInt((lineElements[5])));
                         break;
                     case "V":
@@ -940,12 +933,12 @@ public class CoreController {
                     case "M":
                         this.setMan(new Point(Double.parseDouble(lineElements[1]), Double.parseDouble(lineElements[2])));
                         System.out.println(".."+lineElements[3]);
-                        System.out.println(".."+ManStrategy.valueOf(lineElements[3]));
-                        this.setManStrategy(new Point(Double.parseDouble(lineElements[1]), Double.parseDouble(lineElements[2])), ManStrategy.valueOf(lineElements[3]));
+                        System.out.println(".."+ManStrategyEnum.valueOf(lineElements[3]));
+                        this.setManStrategy(new Point(Double.parseDouble(lineElements[1]), Double.parseDouble(lineElements[2])), ManStrategyEnum.valueOf(lineElements[3]));
                         break;
                     case "L":
                         this.setLion(new Point(Double.parseDouble(lineElements[1]), Double.parseDouble(lineElements[2])));
-                        this.setLionStrategy(new Point(Double.parseDouble(lineElements[1]), Double.parseDouble(lineElements[2])), LionStrategy.valueOf(lineElements[4]));
+                        this.setLionStrategy(new Point(Double.parseDouble(lineElements[1]), Double.parseDouble(lineElements[2])), LionStrategyEnum.valueOf(lineElements[4]));
                         this.setLionRange(new Point(Double.parseDouble(lineElements[1]), Double.parseDouble(lineElements[2])), Integer.parseInt(lineElements[3]));
                         break;
                     default:
@@ -1095,51 +1088,6 @@ public class CoreController {
             }
         }
     }
-
-    public enum ManStrategy {
-        DoNothing, Manual, PaperMan, RandomChoice, RunAwayGreedyMan;
-
-        public Strategy getStrategy(CoreController coreController) {
-            switch (this) {
-                case DoNothing:
-                    return new DoNothing(coreController);
-                case PaperMan:
-                    return new PaperMan(coreController);
-                case RandomChoice:
-                    return new RandomChoice(coreController);
-                case Manual:
-                    return new Manual(coreController);
-                case RunAwayGreedyMan:
-                    return new RunAwayGreedyMan(coreController);
-                default:
-                    throw new IllegalArgumentException("invalid input: " + this);
-            }
-        }
-    }
-
-    public enum LionStrategy {
-        DoNothing, Manual, RandomChoice, AggroGreedyLion, CleverLion;
-
-        public Strategy getStrategy(CoreController coreController) {
-            switch (this) {
-                case RandomChoice:
-                    return new RandomChoice(coreController);
-                case Manual:
-                    return new Manual(coreController);
-                case DoNothing:
-                    return new DoNothing(coreController);
-                case AggroGreedyLion:
-                    return new AggroGreedyLion(coreController);
-                case CleverLion:
-                    return new CleverLion(coreController);
-                default:
-                    throw new IllegalArgumentException("invalid input: " + this);
-            }
-        }
-    }
-
-
-
 
     // TODO: THIS IS NEW
     // TODO: should it work like this?

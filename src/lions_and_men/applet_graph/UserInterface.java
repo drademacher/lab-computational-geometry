@@ -13,6 +13,8 @@ import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import lions_and_men.Main;
 import lions_and_men.applet_graph.algorithm.CoreController;
+import lions_and_men.applet_graph.algorithm.strategies.LionStrategyEnum;
+import lions_and_men.applet_graph.algorithm.strategies.ManStrategyEnum;
 import lions_and_men.applet_graph.visualization.*;
 import lions_and_men.util.ContextMenuHolder;
 import lions_and_men.util.ZoomScrollPane;
@@ -261,28 +263,28 @@ public class UserInterface {
 
         Menu manMenu = new Menu("Set Man Strategy");
         MenuItem setManStrategyWait = new MenuItem("Wait");
-        setManStrategyWait.setOnAction(event -> coreController.setAllManStrategy(CoreController.ManStrategy.DoNothing));
+        setManStrategyWait.setOnAction(event -> coreController.setAllManStrategy(ManStrategyEnum.DoNothing));
         MenuItem setManStrategyGreedy = new MenuItem("Greedy");
-        setManStrategyGreedy.setOnAction(event -> coreController.setAllManStrategy(CoreController.ManStrategy.RunAwayGreedyMan));
+        setManStrategyGreedy.setOnAction(event -> coreController.setAllManStrategy(ManStrategyEnum.RunAwayGreedyMan));
         MenuItem setManStrategyRandom = new MenuItem("RandomChoice");
-        setManStrategyRandom.setOnAction(event -> coreController.setAllManStrategy(CoreController.ManStrategy.RandomChoice));
+        setManStrategyRandom.setOnAction(event -> coreController.setAllManStrategy(ManStrategyEnum.RandomChoice));
         MenuItem setManStrategyManual = new MenuItem("Manual");
-        setManStrategyManual.setOnAction(event -> coreController.setAllManStrategy(CoreController.ManStrategy.Manual));
+        setManStrategyManual.setOnAction(event -> coreController.setAllManStrategy(ManStrategyEnum.Manual));
         MenuItem setManStrategyPaper = new MenuItem("Paper");
-        setManStrategyPaper.setOnAction(event -> coreController.setAllManStrategy(CoreController.ManStrategy.PaperMan));
+        setManStrategyPaper.setOnAction(event -> coreController.setAllManStrategy(ManStrategyEnum.PaperMan));
         manMenu.getItems().addAll(setManStrategyWait, setManStrategyRandom, setManStrategyGreedy, setManStrategyManual, setManStrategyPaper);
 
         Menu lionMenu = new Menu("Set Lion Strategy");
         MenuItem setLionsStrategyWait = new MenuItem("Wait");
-        setLionsStrategyWait.setOnAction(event -> coreController.setAllLionStrategy(CoreController.LionStrategy.DoNothing));
+        setLionsStrategyWait.setOnAction(event -> coreController.setAllLionStrategy(LionStrategyEnum.DoNothing));
         MenuItem setLionsStrategyGreedy = new MenuItem("Greedy");
-        setLionsStrategyGreedy.setOnAction(event -> coreController.setAllLionStrategy(CoreController.LionStrategy.AggroGreedyLion));
+        setLionsStrategyGreedy.setOnAction(event -> coreController.setAllLionStrategy(LionStrategyEnum.AggroGreedyLion));
         MenuItem setLionsStrategyClever = new MenuItem("Clever");
-        setLionsStrategyClever.setOnAction(event -> coreController.setAllLionStrategy(CoreController.LionStrategy.CleverLion));
+        setLionsStrategyClever.setOnAction(event -> coreController.setAllLionStrategy(LionStrategyEnum.CleverLion));
         MenuItem setLionsStrategyRandom = new MenuItem("RandomChoice");
-        setLionsStrategyRandom.setOnAction(event -> coreController.setAllLionStrategy(CoreController.LionStrategy.RandomChoice));
+        setLionsStrategyRandom.setOnAction(event -> coreController.setAllLionStrategy(LionStrategyEnum.RandomChoice));
         MenuItem setLionsStrategyManual = new MenuItem("Manual");
-        setLionsStrategyManual.setOnAction(event -> coreController.setAllLionStrategy(CoreController.LionStrategy.Manual));
+        setLionsStrategyManual.setOnAction(event -> coreController.setAllLionStrategy(LionStrategyEnum.Manual));
         lionMenu.getItems().addAll(setLionsStrategyWait, setLionsStrategyRandom, setLionsStrategyGreedy, setLionsStrategyClever, setLionsStrategyManual);
 
 

@@ -82,16 +82,17 @@ public class VisualizedCoreController extends CoreController {
 
         super.deleteVertex(vertexCoordinates);
 
-        verticesBig.stream().filter(vertex -> vertex.getPosition().equals(vertexCoordinates)).forEach(Vertex::delete);
-        verticesBig.removeIf(vertex -> vertex.getPosition().equals(vertexCoordinates));
 
-        edges.stream().filter(edge -> (edge.getPositionTo().equals(vertexCoordinates)
-                || edge.getPositionFrom().equals(vertexCoordinates))).forEach(Edge::delete);
-        edges.removeIf(edge -> (edge.getPositionTo().equals(vertexCoordinates)
-                || edge.getPositionFrom().equals(vertexCoordinates)));
+        verticesBig.forEach(Vertex::delete);
+        verticesBig.clear();
+        graph.getBigVertices().forEach(bigVertex -> verticesBig.add(new BigVertex(this, bigVertex.getCoordinates())));
 
+        edges.forEach(Edge::delete);
+        edges.clear();
+        graph.getEdges().forEach(edge -> edges.add(new Edge(this, edge.getStartCoordinates(), edge.getEndCoordinates())));
 
         verticesSmall.forEach(Vertex::delete);
+        verticesSmall.clear();
         graph.getSmallVertices().forEach(smallVertex -> verticesSmall.add(new SmallVertex(this, smallVertex.getCoordinates())));
 
 
@@ -123,20 +124,17 @@ public class VisualizedCoreController extends CoreController {
 
         super.removeEdge(vertex1Coordinates, vertex2Coordinates);
 
-        edges.stream().filter
-                (edge ->
-                        ((edge.getPositionTo().equals(vertex1Coordinates) && edge.getPositionFrom().equals(vertex2Coordinates))
-                                || (edge.getPositionTo().equals(vertex2Coordinates) && edge.getPositionFrom().equals(vertex1Coordinates))))
-                .forEach(Edge::delete);
+        //clear all edges
+        this.edges.forEach(Edge::delete);
+        this.edges.clear();
+        this.verticesSmall.forEach(Vertex::delete);
+        this.verticesSmall.clear();
 
-        edges.removeIf(edge ->
-                ((edge.getPositionTo().equals(vertex1Coordinates) && edge.getPositionFrom().equals(vertex2Coordinates))
-                        || (edge.getPositionTo().equals(vertex2Coordinates) && edge.getPositionFrom().equals(vertex1Coordinates))));
-
-        for (lions_and_men.applet_graph.algorithm.graph.SmallVertex smallVertex : getEdgeByPoints(vertex1Coordinates, vertex2Coordinates).getEdgeVertices()) {
-            verticesSmall.stream().filter(vertex -> vertex.equals(smallVertex)).forEach(Vertex::delete);
-            verticesSmall.removeIf(vertex -> vertex.equals(smallVertex));
-        }
+        //create all edges still existing
+        this.graph.getEdges().forEach(edge -> {
+            edges.add(new Edge(this, edge.getStartCoordinates(), edge.getEndCoordinates()));
+            edge.getEdgeVertices().forEach(smallVertex -> verticesSmall.add(new SmallVertex(this, smallVertex.getCoordinates())));
+        });
 
 
         updateManRanges();

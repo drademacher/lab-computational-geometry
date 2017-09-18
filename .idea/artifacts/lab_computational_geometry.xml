@@ -1,12 +1,12 @@
 <component name="ArtifactManager">
-  <artifact type="javafx" name="Applet One">
-    <output-path>$PROJECT_DIR$/out/artifacts/Applet_One</output-path>
+  <artifact type="javafx" name="lab-computational-geometry">
+    <output-path>$PROJECT_DIR$/out/artifacts/lab_computational_geometry</output-path>
     <properties id="javafx-properties">
       <options>
-        <option name="appClass" value="lions_on_graph.Main" />
+        <option name="appClass" value="lions_and_men.Main" />
         <option name="description" value="" />
         <option name="htmlPlaceholderId" value="" />
-        <option name="title" value="Applet One" />
+        <option name="title" value="Lab Computational Geometry" />
         <option name="vendor" value="" />
         <option name="version" value="" />
       </options>

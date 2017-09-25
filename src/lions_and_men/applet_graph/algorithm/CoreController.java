@@ -5,14 +5,8 @@ import lions_and_men.applet_graph.algorithm.entities.Entity;
 import lions_and_men.applet_graph.algorithm.entities.Lion;
 import lions_and_men.applet_graph.algorithm.entities.Man;
 import lions_and_men.applet_graph.algorithm.graph.*;
-import lions_and_men.applet_graph.algorithm.strategies.AggroGreedyLion;
-import lions_and_men.applet_graph.algorithm.strategies.CleverLion;
-import lions_and_men.applet_graph.algorithm.strategies.PaperMan;
-import lions_and_men.applet_graph.algorithm.strategies.RunAwayGreedyMan;
-import lions_and_men.applet_graph.algorithm.strategies.Strategy;
-import lions_and_men.applet_graph.algorithm.strategies.DoNothing;
-import lions_and_men.applet_graph.algorithm.strategies.Manual;
-import lions_and_men.applet_graph.algorithm.strategies.RandomChoice;
+import lions_and_men.applet_graph.algorithm.strategies.*;
+import lions_and_men.exceptions.WrongConfigurationException;
 import lions_and_men.util.Global;
 import lions_and_men.util.Point;
 
@@ -434,11 +428,11 @@ public class CoreController {
         }
     }
 
-    private void resetAllCalculatedPoint(){
-        if(lions != null && lions.size() > 0){
+    private void resetAllCalculatedPoint() {
+        if (lions != null && lions.size() > 0) {
             lions.forEach(Entity::resetCalculatedPosition);
         }
-        if(men != null && men.size() > 0){
+        if (men != null && men.size() > 0) {
             men.forEach(Entity::resetCalculatedPosition);
         }
     }
@@ -632,13 +626,14 @@ public class CoreController {
         return editMode;
     }
 
-    public void setEditMode(boolean editMode) {
-        if(men == null || men.size() < 1 || lions == null || lions.size() < 1){
+    public void setEditMode(boolean editMode) throws WrongConfigurationException {
+        if (!editMode && (men == null || men.size() < 1 || lions == null || lions.size() < 1)) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Error");
             alert.setHeaderText(null);
             alert.setContentText("Your configuration is missing either a man or a lion on a the graph.");
             alert.show();
+            throw new WrongConfigurationException();
         } else {
             this.editMode = editMode;
         }
@@ -939,8 +934,8 @@ public class CoreController {
                         break;
                     case "M":
                         this.setMan(new Point(Double.parseDouble(lineElements[1]), Double.parseDouble(lineElements[2])));
-                        System.out.println(".."+lineElements[3]);
-                        System.out.println(".."+ManStrategy.valueOf(lineElements[3]));
+                        System.out.println(".." + lineElements[3]);
+                        System.out.println(".." + ManStrategy.valueOf(lineElements[3]));
                         this.setManStrategy(new Point(Double.parseDouble(lineElements[1]), Double.parseDouble(lineElements[2])), ManStrategy.valueOf(lineElements[3]));
                         break;
                     case "L":
@@ -1031,11 +1026,11 @@ public class CoreController {
     public boolean simulateStep() {
 
         for (Man man : this.getMen()) {
-            System.out.println("man "+man);
+            System.out.println("man " + man);
             manGoToNextPosition(man.getCoordinates());
         }
         for (Lion lion : this.getLions()) {
-            System.out.println("lion +"+lion);
+            System.out.println("lion +" + lion);
             lionGoToNextPosition(lion.getCoordinates());
         }
 
@@ -1137,8 +1132,6 @@ public class CoreController {
             }
         }
     }
-
-
 
 
     // TODO: THIS IS NEW

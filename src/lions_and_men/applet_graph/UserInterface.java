@@ -14,6 +14,7 @@ import javafx.util.StringConverter;
 import lions_and_men.Main;
 import lions_and_men.applet_graph.algorithm.CoreController;
 import lions_and_men.applet_graph.visualization.*;
+import lions_and_men.exceptions.WrongConfigurationException;
 import lions_and_men.util.ContextMenuHolder;
 import lions_and_men.util.ZoomScrollPane;
 
@@ -76,7 +77,28 @@ public class UserInterface {
 
         editMode = new SimpleBooleanProperty(true);
         activePlaying = new SimpleBooleanProperty(false);
-        editMode.addListener((observable, oldValue, newValue) -> this.coreController.setEditMode(newValue));
+        editMode.addListener((observable, oldValue, newValue) -> {
+            try {
+
+                buttonBarCenter.getChildren().clear();
+
+                if (!newValue) {
+                    modeToggleButton.setText("Play Mode");
+                    buttonBarCenter.getChildren().addAll(playAnimationButton, speedSlider, stopAnimationButton, stepAnimationButton, setViewMenu);
+                } else {
+
+                    activePlaying.set(false);
+
+                    modeToggleButton.setText("Edit Mode");
+                    buttonBarCenter.getChildren().addAll(setGraphButton, setParameterButton, setViewMenu);
+                }
+
+                this.coreController.setEditMode(newValue);
+                zoomScrollPane.autoZoom();
+            } catch (WrongConfigurationException e) {
+                editMode.set(oldValue);
+            }
+        });
 
         initSpeedSlider();
         initAnimationTimer();
@@ -160,26 +182,10 @@ public class UserInterface {
 
         appletToggleButton.setOnAction(event -> Main.showChooser());
 
-        modeToggleButton.setOnMouseClicked(event -> {
-            buttonBarCenter.getChildren().clear();
 
-            if (editMode.getValue()) {
-                editMode.set(false);
-
-                modeToggleButton.setText("Play Mode");
-                buttonBarCenter.getChildren().addAll(playAnimationButton, speedSlider, stopAnimationButton, stepAnimationButton, setViewMenu);
-
-                zoomScrollPane.autoZoom();
-
-            } else {
-                editMode.set(true);
-                activePlaying.set(false);
-
-                modeToggleButton.setText("Edit Mode");
-                buttonBarCenter.getChildren().addAll(setGraphButton, setParameterButton, setViewMenu);
-            }
+        modeToggleButton.setOnAction(event -> {
+            editMode.set(!editMode.get());
         });
-
     }
 
 

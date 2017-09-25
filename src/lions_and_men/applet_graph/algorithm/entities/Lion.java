@@ -11,6 +11,9 @@ import lions_and_men.applet_graph.algorithm.strategies.StrategyEnumLion;
 
 import java.util.ArrayList;
 
+/**
+ * lion specific entity
+ */
 public class Lion extends Entity {
     private static int defaultRange = 0;
     private static StrategyEnumLion defaultStrategy = StrategyEnumLion.CleverLion;

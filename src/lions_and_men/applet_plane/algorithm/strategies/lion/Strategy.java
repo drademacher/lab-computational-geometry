@@ -6,7 +6,9 @@ import lions_and_men.util.Point;
 
 import java.util.ArrayList;
 
-
+/**
+ * abstract strategy class
+ */
 public abstract class Strategy {
 
     private StrategyEnumLion strategyEnumLion;

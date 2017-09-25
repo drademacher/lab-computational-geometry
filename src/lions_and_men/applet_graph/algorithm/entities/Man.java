@@ -11,6 +11,9 @@ import lions_and_men.applet_graph.algorithm.strategies.StrategyEnumMan;
 import java.util.ArrayList;
 
 
+/**
+ * man specific entity
+ */
 public class Man extends Entity {
 
     private static int minimumDistance = 0;

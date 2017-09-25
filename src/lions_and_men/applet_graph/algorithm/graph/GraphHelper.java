@@ -4,7 +4,10 @@ import lions_and_men.applet_graph.algorithm.CoreController;
 
 import java.util.*;
 
-
+/**
+ * helper class
+ * helps to do graph algorithms like (different versions of) BSF
+ */
 public class GraphHelper {
 
     private static GraphHelper graphHelper;

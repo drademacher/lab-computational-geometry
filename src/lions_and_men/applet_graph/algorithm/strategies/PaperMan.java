@@ -9,6 +9,9 @@ import lions_and_men.applet_graph.algorithm.graph.Vertex;
 
 import java.util.ArrayList;
 
+/**
+ * Man Strategy, runs away from lions (provided by paper)
+ */
 public class PaperMan extends Strategy<Man> {
 
     private Vertex target = null;

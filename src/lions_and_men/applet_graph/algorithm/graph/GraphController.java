@@ -7,6 +7,10 @@ import java.util.ArrayList;
 import static lions_and_men.applet_graph.visualization.Constants.BIG_VERTEX_RADIUS;
 import static lions_and_men.applet_graph.visualization.Constants.SMALL_VERTEX_RADIUS;
 
+/**
+ * Controller to manage graph manipulation like add / remove vertex, etc
+ * Controls all graph data structures (vertices, edges, ..)
+ */
 public class GraphController {
 
     private static int idCounter = -1;
@@ -21,6 +25,9 @@ public class GraphController {
     public GraphController() {
     }
 
+    /**
+     * each vertex gets an id (for debugging and console output)
+     */
     private static int getIdCounter() {
         idCounter++;
         return idCounter;
@@ -399,9 +406,10 @@ public class GraphController {
         return vertex1.getCoordinates().add(addingVector);
     }
 
+    /**
+     * print graph (with ids) in console
+     */
     public void debugGraph() {
-
-
         StringBuilder str = new StringBuilder("\n#######################\n");
 
         str.append("bigVertices: ").append(this.bigVertices).append("\n");

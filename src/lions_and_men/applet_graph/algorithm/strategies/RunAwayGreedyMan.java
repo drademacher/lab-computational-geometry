@@ -7,6 +7,9 @@ import lions_and_men.applet_graph.algorithm.graph.Vertex;
 
 import java.util.ArrayList;
 
+/**
+ * Man Strategy, run away from lion greedy
+ */
 public class RunAwayGreedyMan extends Strategy<Man> {
 
     RunAwayGreedyMan(CoreController coreController) {

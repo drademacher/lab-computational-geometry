@@ -4,6 +4,9 @@ import lions_and_men.util.Point;
 
 import java.util.ArrayList;
 
+/**
+ * abstract vertex class (for big and small vertices)
+ */
 public abstract class Vertex {
 
     protected Point coordinates;

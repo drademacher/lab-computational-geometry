@@ -7,7 +7,9 @@ import lions_and_men.applet_graph.algorithm.graph.Vertex;
 
 import java.util.ArrayList;
 
-
+/**
+ * Lion Strategy, tries to coordinates with other lions
+ */
 public class CleverLion extends Strategy<Lion> {
 
     CleverLion(CoreController coreController) {

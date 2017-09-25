@@ -88,7 +88,7 @@ public class Lion implements Entity {
             item1.setOnAction(event2 -> mainPane.setOnMouseClicked(event3 -> {
 
                 mainPane.setOnMouseClicked(null);
-coreController.relocateLion(coordinates, mainPane.getLocalCoordinates(event3.getX(), event3.getY()));
+                coreController.relocateLion(coordinates, mainPane.getLocalCoordinates(event3.getX(), event3.getY()));
 
             }));
 

@@ -9,8 +9,11 @@ import lions_and_men.util.Random;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Objects;
 
+/**
+ * Plane Class
+ * Controls / manages all entities on plane (man, lions)
+ */
 public class Plane {
     private Man man;
     private ArrayList<Lion> lions;

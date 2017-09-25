@@ -5,6 +5,10 @@ import lions_and_men.applet_graph.algorithm.graph.Vertex;
 import lions_and_men.applet_graph.algorithm.strategies.Strategy;
 import lions_and_men.util.Point;
 
+/**
+ * abstract Entity class
+ * data structure with position on graph, strategy, etc
+ */
 public abstract class Entity {
 
 

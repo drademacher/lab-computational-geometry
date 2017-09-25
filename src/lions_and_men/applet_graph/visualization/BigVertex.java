@@ -64,7 +64,7 @@ public class BigVertex implements Vertex {
 
                 mainPane.setOnMouseClicked(null);
 
-              coreController.relocateVertex(coordinates, mainPane.getLocalCoordinates(event3.getX(), event3.getY()));
+                coreController.relocateVertex(coordinates, mainPane.getLocalCoordinates(event3.getX(), event3.getY()));
 
             }));
 

@@ -6,6 +6,9 @@ import lions_and_men.applet_graph.algorithm.graph.Vertex;
 
 import java.util.ArrayList;
 
+/**
+ * Lion and Man Strategy, does not move, only with user input
+ */
 public class Manual<T extends Entity> extends Strategy<T> {
 
     public Manual(CoreController coreController) {

@@ -1,6 +1,9 @@
 package lions_and_men.applet_plane.algorithm.strategies.lion;
 
 
+/**
+ * All provided lion strategies
+ */
 public enum StrategyEnumLion {
     Greedy;
 

@@ -2,6 +2,9 @@ package lions_and_men.applet_graph.algorithm.strategies;
 
 import lions_and_men.applet_graph.algorithm.CoreController;
 
+/**
+ * All provided Man strategies
+ */
 public enum StrategyEnumMan {
     DoNothing, Manual, PaperMan, RandomChoice, RunAwayGreedyMan;
 

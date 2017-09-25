@@ -15,7 +15,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-
+/**
+ * Controller Class
+ * API to control / change properties like entity coordinates, strategies
+ */
 public class CoreController {
 
     protected Plane plane = new Plane();

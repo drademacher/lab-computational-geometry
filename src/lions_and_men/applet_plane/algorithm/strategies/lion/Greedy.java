@@ -6,7 +6,9 @@ import lions_and_men.util.Point;
 
 import java.util.ArrayList;
 
-
+/**
+ * Lion Strategy, runs on shortest path to man
+ */
 public class Greedy extends Strategy {
 
     Greedy(StrategyEnumLion strategyEnumLion) {

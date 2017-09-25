@@ -4,6 +4,9 @@ import lions_and_men.util.Point;
 
 import java.util.ArrayList;
 
+/**
+ * BigVertex: vertices with multiple (>=2) edges
+ */
 public class BigVertex extends Vertex {
 
     private ArrayList<Edge> NEWedges = new ArrayList<>();

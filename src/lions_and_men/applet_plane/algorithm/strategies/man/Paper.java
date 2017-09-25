@@ -6,7 +6,9 @@ import lions_and_men.util.Point;
 
 import java.util.ArrayList;
 
-
+/**
+ * Man Strategy, runs away from lions (inductive)
+ */
 public class Paper extends Strategy {
 
     private double saveRadius;

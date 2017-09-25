@@ -5,6 +5,9 @@ import lions_and_men.util.Point;
 
 import java.util.ArrayList;
 
+/**
+ * edges between bigvertices (bigvertex <-> bigvertex)
+ */
 public class Edge {
 
     private BigVertex[] vertices = new BigVertex[2];

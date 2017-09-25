@@ -7,6 +7,9 @@ import lions_and_men.applet_graph.algorithm.graph.Vertex;
 
 import java.util.ArrayList;
 
+/**
+ * Lion and Man Strategy, runs randomly on graph
+ */
 public class RandomChoice<T extends Entity> extends Strategy<T> {
 
 

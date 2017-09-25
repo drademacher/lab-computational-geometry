@@ -4,7 +4,11 @@ import lions_and_men.util.Point;
 
 import java.util.ArrayList;
 
-
+/**
+ * AllPaths Object
+ * Result of calculation of all paths (lions paths, man path)
+ * return to visual controller to draw / animate paths
+ */
 public class AllPaths {
 
     public final ArrayList<Point> manPath;

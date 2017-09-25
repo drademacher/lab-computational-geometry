@@ -1,5 +1,8 @@
 package lions_and_men.applet_graph.algorithm.graph;
 
+/**
+ * connections between vertices (smallvertex <-> smallvertex, bigvertex <-> bigvertex, bigvertex <-> smallvertex)
+ */
 public class Connection {
 
     private Vertex[] vertices = new Vertex[2];

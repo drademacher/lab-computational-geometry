@@ -3,6 +3,9 @@ package lions_and_men.applet_plane.algorithm.plane;
 import lions_and_men.applet_plane.algorithm.strategies.man.Strategy;
 import lions_and_men.util.Point;
 
+/**
+ * Man entity on Plane
+ */
 public class Man extends Entity {
 
     private Strategy strategy;

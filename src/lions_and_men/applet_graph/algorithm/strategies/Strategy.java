@@ -7,6 +7,9 @@ import lions_and_men.applet_graph.algorithm.graph.Vertex;
 
 import java.util.ArrayList;
 
+/**
+ * Abstract Class for Lion and Man strategies
+ */
 public abstract class Strategy<T extends Entity> implements Cloneable {
     protected CoreController coreController;
     protected T entity;

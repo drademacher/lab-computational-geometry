@@ -14,6 +14,12 @@ import lions_and_men.util.Point;
 import java.io.*;
 import java.util.ArrayList;
 
+/**
+ * Controller Class
+ * coordinates entities and graph logic (algorithms on graph, movement)
+ * API to control / change properties like entity coordinates, strategies
+ * API to manipulate graph
+ */
 public class CoreController {
 
     protected GraphController graph;
@@ -651,6 +657,9 @@ public class CoreController {
         this.lions = new ArrayList<>();
     }
 
+    /**
+     * Hardcoded graph example
+     */
     public void setDefaultGraph1() {
         setEmptyGraph();
 
@@ -728,14 +737,9 @@ public class CoreController {
     }
 
 
-
-
-    /* ****************************
-     *
-     *   GRAPH MANIPULATION
-     *
-     * ****************************/
-
+    /**
+     * Hardcoded graph example
+     */
     public void setDefaultGraph2() {
         setEmptyGraph();
 
@@ -806,6 +810,9 @@ public class CoreController {
         this.setAllLionStrategy(StrategyEnumLion.AggroGreedyLion);
     }
 
+    /**
+     * Hardcoded graph example
+     */
     public void setDefaultGraph3() {
         setEmptyGraph();
 
@@ -876,6 +883,9 @@ public class CoreController {
         this.setAllLionStrategy(StrategyEnumLion.AggroGreedyLion);
     }
 
+    /**
+     * load file
+     */
     public void setGraphFromFile(File file) throws Exception {
         setEmptyGraph();
         try {
@@ -945,6 +955,9 @@ public class CoreController {
 
     }
 
+    /**
+     * save functionality
+     */
     public void saveGraphToFile(File file) {
 
         BufferedWriter bufferedWriter;
@@ -1006,6 +1019,9 @@ public class CoreController {
         return lion.goToNextPosition().getCoordinates();
     }
 
+    /**
+     * simulate next step (in core)... call from Visual Controller to do animation
+     */
     public boolean simulateStep() {
 
         for (Man man : this.getMen()) {
@@ -1023,6 +1039,9 @@ public class CoreController {
         return false;
     }
 
+    /**
+     * terminate condition
+     */
     private boolean lionsHaveWon() {
         for (Man man : getMen()) {
             for (Lion lion : getLions()) {

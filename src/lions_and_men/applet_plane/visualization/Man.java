@@ -41,13 +41,11 @@ public class Man extends Shape {
 
             removeButton.setOnAction(event2 -> coreController.removeMan(this.position));
 
-            relocateButton.setOnAction(event2 -> {
-                pane.setOnMouseClicked(event3 -> {
-                    pane.setOnMouseClicked(null);
-                    coreController.relocateMan(pane.getLocalCoordinates(event3.getX(), event3.getY()));
+            relocateButton.setOnAction(event2 -> pane.setOnMouseClicked(event3 -> {
+                pane.setOnMouseClicked(null);
+                coreController.relocateMan(pane.getLocalCoordinates(event3.getX(), event3.getY()));
 
-                });
-            });
+            }));
 
             contextMenu.getItems().addAll(removeButton, relocateButton, strategyMenu, new SeparatorMenuItem(), closeButton);
             contextMenu.show(shape, event1.getScreenX(), event1.getScreenY());

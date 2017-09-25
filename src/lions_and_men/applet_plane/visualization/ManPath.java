@@ -10,10 +10,8 @@ import java.util.ArrayList;
 public class ManPath extends Shape {
     private static Group group1 = new Group(), group2 = new Group();
     private static Polyline currentShape;
-    private ArrayList<Point> points;
 
     ManPath(ArrayList<Point> points) {
-        this.points = points;
         currentShape = new Polyline();
 
         currentShape.setStroke(Color.BLUE.deriveColor(1, 1, 1, 0.6));
@@ -38,7 +36,7 @@ public class ManPath extends Shape {
         currentShape = null;
     }
 
-    public static void transfer() {
+    static void transfer() {
         group1.getChildren().clear();
         group2.getChildren().clear();
 

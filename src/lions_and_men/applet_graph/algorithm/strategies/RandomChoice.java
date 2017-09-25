@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class RandomChoice<T extends Entity> extends Strategy<T> {
 
 
-    public RandomChoice(CoreController coreController) {
+    RandomChoice(CoreController coreController) {
         super(coreController);
     }
 

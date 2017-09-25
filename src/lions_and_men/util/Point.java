@@ -79,8 +79,7 @@ public class Point implements Comparable<Point> {
 
         Point that = (Point) o;
 
-        if (x != that.x) return false;
-        return y == that.y;
+        return !(x != that.x) && y == that.y;
 
     }
 

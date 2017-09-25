@@ -1,8 +1,6 @@
 package lions_and_men.applet_plane.algorithm.strategies.lion;
 
-/**
- * Created by Jens on 21.07.2017.
- */
+
 public enum StrategyEnumLion {
     Greedy;
 

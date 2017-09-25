@@ -27,12 +27,12 @@ public class Edge {
         return edgeVertices;
     }
 
-    public void registerEdgeVertex(SmallVertex edgeVertex) {
+    void registerEdgeVertex(SmallVertex edgeVertex) {
         this.edgeVertices.add(edgeVertex);
         weight++;
     }
 
-    public void unregisterEdgeVertex(SmallVertex edgeVertex) {
+    void unregisterEdgeVertex(SmallVertex edgeVertex) {
         this.edgeVertices.remove(edgeVertex);
         weight--;
     }
@@ -41,7 +41,7 @@ public class Edge {
         return weight;
     }
 
-    public boolean contains(BigVertex vertex) {
+    boolean contains(BigVertex vertex) {
         return vertices[0].equals(vertex) || vertices[1].equals(vertex);
     }
 
@@ -55,7 +55,7 @@ public class Edge {
         return null;
     }
 
-    public BigVertex[] getVertices() {
+    BigVertex[] getVertices() {
         return vertices;
     }
 

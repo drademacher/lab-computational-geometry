@@ -16,8 +16,8 @@ import lions_and_men.applet_plane.algorithm.plane.AllPaths;
 import lions_and_men.applet_plane.algorithm.strategies.lion.StrategyEnumLion;
 import lions_and_men.applet_plane.algorithm.strategies.man.StrategyEnumMan;
 import lions_and_men.applet_plane.visualization.*;
-import lions_and_men.util.ContextMenuHolder;
 import lions_and_men.exceptions.WrongConfigurationException;
+import lions_and_men.util.ContextMenuHolder;
 import lions_and_men.util.ZoomScrollPane;
 
 import java.io.File;
@@ -183,9 +183,7 @@ public class UserInterface {
         appletToggleButton.setStyle("-fx-font-style: italic");
         appletToggleButton.setOnAction(event -> Main.showChooser());
 
-        modeToggleButton.setOnAction(event -> {
-            editMode.set(!editMode.get());
-        });
+        modeToggleButton.setOnAction(event -> editMode.set(!editMode.get()));
 
     }
 

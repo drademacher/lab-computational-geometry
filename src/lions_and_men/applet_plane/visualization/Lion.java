@@ -45,17 +45,13 @@ public class Lion extends Shape {
             strategyMenu.getItems().addAll(greedyStrategyButton);
 
 
-            removeButton.setOnAction(event2 -> {
-                coreController.removeLion(new Point(xPos.getValue(), yPos.getValue()));
-            });
+            removeButton.setOnAction(event2 -> coreController.removeLion(new Point(xPos.getValue(), yPos.getValue())));
 
-            relocateButton.setOnAction(event2 -> {
-                pane.setOnMouseClicked(event3 -> {
-                    pane.setOnMouseClicked(null);
-                    coreController.relocateLion(new Point(xPos.getValue(), yPos.getValue()), pane.getLocalCoordinates(event3.getX(), event3.getY()));
+            relocateButton.setOnAction(event2 -> pane.setOnMouseClicked(event3 -> {
+                pane.setOnMouseClicked(null);
+                coreController.relocateLion(new Point(xPos.getValue(), yPos.getValue()), pane.getLocalCoordinates(event3.getX(), event3.getY()));
 
-                });
-            });
+            }));
 
             contextMenu.getItems().addAll(removeButton, relocateButton, strategyMenu, new SeparatorMenuItem(), closeButton);
             contextMenu.show(shape, event1.getScreenX(), event1.getScreenY());

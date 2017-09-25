@@ -10,9 +10,9 @@ public abstract class Entity {
 
     protected Vertex position;
     protected CoreController coreController;
-    protected Vertex nextPosition;
-    protected boolean didManualStep = false;
     protected Strategy strategy;
+    Vertex nextPosition;
+    boolean didManualStep = false;
 
     public Entity(Vertex startPosition, CoreController coreController) {
         this.position = startPosition;
@@ -44,13 +44,13 @@ public abstract class Entity {
         return nextPosition;
     }
 
-    public abstract void setNextPosition(Vertex nextposition);
+    public abstract void setNextPosition(Vertex nextPosition);
 
     public Vertex getCalculatedPosition() {
         return nextPosition;
     }
 
-    public void resetCalculatedPosition(){
+    public void resetCalculatedPosition() {
         nextPosition = null;
         strategy.reset();
     }

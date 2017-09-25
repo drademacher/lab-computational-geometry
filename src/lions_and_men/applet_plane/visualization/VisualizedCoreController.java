@@ -9,9 +9,9 @@ import javafx.scene.shape.Path;
 import javafx.util.Duration;
 import lions_and_men.applet_plane.algorithm.CoreController;
 import lions_and_men.applet_plane.algorithm.plane.AllPaths;
+import lions_and_men.exceptions.WrongConfigurationException;
 import lions_and_men.util.ConvexHull;
 import lions_and_men.util.Point;
-import lions_and_men.exceptions.WrongConfigurationException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,9 +21,7 @@ import static lions_and_men.applet_plane.visualization.Constants.ANIMATION_DURAT
 
 public class VisualizedCoreController extends CoreController {
     private List<Lion> lions;
-    private ConvexHull hull;
     private Man manPoint;
-    private AllPaths allPaths;
     private int pathCount;
     private int pathStoneCount;
     private int minimumPathSize;
@@ -62,7 +60,7 @@ public class VisualizedCoreController extends CoreController {
         }
     }
 
-    public void clean() {
+    private void clean() {
         if (this.lions != null) {
             this.lions.forEach(Lion::clear);
         }
@@ -133,7 +131,7 @@ public class VisualizedCoreController extends CoreController {
     public void createMan(Point coordinates) {
         super.createMan(coordinates);
 
-        if(manPoint != null){
+        if (manPoint != null) {
             return;
         }
         manPoint = new Man(coordinates);
@@ -175,7 +173,7 @@ public class VisualizedCoreController extends CoreController {
 
 
     private void updateConvexHull(List<Lion> lions) {
-        hull = new ConvexHull(lions);
+        ConvexHull hull = new ConvexHull(lions);
         Lion[] lionsInHull = new Lion[hull.getPoints().length];
         for (int i = 0; i < lionsInHull.length; i++) {
             for (Lion l : lions) {
@@ -203,7 +201,7 @@ public class VisualizedCoreController extends CoreController {
             return null;
         }
 
-        allPaths = super.simulateStep();
+        AllPaths allPaths = super.simulateStep();
 
         // draw path stuff
         if (pathCount == 0) {

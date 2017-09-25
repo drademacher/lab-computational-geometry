@@ -21,9 +21,6 @@ public class ZoomScrollPane extends ScrollPane {
     private final StackPane mainPane = new StackPane();
     private Group mainGroup = new Group();
 
-//    private Point2D scrollOffset = new Point2D(0, 0);
-
-
     public ZoomScrollPane() {
         final double SCALE_DELTA = 1.1;
 

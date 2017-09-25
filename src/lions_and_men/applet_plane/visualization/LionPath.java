@@ -10,12 +10,8 @@ import java.util.ArrayList;
 public class LionPath extends Shape {
     private static Group group1 = new Group(), group2 = new Group();
 
-    private ArrayList<Point> points;
-    private Polyline latestShape;
-
     LionPath(ArrayList<Point> points) {
-        this.points = points;
-        this.latestShape = new Polyline();
+        Polyline latestShape = new Polyline();
 
         latestShape.setStroke(Color.RED.deriveColor(1, 1, 1, 0.1));
         for (Point p : points) {

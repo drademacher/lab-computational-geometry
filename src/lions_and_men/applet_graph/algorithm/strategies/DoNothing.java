@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class DoNothing<T extends Entity> extends Strategy<T> {
 
-    public DoNothing(CoreController coreController) {
+    DoNothing(CoreController coreController) {
         super(coreController);
     }
 

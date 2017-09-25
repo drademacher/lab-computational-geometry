@@ -6,9 +6,9 @@ import java.util.ArrayList;
 
 public abstract class Vertex {
 
-    protected ArrayList<Connection> connections = new ArrayList<>();
     protected Point coordinates;
-    protected int id;
+    private ArrayList<Connection> connections = new ArrayList<>();
+    private int id;
 
     public Vertex(int id, Point coordinates) {
         this.coordinates = coordinates;
@@ -16,12 +16,12 @@ public abstract class Vertex {
     }
 
 
-    public boolean registerConnection(Connection connection) {
-        return this.connections.add(connection);
+    void registerConnection(Connection connection) {
+        this.connections.add(connection);
     }
 
-    public boolean unregisterConnection(Connection connection) {
-        return this.connections.remove(connection);
+    void unregisterConnection(Connection connection) {
+        this.connections.remove(connection);
     }
 
     public Point getCoordinates() {
@@ -32,7 +32,7 @@ public abstract class Vertex {
         this.coordinates = coordinates;
     }
 
-    public int getId() {
+    int getId() {
         return id;
     }
 

@@ -6,15 +6,13 @@ import lions_and_men.util.Point;
 
 import java.util.ArrayList;
 
-/**
- * Created by Jens on 20.07.2017.
- */
+
 public class Paper extends Strategy {
 
     private double saveRadius;
     private double radiusMan;
 
-    public Paper(StrategyEnumMan strategyEnumMan) {
+    Paper(StrategyEnumMan strategyEnumMan) {
         super(strategyEnumMan);
     }
 
@@ -33,7 +31,7 @@ public class Paper extends Strategy {
             result.add(man.getPosition());
         }
 
-        result = doMove(man, lions.get(index), inductionPath, result);
+        result = doMove(lions.get(index), inductionPath, result);
 
         return result;
     }
@@ -45,7 +43,7 @@ public class Paper extends Strategy {
     * saveRadius            == ???   (lion.getRange()*2)
     *
     */
-    private ArrayList<Point> doMove(Man man, Lion lion, ArrayList<Point> inductionPath, ArrayList<Point> curPath) {
+    private ArrayList<Point> doMove(Lion lion, ArrayList<Point> inductionPath, ArrayList<Point> curPath) {
         this.saveRadius = lion.getRange() * 2;
 
         Point curLionPosition = lion.getCalculatedPositionAtTime(curPath.size() - 2);
@@ -72,10 +70,8 @@ public class Paper extends Strategy {
             } else if (!cuPosition.equals(goalPosition) &&
                     (cuPosition.distanceTo(curLionPosition) >= saveRadius - lion.getSpeed()) &&
                     (goInGoalDirection(cuPosition, goalPosition).distanceTo(curLionPosition) >= (lion.getSpeed() + cuPosition.distanceTo(curLionPosition)))) {
-                // system.out.println("CASE B");
                 curPath.add(goInGoalDirection(cuPosition, goalPosition));
             } else {
-                // system.out.println("CASE C");
                 curPath.add(doAvoidanceMove(cuPosition, curLionPosition));
             }
         }
@@ -88,8 +84,7 @@ public class Paper extends Strategy {
         double vectorLength = vector.length();
         Point unitVector = vector.mul(1 / vectorLength);
         Point stepVector = unitVector.mul(-radiusMan);
-        Point result = curPosition.add(stepVector);
-        return result;
+        return curPosition.add(stepVector);
     }
 
     // free move and escape move
@@ -100,8 +95,7 @@ public class Paper extends Strategy {
         Point unitVector = vector.mul(1 / vectorLength);
         Point stepVector = unitVector.mul(radiusMan);
 
-        Point result = curPosition.add(stepVector);
-        return result;
+        return curPosition.add(stepVector);
     }
 
     // avoidance move
@@ -162,24 +156,4 @@ public class Paper extends Strategy {
     }
 
 
-    private double getAngleBetween(Point previous, Point center, Point next) {
-
-        Point vector1 = new Point(previous.getX() - center.getX(), previous.getY() - center.getY());
-        Point vector2 = new Point(next.getX() - center.getX(), next.getY() - center.getY());
-        Point vector3 = new Point(previous.getX() - next.getX(), previous.getY() - next.getY());
-
-        //need to normalize:
-        Point vector1Normalized = vector1.mul(1 / vector1.length());
-        Point vector2Normalized = vector2.mul(1 / vector2.length());
-
-        double rad = Math.acos(vector1Normalized.getX() * vector2Normalized.getX() + vector1Normalized.getY() * vector2Normalized.getY());
-
-        // system.out.println("rad "+rad);
-
-        double deg = Math.toDegrees(rad);
-
-        // system.out.println("deg "+deg);
-
-        return deg;
-    }
 }

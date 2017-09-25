@@ -27,7 +27,7 @@ public abstract class Entity {
         return speed;
     }
 
-    protected void setSpeed(double speed) {
+    void setSpeed(double speed) {
         this.speed = speed;
     }
 
@@ -40,7 +40,7 @@ public abstract class Entity {
         }};
     }
 
-    public void setCalculatedPath(ArrayList<Point> calcedPath) {
+    void setCalculatedPath(ArrayList<Point> calcedPath) {
         this.calculatedPath = calcedPath;
     }
 
@@ -58,7 +58,4 @@ public abstract class Entity {
         return null;
     }
 
-    public Point getCalculatedLastPosition() {
-        return getCalculatedPath().get(getCalculatedPath().size() - 1);
-    }
 }

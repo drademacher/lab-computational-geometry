@@ -11,7 +11,7 @@ public class ContextMenuHolder {
         // disable constructor
     }
 
-    public static final ContextMenu getFreshContextMenu() {
+    public static ContextMenu getFreshContextMenu() {
         if (singleton != null) {
             singleton.hide();
         }

@@ -6,9 +6,7 @@ import lions_and_men.util.Point;
 
 import java.util.ArrayList;
 
-/**
- * Created by Jens on 21.07.2017.
- */
+
 public abstract class Strategy {
 
     private StrategyEnumLion strategyEnumLion;

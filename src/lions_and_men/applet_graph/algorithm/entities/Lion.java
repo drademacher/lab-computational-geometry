@@ -5,9 +5,9 @@ import lions_and_men.applet_graph.algorithm.CoreController;
 import lions_and_men.applet_graph.algorithm.graph.Connection;
 import lions_and_men.applet_graph.algorithm.graph.GraphHelper;
 import lions_and_men.applet_graph.algorithm.graph.Vertex;
-import lions_and_men.applet_graph.algorithm.strategies.StrategyEnumLion;
-import lions_and_men.applet_graph.algorithm.strategies.Strategy;
 import lions_and_men.applet_graph.algorithm.strategies.Manual;
+import lions_and_men.applet_graph.algorithm.strategies.Strategy;
+import lions_and_men.applet_graph.algorithm.strategies.StrategyEnumLion;
 
 import java.util.ArrayList;
 
@@ -100,6 +100,6 @@ public class Lion extends Entity {
                 return true;
             }
         }
-        return false;//TODO
+        return false;
     }
 }

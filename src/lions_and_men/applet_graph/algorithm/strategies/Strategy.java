@@ -8,7 +8,7 @@ import lions_and_men.applet_graph.algorithm.graph.Vertex;
 import java.util.ArrayList;
 
 public abstract class Strategy<T extends Entity> implements Cloneable {
-        protected CoreController coreController;
+    protected CoreController coreController;
     protected T entity;
     GraphHelper helper;
 
@@ -39,7 +39,7 @@ public abstract class Strategy<T extends Entity> implements Cloneable {
         return this.getClass().getName().substring(lastOccurrenceOfPoint + 1);
     }
 
-    public void reset(){
+    public void reset() {
 
     }
 }

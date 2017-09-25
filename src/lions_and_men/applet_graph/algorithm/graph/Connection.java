@@ -14,7 +14,7 @@ public class Connection {
     }
 
 
-    public boolean contains(Vertex vertex) {
+    boolean contains(Vertex vertex) {
         return vertices[0].equals(vertex) || vertices[1].equals(vertex);
     }
 
@@ -26,10 +26,6 @@ public class Connection {
             return vertices[0];
         }
         return null;
-    }
-
-    public Vertex[] getVertices() {
-        return vertices;
     }
 
     @Override

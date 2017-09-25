@@ -46,9 +46,7 @@ public class Edge {
             MenuItem closeItem = new MenuItem("Close");
 
 
-            item0.setOnAction(event2 -> {
-                coreController.removeEdge(from, to);
-            });
+            item0.setOnAction(event2 -> coreController.removeEdge(from, to));
 
             item1.setOnAction(event2 -> {
                 int weight = coreController.getEdgeByVertices(coreController.getBigVertexByCoordinate(from), coreController.getBigVertexByCoordinate(to)).getEdgeWeight();
@@ -98,11 +96,11 @@ public class Edge {
         shapeGroup.getChildren().remove(shape);
     }
 
-    public Point getPositionTo() {
+    Point getPositionTo() {
         return to;
     }
 
-    public Point getPositionFrom() {
+    Point getPositionFrom() {
         return from;
     }
 }

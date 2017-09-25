@@ -36,10 +36,10 @@ public class ConvexHull {
             Arrays.sort(this.points);
 
             // Build lower hull
-            for (int i = 0; i < n; ++i) {
-                while (k >= 2 && cross(this.hull[k - 2], this.hull[k - 1], this.points[i]) <= 0)
+            for (Point point : this.points) {
+                while (k >= 2 && cross(this.hull[k - 2], this.hull[k - 1], point) <= 0)
                     k--;
-                this.hull[k++] = this.points[i];
+                this.hull[k++] = point;
             }
 
             // Build upper hull
@@ -51,10 +51,8 @@ public class ConvexHull {
             if (k > 1) {
                 this.hull = Arrays.copyOfRange(this.hull, 0, k - 1); // remove non-hull vertices after k; remove k - 1 which is a duplicate
             }
-        } else if (this.points.length <= 1) {
-            this.hull = this.points;
         } else {
-//            return null;
+            this.hull = this.points;
         }
     }
 
@@ -65,7 +63,7 @@ public class ConvexHull {
         boolean result = false;
         for (i = 0, j = hull.length - 1; i < hull.length; j = i++) {
             if ((hull[i].getY() > test.getY()) != (hull[j].getY() > test.getY()) &&
-                    (test.getX() < (hull[j].getX() - hull[i].getX()) * (test.getY() - hull[i].getY()) / (hull[j].getY()-hull[i].getY()) + hull[i].getX())) {
+                    (test.getX() < (hull[j].getX() - hull[i].getX()) * (test.getY() - hull[i].getY()) / (hull[j].getY() - hull[i].getY()) + hull[i].getX())) {
                 result = !result;
             }
         }

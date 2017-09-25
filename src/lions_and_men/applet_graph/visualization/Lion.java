@@ -17,9 +17,7 @@ import java.util.Optional;
 
 import static lions_and_men.applet_graph.visualization.Constants.*;
 
-/**
- * Created by Jens on 25.06.2017.
- */
+
 public class Lion implements Entity {
     private static ZoomScrollPane mainPane;
     private static Group shapeGroup = new Group();
@@ -63,15 +61,9 @@ public class Lion implements Entity {
             MenuItem iteme3 = new MenuItem("Set");
 
 
-            iteme1.setOnAction(event2 -> {
-                lions_and_men.applet_graph.algorithm.entities.Lion lion = coreController.getLionByCoordinate(coordinates);
-                coreController.incrementLionRange(coordinates);
-            });
+            iteme1.setOnAction(event2 -> coreController.incrementLionRange(coordinates));
 
-            iteme2.setOnAction(event2 -> {
-                lions_and_men.applet_graph.algorithm.entities.Lion lion = coreController.getLionByCoordinate(coordinates);
-                coreController.decrementLionRange(coordinates);
-            });
+            iteme2.setOnAction(event2 -> coreController.decrementLionRange(coordinates));
 
             iteme3.setOnAction(event2 -> {
                 lions_and_men.applet_graph.algorithm.entities.Lion lion = coreController.getLionByCoordinate(coordinates);
@@ -91,40 +83,24 @@ public class Lion implements Entity {
             edgeMenu.getItems().addAll(iteme1, iteme2, iteme3);
 
 
-            item0.setOnAction(event2 -> {
-                coreController.removeLion(coordinates);
-            });
+            item0.setOnAction(event2 -> coreController.removeLion(coordinates));
 
-            item1.setOnAction(event2 -> {
-                mainPane.setOnMouseClicked(event3 -> {
+            item1.setOnAction(event2 -> mainPane.setOnMouseClicked(event3 -> {
 
-                    mainPane.setOnMouseClicked(null);
+                mainPane.setOnMouseClicked(null);
+coreController.relocateLion(coordinates, mainPane.getLocalCoordinates(event3.getX(), event3.getY()));
 
-//                    System.out.println(mainPane.getLocalCoordinates(event3.getX(), event3.getY()));
-                    coreController.relocateLion(coordinates, mainPane.getLocalCoordinates(event3.getX(), event3.getY()));
+            }));
 
-                });
-            });
+            waitStrategyButton.setOnAction(event2 -> coreController.setLionStrategy(coordinates, StrategyEnumLion.DoNothing));
 
-            waitStrategyButton.setOnAction(event2 -> {
-                coreController.setLionStrategy(coordinates, StrategyEnumLion.DoNothing);
-            });
+            greedyStrategyButton.setOnAction(event2 -> coreController.setLionStrategy(coordinates, StrategyEnumLion.AggroGreedyLion));
 
-            greedyStrategyButton.setOnAction(event2 -> {
-                coreController.setLionStrategy(coordinates, StrategyEnumLion.AggroGreedyLion);
-            });
+            cleverStrategyButton.setOnAction(event2 -> coreController.setLionStrategy(coordinates, StrategyEnumLion.CleverLion));
 
-            cleverStrategyButton.setOnAction(event2 -> {
-                coreController.setLionStrategy(coordinates, StrategyEnumLion.CleverLion);
-            });
+            randomStrategyButton.setOnAction(event2 -> coreController.setLionStrategy(coordinates, StrategyEnumLion.RandomChoice));
 
-            randomStrategyButton.setOnAction(event2 -> {
-                coreController.setLionStrategy(coordinates, StrategyEnumLion.RandomChoice);
-            });
-
-            manualStrategyButton.setOnAction(event2 -> {
-                coreController.setLionStrategy(coordinates, StrategyEnumLion.Manual);
-            });
+            manualStrategyButton.setOnAction(event2 -> coreController.setLionStrategy(coordinates, StrategyEnumLion.Manual));
 
             contextMenu.getItems().addAll(item0, item1, strategyMenu, edgeMenu, new SeparatorMenuItem(), closeItem);
             contextMenu.show(shape, event1.getScreenX(), event1.getScreenY());
@@ -154,12 +130,6 @@ public class Lion implements Entity {
 
         this.coordinates = coordinates;
     }
-
-//    public void relocate(Point coordinates) {
-//        this.coordinates = coordinates;
-//        shape.relocate(coordinates.getX() - ENTITY_RADIUS, coordinates.getY() - ENTITY_RADIUS);
-//    }
-
 
     public void delete() {
         shapeGroup.getChildren().remove(shape);

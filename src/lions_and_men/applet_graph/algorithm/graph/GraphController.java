@@ -160,7 +160,7 @@ public class GraphController {
         }
     }
 
-    public void changeEdgeWeight(BigVertex vertex1, BigVertex vertex2) {
+    private void changeEdgeWeight(BigVertex vertex1, BigVertex vertex2) {
         changeEdgeWeight(vertex1, vertex2, GraphController.defaultEdgeWeight);
     }
 
@@ -401,7 +401,6 @@ public class GraphController {
 
     public void debugGraph() {
 
-        System.out.println("debug graph....");
 
         StringBuilder str = new StringBuilder("\n#######################\n");
 

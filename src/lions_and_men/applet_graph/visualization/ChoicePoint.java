@@ -9,22 +9,15 @@ import lions_and_men.util.Point;
 public class ChoicePoint {
     private static Group shapeGroup = new Group();
 
-    private Circle shape;
-    private VisualizedCoreController coreController;
     private Point choice;
-    private Point entity;
 
-    public ChoicePoint(VisualizedCoreController coreController, Point entity, Point startCoordinates, Color color) {
-        this.coreController = coreController;
-        this.entity = entity;
+    ChoicePoint(VisualizedCoreController coreController, Point entity, Point startCoordinates, Color color) {
         this.choice = startCoordinates;
 
-        shape = new Circle(choice.getX(), choice.getY(), Constants.CHOICEPOINT_RADIUS, color);
+        Circle shape = new Circle(choice.getX(), choice.getY(), Constants.CHOICEPOINT_RADIUS, color);
         shapeGroup.getChildren().add(shape);
 
-        shape.setOnMouseClicked(event -> {
-            coreController.setNextEntityStep(entity, choice);
-        });
+        shape.setOnMouseClicked(event -> coreController.setNextEntityStep(entity, choice));
     }
 
 

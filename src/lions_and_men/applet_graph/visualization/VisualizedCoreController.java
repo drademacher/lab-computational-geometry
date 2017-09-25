@@ -289,7 +289,7 @@ public class VisualizedCoreController extends CoreController {
         rangesMan.forEach(Range::delete);
         rangesMan.clear();
 
-        getMen().forEach(man -> man.getRangeVertices().forEach(vertex -> rangesMan.add(new Range(this, vertex.getCoordinates(), true))));
+        getMen().forEach(man -> man.getRangeVertices().forEach(vertex -> rangesMan.add(new Range(vertex.getCoordinates(), true))));
     }
 
     @Override
@@ -304,7 +304,7 @@ public class VisualizedCoreController extends CoreController {
         rangesLion.forEach(Range::delete);
         rangesLion.clear();
 
-        getLions().forEach(lion -> lion.getRangeVertices().forEach(vertex -> rangesLion.add(new Range(this, vertex.getCoordinates()))));
+        getLions().forEach(lion -> lion.getRangeVertices().forEach(vertex -> rangesLion.add(new Range(vertex.getCoordinates()))));
     }
 
 
@@ -315,8 +315,8 @@ public class VisualizedCoreController extends CoreController {
         stepPreviews.forEach(Vertex::delete);
         stepPreviews.clear();
 
-        getMen().forEach(man -> stepPreviews.add(new StepPreview(this, man.getNextPosition().getCoordinates())));
-        getLions().forEach(lion -> stepPreviews.add(new StepPreview(this, lion.getNextPosition().getCoordinates())));
+        getMen().forEach(man -> stepPreviews.add(new StepPreview(man.getNextPosition().getCoordinates())));
+        getLions().forEach(lion -> stepPreviews.add(new StepPreview(lion.getNextPosition().getCoordinates())));
 
 
         // choice points

@@ -7,18 +7,15 @@ import lions_and_men.applet_graph.algorithm.graph.Vertex;
 
 import java.util.ArrayList;
 
-/**
- * Created by Jens on 18.07.2017.
- */
+
 public class CleverLion extends Strategy<Lion> {
 
-    public CleverLion(CoreController coreController) {
+    CleverLion(CoreController coreController) {
         super(coreController);
     }
 
     @Override
     protected ArrayList<Vertex> calculatePossibleSteps() {
-        //System.out.println("### " + lion);
         Vertex currentPosition = entity.getCurrentPosition();
         int steps = Integer.MAX_VALUE;
         int stepsToBigVertex = Integer.MAX_VALUE;

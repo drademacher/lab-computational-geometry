@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class RunAwayGreedyMan extends Strategy<Man> {
 
-    public RunAwayGreedyMan(CoreController coreController) {
+    RunAwayGreedyMan(CoreController coreController) {
         super(coreController);
     }
 

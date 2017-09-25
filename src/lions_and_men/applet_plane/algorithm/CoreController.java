@@ -1,14 +1,14 @@
 package lions_and_men.applet_plane.algorithm;
 
 import javafx.scene.control.Alert;
-import lions_and_men.applet_plane.algorithm.plane.AllPaths;
-import lions_and_men.applet_plane.algorithm.plane.Lion;
-import lions_and_men.applet_plane.algorithm.plane.Man;
-import lions_and_men.applet_plane.algorithm.plane.Plane;
+import lions_and_men.applet_plane.algorithm.plane.*;
 import lions_and_men.applet_plane.algorithm.strategies.lion.StrategyEnumLion;
 import lions_and_men.applet_plane.algorithm.strategies.man.StrategyEnumMan;
 import lions_and_men.exceptions.WrongConfigurationException;
-import lions_and_men.util.*;
+import lions_and_men.util.ConvexHull;
+import lions_and_men.util.Global;
+import lions_and_men.util.Point;
+import lions_and_men.util.Random;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ public class CoreController {
     protected double maxY = 0;
     protected double minX = 0;
     protected double minY = 0;
-    protected boolean editMode = true;
+    private boolean editMode = true;
 
     private int stepsToGoAfterEscape = 100;
 
@@ -161,7 +161,6 @@ public class CoreController {
 
             // valid version, read file
             while ((currentLine = br.readLine()) != null) { //Read in MapRow
-//                System.out.println(currentLine);
 
                 lineElements = currentLine.split("##");
 
@@ -173,7 +172,6 @@ public class CoreController {
                         setManStrategy(StrategyEnumMan.valueOf(lineElements[3]));
                         setManEpsilon(Double.parseDouble(lineElements[4]));
 
-                        // System.out.println("" + new Point(Double.parseDouble(lineElements[1]), Double.parseDouble(lineElements[2])) + " ## " + Double.parseDouble(lineElements[4]));
                         break;
                     case "L":
                         createLion(pos);
@@ -203,13 +201,11 @@ public class CoreController {
             bufferedWriter.flush();
 
             Man man = plane.getMan();
-//                System.out.println("M##" + man.getPosition().getX() + "##" + man.getPosition().getY() + "##" + man.getStrategy().toString() + "##" + man.getSpeed());
             bufferedWriter.write("M##" + man.getPosition().getX() + "##" + man.getPosition().getY() + "##" + man.getStrategy().getName() + "##" + man.getEpsilon());
             bufferedWriter.newLine();
             bufferedWriter.flush();
 
             for (Lion lion : plane.getLions()) {
-                System.out.println(lion.getStrategy());
                 bufferedWriter.write("L##" + lion.getPosition().getX() + "##" + lion.getPosition().getY() + "##" + lion.getStrategy().getName());
                 bufferedWriter.newLine();
                 bufferedWriter.flush();
@@ -256,7 +252,7 @@ public class CoreController {
 
         allPathsList.clear();
         this.plane.getMan().resetPath();
-        this.plane.getLions().forEach(lion -> lion.resetPath());
+        this.plane.getLions().forEach(Entity::resetPath);
 
         ArrayList<Point> resultPath = new ArrayList<>();
         ArrayList<Point> inductionPath;
@@ -284,7 +280,6 @@ public class CoreController {
 
                 for (int j = 0; j <= k; j++) {
                     lionPaths.put(j, this.plane.calcLionPath(j, lionPaths.get(j), resultPath));
-//                    this.plane.setCalculatedLionPath(lionPaths.get(j), j);
                 }
 
 
@@ -345,10 +340,10 @@ public class CoreController {
     }
 
     public void setEditMode(boolean editMode) throws WrongConfigurationException {
-        if ( !editMode && (this.plane.getMan() == null || this.plane.getLions() == null || this.plane.getLions().size() < 1)) {
+        if (!editMode && (this.plane.getMan() == null || this.plane.getLions() == null || this.plane.getLions().size() < 1)) {
             throw new WrongConfigurationException();
         }
-        if(!editMode){
+        if (!editMode) {
             resetInductionsStep();
         }
         this.editMode = editMode;
@@ -382,7 +377,7 @@ public class CoreController {
     }
 
     private void setManEpsilon(double epsilon) {
-        if(plane.getMan() != null){
+        if (plane.getMan() != null) {
             plane.getMan().setEpsilon(epsilon);
         }
     }
@@ -410,13 +405,13 @@ public class CoreController {
         }
     }
 
-    public void setStepsToGoAfterEscape(int stepsToGoAfterEscape) {
-        if(stepsToGoAfterEscape > 0){
-            this.stepsToGoAfterEscape = stepsToGoAfterEscape;
-        }
-    }
-
     public int getStepsToGoAfterEscape() {
         return stepsToGoAfterEscape;
+    }
+
+    public void setStepsToGoAfterEscape(int stepsToGoAfterEscape) {
+        if (stepsToGoAfterEscape > 0) {
+            this.stepsToGoAfterEscape = stepsToGoAfterEscape;
+        }
     }
 }

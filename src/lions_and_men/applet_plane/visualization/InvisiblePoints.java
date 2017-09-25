@@ -10,12 +10,8 @@ import static lions_and_men.applet_plane.visualization.Constants.ENTITY_RADIUS;
 public class InvisiblePoints extends Shape {
     private static Group group = new Group();
 
-    private Point position;
-    private Circle shape;
-
     InvisiblePoints(Point position) {
-        this.position = position;
-        this.shape = new Circle(position.getX(), position.getY(), ENTITY_RADIUS, Color.TRANSPARENT);
+        Circle shape = new Circle(position.getX(), position.getY(), ENTITY_RADIUS, Color.TRANSPARENT);
         group.getChildren().add(shape);
     }
 

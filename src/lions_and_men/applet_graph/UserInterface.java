@@ -123,9 +123,7 @@ public class UserInterface {
         speedSlider.setMajorTickUnit(50);
         speedSlider.setMinorTickCount(0);
         speedSlider.setBlockIncrement(50);
-        speedSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
-            ANIMATION_DURATION = newValue.intValue();
-        });
+        speedSlider.valueProperty().addListener((observable, oldValue, newValue) -> ANIMATION_DURATION = newValue.intValue());
         speedSlider.disableProperty().bind(activePlaying);
         speedSlider.setLabelFormatter(new StringConverter<Double>() {
             @Override
@@ -184,9 +182,7 @@ public class UserInterface {
         appletToggleButton.setOnAction(event -> Main.showChooser());
 
 
-        modeToggleButton.setOnAction(event -> {
-            editMode.set(!editMode.get());
-        });
+        modeToggleButton.setOnAction(event -> editMode.set(!editMode.get()));
     }
 
 

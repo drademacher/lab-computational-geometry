@@ -1,9 +1,6 @@
 package lions_and_men.applet_plane.algorithm.strategies.man;
 
 
-/**
- * Created by Jens on 20.07.2017.
- */
 public enum StrategyEnumMan {
     Paper;
 

@@ -4,9 +4,7 @@ import lions_and_men.applet_graph.algorithm.CoreController;
 
 import java.util.*;
 
-/**
- * Created by Jens on 20.05.2017.
- */
+
 public class GraphHelper {
 
     private static GraphHelper graphHelper;
@@ -33,7 +31,7 @@ public class GraphHelper {
         Map<Vertex, Integer> map = new HashMap<>();
         Set<Vertex> set = new HashSet<>();
         Queue<Vertex> queue = new LinkedList<>();
-        Vertex current = null;
+        Vertex current;
 
         set.add(startVertex);
 
@@ -77,7 +75,7 @@ public class GraphHelper {
         Map<Vertex, Integer> map = new HashMap<>();
         Set<Vertex> set = new HashSet<>();
         Queue<Vertex> queue = new LinkedList<>();
-        Vertex current = null;
+        Vertex current;
 
         map.put(directionVertex, 1);
 
@@ -117,7 +115,7 @@ public class GraphHelper {
         Map<Vertex, Integer> map = new HashMap<>();
         Set<Vertex> set = new HashSet<>();
         Queue<Vertex> queue = new LinkedList<>();
-        Vertex current = null;
+        Vertex current;
 
         map.put(startVertex, 0);
 
@@ -244,7 +242,7 @@ public class GraphHelper {
 
         Set<Vertex> set = new HashSet<>();
         Queue<Vertex> queue = new LinkedList<>();
-        Vertex current = null;
+        Vertex current;
 
 
         set.add(vertex);
@@ -289,7 +287,7 @@ public class GraphHelper {
 
         Set<Vertex> set = new HashSet<>();
         Queue<Vertex> queue = new LinkedList<>();
-        Vertex current = null;
+        Vertex current;
 
 
         set.add(vertex);

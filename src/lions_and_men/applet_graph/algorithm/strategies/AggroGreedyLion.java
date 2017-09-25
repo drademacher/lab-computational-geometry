@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class AggroGreedyLion extends Strategy<Lion> {
 
-    public AggroGreedyLion(CoreController coreController) {
+    AggroGreedyLion(CoreController coreController) {
         super(coreController);
     }
 

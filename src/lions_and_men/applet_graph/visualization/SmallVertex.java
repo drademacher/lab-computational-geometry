@@ -15,7 +15,7 @@ public class SmallVertex implements Vertex {
     private VisualizedCoreController coreController;
     private Point coordinates;
 
-    public SmallVertex(VisualizedCoreController coreController, Point startCoordinates) {
+    SmallVertex(VisualizedCoreController coreController, Point startCoordinates) {
 
         this.coreController = coreController;
         this.coordinates = startCoordinates;
@@ -38,13 +38,9 @@ public class SmallVertex implements Vertex {
             MenuItem closeItem = new MenuItem("Close");
 
 
-            item0.setOnAction(event2 -> {
-                coreController.setMan(coordinates);
-            });
+            item0.setOnAction(event2 -> coreController.setMan(coordinates));
 
-            item1.setOnAction(event2 -> {
-                coreController.setLion(coordinates);
-            });
+            item1.setOnAction(event2 -> coreController.setLion(coordinates));
 
             contextMenu.getItems().addAll(item0, item1, new SeparatorMenuItem(), closeItem);
             contextMenu.show(shape, event1.getScreenX(), event1.getScreenY());

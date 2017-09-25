@@ -23,8 +23,6 @@ public class Plane {
     public void addMan(Point pos, double epsilon) {
         man = new Man(pos, epsilon);
         setManStrategy(StrategyEnumMan.Paper);
-//        System.out.println(man.getStrategy());
-//        System.out.println("man position @ " + pos);
     }
 
     public void removeMan() {
@@ -35,7 +33,6 @@ public class Plane {
         Lion lion = new Lion(pos);
         lions.add(lion);
         setLionStrategy(lion, StrategyEnumLion.Greedy);
-//        System.out.println(pos + " # " + lion.getStrategy());
     }
 
     public void removeLion(Point coordinates) {
@@ -50,23 +47,17 @@ public class Plane {
     }
 
     public void setLionStrategy(Point coordinates, StrategyEnumLion strategyEnum) {
-//        System.out.println(coordinates.toString());
 
         Lion lion = getLionByCoordinate(coordinates);
-        if (Objects.equals(coordinates.toString(), "(295.0, 50.0)")) {
-            System.out.println("wow");
-//            System.out.println(lion.getStrategy());
-        }
         setLionStrategy(lion, strategyEnum);
     }
 
-    public void setLionStrategy(Lion lion, StrategyEnumLion strategyEnum) {
+    private void setLionStrategy(Lion lion, StrategyEnumLion strategyEnum) {
         if (lion == null) {
-            System.out.println("no lion, no strategy");
             return;
         }
         if (strategyEnum == null) {
-            System.out.println("no strategy!!");
+            return;
         }
         Strategy strat = strategyEnum.getStrategy();
         lion.setStrategy(strat);
@@ -130,11 +121,6 @@ public class Plane {
     public int getLionsSize() {
         return lions.size();
     }
-
-//    public void setCalculatedLionPath(ArrayList<Point> calculatedLionPath, int index) {
-//        lions.get(index).setCalculatedPath(calculatedLionPath);
-//    }
-
 
     public Man getMan() {
         return man;

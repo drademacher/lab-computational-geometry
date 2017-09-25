@@ -7,9 +7,7 @@ import lions_and_men.util.Point;
 
 import java.util.ArrayList;
 
-/**
- * Created by Jens on 20.07.2017.
- */
+
 public abstract class Strategy {
 
 

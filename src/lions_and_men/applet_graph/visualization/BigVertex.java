@@ -18,7 +18,7 @@ public class BigVertex implements Vertex {
     private Point coordinates;
 
 
-    public BigVertex(VisualizedCoreController coreController, Point startCoordinates) {
+    BigVertex(VisualizedCoreController coreController, Point startCoordinates) {
         this.coreController = coreController;
         this.coordinates = startCoordinates;
 
@@ -29,7 +29,6 @@ public class BigVertex implements Vertex {
         shape.setFill(Constants.COLOR_BACKGROUND);
         shapeGroup.getChildren().add(shape);
 
-//        shape.setOnMouseClicked(event -> event.consume());
         shape.setOnContextMenuRequested(event1 -> {
             event1.consume();
 
@@ -45,48 +44,35 @@ public class BigVertex implements Vertex {
             MenuItem item4 = new MenuItem("Add Lion");
             MenuItem closeItem = new MenuItem("Close");
 
-            item0.setOnAction(event2 -> {
-                mainPane.setOnMouseClicked(event3 -> {
+            item0.setOnAction(event2 -> mainPane.setOnMouseClicked(event3 -> {
 
-                    mainPane.setOnMouseClicked(null);
+                mainPane.setOnMouseClicked(null);
 
-                    coreController.createEdge(coordinates, mainPane.getLocalCoordinates(event3.getX(), event3.getY()));
+                coreController.createEdge(coordinates, mainPane.getLocalCoordinates(event3.getX(), event3.getY()));
 
-                });
-            });
+            }));
 
-            item1.setOnAction(event2 -> {
-                mainPane.setOnMouseClicked(event3 -> {
+            item1.setOnAction(event2 -> mainPane.setOnMouseClicked(event3 -> {
 
-                    mainPane.setOnMouseClicked(null);
+                mainPane.setOnMouseClicked(null);
 
-                    coreController.removeEdge(coordinates, mainPane.getLocalCoordinates(event3.getX(), event3.getY()));
+                coreController.removeEdge(coordinates, mainPane.getLocalCoordinates(event3.getX(), event3.getY()));
 
-                });
-            });
+            }));
 
-            item2.setOnAction(event2 -> {
-                mainPane.setOnMouseClicked(event3 -> {
+            item2.setOnAction(event2 -> mainPane.setOnMouseClicked(event3 -> {
 
-                    mainPane.setOnMouseClicked(null);
+                mainPane.setOnMouseClicked(null);
 
-//                    System.out.println(mainPane.getLocalCoordinates(event3.getX(), event3.getY()));
-                    coreController.relocateVertex(coordinates, mainPane.getLocalCoordinates(event3.getX(), event3.getY()));
+              coreController.relocateVertex(coordinates, mainPane.getLocalCoordinates(event3.getX(), event3.getY()));
 
-                });
-            });
+            }));
 
-            item5.setOnAction(event2 -> {
-                coreController.deleteVertex(coordinates);
-            });
+            item5.setOnAction(event2 -> coreController.deleteVertex(coordinates));
 
-            item3.setOnAction(event2 -> {
-                coreController.setMan(coordinates);
-            });
+            item3.setOnAction(event2 -> coreController.setMan(coordinates));
 
-            item4.setOnAction(event2 -> {
-                coreController.setLion(coordinates);
-            });
+            item4.setOnAction(event2 -> coreController.setLion(coordinates));
 
             contextMenu.getItems().addAll(item2, item5, new SeparatorMenuItem(), item0, item1, new SeparatorMenuItem(), item3, item4, new SeparatorMenuItem(), closeItem);
             contextMenu.show(shape, event1.getScreenX(), event1.getScreenY());

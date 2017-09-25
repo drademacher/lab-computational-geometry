@@ -6,7 +6,7 @@ import lions_and_men.util.ZoomScrollPane;
 
 public abstract class Shape {
     protected static CoreController coreController;
-    protected static ZoomScrollPane pane;
+    static ZoomScrollPane pane;
 
     public static void setCoreController(CoreController coreController) {
         Shape.coreController = coreController;

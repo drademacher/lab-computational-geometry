@@ -6,12 +6,10 @@ import lions_and_men.util.Point;
 
 import java.util.ArrayList;
 
-/**
- * Created by Jens on 21.07.2017.
- */
+
 public class Greedy extends Strategy {
 
-    public Greedy(StrategyEnumLion strategyEnumLion) {
+    Greedy(StrategyEnumLion strategyEnumLion) {
         super(strategyEnumLion);
     }
 
@@ -47,16 +45,4 @@ public class Greedy extends Strategy {
         return prevPath;
     }
 
-    private boolean lionCatchedMan(Point lionCoord, Point manCoord, Lion lion) {
-
-        if (lionCoord == null || manCoord == null || lion == null) {
-            return false;
-        }
-
-        if (new Point(manCoord.getX() - lionCoord.getX(), manCoord.getY() - lionCoord.getY()).length() < lion.getSpeed()) {
-            return true;
-        }
-
-        return false;
-    }
 }

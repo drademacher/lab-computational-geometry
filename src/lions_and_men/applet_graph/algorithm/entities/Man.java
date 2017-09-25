@@ -4,9 +4,9 @@ import lions_and_men.applet_graph.algorithm.CoreController;
 import lions_and_men.applet_graph.algorithm.graph.Connection;
 import lions_and_men.applet_graph.algorithm.graph.GraphHelper;
 import lions_and_men.applet_graph.algorithm.graph.Vertex;
-import lions_and_men.applet_graph.algorithm.strategies.StrategyEnumMan;
 import lions_and_men.applet_graph.algorithm.strategies.Manual;
 import lions_and_men.applet_graph.algorithm.strategies.Strategy;
+import lions_and_men.applet_graph.algorithm.strategies.StrategyEnumMan;
 
 import java.util.ArrayList;
 
@@ -29,10 +29,6 @@ public class Man extends Entity {
 
     public static void setMinimumDistance(int distance) {
         Man.minimumDistance = distance;
-    }
-
-    public static void removeMinimumDistance() {
-        Man.minimumDistance = 0;
     }
 
     public static StrategyEnumMan getDefaultStrategy() {
@@ -127,9 +123,6 @@ public class Man extends Entity {
             }
         }
 
-        if (coreController.getMen().size() < 2) {
-            return true;
-        }
-        return isValidVertex;
+        return coreController.getMen().size() < 2 || isValidVertex;
     }
 }

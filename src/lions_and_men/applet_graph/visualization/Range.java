@@ -6,24 +6,20 @@ import lions_and_men.util.Point;
 
 import static lions_and_men.applet_graph.visualization.Constants.*;
 
-/**
- * Created by Jens on 29.06.2017.
- */
+
 public class Range implements Vertex {
     private static Group shapeGroup = new Group();
 
     private Circle shape;
-    private VisualizedCoreController coreController;
     private Point coordinates;
 
-    public Range(VisualizedCoreController coreController, Point startCoordinates) {
-        this(coreController, startCoordinates, false);
+    public Range(Point startCoordinates) {
+        this(startCoordinates, false);
     }
 
 
-    public Range(VisualizedCoreController coreController, Point startCoordinates, boolean manRange) {
+    public Range(Point startCoordinates, boolean manRange) {
 
-        this.coreController = coreController;
         this.coordinates = startCoordinates;
 
         if (manRange) {

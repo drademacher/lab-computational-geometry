@@ -69,7 +69,7 @@ public class PaperMan extends Strategy<Man> {
                     }
                 }
             }
-            //go to closest quarter
+            //go to best quarter
             else {
 //                System.out.println("go to quarter");
                 ArrayList<Vertex> neighborQuarters;
@@ -78,18 +78,39 @@ public class PaperMan extends Strategy<Man> {
 //            System.out.println("  neighborQuarters: "+neighborQuarters);
 
                 target = currentPosition; // fallback
-                int distance = 0;
+                int distanceToLion = 0;
+//                int distance = 0;
+                System.out.println("***********");
                 for (Vertex quarter : neighborQuarters) {
 
 //                    System.out.println("old distance: "+distance);
                     if (checkInvariant(quarter)) {
-                        if (distance < helper.getDistanceBetween(currentPosition, quarter)) {
-                            distance = helper.getDistanceBetween(currentPosition, quarter);
-//                            System.out.println("updated distance: "+distance);
+                        ArrayList<Vertex> pathToQuater = helper.getPathBetween(currentPosition, quarter);
+                        if(pathToQuater != null && pathToQuater.size()>0){
+                            Vertex directionVertex =pathToQuater.get(0);
 
-                            target = quarter;
-//                            System.out.println("possible target: "+target);
+                            System.out.println("calculated distance....   "+ helper.BFSToLion(currentPosition, directionVertex));
+                            System.out.println("distance: "+distanceToLion);
+                            System.out.println("check condition: "+ (distanceToLion < helper.BFSToLion(currentPosition, directionVertex)));
+                            if(distanceToLion < helper.BFSToLion(currentPosition, directionVertex)){
+                                distanceToLion = helper.BFSToLion(currentPosition, directionVertex);
+                                System.out.println("new distance....   "+ distanceToLion);
+                                target = quarter;
+                            }
+                            else{
+                                System.out.println("old distance....   "+ distanceToLion);
+                            }
+                        }else{
+                            System.out.println("********************************************** PROBLEM");
                         }
+//                        if (distance < helper.getDistanceBetween(currentPosition, quarter)) {
+//                            distance = helper.getDistanceBetween(currentPosition, quarter);
+//
+////                            System.out.println("updated distance: "+distance);
+//
+//                            target = quarter;
+////                            System.out.println("possible target: "+target);
+//                        }
                     }
                 }
             }

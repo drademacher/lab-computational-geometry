@@ -8,7 +8,7 @@ import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.util.Duration;
-import lions_and_men.applet_graph.algorithm.CoreController;
+import lions_and_men.applet_graph.algorithm.strategies.StrategyEnumMan;
 import lions_and_men.util.ContextMenuHolder;
 import lions_and_men.util.Point;
 import lions_and_men.util.ZoomScrollPane;
@@ -90,23 +90,23 @@ public class Man implements Entity {
             edgeMenu.getItems().addAll(iteme1, iteme2, iteme3);
 
             waitStrategyButton.setOnAction(event2 -> {
-                coreController.setManStrategy(coordinates, CoreController.ManStrategy.DoNothing);
+                coreController.setManStrategy(coordinates, StrategyEnumMan.DoNothing);
             });
 
             greedyStrategyButton.setOnAction(event2 -> {
-                coreController.setManStrategy(coordinates, CoreController.ManStrategy.RunAwayGreedyMan);
+                coreController.setManStrategy(coordinates, StrategyEnumMan.RunAwayGreedyMan);
             });
 
             randomStrategyButton.setOnAction(event2 -> {
-                coreController.setManStrategy(coordinates, CoreController.ManStrategy.RandomChoice);
+                coreController.setManStrategy(coordinates, StrategyEnumMan.RandomChoice);
             });
 
             manualStrategyButton.setOnAction(event2 -> {
-                coreController.setManStrategy(coordinates, CoreController.ManStrategy.Manual);
+                coreController.setManStrategy(coordinates, StrategyEnumMan.Manual);
             });
 
             paperStrategyButton.setOnAction(event2 -> {
-                coreController.setManStrategy(coordinates, CoreController.ManStrategy.PaperMan);
+                coreController.setManStrategy(coordinates, StrategyEnumMan.PaperMan);
             });
 
             item0.setOnAction(event2 -> {

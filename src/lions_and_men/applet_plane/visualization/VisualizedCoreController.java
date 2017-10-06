@@ -115,11 +115,6 @@ public class VisualizedCoreController extends CoreController {
         super.setDefaultGraph4();
     }
 
-    @Override
-    public void setDefaultGraph5() {
-        super.setDefaultGraph5();
-    }
-
     public void setRandomConfiguration() {
         super.setRandomConfiguration();
         lions.forEach(lion -> System.out.print(lion.getPosition() + ", "));

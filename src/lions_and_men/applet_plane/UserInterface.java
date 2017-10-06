@@ -197,13 +197,12 @@ public class UserInterface {
                 graph2MenuItem = new MenuItem("Example 2"),
                 graph3MenuItem = new MenuItem("Example 3"),
                 graph4MenuItem = new MenuItem("Example 4"),
-                graph5MenuItem = new MenuItem("Example 5"),
                 randomConfigurationButton = new MenuItem("RandomChoice"),
                 openMapMenuItem = new MenuItem("Open"),
                 saveMapMenuItem = new MenuItem("Save");
 
 
-        setGraphButton.getItems().addAll(emptyMapMenuItem, new SeparatorMenuItem(), graph1MenuItem, graph2MenuItem, graph3MenuItem, graph4MenuItem, graph5MenuItem, randomConfigurationButton, new SeparatorMenuItem(), openMapMenuItem, saveMapMenuItem);
+        setGraphButton.getItems().addAll(emptyMapMenuItem, new SeparatorMenuItem(), graph1MenuItem, graph2MenuItem, graph3MenuItem, graph4MenuItem, randomConfigurationButton, new SeparatorMenuItem(), openMapMenuItem, saveMapMenuItem);
 
 
         buttonBarCenter.getChildren().addAll(setGraphButton, setParameterButton, newPermutationButton, setViewMenu);
@@ -236,13 +235,6 @@ public class UserInterface {
             this.coreController.setDefaultGraph4();
             this.zoomScrollPane.autoZoom();
         });
-
-        graph5MenuItem.setOnAction(event -> {
-            clearGraphShapes();
-            this.coreController.setDefaultGraph5();
-            this.zoomScrollPane.autoZoom();
-        });
-
 
         randomConfigurationButton.setOnAction(event -> {
             clearGraphShapes();

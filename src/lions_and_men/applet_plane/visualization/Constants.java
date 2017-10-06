@@ -19,7 +19,7 @@ public class Constants {
     static final Color COLOR_MAN = (Color) Paint.valueOf("#0922e5");
     static final Color COLOR_LION = (Color) Paint.valueOf("#e51408");
     static final double ENTITY_RADIUS = 1.5;
-    public static int ANIMATION_DURATION = 250;
+    public static int ANIMATION_DURATION = 1500;
 
     public static String getHexString(Color color) {
         String hex = String.format("#%02X%02X%02X",

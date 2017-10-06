@@ -132,15 +132,10 @@ public class VisualizedCoreController extends CoreController {
         super.createMan(coordinates);
 
         if (manPoint != null) {
-            return;
+            manPoint.clear();
         }
-        manPoint = new Man(coordinates);
-    }
 
-    @Override
-    public void relocateMan(Point to) {
-        super.relocateMan(to);
-        clean();
+        manPoint = new Man(coordinates);
     }
 
     @Override

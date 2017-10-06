@@ -424,7 +424,7 @@ public class UserInterface {
                 return;
 
             ContextMenu contextMenu = ContextMenuHolder.getFreshContextMenu();
-            MenuItem addManItem = new MenuItem("Add Man");
+            MenuItem addManItem = new MenuItem("Set Man");
             addManItem.setOnAction(event2 -> coreController.createMan(zoomScrollPane.getLocalCoordinates(event1.getX(), event1.getY())));
 
             MenuItem addLionItem = new MenuItem("Add Lion");

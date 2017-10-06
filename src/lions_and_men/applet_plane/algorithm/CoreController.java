@@ -354,9 +354,11 @@ public class CoreController {
 
     public void createMan(Point coordinates) {
         if (this.plane.getMan() != null) {
-            return;
+            relocateMan(coordinates);
+        } else {
+            plane.addMan(coordinates, defaultMenEpsilon);
         }
-        plane.addMan(coordinates, defaultMenEpsilon);
+
     }
 
     public void createLion(Point coordinates) {
@@ -371,7 +373,7 @@ public class CoreController {
         plane.removeLion(coordinates);
     }
 
-    public void relocateMan(Point to) {
+    private void relocateMan(Point to) {
         plane.getMan().setPosition(to);
     }
 

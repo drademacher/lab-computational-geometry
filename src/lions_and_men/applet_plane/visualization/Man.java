@@ -43,7 +43,7 @@ public class Man extends Shape {
 
             relocateButton.setOnAction(event2 -> pane.setOnMouseClicked(event3 -> {
                 pane.setOnMouseClicked(null);
-                coreController.relocateMan(pane.getLocalCoordinates(event3.getX(), event3.getY()));
+                coreController.createMan(pane.getLocalCoordinates(event3.getX(), event3.getY()));
 
             }));
 

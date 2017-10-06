@@ -95,9 +95,9 @@ public class CoreController {
         setEmptyGraph();
 
         createLion(new Point(-170, -100));
-        createLion(new Point(-12, -50));
+        createLion(new Point(0, -65));
         createLion(new Point(-45, -35));
-        createLion(new Point(-90, 10));
+        createLion(new Point(-110, 10));
 
         createMan(new Point(-125, -80));
     }

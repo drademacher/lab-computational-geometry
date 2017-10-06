@@ -24,7 +24,8 @@ public class VisualizedCoreController extends CoreController {
         super();
     }
 
-    public void cleanUp() {
+    private void refrresh() {
+        // clean up
         verticesBig.forEach(Vertex::delete);
         verticesBig.clear();
 
@@ -45,6 +46,26 @@ public class VisualizedCoreController extends CoreController {
 
         stepPreviews.forEach(Vertex::delete);
         stepPreviews.clear();
+
+        // draw big vertices, edges, small vertices
+        graph.getBigVertices().forEach(bigVertex -> verticesBig.add(new BigVertex(this, bigVertex.getCoordinates())));
+        graph.getEdges().forEach(edge -> edges.add(new Edge(this, edge.getStartCoordinates(), edge.getEndCoordinates())));
+        graph.getSmallVertices().forEach(smallVertex -> verticesSmall.add(new SmallVertex(this, smallVertex.getCoordinates())));
+
+        // draw entities
+        getMen().forEach(man -> entities.add(new Man(this, man.getCoordinates())));
+        getLions().forEach(lion -> entities.add(new Lion(this, lion.getCoordinates())));
+
+        updateLionRanges();
+        updateManRanges();
+        updateStepPreviewsAndChoicePoints();
+    }
+
+    @Override
+    public void setEmptyGraph() {
+        super.setEmptyGraph();
+
+        refrresh();
     }
 
     /* ****************************
@@ -57,26 +78,14 @@ public class VisualizedCoreController extends CoreController {
 
         super.relocateVertex(vertexCoordinates, newCoordinate);
 
-        verticesBig.stream().filter(vertex -> vertex.getPosition().equals(vertexCoordinates)).forEach(vertex -> vertex.relocate(newCoordinate));
-
-        edges.stream().filter(edge -> edge.getPositionFrom().equals(vertexCoordinates)).forEach(edge -> edge.relocate(newCoordinate, edge.getPositionTo()));
-        edges.stream().filter(edge -> edge.getPositionTo().equals(vertexCoordinates)).forEach(edge -> edge.relocate(edge.getPositionFrom(), newCoordinate));
-
-        verticesSmall.forEach(Vertex::delete);
-        graph.getSmallVertices().forEach(smallVertex -> verticesSmall.add(new SmallVertex(this, smallVertex.getCoordinates())));
-
-        entities.forEach(Entity::delete);
-        entities.clear();
-        getMen().forEach(man -> entities.add(new Man(this, man.getCoordinates())));
-        getLions().forEach(lion -> entities.add(new Lion(this, lion.getCoordinates())));
-
-        entities.stream().filter(entity -> entity.getPosition().equals(vertexCoordinates)).forEach(entity -> entity.relocate(newCoordinate));
+        refrresh();
     }
 
     public void createVertex(Point coordinate) {
         super.createVertex(coordinate);
 
-        verticesBig.add(new BigVertex(this, coordinate));
+        refrresh();
+
     }
 
     public void deleteVertex(Point vertexCoordinates) {
@@ -85,21 +94,7 @@ public class VisualizedCoreController extends CoreController {
         super.deleteVertex(vertexCoordinates);
 
 
-        verticesBig.forEach(Vertex::delete);
-        verticesBig.clear();
-        graph.getBigVertices().forEach(bigVertex -> verticesBig.add(new BigVertex(this, bigVertex.getCoordinates())));
-
-        edges.forEach(Edge::delete);
-        edges.clear();
-        graph.getEdges().forEach(edge -> edges.add(new Edge(this, edge.getStartCoordinates(), edge.getEndCoordinates())));
-
-        verticesSmall.forEach(Vertex::delete);
-        verticesSmall.clear();
-        graph.getSmallVertices().forEach(smallVertex -> verticesSmall.add(new SmallVertex(this, smallVertex.getCoordinates())));
-
-
-        updateManRanges();
-        updateLionRanges();
+        refrresh();
     }
 
     public void createEdge(Point vertex1Coordinates, Point vertex2Coordinates) {
@@ -110,37 +105,14 @@ public class VisualizedCoreController extends CoreController {
 
         super.createEdge(vertex1Coordinates, vertex2Coordinates, weight);
 
-        lions_and_men.applet_graph.algorithm.graph.Edge edge = getEdgeByPoints(vertex1Coordinates, vertex2Coordinates);
-        if (edge == null) {
-            return;
-        }
-        edges.add(new Edge(this, edge.getStartCoordinates(), edge.getEndCoordinates()));
-        edge.getEdgeVertices().forEach(smallVertex -> verticesSmall.add(new SmallVertex(this, smallVertex.getCoordinates())));
-
-
-        updateManRanges();
-        updateLionRanges();
+        refrresh();
     }
 
     public void removeEdge(Point vertex1Coordinates, Point vertex2Coordinates) {
 
         super.removeEdge(vertex1Coordinates, vertex2Coordinates);
 
-        //clear all edges
-        this.edges.forEach(Edge::delete);
-        this.edges.clear();
-        this.verticesSmall.forEach(Vertex::delete);
-        this.verticesSmall.clear();
-
-        //create all edges still existing
-        this.graph.getEdges().forEach(edge -> {
-            edges.add(new Edge(this, edge.getStartCoordinates(), edge.getEndCoordinates()));
-            edge.getEdgeVertices().forEach(smallVertex -> verticesSmall.add(new SmallVertex(this, smallVertex.getCoordinates())));
-        });
-
-
-        updateManRanges();
-        updateLionRanges();
+        refrresh();
     }
 
     @Override
@@ -148,16 +120,7 @@ public class VisualizedCoreController extends CoreController {
 
         super.changeEdgeWeight(vertex1Coordinates, vertex2Coordinates, weight);
 
-        verticesSmall.forEach(Vertex::delete);
-        graph.getSmallVertices().forEach(smallVertex -> verticesSmall.add(new SmallVertex(this, smallVertex.getCoordinates())));
-
-        entities.forEach(Entity::delete);
-        entities.clear();
-        getMen().forEach(man -> entities.add(new Man(this, man.getCoordinates())));
-        getLions().forEach(lion -> entities.add(new Lion(this, lion.getCoordinates())));
-
-        updateManRanges();
-        updateLionRanges();
+        refrresh();
     }
 
     /* ****************************
@@ -170,59 +133,40 @@ public class VisualizedCoreController extends CoreController {
 
         super.setMan(vertexCoorinate);
 
-        entities.add(new Man(this, vertexCoorinate));
-        updateManRanges();
-
-        updateStepPreviewsAndChoicePoints();
+        refrresh();
     }
 
     public void setLion(Point vertexCoorinate) {
 
         super.setLion(vertexCoorinate);
 
-        entities.add(new Lion(this, vertexCoorinate));
-        updateLionRanges();
-
-        updateStepPreviewsAndChoicePoints();
+        refrresh();
     }
 
     public void relocateMan(Point manCoordinate, Point vertexCoordinate) {
 
         super.relocateMan(manCoordinate, vertexCoordinate);
 
-        Point realVertexCoordinate = graph.getVertexByCoordinate(vertexCoordinate).getCoordinates();
-        entities.stream().filter(entity -> entity.getPosition().equals(manCoordinate)).forEach(entity -> entity.relocate(realVertexCoordinate));
-        updateManRanges();
-
-        updateStepPreviewsAndChoicePoints();
+        refrresh();
     }
 
     public void relocateLion(Point lionCoordinate, Point vertexCoordinate) {
 
         super.relocateLion(lionCoordinate, vertexCoordinate);
 
-        Point realVertexCoordinate = graph.getVertexByCoordinate(vertexCoordinate).getCoordinates();
-        entities.stream().filter(entity -> entity.getPosition().equals(lionCoordinate)).forEach(entity -> entity.relocate(realVertexCoordinate));
-        updateLionRanges();
-        updateStepPreviewsAndChoicePoints();
+        refrresh();
     }
 
     public void removeMan(Point manCoordinate) {
-
-        entities.stream().filter(entity -> entity.getPosition().equals(manCoordinate)).forEach(Entity::delete);
-        entities.removeIf(entity -> entity.getPosition().equals(manCoordinate));
-
         super.removeMan(manCoordinate);
-        updateStepPreviewsAndChoicePoints();
+
+        refrresh();
     }
 
     public void removeLion(Point lionCoordinate) {
-
-        entities.stream().filter(entity -> entity.getPosition().equals(lionCoordinate)).forEach(Entity::delete);
-        entities.removeIf(entity -> entity.getPosition().equals(lionCoordinate));
-
         super.removeLion(lionCoordinate);
-        updateStepPreviewsAndChoicePoints();
+
+        refrresh();
     }
 
     @Override
@@ -309,8 +253,6 @@ public class VisualizedCoreController extends CoreController {
 
 
     private void updateStepPreviewsAndChoicePoints() {
-
-        //TODO flush and create new....
         // step previews
         stepPreviews.forEach(Vertex::delete);
         stepPreviews.clear();

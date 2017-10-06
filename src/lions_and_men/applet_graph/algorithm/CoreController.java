@@ -646,13 +646,8 @@ public class CoreController {
      *
      * ****************************/
 
-    public void cleanUp() {
-
-    }
-
     public void setEmptyGraph() {
         this.graph = new GraphController();
-        cleanUp();
         this.men = new ArrayList<>();
         this.lions = new ArrayList<>();
     }

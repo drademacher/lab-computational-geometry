@@ -337,31 +337,31 @@ public class UserInterface {
 
         setParameterButton.getItems().addAll(setGlobalManSpeed, setMinPathLength, new SeparatorMenuItem(), manMenu, lionMenu);
 
-        CheckMenuItem viewEntities = new CheckMenuItem("View Entities");
+        CheckMenuItem viewEntities = new CheckMenuItem("Entities");
         entityShapes.visibleProperty().bind(viewEntities.selectedProperty());
         viewEntities.setSelected(true);
 
-        CheckMenuItem viewLionRanges = new CheckMenuItem("View Lion Ranges");
+        CheckMenuItem viewLionRanges = new CheckMenuItem("Lion Ranges");
         lionRangeShapes.visibleProperty().bind(viewLionRanges.selectedProperty());
         viewLionRanges.setSelected(true);
 
-        CheckMenuItem viewConvexHull = new CheckMenuItem("View Lion Bounding");
+        CheckMenuItem viewConvexHull = new CheckMenuItem("Lion Bounding");
         convexHullShapes.visibleProperty().bind(viewConvexHull.selectedProperty().or(editMode));
         viewConvexHull.setSelected(false);
 
-        CheckMenuItem viewManPath = new CheckMenuItem("View Most Recent Man Paths");
+        CheckMenuItem viewManPath = new CheckMenuItem("Most Recent Man Paths");
         currentManPathShapes.visibleProperty().bind(viewManPath.selectedProperty());
         viewManPath.setSelected(true);
 
-        CheckMenuItem viewPreviousManPath = new CheckMenuItem("View Previous Man Path");
+        CheckMenuItem viewPreviousManPath = new CheckMenuItem("Previous Man Path");
         oldManPathShapes.visibleProperty().bind(viewPreviousManPath.selectedProperty());
         viewPreviousManPath.setSelected(true);
 
-        CheckMenuItem viewLatestLionPath = new CheckMenuItem("View Most Recent Lion Paths");
+        CheckMenuItem viewLatestLionPath = new CheckMenuItem("Most Recent Lion Paths");
         currentLionsPathShapes.visibleProperty().bind(viewLatestLionPath.selectedProperty());
         viewLatestLionPath.setSelected(true);
 
-        CheckMenuItem viewLionPath = new CheckMenuItem("View Old Lion Paths");
+        CheckMenuItem viewLionPath = new CheckMenuItem("Old Lion Paths");
         oldLionsPathShapes.visibleProperty().bind(viewLionPath.selectedProperty());
         viewLionPath.setSelected(false);
 

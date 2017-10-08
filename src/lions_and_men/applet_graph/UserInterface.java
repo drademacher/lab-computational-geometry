@@ -386,15 +386,15 @@ public class UserInterface {
         });
 
 
-        CheckMenuItem viewEntities = new CheckMenuItem("View Entities");
+        CheckMenuItem viewEntities = new CheckMenuItem("Entities");
         entityShapes.visibleProperty().bind(viewEntities.selectedProperty());
         viewEntities.setSelected(true);
 
-        CheckMenuItem viewLionRanges = new CheckMenuItem("View Lion Ranges");
+        CheckMenuItem viewLionRanges = new CheckMenuItem("Lion Ranges");
         lionRangeShapes.visibleProperty().bind(viewLionRanges.selectedProperty());
         viewLionRanges.setSelected(true);
 
-        CheckMenuItem viewPreviews = new CheckMenuItem("View Preview");
+        CheckMenuItem viewPreviews = new CheckMenuItem("Preview");
         stepPreviewShapes.visibleProperty().bind(viewPreviews.selectedProperty());
         viewPreviews.setSelected(false);
 

@@ -650,6 +650,10 @@ public class CoreController {
         this.graph = new GraphController();
         this.men = new ArrayList<>();
         this.lions = new ArrayList<>();
+
+        Lion.setDefaultRange(0);
+        Man.setDefaultRange(0);
+        GraphController.setDefaultEdgeWeight(4);
     }
 
     /**

@@ -13,7 +13,12 @@ public class StepPreview implements Vertex {
     StepPreview(Point startCoordinates) {
         this.coordinates = startCoordinates;
 
-        shape = new Circle(coordinates.getX(), coordinates.getY(), Constants.ENTITY_RADIUS, Constants.COLOR_PREVIEW);
+//        shape = new Circle(coordinates.getX(), coordinates.getY(), Constants.ENTITY_RADIUS, Constants.COLOR_PREVIEW);
+        shape = new Circle(coordinates.getX(), coordinates.getY(), Constants.BIG_VERTEX_RADIUS);
+        shape.setStrokeWidth(Constants.SMALL_VERTEX_RADIUS / 5);
+        shape.setStroke(Constants.COLOR_PREVIEW);
+        shape.setFill(Constants.COLOR_BACKGROUND);
+
         shapeGroup.getChildren().add(shape);
     }
 

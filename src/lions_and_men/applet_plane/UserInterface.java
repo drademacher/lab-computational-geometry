@@ -291,7 +291,7 @@ public class UserInterface {
 
             TextInputDialog dialog = new TextInputDialog("" + currentValue);
             dialog.setTitle("Set Man Epsilon");
-            dialog.setHeaderText("-----.");
+            dialog.setHeaderText("Choose epsilon > 0 to change the man speed.");
 
             Optional<String> result = dialog.showAndWait();
 
@@ -317,7 +317,7 @@ public class UserInterface {
 
             TextInputDialog dialog = new TextInputDialog("" + currentValue);
             dialog.setTitle("Set Minimum Path Length");
-            dialog.setHeaderText("-----.");
+            dialog.setHeaderText("Choose the minimum path length which is displayed.");
 
             Optional<String> result = dialog.showAndWait();
 

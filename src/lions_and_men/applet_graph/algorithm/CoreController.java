@@ -652,7 +652,10 @@ public class CoreController {
         this.lions = new ArrayList<>();
 
         Lion.setDefaultRange(0);
+        Lion.setDefaultStrategy(StrategyEnumLion.CleverLion);
         Man.setDefaultRange(0);
+        Man.setMinimumDistance(0);
+        Man.setDefaultStrategy(StrategyEnumMan.PaperMan);
         GraphController.setDefaultEdgeWeight(4);
     }
 

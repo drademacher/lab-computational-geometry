@@ -257,12 +257,12 @@ public class UserInterface {
             }
         });
 
-        MenuItem setEdgeWeight = new MenuItem("Set Edge Weight");
-        MenuItem setManMinDistance = new MenuItem("Set Man Minimum Distance");
-        MenuItem setManRange = new MenuItem("Set Man Range");
-        MenuItem setLionRange = new MenuItem("Set Lion Range");
+        MenuItem setEdgeWeight = new MenuItem("Edge Weight");
+        MenuItem setManMinDistance = new MenuItem("Man Minimum Distance");
+        MenuItem setManRange = new MenuItem("Man Range");
+        MenuItem setLionRange = new MenuItem("Lion Range");
 
-        Menu manMenu = new Menu("Set Man Strategy");
+        Menu manMenu = new Menu("Man Strategy");
         MenuItem setManStrategyWait = new MenuItem("Wait");
         setManStrategyWait.setOnAction(event -> coreController.setAllManStrategy(StrategyEnumMan.DoNothing));
         MenuItem setManStrategyGreedy = new MenuItem("Greedy");
@@ -275,7 +275,7 @@ public class UserInterface {
         setManStrategyPaper.setOnAction(event -> coreController.setAllManStrategy(StrategyEnumMan.PaperMan));
         manMenu.getItems().addAll(setManStrategyWait, setManStrategyRandom, setManStrategyGreedy, setManStrategyManual, setManStrategyPaper);
 
-        Menu lionMenu = new Menu("Set Lion Strategy");
+        Menu lionMenu = new Menu("Lion Strategy");
         MenuItem setLionsStrategyWait = new MenuItem("Wait");
         setLionsStrategyWait.setOnAction(event -> coreController.setAllLionStrategy(StrategyEnumLion.DoNothing));
         MenuItem setLionsStrategyGreedy = new MenuItem("Greedy");

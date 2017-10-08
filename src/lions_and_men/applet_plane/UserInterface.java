@@ -192,12 +192,12 @@ public class UserInterface {
      * Initialize the buttons of the edit mode and add the button logic.
      */
     private void initEditButtons() {
-        MenuItem emptyMapMenuItem = new MenuItem("Empty Graph"),
+        MenuItem emptyMapMenuItem = new MenuItem("Empty Plane"),
                 graph1MenuItem = new MenuItem("Example 1"),
                 graph2MenuItem = new MenuItem("Example 2"),
                 graph3MenuItem = new MenuItem("Example 3"),
                 graph4MenuItem = new MenuItem("Example 4"),
-                randomConfigurationButton = new MenuItem("RandomChoice"),
+                randomConfigurationButton = new MenuItem("Random Plane"),
                 openMapMenuItem = new MenuItem("Open"),
                 saveMapMenuItem = new MenuItem("Save");
 
@@ -273,14 +273,14 @@ public class UserInterface {
         });
 
 
-        MenuItem setGlobalManSpeed = new MenuItem("Set Man Epsilon");
+        MenuItem setGlobalManSpeed = new MenuItem("Man Epsilon");
 
-        Menu manMenu = new Menu("Set Man Strategy");
+        Menu manMenu = new Menu("Man Strategy");
         MenuItem setManStrategyPaper = new MenuItem("Paper");
         setManStrategyPaper.setOnAction(event -> coreController.setAllManStrategy(StrategyEnumMan.Paper));
         manMenu.getItems().addAll(setManStrategyPaper/*, setManStrategyRandom, setManStrategyGreedy, setManStrategyManual*/);
 
-        Menu lionMenu = new Menu("Set Lion Strategy");
+        Menu lionMenu = new Menu("Lion Strategy");
         MenuItem setLionsStrategyGreedy = new MenuItem("Greedy");
         setLionsStrategyGreedy.setOnAction(event -> coreController.setAllLionStrategy(StrategyEnumLion.Greedy));
         lionMenu.getItems().addAll(setLionsStrategyGreedy/*, setLionsStrategyRandom, setLionsStrategyManual*/);
@@ -309,7 +309,7 @@ public class UserInterface {
             }
         });
 
-        MenuItem setMinPathLength = new MenuItem("Set Minimum Path Length");
+        MenuItem setMinPathLength = new MenuItem("Minimum Path Length");
 
         setMinPathLength.setOnAction(event -> {
             int currentValue = this.coreController.getStepsToGoAfterEscape();

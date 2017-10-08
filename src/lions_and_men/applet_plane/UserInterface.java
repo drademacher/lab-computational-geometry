@@ -38,7 +38,7 @@ public class UserInterface {
     private Button helpToggleButton = new Button("Help");
     private Button appletToggleButton = new Button("Choose App");
     private Button modeToggleButton = new Button("Edit Mode");
-    private Group entityShapes = new Group(), lionRangeShapes = new Group(), convexHullShapes = new Group(), currentLionsPathShapes = new Group(), oldLionsPathShapes = new Group(), currentManPathShapes = new Group(), oldManPathShapes = new Group(), boundingPointsShapes = new Group();
+    private Group entityShapes = new Group(), convexHullShapes = new Group(), currentLionsPathShapes = new Group(), oldLionsPathShapes = new Group(), currentManPathShapes = new Group(), oldManPathShapes = new Group(), boundingPointsShapes = new Group();
     private Button playAnimationButton = new Button("Play");
     private Button stopAnimationButton = new Button("Stop");
     private Button stepAnimationButton = new Button("Single Step");
@@ -341,10 +341,6 @@ public class UserInterface {
         entityShapes.visibleProperty().bind(viewEntities.selectedProperty());
         viewEntities.setSelected(true);
 
-        CheckMenuItem viewLionRanges = new CheckMenuItem("Lion Ranges");
-        lionRangeShapes.visibleProperty().bind(viewLionRanges.selectedProperty());
-        viewLionRanges.setSelected(true);
-
         CheckMenuItem viewConvexHull = new CheckMenuItem("Lion Bounding");
         convexHullShapes.visibleProperty().bind(viewConvexHull.selectedProperty().or(editMode));
         viewConvexHull.setSelected(false);
@@ -365,7 +361,7 @@ public class UserInterface {
         oldLionsPathShapes.visibleProperty().bind(viewLionPath.selectedProperty());
         viewLionPath.setSelected(false);
 
-        setViewMenu.getItems().addAll(viewEntities, viewLionRanges, viewConvexHull, viewManPath, viewPreviousManPath, viewLionPath, viewLatestLionPath);
+        setViewMenu.getItems().addAll(viewEntities, viewConvexHull, viewManPath, viewPreviousManPath, viewLionPath, viewLatestLionPath);
     }
 
 
@@ -439,7 +435,7 @@ public class UserInterface {
         Shape.setPane(zoomScrollPane);
 
         zoomScrollPane.getNodesHolder().clear();
-        zoomScrollPane.getNodesHolder().addAll(lionRangeShapes, convexHullShapes, oldManPathShapes, currentManPathShapes, currentLionsPathShapes, oldLionsPathShapes, entityShapes, boundingPointsShapes);
+        zoomScrollPane.getNodesHolder().addAll(convexHullShapes, oldManPathShapes, currentManPathShapes, currentLionsPathShapes, oldLionsPathShapes, entityShapes, boundingPointsShapes);
 
 
         Man.setGroup(entityShapes);

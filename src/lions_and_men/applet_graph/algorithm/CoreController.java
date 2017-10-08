@@ -798,7 +798,7 @@ public class CoreController {
         this.createEdge(new Point(90, 100), new Point(120, 70));
 
         this.setLion(this.graph.getSmallVertices().get(3).getCoordinates());
-        this.setLion(this.graph.getSmallVertices().get(17).getCoordinates());
+        this.setLion(this.graph.getSmallVertices().get(16).getCoordinates());
         this.setMan(this.graph.getSmallVertices().get(0).getCoordinates());
 
         this.setAllManStrategy(StrategyEnumMan.PaperMan);

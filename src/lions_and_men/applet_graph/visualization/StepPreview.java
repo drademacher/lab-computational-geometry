@@ -14,10 +14,24 @@ public class StepPreview implements Vertex {
     private Circle shape;
     private Point coordinates;
 
-    StepPreview(Point startCoordinates) {
+    StepPreview(Point startCoordinates, boolean isBigVertex, boolean isMan) {
         this.coordinates = startCoordinates;
 
-        shape = new Circle(coordinates.getX(), coordinates.getY(), Constants.ENTITY_RADIUS, Constants.COLOR_PREVIEW);
+        if (isBigVertex) {
+            shape = new Circle(coordinates.getX(), coordinates.getY(), Constants.BIG_VERTEX_RADIUS);
+            shape.setStrokeWidth(Constants.BIG_VERTEX_RADIUS / 5);
+        } else {
+            shape = new Circle(coordinates.getX(), coordinates.getY(), Constants.SMALL_VERTEX_RADIUS);
+            shape.setStrokeWidth(Constants.SMALL_VERTEX_RADIUS / 5);
+        }
+        if (isMan) {
+            shape.setStroke(Constants.COLOR_MAN);
+        } else {
+            shape.setStroke(Constants.COLOR_LION);
+        }
+        shape.setFill(Constants.COLOR_BACKGROUND);
+
+
         shapeGroup.getChildren().add(shape);
     }
 

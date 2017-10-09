@@ -261,8 +261,8 @@ public class VisualizedCoreController extends CoreController {
         stepPreviews.forEach(Vertex::delete);
         stepPreviews.clear();
 
-        getMen().forEach(man -> stepPreviews.add(new StepPreview(man.getNextPosition().getCoordinates())));
-        getLions().forEach(lion -> stepPreviews.add(new StepPreview(lion.getNextPosition().getCoordinates())));
+        getMen().forEach(man -> stepPreviews.add(new StepPreview(man.getNextPosition().getCoordinates(), getBigVertexByCoordinate(man.getNextPosition().getCoordinates()) != null, true)));
+        getLions().forEach(lion -> stepPreviews.add(new StepPreview(lion.getNextPosition().getCoordinates(), getBigVertexByCoordinate(lion.getNextPosition().getCoordinates()) != null, false)));
 
 
         // choice points

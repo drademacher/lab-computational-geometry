@@ -42,26 +42,18 @@ public class CoreController {
         setEmptyGraph();
 
         createLion(new Point(50, 20));
-        createLion(new Point(190, 20));
-        createLion(new Point(220, 140));
-        createLion(new Point(120, 220));
+        createLion(new Point(200, 20));
+        createLion(new Point(240, 130));
+        createLion(new Point(180, 220));
         createLion(new Point(20, 140));
 
         createLion(new Point(120, 40));
-        createLion(new Point(160, 50));
-        createLion(new Point(190, 90));
         createLion(new Point(190, 130));
         createLion(new Point(160, 170));
         createLion(new Point(120, 180));
-        createLion(new Point(80, 170));
-        createLion(new Point(50, 130));
         createLion(new Point(50, 90));
         createLion(new Point(80, 50));
-
         createLion(new Point(120, 70));
-        createLion(new Point(150, 100));
-        createLion(new Point(140, 140));
-        createLion(new Point(100, 140));
 
         createMan(new Point(161, 113));
 

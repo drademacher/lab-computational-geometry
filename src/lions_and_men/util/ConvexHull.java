@@ -6,15 +6,27 @@ import lions_and_men.applet_plane.visualization.Lion;
 import java.util.Arrays;
 import java.util.List;
 
+
+/**
+ * Convex Hull
+ */
 public class ConvexHull {
     private Point[] points;
     private Point[] hull = new Point[0];
 
+    /**
+     * Create a convex hull with (lion) points
+     * @param points given points to create the ch with
+     */
     public ConvexHull(Point[] points) {
         this.points = points.clone();
         convex_hull();
     }
 
+    /**
+     * Create a convex hull with (lion) points
+     * @param lions given lions to create the ch with
+     */
     public ConvexHull(List<Lion> lions) {
         points = new Point[lions.size()];
         for (int i = 0; i < lions.size(); i++) {
@@ -57,6 +69,11 @@ public class ConvexHull {
     }
 
 
+    /**
+     * checks if a given point is inside the ch
+     * @param test check if this given point is inside the ch
+     * @return true if the given point is inside the ch, false ow
+     */
     public boolean insideHull(Point test) {
         int i;
         int j;
@@ -70,6 +87,10 @@ public class ConvexHull {
         return result;
     }
 
+    /**
+     * get the points of the ch
+     * @return return all points of the ch
+     */
     public Point[] getPoints() {
         return hull;
     }

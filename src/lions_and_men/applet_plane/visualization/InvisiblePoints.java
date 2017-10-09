@@ -7,6 +7,9 @@ import lions_and_men.util.Point;
 
 import static lions_and_men.applet_plane.visualization.Constants.ENTITY_RADIUS;
 
+/**
+ * Invisible points to describe the bounding box (to fix the optimal zoom) when all paths are animated
+ */
 public class InvisiblePoints extends Shape {
     private static Group group = new Group();
 

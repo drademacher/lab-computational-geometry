@@ -12,6 +12,9 @@ import lions_and_men.util.Point;
 import static lions_and_men.applet_plane.visualization.Constants.COLOR_MAN;
 import static lions_and_men.applet_plane.visualization.Constants.ENTITY_RADIUS;
 
+/**
+ * shape of a man point
+ */
 public class Man extends Shape {
     private static Group group = new Group();
 

@@ -6,6 +6,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import lions_and_men.util.Point;
 
+/**
+ * Possible choices for the manuel modus (to choose where to go next)
+ */
 public class ChoicePoint {
     private static Group shapeGroup = new Group();
 

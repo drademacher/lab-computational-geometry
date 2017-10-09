@@ -7,6 +7,9 @@ import lions_and_men.util.Point;
 import static lions_and_men.applet_graph.visualization.Constants.*;
 
 
+/**
+ * shape of the man or lion ranges
+ */
 public class Range implements Vertex {
     private static Group shapeGroup = new Group();
 

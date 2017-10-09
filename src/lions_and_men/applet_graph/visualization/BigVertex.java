@@ -9,6 +9,9 @@ import lions_and_men.util.ContextMenuHolder;
 import lions_and_men.util.Point;
 import lions_and_men.util.ZoomScrollPane;
 
+/**
+ * Shape of a big vertex
+ */
 public class BigVertex implements Vertex {
     private static ZoomScrollPane mainPane;
     private static Group shapeGroup;

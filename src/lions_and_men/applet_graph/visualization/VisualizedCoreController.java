@@ -10,6 +10,10 @@ import java.util.ArrayList;
 
 import static lions_and_men.applet_graph.visualization.Constants.*;
 
+
+/**
+ * api for visualization. Extends the actual core controller (which is callable without a gui)
+ */
 public class VisualizedCoreController extends CoreController {
 
     private ArrayList<Vertex> verticesBig = new ArrayList<>();

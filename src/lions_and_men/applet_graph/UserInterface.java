@@ -27,6 +27,9 @@ import java.util.TimerTask;
 import static lions_and_men.applet_graph.visualization.Constants.ANIMATION_DURATION;
 
 
+/**
+ * User Interface with all buttons, menus and gui components
+ */
 public class UserInterface {
     private Timer player;
 

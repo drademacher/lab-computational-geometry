@@ -3,7 +3,9 @@ package lions_and_men.applet_plane.visualization;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 
-
+/**
+ * polygon with all lions inside
+ */
 public class LionsPolygon extends Shape {
     private static Group group = new Group();
 

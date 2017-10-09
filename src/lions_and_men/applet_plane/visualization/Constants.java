@@ -3,7 +3,9 @@ package lions_and_men.applet_plane.visualization;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
-
+/**
+ * multiple constant values, e.g. colors, radii
+ */
 public class Constants {
     //    public static final Color COLOR_BACKGROUND = (Color) ((Region) lions_and_men.Main.getSceneTwo().getRoot()).getBackground().getFills().get(0).getFill();
     public static final Color COLOR_VERTEX = (Color) Paint.valueOf("#353535");

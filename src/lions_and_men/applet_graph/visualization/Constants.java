@@ -3,6 +3,10 @@ package lions_and_men.applet_graph.visualization;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
+
+/**
+ * multiple constant values, e.g. colors, radii
+ */
 public class Constants {
 
     public static final double BIG_VERTEX_RADIUS = 3;

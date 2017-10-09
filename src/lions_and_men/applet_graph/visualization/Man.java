@@ -18,6 +18,9 @@ import java.util.Optional;
 import static lions_and_men.applet_graph.visualization.Constants.ANIMATION_DURATION;
 
 
+/**
+ * shape of a man point
+ */
 public class Man implements Entity {
     private static ZoomScrollPane mainPane;
     private static Group shapeGroup = new Group();

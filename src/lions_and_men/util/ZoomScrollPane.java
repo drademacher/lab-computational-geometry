@@ -13,9 +13,12 @@ import javafx.scene.layout.StackPane;
 
 
 /***
+ * Selfmade Pane with Zooming and Scrolling abilities which is not included in Java Standard.
+ *
+ *
  * Ideas from
  * https://stackoverflow.com/questions/16680295/javafx-correct-scaling
- * With custom extensions.
+ * with a lot of own improvements.
  */
 public class ZoomScrollPane extends ScrollPane {
     private final StackPane mainPane = new StackPane();

@@ -9,7 +9,7 @@ import lions_and_men.util.ContextMenuHolder;
 import lions_and_men.util.Point;
 
 /**
- * shape of a small vertex
+ * Shape of a small vertex.
  */
 public class SmallVertex implements Vertex {
     private static Group shapeGroup = new Group();

@@ -28,7 +28,7 @@ import static lions_and_men.applet_graph.visualization.Constants.ANIMATION_DURAT
 
 
 /**
- * User Interface with all buttons, menus and gui components
+ * User Interface with all buttons, menus and gui components.
  */
 public class UserInterface {
     private Timer player;
@@ -49,12 +49,10 @@ public class UserInterface {
     private VisualizedCoreController coreController = new VisualizedCoreController();
 
     private Stage stage;
-    private BorderPane root;
 
 
     public UserInterface(Stage stage, BorderPane root) {
         this.stage = stage;
-        this.root = root;
 
         zoomScrollPane = new ZoomScrollPane();
         root.setCenter(zoomScrollPane);

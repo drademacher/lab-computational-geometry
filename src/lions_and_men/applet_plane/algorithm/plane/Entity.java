@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 /**
  * abstract Entity class
- * data structure with position on plane, strategy, etc
+ * Data structure with position on plane, strategy, etc.
  */
 public abstract class Entity {
     private Point position;

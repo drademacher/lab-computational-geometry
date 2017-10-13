@@ -19,7 +19,7 @@ import static lions_and_men.applet_graph.visualization.Constants.*;
 
 
 /**
- * shape of a lion point
+ * Shape of a lion point.
  */
 public class Lion implements Entity {
     private static ZoomScrollPane mainPane;

@@ -16,6 +16,7 @@ public class ConvexHull {
 
     /**
      * Create a convex hull with (lion) points
+     *
      * @param points given points to create the ch with
      */
     public ConvexHull(Point[] points) {
@@ -25,6 +26,7 @@ public class ConvexHull {
 
     /**
      * Create a convex hull with (lion) points
+     *
      * @param lions given lions to create the ch with
      */
     public ConvexHull(List<Lion> lions) {
@@ -71,6 +73,7 @@ public class ConvexHull {
 
     /**
      * checks if a given point is inside the ch
+     *
      * @param test check if this given point is inside the ch
      * @return true if the given point is inside the ch, false ow
      */
@@ -89,6 +92,7 @@ public class ConvexHull {
 
     /**
      * get the points of the ch
+     *
      * @return return all points of the ch
      */
     public Point[] getPoints() {

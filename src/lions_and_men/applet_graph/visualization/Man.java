@@ -19,7 +19,7 @@ import static lions_and_men.applet_graph.visualization.Constants.ANIMATION_DURAT
 
 
 /**
- * shape of a man point
+ * Shape of a man point.
  */
 public class Man implements Entity {
     private static ZoomScrollPane mainPane;

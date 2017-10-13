@@ -20,8 +20,6 @@ public class Paper extends Strategy {
 
     @Override
     public ArrayList<Point> getPath(Man man, ArrayList<Lion> lions, int index, ArrayList<Point> inductionPath) {
-
-//        this.radiusMan = man.getSpeed();
         this.radiusMan = 1 + (man.getEpsilon() * (1 - (Math.pow(2, -(index + 1)))));
 
         ArrayList<Point> result;
@@ -57,7 +55,6 @@ public class Paper extends Strategy {
         } else {
 
             Point cuPosition = curPath.get(curPath.size() - 1);
-//            int indexGoal = (int) Math.floor(Math.floor((curPath.size() / lion.getSpeed()) + 1) * lion.getSpeed());
             int indexGoal = (int) (curPath.size() * this.radiusMan);
             while (indexGoal > 0.5 * inductionPath.size()) {
 

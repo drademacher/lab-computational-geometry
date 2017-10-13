@@ -1,5 +1,9 @@
 package lions_and_men.util;
 
+/**
+ * Utility class to keep a single random object.
+ * This is very necessary in case to properly test the source code (i.e. fixed seeds for unit tests).
+ */
 public class Random {
 
     private static java.util.Random RANDOM;

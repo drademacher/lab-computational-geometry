@@ -1093,8 +1093,6 @@ public class CoreController {
         }
     }
 
-    // TODO: THIS IS NEW
-    // TODO: should it work like this?
     public int getDistanceBetween(Vertex vertex1, Vertex vertex2) {
         return GraphHelper.createGraphHelper(this).getDistanceBetween(vertex1, vertex2);
     }

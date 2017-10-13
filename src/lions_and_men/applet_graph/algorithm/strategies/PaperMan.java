@@ -72,7 +72,6 @@ public class PaperMan extends Strategy<Man> {
 
                 target = currentPosition; // fallback
                 int distanceToLion = 0;
-//                int distance = 0;
                 for (Vertex quarter : neighborQuarters) {
 
                     if (checkInvariant(quarter)) {

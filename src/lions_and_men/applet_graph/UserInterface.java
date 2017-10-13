@@ -38,7 +38,7 @@ public class UserInterface {
     private HBox buttonBarCenter;
     private Button modeToggleButton = new Button("Edit Mode");
     private Button appletToggleButton = new Button("Choose App");
-    private Group vertexShapes = new Group(), edgeShapes = new Group(), entityShapes = new Group(), lionRangeShapes = new Group(), stepPreviewShapes = new Group(), choisePointShapes = new Group();
+    private Group vertexShapes = new Group(), edgeShapes = new Group(), entityShapes = new Group(), entityRangeShapes = new Group(), stepPreviewShapes = new Group(), choisePointShapes = new Group();
     private Button playAnimationButton = new Button("Play");
     private Button stopAnimationButton = new Button("Stop");
     private Button stepAnimationButton = new Button("Single Step");
@@ -366,15 +366,15 @@ public class UserInterface {
         entityShapes.visibleProperty().bind(viewEntities.selectedProperty());
         viewEntities.setSelected(true);
 
-        CheckMenuItem viewLionRanges = new CheckMenuItem("Lion Ranges");
-        lionRangeShapes.visibleProperty().bind(viewLionRanges.selectedProperty());
-        viewLionRanges.setSelected(true);
+        CheckMenuItem viewEntityRanges = new CheckMenuItem("Entity Ranges");
+        entityRangeShapes.visibleProperty().bind(viewEntityRanges.selectedProperty());
+        viewEntityRanges.setSelected(true);
 
         CheckMenuItem viewPreviews = new CheckMenuItem("Preview");
         stepPreviewShapes.visibleProperty().bind(viewPreviews.selectedProperty());
         viewPreviews.setSelected(false);
 
-        setViewMenu.getItems().addAll(viewEntities, viewLionRanges, viewPreviews);
+        setViewMenu.getItems().addAll(viewEntities, viewEntityRanges, viewPreviews);
     }
 
 
@@ -458,7 +458,7 @@ public class UserInterface {
         this.coreController.setEmptyGraph();
 
         zoomScrollPane.getNodesHolder().clear();
-        zoomScrollPane.getNodesHolder().addAll(edgeShapes, vertexShapes, stepPreviewShapes, lionRangeShapes, entityShapes, choisePointShapes);
+        zoomScrollPane.getNodesHolder().addAll(edgeShapes, vertexShapes, stepPreviewShapes, entityRangeShapes, entityShapes, choisePointShapes);
 
         BigVertex.setMainPane(zoomScrollPane);
         BigVertex.setShapeGroup(vertexShapes);
@@ -468,7 +468,7 @@ public class UserInterface {
         Man.setShapeGroup(entityShapes);
         Lion.setMainPane(zoomScrollPane);
         Lion.setShapeGroup(entityShapes);
-        Range.setShapeGroup(lionRangeShapes);
+        Range.setShapeGroup(entityRangeShapes);
         StepPreview.setShapeGroup(stepPreviewShapes);
         ChoicePoint.setShapeGroup(choisePointShapes);
     }
@@ -482,7 +482,7 @@ public class UserInterface {
         vertexShapes.getChildren().clear();
         edgeShapes.getChildren().clear();
         entityShapes.getChildren().clear();
-        lionRangeShapes.getChildren().clear();
+        entityRangeShapes.getChildren().clear();
     }
 
     private void initGameOverAlert() {

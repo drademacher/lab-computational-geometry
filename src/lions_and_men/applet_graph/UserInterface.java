@@ -38,7 +38,7 @@ public class UserInterface {
     private HBox buttonBarCenter;
     private Button modeToggleButton = new Button("Edit Mode");
     private Button appletToggleButton = new Button("Choose App");
-    private Group vertexShapes = new Group(), edgeShapes = new Group(), entityShapes = new Group(), entityRangeShapes = new Group(), stepPreviewShapes = new Group(), choisePointShapes = new Group();
+    private Group vertexShapes = new Group(), edgeShapes = new Group(), entityShapes = new Group(), entityRangeShapes = new Group(), stepPreviewShapes = new Group(), choicePointShapes = new Group();
     private Button playAnimationButton = new Button("Play");
     private Button stopAnimationButton = new Button("Stop");
     private Button stepAnimationButton = new Button("Single Step");
@@ -458,7 +458,7 @@ public class UserInterface {
         this.coreController.setEmptyGraph();
 
         zoomScrollPane.getNodesHolder().clear();
-        zoomScrollPane.getNodesHolder().addAll(edgeShapes, vertexShapes, stepPreviewShapes, entityRangeShapes, entityShapes, choisePointShapes);
+        zoomScrollPane.getNodesHolder().addAll(edgeShapes, vertexShapes, stepPreviewShapes, entityRangeShapes, entityShapes, choicePointShapes);
 
         BigVertex.setMainPane(zoomScrollPane);
         BigVertex.setShapeGroup(vertexShapes);
@@ -470,7 +470,7 @@ public class UserInterface {
         Lion.setShapeGroup(entityShapes);
         Range.setShapeGroup(entityRangeShapes);
         StepPreview.setShapeGroup(stepPreviewShapes);
-        ChoicePoint.setShapeGroup(choisePointShapes);
+        ChoicePoint.setShapeGroup(choicePointShapes);
     }
 
 

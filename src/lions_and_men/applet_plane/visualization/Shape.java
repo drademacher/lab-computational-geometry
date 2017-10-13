@@ -5,7 +5,7 @@ import lions_and_men.applet_plane.algorithm.CoreController;
 import lions_and_men.util.ZoomScrollPane;
 
 /**
- * abstract shape class
+ * Abstract shape class used as basis for all shapes.
  */
 public abstract class Shape {
     protected static CoreController coreController;

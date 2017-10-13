@@ -8,7 +8,7 @@ import lions_and_men.util.Point;
 import java.util.ArrayList;
 
 /**
- * polygonal path to display the path a lion runs during animation
+ * Polygonal path to display the path a lion runs during animation.
  */
 public class LionPath extends Shape {
     private static Group group1 = new Group(), group2 = new Group();

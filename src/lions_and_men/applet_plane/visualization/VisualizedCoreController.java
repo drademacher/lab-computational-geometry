@@ -18,7 +18,10 @@ import java.util.List;
 
 import static lions_and_men.applet_plane.visualization.Constants.ANIMATION_DURATION;
 
-
+/**
+ * Extension of the Controller Class. Using an instance of this controller over an instance of CoreController leads
+ * to including animations and visuals on executing actions.
+ */
 public class VisualizedCoreController extends CoreController {
     private List<Lion> lions;
     private Man manPoint;
@@ -97,7 +100,6 @@ public class VisualizedCoreController extends CoreController {
     @Override
     public void setDefaultGraph1() {
         super.setDefaultGraph1();
-//        calcAllPaths(1);
     }
 
     @Override
@@ -186,7 +188,6 @@ public class VisualizedCoreController extends CoreController {
 
     @Override
     public AllPaths simulateStep() {
-
         if (onGoingAnimationBlockNew) {
             return null;
         }
@@ -197,7 +198,6 @@ public class VisualizedCoreController extends CoreController {
         if (pathCount == 0) {
             minimumPathSize = allPaths.pathSize;
             ManPath.clear();
-//            clean();
             for (Lion lion : lions) {
                 lion.getShape().setVisible(false);
             }
@@ -213,13 +213,7 @@ public class VisualizedCoreController extends CoreController {
             new LionPath(allPaths.lionPaths.get(i));
         }
 
-        // fade in next lion
         lions.get(pathCount).getShape().setVisible(true);
-//        FadeTransition fadeIn = new FadeTransition();
-//        fadeIn.setNode(lions.get(pathCount).getShape());
-//        fadeIn.setFromValue(0.0);
-//        fadeIn.setToValue(1.0);
-//        fadeIn.setDuration(Duration.millis(ANIMATION_DURATION * 0.2));
 
 
         ParallelTransition fullTransition = new ParallelTransition();
@@ -251,9 +245,6 @@ public class VisualizedCoreController extends CoreController {
             lionTransition.setPath(lionPath);
             lionTransition.setNode(lions.get(i).getShape());
             fullTransition.getChildren().add(lionTransition);
-
-
-//            lions.get(i).setPosition(allPaths.lionPaths.get(i).get(pathStoneCount));
         }
 
         if (pathStoneCount == 0) {
@@ -262,7 +253,6 @@ public class VisualizedCoreController extends CoreController {
 
 
         pathCount++;
-//        allPaths = simulateStep();
 
         fullTransition.play();
         fullTransition.setOnFinished(event -> onGoingAnimationBlockNew = false);

@@ -109,8 +109,6 @@ public class UserInterface {
         initModeButton();
         initContextMenu();
         initZoomScrollPane();
-
-//        initGameOverAlert();
     }
 
     private void initSpeedSlider() {
@@ -444,10 +442,4 @@ public class UserInterface {
         boundingPointsShapes.getChildren().clear();
     }
 
-//    private void initGameOverAlert() {
-//        Alert gameOverAlert = new Alert(Alert.AlertType.INFORMATION);
-//        gameOverAlert.setTitle("Game Over");
-//        gameOverAlert.setHeaderText("The lions have won the game.");
-//        gameOverAlert.setContentText("You can start a new game by playing a new man into the graph.");
-//    }
 }

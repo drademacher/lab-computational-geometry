@@ -65,7 +65,6 @@ public class Paper extends Strategy {
             if (cuPosition.distanceTo(curLionPosition) >= saveRadius + radiusMan) {
 
                 curPath.add(goInGoalDirection(cuPosition, goalPosition));
-                    /*TODO parallel, instead of points??*/
             } else if (!cuPosition.equals(goalPosition) &&
                     (cuPosition.distanceTo(curLionPosition) >= saveRadius - lion.getSpeed()) &&
                     (goInGoalDirection(cuPosition, goalPosition).distanceTo(curLionPosition) >= (lion.getSpeed() + cuPosition.distanceTo(curLionPosition)))) {
@@ -100,7 +99,7 @@ public class Paper extends Strategy {
     // avoidance move
     private Point doAvoidanceMove(Point curPosition, Point lionPosition) {
         Point[] intersections = getIntersectionPoints(curPosition, radiusMan, lionPosition, saveRadius);
-        return intersections[0];//TODO need counterclockwise point
+        return intersections[0];
     }
 
     private Point[] getIntersectionPoints(Point m1, double radius1, Point m2, double radius2) {

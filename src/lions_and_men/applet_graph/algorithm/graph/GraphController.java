@@ -116,7 +116,7 @@ public class GraphController {
         //check duplicate
         for (Edge edge : vertex1.getEdges()) {
             if (edge.getNeighbor(vertex1).equals(vertex2)) {
-                return; //dublicate
+                return;
             }
         }
 

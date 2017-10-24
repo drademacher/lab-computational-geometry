@@ -11,7 +11,7 @@ import java.util.Optional;
 import static lions_and_men.applet_graph.visualization.Constants.COLOR_EDGE;
 
 /**
- * shape of an edge
+ * Shape of an edge.
  */
 public class Edge {
     private static Group shapeGroup = new Group();

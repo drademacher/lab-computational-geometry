@@ -10,8 +10,6 @@ import lions_and_men.util.Point;
  * data structure with position on graph, strategy, etc
  */
 public abstract class Entity {
-
-
     protected Vertex position;
     protected CoreController coreController;
     protected Strategy strategy;

@@ -19,7 +19,6 @@ public class Constants {
     static final Color COLOR_LION = (Color) Paint.valueOf("#e51408");
     static final Color COLOR_MAN_RANGE = (Color) Paint.valueOf("#0922e5");
     static final Color COLOR_LION_RANGE = (Color) Paint.valueOf("#F28983");
-    static final Color COLOR_PREVIEW = (Color) Paint.valueOf("#FFFF00");
     static final Color COLOR_CHOICEPOINT = (Color) Paint.valueOf("#7a7a7a99");
     static final double ENTITY_RADIUS = 1.5;
     static final double CHOICEPOINT_RADIUS = 1.5;

@@ -4,7 +4,7 @@ import javafx.scene.Group;
 import javafx.scene.paint.Color;
 
 /**
- * polygon with all lions inside
+ * Polygon in which are lions are contained.
  */
 public class LionsPolygon extends Shape {
     private static Group group = new Group();

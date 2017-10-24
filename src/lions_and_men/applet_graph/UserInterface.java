@@ -28,19 +28,17 @@ import static lions_and_men.applet_graph.visualization.Constants.ANIMATION_DURAT
 
 
 /**
- * User Interface with all buttons, menus and gui components
+ * User Interface with all buttons, menus and gui components.
  */
 public class UserInterface {
     private Timer player;
 
     private ZoomScrollPane zoomScrollPane;
-    private ScrollPane helpPane;
     private Slider speedSlider;
     private HBox buttonBarCenter;
     private Button modeToggleButton = new Button("Edit Mode");
-    private Button helpToggleButton = new Button("Help");
     private Button appletToggleButton = new Button("Choose App");
-    private Group vertexShapes = new Group(), edgeShapes = new Group(), entityShapes = new Group(), lionRangeShapes = new Group(), stepPreviewShapes = new Group(), choisePointShapes = new Group();
+    private Group vertexShapes = new Group(), edgeShapes = new Group(), entityShapes = new Group(), entityRangeShapes = new Group(), stepPreviewShapes = new Group(), choicePointShapes = new Group();
     private Button playAnimationButton = new Button("Play");
     private Button stopAnimationButton = new Button("Stop");
     private Button stepAnimationButton = new Button("Single Step");
@@ -51,12 +49,10 @@ public class UserInterface {
     private VisualizedCoreController coreController = new VisualizedCoreController();
 
     private Stage stage;
-    private BorderPane root;
 
 
     public UserInterface(Stage stage, BorderPane root) {
         this.stage = stage;
-        this.root = root;
 
         zoomScrollPane = new ZoomScrollPane();
         root.setCenter(zoomScrollPane);
@@ -65,7 +61,7 @@ public class UserInterface {
         buttonBarCenter.setPadding(new Insets(10, 10, 10, 10));
         buttonBarCenter.setSpacing(25);
 
-        HBox buttonBarRight = new HBox(helpToggleButton, appletToggleButton);
+        HBox buttonBarRight = new HBox(appletToggleButton);
         buttonBarRight.setPadding(new Insets(10, 10, 10, 150));
         buttonBarRight.setSpacing(25);
 
@@ -156,29 +152,6 @@ public class UserInterface {
      * Initialize the mode toggle button and add the button logic.
      */
     private void initModeButton() {
-        Label helpText = new Label();
-        helpPane = new ScrollPane(helpText);
-        helpPane.setFitToWidth(true);
-        helpToggleButton.setStyle("-fx-font-style: italic");
-        helpToggleButton.setOnAction(event -> {
-            if (root.getCenter() == helpPane) {
-                root.setCenter(zoomScrollPane);
-            } else {
-                root.setCenter(helpPane);
-            }
-        });
-        helpText.setWrapText(true);
-        helpText.setStyle("-fx-font-family: \"Verdana\"; -fx-font-size: 20; -fx-text-fill: black;");
-        helpText.setPadding(new Insets(50, 50, 50, 50));
-
-        helpText.setText("Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. \n" +
-                "\n" +
-                "Duis autem vel eum <b>iriure</b> dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. \n" +
-                "\n" +
-                "Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. \n" +
-                "\n" +
-                "Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. ");
-
 
         appletToggleButton.setStyle("-fx-font-style: italic");
 
@@ -393,15 +366,15 @@ public class UserInterface {
         entityShapes.visibleProperty().bind(viewEntities.selectedProperty());
         viewEntities.setSelected(true);
 
-        CheckMenuItem viewLionRanges = new CheckMenuItem("Lion Ranges");
-        lionRangeShapes.visibleProperty().bind(viewLionRanges.selectedProperty());
-        viewLionRanges.setSelected(true);
+        CheckMenuItem viewEntityRanges = new CheckMenuItem("Entity Ranges");
+        entityRangeShapes.visibleProperty().bind(viewEntityRanges.selectedProperty());
+        viewEntityRanges.setSelected(true);
 
         CheckMenuItem viewPreviews = new CheckMenuItem("Preview");
         stepPreviewShapes.visibleProperty().bind(viewPreviews.selectedProperty());
         viewPreviews.setSelected(false);
 
-        setViewMenu.getItems().addAll(viewEntities, viewLionRanges, viewPreviews);
+        setViewMenu.getItems().addAll(viewEntities, viewEntityRanges, viewPreviews);
     }
 
 
@@ -485,7 +458,7 @@ public class UserInterface {
         this.coreController.setEmptyGraph();
 
         zoomScrollPane.getNodesHolder().clear();
-        zoomScrollPane.getNodesHolder().addAll(edgeShapes, vertexShapes, stepPreviewShapes, lionRangeShapes, entityShapes, choisePointShapes);
+        zoomScrollPane.getNodesHolder().addAll(edgeShapes, vertexShapes, stepPreviewShapes, entityRangeShapes, entityShapes, choicePointShapes);
 
         BigVertex.setMainPane(zoomScrollPane);
         BigVertex.setShapeGroup(vertexShapes);
@@ -495,9 +468,9 @@ public class UserInterface {
         Man.setShapeGroup(entityShapes);
         Lion.setMainPane(zoomScrollPane);
         Lion.setShapeGroup(entityShapes);
-        Range.setShapeGroup(lionRangeShapes);
+        Range.setShapeGroup(entityRangeShapes);
         StepPreview.setShapeGroup(stepPreviewShapes);
-        ChoicePoint.setShapeGroup(choisePointShapes);
+        ChoicePoint.setShapeGroup(choicePointShapes);
     }
 
 
@@ -509,7 +482,7 @@ public class UserInterface {
         vertexShapes.getChildren().clear();
         edgeShapes.getChildren().clear();
         entityShapes.getChildren().clear();
-        lionRangeShapes.getChildren().clear();
+        entityRangeShapes.getChildren().clear();
     }
 
     private void initGameOverAlert() {

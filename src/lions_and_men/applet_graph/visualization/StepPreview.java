@@ -4,9 +4,8 @@ import javafx.scene.Group;
 import javafx.scene.shape.Circle;
 import lions_and_men.util.Point;
 
-
 /**
- * shape of a step preview (to indicate where an entity will go next)
+ * Shape of a step preview (to indicate where an entity will go next).
  */
 public class StepPreview implements Vertex {
     private static Group shapeGroup = new Group();

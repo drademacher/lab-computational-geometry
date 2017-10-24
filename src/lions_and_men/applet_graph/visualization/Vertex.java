@@ -4,7 +4,7 @@ import lions_and_men.util.Point;
 
 
 /**
- * interface to describe a vertex (big or small vertex)
+ * Interface to describe a vertex (big or small vertex).
  */
 public interface Vertex {
 

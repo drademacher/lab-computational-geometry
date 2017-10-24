@@ -20,8 +20,6 @@ public class Paper extends Strategy {
 
     @Override
     public ArrayList<Point> getPath(Man man, ArrayList<Lion> lions, int index, ArrayList<Point> inductionPath) {
-
-//        this.radiusMan = man.getSpeed();
         this.radiusMan = 1 + (man.getEpsilon() * (1 - (Math.pow(2, -(index + 1)))));
 
         ArrayList<Point> result;
@@ -57,7 +55,6 @@ public class Paper extends Strategy {
         } else {
 
             Point cuPosition = curPath.get(curPath.size() - 1);
-//            int indexGoal = (int) Math.floor(Math.floor((curPath.size() / lion.getSpeed()) + 1) * lion.getSpeed());
             int indexGoal = (int) (curPath.size() * this.radiusMan);
             while (indexGoal > 0.5 * inductionPath.size()) {
 
@@ -68,7 +65,6 @@ public class Paper extends Strategy {
             if (cuPosition.distanceTo(curLionPosition) >= saveRadius + radiusMan) {
 
                 curPath.add(goInGoalDirection(cuPosition, goalPosition));
-                    /*TODO parallel, instead of points??*/
             } else if (!cuPosition.equals(goalPosition) &&
                     (cuPosition.distanceTo(curLionPosition) >= saveRadius - lion.getSpeed()) &&
                     (goInGoalDirection(cuPosition, goalPosition).distanceTo(curLionPosition) >= (lion.getSpeed() + cuPosition.distanceTo(curLionPosition)))) {
@@ -103,7 +99,7 @@ public class Paper extends Strategy {
     // avoidance move
     private Point doAvoidanceMove(Point curPosition, Point lionPosition) {
         Point[] intersections = getIntersectionPoints(curPosition, radiusMan, lionPosition, saveRadius);
-        return intersections[0];//TODO need counterclockwise point
+        return intersections[0];
     }
 
     private Point[] getIntersectionPoints(Point m1, double radius1, Point m2, double radius2) {

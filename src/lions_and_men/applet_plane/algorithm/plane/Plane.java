@@ -102,7 +102,6 @@ public class Plane {
     public ArrayList<Point> calcLionPath(int index, ArrayList<Point> resultPath, ArrayList<Point> manPath) {
         if (lions.get(index).getStrategy() == null) {
             System.out.println("*ERROR*   -   lion without strategy! SHOULD NOT HAPPEN");
-            //TODO should not be possible.... but some lions does not have a strategy
             if (resultPath == null) {
                 resultPath = new ArrayList<>();
             }

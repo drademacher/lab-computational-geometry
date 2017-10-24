@@ -22,6 +22,7 @@ public class Random {
      */
     public static int getRandomInteger(int d) {
         if (RANDOM == null) RANDOM = new java.util.Random();
+        if (d < 1) d = 1;
         return RANDOM.nextInt(d);
     }
 
